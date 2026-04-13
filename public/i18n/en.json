@@ -1,0 +1,14 @@
+{
+  "header": {
+    "login": "Sign in",
+    "logout": "Sign out"
+  },
+  "landing": {
+    "title": "Hello, world.",
+    "subtitle": "The review platform that actually understands what you play."
+  },
+  "login": {
+    "title": "Welcome to Vouch",
+    "subtitle": "Sign in to start rating"
+  }
+}

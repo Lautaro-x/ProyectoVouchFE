@@ -1,0 +1,48 @@
+import { Component, inject, signal, computed, HostListener, ElementRef } from '@angular/core';
+import { LangService } from '../../../core/services/lang.service';
+
+interface LangOption {
+  code: string;
+  country: string;
+}
+
+@Component({
+  selector: 'app-lang-switcher',
+  standalone: true,
+  templateUrl: './lang-switcher.component.html',
+  styleUrl: './lang-switcher.component.css',
+})
+export class LangSwitcherComponent {
+  protected readonly langService = inject(LangService);
+  private readonly elementRef = inject(ElementRef);
+
+  readonly isOpen = signal(false);
+
+  readonly langOptions: LangOption[] = [
+    { code: 'es', country: 'es' },
+    { code: 'en', country: 'gb' },
+    { code: 'fr', country: 'fr' },
+    { code: 'pt', country: 'pt' },
+    { code: 'it', country: 'it' },
+  ];
+
+  readonly currentCountry = computed(
+    () => this.langOptions.find(o => o.code === this.langService.activeLang())?.country ?? 'es'
+  );
+
+  toggle(): void {
+    this.isOpen.update(v => !v);
+  }
+
+  selectLang(code: string): void {
+    this.langService.setLang(code);
+    this.isOpen.set(false);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.isOpen.set(false);
+    }
+  }
+}

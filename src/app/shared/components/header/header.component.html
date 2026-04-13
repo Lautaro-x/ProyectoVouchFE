@@ -1,12 +1,16 @@
 <header class="header">
   <div class="header-container">
-    <a class="header-logo" routerLink="/">Vouch</a>
+    <a class="header-logo" routerLink="/">
+      <img src="/logo.png" alt="Vouch" class="header-logo-img" />
+      <span class="header-logo-text">Vouch</span>
+    </a>
     <nav class="header-nav">
+      <app-lang-switcher />
       @if (authService.currentUser()) {
         <span class="header-username">{{ authService.currentUser()!.name }}</span>
-        <button class="header-btn-logout" (click)="logout()">Cerrar sesión</button>
+        <button class="header-btn-logout" (click)="logout()">{{ 'header.logout' | transloco }}</button>
       } @else {
-        <a class="header-btn-login" routerLink="/login">Iniciar sesión</a>
+        <a class="header-btn-login" routerLink="/login">{{ 'header.login' | transloco }}</a>
       }
     </nav>
   </div>

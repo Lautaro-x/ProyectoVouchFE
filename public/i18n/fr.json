@@ -1,0 +1,14 @@
+{
+  "header": {
+    "login": "Se connecter",
+    "logout": "Se déconnecter"
+  },
+  "landing": {
+    "title": "Bonjour, monde.",
+    "subtitle": "La plateforme de critiques qui comprend vraiment ce que vous jouez."
+  },
+  "login": {
+    "title": "Bienvenue sur Vouch",
+    "subtitle": "Connectez-vous pour commencer à noter"
+  }
+}

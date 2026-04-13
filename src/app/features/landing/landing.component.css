@@ -15,13 +15,13 @@
 .landing-title {
   font-size: 3.5rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text);
   margin-bottom: 1.25rem;
   line-height: 1.1;
 }
 
 .landing-subtitle {
   font-size: 1.2rem;
-  color: #a0a0b0;
+  color: var(--color-text-muted);
   line-height: 1.6;
 }

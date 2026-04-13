@@ -1,0 +1,19 @@
+<div class="lang-switcher">
+  <button class="lang-trigger" (click)="toggle()">
+    <span class="fi" [class]="'fi fi-' + currentCountry()"></span>
+    <span class="lang-arrow" [class.lang-arrow--open]="isOpen()">▾</span>
+  </button>
+
+  @if (isOpen()) {
+    <div class="lang-dropdown">
+      @for (opt of langOptions; track opt.code) {
+        <button
+          class="lang-option"
+          [class.lang-option--active]="opt.code === langService.activeLang()"
+          (click)="selectLang(opt.code)">
+          <span class="fi" [class]="'fi fi-' + opt.country"></span>
+        </button>
+      }
+    </div>
+  }
+</div>

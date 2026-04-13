@@ -1,59 +1,194 @@
-# ProyectoVouchFE
+# Vouch — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Aplicación Angular del proyecto Vouch, una plataforma social de críticas ponderadas para videojuegos.
 
-## Development server
+---
 
-To start a local development server, run:
+## Stack
 
+| Tecnología | Versión | Rol |
+|---|---|---|
+| Angular | 21.2.0 | Framework |
+| TypeScript | 5.9.2 | Lenguaje |
+| @angular/ssr | 21.2.7 | Server-Side Rendering |
+| @jsverse/transloco | — | Internacionalización (i18n) |
+| RxJS | 7.8.0 | Programación reactiva |
+| Vitest | 4.0.8 | Testing |
+
+---
+
+## Arquitectura general
+
+Arquitectura basada en **standalone components** (sin NgModules), con lazy loading por ruta y separación estricta de responsabilidades.
+
+```
+src/
+├── app/
+│   ├── core/                          # Singletons: servicios, guards, interceptors, tokens
+│   │   ├── guards/
+│   │   │   └── auth.guard.ts          # Protege rutas privadas
+│   │   ├── interceptors/
+│   │   │   └── auth.interceptor.ts    # Añade Bearer token a todas las requests
+│   │   ├── models/
+│   │   │   └── user.model.ts          # Interfaz User
+│   │   ├── services/
+│   │   │   ├── auth.service.ts        # Login, logout, token, usuario actual
+│   │   │   └── lang.service.ts        # Detección y cambio de idioma
+│   │   └── tokens/
+│   │       └── accept-language.token.ts  # Token DI para header Accept-Language
+│   ├── features/                      # Módulos funcionales (lazy loaded)
+│   │   ├── auth/
+│   │   │   └── login/                 # Página de login con Google
+│   │   └── landing/                   # Página de inicio
+│   ├── shared/                        # Componentes reutilizables
+│   │   └── components/
+│   │       ├── header/                # Cabecera global con nav y auth
+│   │       └── lang-switcher/         # Selector de idioma
+│   ├── app.config.ts                  # Providers globales (browser)
+│   ├── app.config.server.ts           # Providers adicionales (SSR)
+│   ├── app.routes.ts                  # Definición de rutas
+│   ├── app.routes.server.ts           # Render modes por ruta
+│   └── transloco-loader.ts            # Loader HTTP de traducciones
+├── environments/
+│   └── environment.ts                 # Variables de entorno (dev)
+└── public/
+    └── i18n/                          # Archivos de traducción JSON
+        ├── es.json
+        ├── en.json
+        ├── fr.json
+        ├── pt.json
+        └── it.json
+```
+
+---
+
+## Configuración local
+
+### Requisitos
+- Node.js 24.x LTS
+- Angular CLI 21.x
+
+### Instalación
 ```bash
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+### Variables de entorno (`src/environments/environment.ts`)
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'http://proyectovouchbe.local/api',
+  googleClientId: 'tu_google_client_id',
+};
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
+## Características implementadas
+
+### SSR — Server-Side Rendering
+
+**Librería:** `@angular/ssr` 21.2.7
+
+**Configuración de render modes** (`app.routes.server.ts`):
+| Ruta | Modo | Motivo |
+|---|---|---|
+| `/` | Prerender | Contenido estático, óptimo para SEO |
+| `/login` | Prerender | Contenido estático, óptimo para SEO |
+| `**` | Client | Rutas dinámicas sin pre-renderizado |
+
+**Decisión de arquitectura:** Se eligió SSR desde el inicio del proyecto porque refactorizar una aplicación grande a SSR es costoso. El coste de añadirlo en una base limpia es mínimo. En producción se sirve con Node.js + PM2 + Nginx como reverse proxy.
+
+**Compatibilidad SSR:** Las APIs del navegador (`localStorage`, `document`, `window`, Google GSI) no están disponibles en el servidor. Se usa `isPlatformBrowser(PLATFORM_ID)` para proteger cualquier acceso a estas APIs. En Angular 21, `ngAfterViewInit` sí se ejecuta en el servidor durante el pre-rendering, por lo que requiere protección explícita.
+
+---
+
+### Auth — Google Identity Services + Sanctum
+
+**Librerías:** Google Identity Services (script CDN en `index.html`), Angular HttpClient, Sanctum tokens
+
+**Flujo completo:**
+```
+Usuario hace clic en "Iniciar sesión"
+  → Navega a /login
+    → Google GSI renderiza el botón nativo de Google
+      → Usuario autentica con su cuenta Google (popup)
+        → Google devuelve un credential (JWT firmado por Google)
+          → LoginComponent envía el credential a AuthService
+            → POST /api/auth/google { credential }
+              → Backend verifica y devuelve { token, user }
+                → AuthService guarda token y user en localStorage
+                  → Redirige a /
 ```
 
-## Building
+**Almacenamiento:** Token y usuario en `localStorage`. Decisión estándar para SPAs en MVP. La alternativa más segura (HttpOnly cookies) se evaluará en producción.
 
-To build the project run:
+**Interceptor:** `auth.interceptor.ts` añade automáticamente `Authorization: Bearer {token}` a todas las peticiones HTTP salientes si hay sesión activa.
 
-```bash
-ng build
+**Protección de rutas:** `auth.guard.ts` redirige a `/login` si el usuario no está autenticado.
+
+**Compatibilidad SSR:** `localStorage` y Google GSI están protegidos con `isPlatformBrowser`.
+
+---
+
+### i18n — Internacionalización
+
+**Librería:** `@jsverse/transloco`
+
+**Idiomas disponibles:** Español (`es`), Inglés (`en`), Francés (`fr`), Portugués (`pt`), Italiano (`it`)
+
+**Archivos de traducción:** `public/i18n/{lang}.json` — cargados bajo demanda por idioma (lazy loading).
+
+**Uso en templates:**
+```html
+{{ 'seccion.clave' | transloco }}
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+**Cambio de idioma en runtime:** Sin recarga de página. El componente `LangSwitcherComponent` expone los botones en el header. El idioma activo es un signal reactivo derivado de `TranslocoService.langChanges$` via `toSignal()`.
 
-## Running unit tests
+**Detección automática de idioma** (`LangService`):
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+```
+Prioridad 1 — localStorage key 'lang'
+  El usuario eligió explícitamente un idioma en una visita anterior.
 
-```bash
-ng test
+Prioridad 2 — navigator.language (browser)
+  Idioma configurado en el navegador del usuario.
+  Más preciso que geolocalización por IP: refleja la preferencia real,
+  no el país desde donde se conecta.
+
+Prioridad 3 — 'es' (fallback)
+  Ninguna detección produjo un idioma disponible.
 ```
 
-## Running end-to-end tests
+**Por qué no IP geolocation:** Requiere API externa con rate limits, falla con VPNs, un país puede tener múltiples idiomas oficiales (Suiza, Bélgica, etc.).
 
-For end-to-end (e2e) testing, run:
+**Por qué no Accept-Language header (SSR):** El token `REQUEST` de `@angular/ssr` no está disponible en Angular 21. El servidor siempre pre-renderiza en español; el cliente hidrata con el idioma correcto.
 
-```bash
-ng e2e
-```
+**Inicialización:** `provideAppInitializer` ejecuta `LangService.init()` antes de que Angular renderice nada, evitando parpadeos de idioma.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## Roadmap
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Fase 1 — Core (en progreso)
+- [x] Estructura base (standalone components, lazy routes)
+- [x] SSR configurado
+- [x] Auth con Google Identity Services
+- [x] i18n con Transloco (5 idiomas, detección automática)
+- [ ] Página de perfil de usuario
+- [ ] Buscador de productos (juegos)
+- [ ] Ficha de producto con triple nota (Global, Pro, Trust)
+- [ ] Formulario de crítica con sliders por categoría
+
+### Fase 2 — Capa social
+- [ ] Sistema de Follow (Críticos de confianza)
+- [ ] Trust Score en tiempo real
+- [ ] Gráfico de radar por categorías
+
+### Fase 3 — Optimización y SEO
+- [ ] Meta tags dinámicos por producto (OpenGraph)
+- [ ] Sitemap dinámico
+- [ ] Widget para streamers (OBS)
+- [ ] Generador de infografías para redes sociales

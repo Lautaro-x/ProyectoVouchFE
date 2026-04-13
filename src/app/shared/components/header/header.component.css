@@ -1,6 +1,6 @@
 .header {
-  background-color: #1a1a2e;
-  border-bottom: 1px solid #2a2a4a;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   height: 64px;
   display: flex;
   align-items: center;
@@ -17,9 +17,21 @@
 }
 
 .header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+.header-logo-text {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text);
   letter-spacing: 0.05em;
 }
 
@@ -30,14 +42,14 @@
 }
 
 .header-username {
-  color: #a0a0b0;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
 }
 
 .header-btn-login {
   padding: 0.5rem 1.25rem;
-  background-color: #4f46e5;
-  color: #ffffff;
+  background-color: var(--color-accent);
+  color: var(--color-text);
   border-radius: 6px;
   font-size: 0.9rem;
   font-weight: 500;
@@ -45,14 +57,14 @@
 }
 
 .header-btn-login:hover {
-  background-color: #4338ca;
+  background-color: var(--color-accent-hover);
 }
 
 .header-btn-logout {
   padding: 0.5rem 1.25rem;
   background-color: transparent;
-  color: #a0a0b0;
-  border: 1px solid #2a2a4a;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 0.9rem;
   font-weight: 500;
@@ -62,6 +74,6 @@
 }
 
 .header-btn-logout:hover {
-  background-color: #2a2a4a;
-  color: #ffffff;
+  background-color: var(--color-border);
+  color: var(--color-text);
 }

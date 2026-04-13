@@ -1,5 +1,7 @@
-import { Component, AfterViewInit, NgZone, inject } from '@angular/core';
+import { Component, AfterViewInit, NgZone, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 import { AuthService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment';
 
@@ -15,6 +17,7 @@ declare const google: {
 @Component({
   selector: 'app-login',
   standalone: true,
+  imports: [TranslocoModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -22,8 +25,11 @@ export class LoginComponent implements AfterViewInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly ngZone = inject(NgZone);
+  private readonly platformId = inject(PLATFORM_ID);
 
   ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     if (this.authService.isAuthenticated()) {
       this.router.navigate(['/']);
       return;
