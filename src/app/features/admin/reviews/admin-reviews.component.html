@@ -1,0 +1,101 @@
+<app-dialog
+  [title]="banDialogTitle()"
+  [isOpen]="banDialogOpen()"
+  (closed)="closeBanDialog()"
+>
+  <div class="field">
+    <label>{{ 'admin.reviews.ban_reason_label' | transloco }} <span class="muted">{{ 'admin.common.optional' | transloco }}</span></label>
+    <input type="text" [value]="banReason()" (input)="banReason.set($any($event.target).value)" [placeholder]="'admin.reviews.ban_reason_ph' | transloco" (keydown.enter)="confirmBan()" />
+  </div>
+  <div class="form-actions">
+    <button class="btn-primary danger" (click)="confirmBan()">{{ 'admin.reviews.confirm_ban' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeBanDialog()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<app-dialog
+  [title]="confirmDialogTitle()"
+  [subtitle]="confirmDialogSubtitle()"
+  [isOpen]="confirmDialogOpen()"
+  (closed)="closeConfirm()"
+>
+  <div class="form-actions">
+    <button class="btn-primary" (click)="confirmAction()">{{ 'admin.common.confirm' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeConfirm()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<div class="section-header">
+  <h2>{{ 'admin.reviews.title' | transloco }}</h2>
+  <div class="filters">
+    <button class="btn-ghost" [class.active]="bannedOnly()" (click)="toggleBannedFilter()">
+      {{ (bannedOnly() ? 'admin.reviews.filter_all' : 'admin.reviews.filter_banned') | transloco }}
+    </button>
+  </div>
+</div>
+
+<div class="table-toolbar">
+  <span class="table-meta">@if (page()) { {{ page()!.total }} {{ 'admin.common.records' | transloco }} }</span>
+  <div class="per-page">
+    <span>{{ 'admin.common.per_page' | transloco }}</span>
+    <select [value]="perPage()" (change)="setPerPage(+$any($event.target).value)">
+      <option value="15">15</option><option value="25">25</option>
+      <option value="50">50</option><option value="100">100</option>
+    </select>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th class="sortable" [class.sorted]="sortBy() === 'id'" (click)="setSort('id')">ID{{ sortIcon('id') }}</th>
+      <th>{{ 'admin.reviews.col_user' | transloco }}</th>
+      <th>{{ 'admin.reviews.col_product' | transloco }}</th>
+      <th class="sortable" [class.sorted]="sortBy() === 'weighted_score'" (click)="setSort('weighted_score')">{{ 'admin.reviews.col_score' | transloco }}{{ sortIcon('weighted_score') }}</th>
+      <th>{{ 'admin.reviews.col_status' | transloco }}</th>
+      <th class="sortable" [class.sorted]="sortBy() === 'created_at'" (click)="setSort('created_at')">{{ 'admin.common.col_date' | transloco }}{{ sortIcon('created_at') }}</th>
+      <th></th>
+    </tr>
+    <tr class="filter-row">
+      <th></th>
+      <th colspan="2"><input type="text" [placeholder]="'admin.reviews.search_ph' | transloco" [value]="filterSearch()" (input)="filterSearch.set($any($event.target).value); load()" /></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (r of page()?.data ?? []; track r.id) {
+      <tr [class.banned-row]="r.banned_at">
+        <td class="muted">{{ r.id }}</td>
+        <td>{{ r.user?.name ?? r.user_id }}</td>
+        <td>{{ r.product?.title ?? r.product_id }}</td>
+        <td><strong>{{ r.weighted_score }}</strong> <span class="muted">{{ r.letter_grade }}</span></td>
+        <td>
+          @if (r.banned_at) {
+            <span class="badge danger">{{ 'admin.reviews.status_banned' | transloco }}</span>
+          } @else {
+            <span class="badge">{{ 'admin.reviews.status_active' | transloco }}</span>
+          }
+        </td>
+        <td class="muted">{{ r.created_at | slice:0:10 }}</td>
+        <td class="actions">
+          @if (r.banned_at) {
+            <button class="btn-sm" (click)="unban(r)">{{ 'admin.reviews.action_unban' | transloco }}</button>
+          } @else {
+            <button class="btn-sm danger" (click)="startBan(r)">{{ 'admin.reviews.action_ban' | transloco }}</button>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@if (page() && page()!.last_page > 1) {
+  <div class="pagination">
+    @for (p of pages(); track p) {
+      <button class="btn-sm" [class.active]="p === page()!.current_page" (click)="goTo(p)">{{ p }}</button>
+    }
+  </div>
+}

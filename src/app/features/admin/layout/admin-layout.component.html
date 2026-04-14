@@ -1,0 +1,25 @@
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <span class="brand-vouch">VOUCH</span>
+    <span class="brand-admin">admin</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    @for (section of sections; track section.path) {
+      <a
+        [routerLink]="section.path"
+        routerLinkActive="active"
+        class="nav-item"
+      >{{ section.labelKey | transloco }}</a>
+    }
+  </nav>
+
+  <div class="sidebar-footer">
+    <span class="sidebar-user">{{ user()?.name }}</span>
+    <button class="logout-btn" (click)="logout()">{{ 'admin.nav.logout' | transloco }}</button>
+  </div>
+</aside>
+
+<main class="admin-main">
+  <router-outlet />
+</main>

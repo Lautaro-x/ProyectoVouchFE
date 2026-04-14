@@ -1,0 +1,83 @@
+<app-dialog [title]="formDialogTitle()" [isOpen]="formDialogOpen()" (closed)="closeFormDialog()">
+  @for (locale of locales; track locale.code) {
+    <div class="field">
+      <label>{{ locale.label }}</label>
+      <input
+        type="text"
+        [value]="formName()[locale.code]"
+        (input)="updateFormName(locale.code, $any($event.target).value)"
+        (keydown.enter)="locale.code === 'it' && save()"
+      />
+    </div>
+  }
+  <div class="form-actions">
+    <button class="btn-primary" (click)="save()">{{ 'admin.common.save' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeFormDialog()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<app-dialog
+  [title]="confirmDialogTitle()"
+  [subtitle]="confirmDialogSubtitle()"
+  [isOpen]="confirmDialogOpen()"
+  (closed)="closeConfirm()"
+>
+  <div class="form-actions">
+    <button class="btn-primary danger" (click)="confirmAction()">{{ 'admin.common.confirm' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeConfirm()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<div class="section-header">
+  <h2>{{ 'admin.categories.title' | transloco }}</h2>
+  <button class="btn-primary" (click)="openCreate()">{{ 'admin.common.new_fem' | transloco }}</button>
+</div>
+
+<div class="table-toolbar">
+  <span class="table-meta">@if (page()) { {{ page()!.total }} {{ 'admin.common.records' | transloco }} }</span>
+  <div class="per-page">
+    <span>{{ 'admin.common.per_page' | transloco }}</span>
+    <select [value]="perPage()" (change)="setPerPage(+$any($event.target).value)">
+      <option value="15">15</option><option value="25">25</option>
+      <option value="50">50</option><option value="100">100</option>
+    </select>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th class="sortable" [class.sorted]="sortBy() === 'id'" (click)="setSort('id')">ID{{ sortIcon('id') }}</th>
+      <th class="sortable" [class.sorted]="sortBy() === 'name'" (click)="setSort('name')">{{ 'admin.common.name' | transloco }}{{ sortIcon('name') }}</th>
+      <th class="sortable" [class.sorted]="sortBy() === 'slug'" (click)="setSort('slug')">{{ 'admin.common.slug' | transloco }}{{ sortIcon('slug') }}</th>
+      <th></th>
+    </tr>
+    <tr class="filter-row">
+      <th></th>
+      <th><input type="text" [placeholder]="'admin.common.search' | transloco" [value]="filterSearch()" (input)="filterSearch.set($any($event.target).value); load()" /></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of page()?.data ?? []; track item.id) {
+      <tr>
+        <td class="muted">{{ item.id }}</td>
+        <td>{{ item.name | localizedName }}</td>
+        <td class="muted">{{ item.slug }}</td>
+        <td class="actions">
+          <button class="btn-sm" (click)="openEdit(item)">{{ 'admin.common.edit' | transloco }}</button>
+          <button class="btn-sm danger" (click)="delete(item)">{{ 'admin.common.delete' | transloco }}</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@if (page() && page()!.last_page > 1) {
+  <div class="pagination">
+    @for (p of pages(); track p) {
+      <button class="btn-sm" [class.active]="p === page()!.current_page" (click)="goTo(p)">{{ p }}</button>
+    }
+  </div>
+}

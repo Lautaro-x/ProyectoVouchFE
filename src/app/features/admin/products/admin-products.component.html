@@ -1,0 +1,182 @@
+<app-dialog [title]="formDialogTitle()" [isOpen]="formDialogOpen()" (closed)="closeFormDialog()">
+  <div class="form-grid">
+    <div class="field">
+      <label>{{ 'admin.common.type' | transloco }}</label>
+      <select [value]="form().type" (change)="updateForm('type', $any($event.target).value)">
+        <option value="game">{{ 'admin.types.game' | transloco }}</option>
+        <option value="movie">{{ 'admin.types.movie' | transloco }}</option>
+        <option value="series">{{ 'admin.types.series' | transloco }}</option>
+      </select>
+    </div>
+    <div class="field span2">
+      <label>{{ 'admin.products.field_title' | transloco }}</label>
+      <input type="text" [value]="form().title" (input)="updateForm('title', $any($event.target).value)" />
+    </div>
+    <div class="field span2">
+      <label>{{ 'admin.products.field_description' | transloco }}</label>
+      <textarea [value]="form().description" (input)="updateForm('description', $any($event.target).value)" rows="3"></textarea>
+    </div>
+    <div class="field span2">
+      <label>{{ 'admin.products.field_cover' | transloco }}</label>
+      <input type="text" [value]="form().cover_image" (input)="updateForm('cover_image', $any($event.target).value)" />
+    </div>
+    @if (form().type === 'game') {
+      <div class="field">
+        <label>Developer</label>
+        <input type="text" [value]="form().developer" (input)="updateForm('developer', $any($event.target).value)" />
+      </div>
+      <div class="field">
+        <label>Publisher</label>
+        <input type="text" [value]="form().publisher" (input)="updateForm('publisher', $any($event.target).value)" />
+      </div>
+    }
+    <div class="field span2">
+      <label>{{ 'admin.products.field_genres' | transloco }}</label>
+      <div class="genre-checkboxes">
+        @for (g of genres(); track g.id) {
+          <label class="checkbox-label">
+            <input type="checkbox" [checked]="form().genre_ids.includes(g.id)" (change)="toggleGenre(g.id, $any($event.target).checked)" />
+            {{ g.name | localizedName }}
+          </label>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button class="btn-primary" (click)="save()">{{ 'admin.common.save' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeFormDialog()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<app-dialog [title]="'admin.products.igdb_title' | transloco" [isOpen]="igdbDialogOpen()" (closed)="closeIgdbDialog()">
+  <div class="igdb-search">
+    <input type="text" [placeholder]="'admin.products.igdb_search_ph' | transloco" [value]="igdbQuery()" (input)="igdbQuery.set($any($event.target).value)" (keydown.enter)="searchIgdb()" />
+    <button class="btn-primary" (click)="searchIgdb()">{{ 'admin.products.igdb_search_btn' | transloco }}</button>
+  </div>
+  @if (igdbResults().length) {
+    <div class="igdb-results">
+      @for (game of igdbResults(); track game.id) {
+        <div class="igdb-card">
+          @if (coverOf(game)) { <img [src]="coverOf(game)" [alt]="game.name" /> }
+          <div class="igdb-info">
+            <strong>{{ game.name }}</strong>
+            <span class="muted">{{ game.platforms?.slice(0,3)?.map(p => p.name)?.join(', ') }}</span>
+          </div>
+          <button class="btn-sm" (click)="importIgdb(game.id)">{{ 'admin.common.import' | transloco }}</button>
+        </div>
+      }
+    </div>
+  }
+  <div class="form-actions">
+    <button class="btn-ghost" (click)="closeIgdbDialog()">{{ 'admin.common.close' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<app-dialog [title]="linksDialogTitle()" [isOpen]="linksDialogOpen()" (closed)="closeLinksDialog()">
+  @if (linksPlatforms().length === 0) {
+    <p class="muted">{{ 'admin.products.links_no_platforms' | transloco }}</p>
+  } @else {
+    <div class="links-list">
+      @for (p of linksPlatforms(); track p.id; let i = $index) {
+        <div class="links-row">
+          <span class="links-platform-name">{{ p.name }}</span>
+          <input type="text" [placeholder]="'admin.products.links_url_ph' | transloco" [value]="p.url" (input)="updateLinkUrl(i, $any($event.target).value)" />
+        </div>
+      }
+    </div>
+  }
+  <div class="form-actions">
+    <button class="btn-primary" (click)="saveLinks()">{{ 'admin.common.save' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeLinksDialog()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<app-dialog
+  [title]="confirmDialogTitle()"
+  [subtitle]="confirmDialogSubtitle()"
+  [isOpen]="confirmDialogOpen()"
+  (closed)="closeConfirm()"
+>
+  <div class="form-actions">
+    <button class="btn-primary danger" (click)="confirmAction()">{{ 'admin.common.confirm' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeConfirm()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<div class="section-header">
+  <h2>{{ 'admin.products.title' | transloco }}</h2>
+  <div class="header-actions">
+    <button class="btn-ghost" (click)="openIgdb()">{{ 'admin.products.import_btn' | transloco }}</button>
+    <button class="btn-primary" (click)="openCreate()">{{ 'admin.common.new_masc' | transloco }}</button>
+  </div>
+</div>
+
+<div class="table-toolbar">
+  <span class="table-meta">@if (page()) { {{ page()!.total }} {{ 'admin.common.records' | transloco }} }</span>
+  <div class="per-page">
+    <span>{{ 'admin.common.per_page' | transloco }}</span>
+    <select [value]="perPage()" (change)="setPerPage(+$any($event.target).value)">
+      <option value="15">15</option><option value="25">25</option>
+      <option value="50">50</option><option value="100">100</option>
+    </select>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th class="sortable" [class.sorted]="sortBy() === 'id'" (click)="setSort('id')">ID{{ sortIcon('id') }}</th>
+      <th class="sortable" [class.sorted]="sortBy() === 'title'" (click)="setSort('title')">{{ 'admin.products.col_title' | transloco }}{{ sortIcon('title') }}</th>
+      <th class="sortable" [class.sorted]="sortBy() === 'type'" (click)="setSort('type')">{{ 'admin.common.type' | transloco }}{{ sortIcon('type') }}</th>
+      <th>{{ 'admin.products.col_genres' | transloco }}</th>
+      <th>{{ 'admin.products.col_platforms' | transloco }}</th>
+      <th></th>
+    </tr>
+    <tr class="filter-row">
+      <th></th>
+      <th><input type="text" [placeholder]="'admin.products.search_ph' | transloco" [value]="filterSearch()" (input)="filterSearch.set($any($event.target).value); load()" /></th>
+      <th>
+        <select [value]="filterType()" (change)="filterType.set($any($event.target).value); load()">
+          <option value="">{{ 'admin.types.all' | transloco }}</option>
+          <option value="game">{{ 'admin.types.game' | transloco }}</option>
+          <option value="movie">{{ 'admin.types.movie' | transloco }}</option>
+          <option value="series">{{ 'admin.types.series' | transloco }}</option>
+        </select>
+      </th>
+      <th>
+        <select [value]="filterGenreId()" (change)="filterGenreId.set(+$any($event.target).value); load()">
+          <option value="0">{{ 'admin.products.filter_all_genres' | transloco }}</option>
+          @for (g of genres(); track g.id) { <option [value]="g.id">{{ g.name | localizedName }}</option> }
+        </select>
+      </th>
+      <th></th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (p of page()?.data ?? []; track p.id) {
+      <tr>
+        <td class="muted">{{ p.id }}</td>
+        <td>
+          @if (p.cover_image) { <img class="cover-thumb" [src]="p.cover_image" [alt]="p.title" /> }
+          {{ p.title }}
+        </td>
+        <td><span class="badge">{{ 'admin.types.' + p.type | transloco }}</span></td>
+        <td class="muted">{{ genreNames(p) }}</td>
+        <td class="muted">{{ p.platforms?.length ?? 0 }}</td>
+        <td class="actions">
+          <button class="btn-sm" (click)="openLinks(p)">{{ 'admin.products.links_btn' | transloco }}</button>
+          <button class="btn-sm" (click)="openEdit(p)">{{ 'admin.common.edit' | transloco }}</button>
+          <button class="btn-sm danger" (click)="delete(p)">{{ 'admin.common.delete' | transloco }}</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@if (page() && page()!.last_page > 1) {
+  <div class="pagination">
+    @for (p of pages(); track p) {
+      <button class="btn-sm" [class.active]="p === page()!.current_page" (click)="goTo(p)">{{ p }}</button>
+    }
+  </div>
+}

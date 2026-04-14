@@ -26,7 +26,8 @@ src/
 ├── app/
 │   ├── core/                          # Singletons: servicios, guards, interceptors, tokens
 │   │   ├── guards/
-│   │   │   └── auth.guard.ts          # Protege rutas privadas
+│   │   │   ├── auth.guard.ts          # Protege rutas privadas
+│   │   │   └── admin.guard.ts         # Protege /administration (role === 'admin')
 │   │   ├── interceptors/
 │   │   │   └── auth.interceptor.ts    # Añade Bearer token a todas las requests
 │   │   ├── models/
@@ -39,11 +40,28 @@ src/
 │   ├── features/                      # Módulos funcionales (lazy loaded)
 │   │   ├── auth/
 │   │   │   └── login/                 # Página de login con Google
-│   │   └── landing/                   # Página de inicio
+│   │   ├── landing/                   # Página de inicio
+│   │   └── admin/                     # Panel de administración (/administration)
+│   │       ├── layout/                # Shell con sidebar
+│   │       ├── genres/                # CRUD Géneros + asignación de categorías
+│   │       ├── categories/            # CRUD Categorías
+│   │       ├── platforms/             # CRUD Plataformas
+│   │       ├── products/              # CRUD Productos + búsqueda IGDB
+│   │       ├── reviews/               # Gestión de reseñas (banear/desbanear)
+│   │       ├── users/                 # Gestión de usuarios (banear/desbanear, roles)
+│   │       ├── models/
+│   │       │   └── admin.models.ts    # Interfaces TypeScript del panel
+│   │       ├── pipes/
+│   │       │   └── localized-name.pipe.ts  # Pipe para mostrar nombres traducibles en el locale activo
+│   │       ├── services/
+│   │       │   └── admin-api.service.ts  # Métodos tipados para todos los endpoints admin
+│   │       ├── admin.routes.ts
+│   │       └── admin-shared.css       # Estilos compartidos del panel
 │   ├── shared/                        # Componentes reutilizables
 │   │   └── components/
 │   │       ├── header/                # Cabecera global con nav y auth
-│   │       └── lang-switcher/         # Selector de idioma
+│   │       ├── lang-switcher/         # Selector de idioma
+│   │       └── dialog/                # Diálogo modal genérico (confirmaciones)
 │   ├── app.config.ts                  # Providers globales (browser)
 │   ├── app.config.server.ts           # Providers adicionales (SSR)
 │   ├── app.routes.ts                  # Definición de rutas
@@ -170,24 +188,125 @@ Prioridad 3 — 'es' (fallback)
 
 ---
 
+### Panel de administración (`/administration`)
+
+Ruta oculta, no enlazada en ningún menú. Accesible sólo escribiendo la URL directamente. Protegida por `AdminGuard`.
+
+**Decisión de arquitectura:** La ruta no aparece en ningún menú de navegación. El acceso requiere conocer la URL y tener el rol `admin`. No hay flujo de login separado — usa el mismo login de Google que el resto de la app.
+
+#### AdminGuard (`src/app/core/guards/admin.guard.ts`)
+`CanActivateFn` que lee `currentUser()` del servicio de auth. Redirige a `/` si el usuario no está autenticado o no tiene `role === 'admin'`.
+
+#### Admin Layout (`features/admin/layout/`)
+Shell del panel: sidebar de navegación fija + `<router-outlet>`. Todas las secciones cargan de forma lazy.
+
+#### AdminApiService (`features/admin/services/admin-api.service.ts`)
+Servicio centralizado con métodos tipados para todos los endpoints admin del backend. Devuelve `Observable<T>` usando `HttpClient`.
+
+#### Modelos TypeScript (`features/admin/models/admin.models.ts`)
+Interfaces que mapean la forma de los datos del backend:
+`Genre`, `Category`, `CategoryWithWeight`, `Platform`, `Product`, `GameDetail`, `AdminReview`, `AdminUser`, `Paginated<T>`, `IgdbGame`.
+
+El tipo `TranslatableName = Record<string, string>` representa los campos de nombre multilingüe que el backend devuelve como objeto JSON con los 5 idiomas (`en`, `es`, `fr`, `pt`, `it`). Los interfaces `Genre` y `Category` usan este tipo para su campo `name`.
+
+#### LocalizedNamePipe (`features/admin/pipes/localized-name.pipe.ts`)
+Pipe `pure: false` que recibe un `TranslatableName` y devuelve el valor en el locale activo según `TranslocoService.getActiveLang()`, con fallback a `en`. Al ser `pure: false`, reacciona al cambio de idioma sin recargar la página.
+
+```html
+{{ item.name | localizedName }}
+```
+
+Usado en las tablas de Géneros, Categorías y en los selectores y tabla de Productos.
+
+#### CSS compartido (`features/admin/admin-shared.css`)
+Hoja de estilos común importada por todos los componentes de sección vía `@import '../admin-shared.css'`. Define: table, form-card, form-grid, field, btn-primary, btn-ghost, btn-sm, badge, pagination, section-header, igdb-search, igdb-results, igdb-card.
+
+#### Secciones del panel
+
+**Géneros** — CRUD + gestión de categorías con pesos por género. Sólo muestra las categorías asignadas; el dropdown lista las disponibles (no asignadas). Confirmación vía `DialogComponent` antes de añadir o quitar. El formulario de creación/edición expone un campo de texto por cada uno de los 5 idiomas.
+
+**Categorías** — CRUD con formulario multilingüe (5 idiomas). El slug se genera en el backend a partir del nombre en inglés.
+
+**Plataformas** — CRUD con tipo (`console | pc | streaming`).
+
+**Productos** — Listado paginado, CRUD con campos `GameDetails` embebidos, búsqueda en IGDB con miniatura e importación directa con un click.
+
+**Reseñas** — Listado paginado, filtro por baneadas, banear con motivo / desbanear. Texto truncado a 60 caracteres con `SlicePipe`.
+
+**Usuarios** — Listado paginado, filtros por estado y rol, cambio de rol inline, banear con motivo / desbanear. Texto truncado con `SlicePipe`.
+
+---
+
+### DialogComponent (`src/app/shared/components/dialog/`)
+
+Componente modal reutilizable. El contenido se proyecta vía `<ng-content>`, por lo que sirve para cualquier tipo de acción: confirmaciones, formularios, información.
+
+**API:**
+
+| Input/Output | Tipo | Descripción |
+|---|---|---|
+| `title` | `input<string>('')` | Título del diálogo |
+| `subtitle` | `input<string>('')` | Subtítulo descriptivo (opcional) |
+| `isOpen` | `input<boolean>(false)` | Controla visibilidad |
+| `(closed)` | `output<void>` | Emitido al cerrar (X, Escape, clic backdrop) |
+
+**Cierre automático:** `@HostListener('document:keydown.escape')` y clic sobre `.dialog-backdrop`.
+
+**Uso:**
+```html
+<app-dialog
+  [title]="dialogTitle()"
+  [subtitle]="dialogSubtitle()"
+  [isOpen]="dialogOpen()"
+  (closed)="closeDialog()"
+>
+  <div class="form-actions">
+    <button class="btn-primary" (click)="confirmDialog()">Confirmar</button>
+    <button class="btn-ghost" (click)="closeDialog()">Cancelar</button>
+  </div>
+</app-dialog>
+```
+
+**Patrón de integración con acción pendiente:** El componente anfitrión guarda la acción como `signal<(() => void) | null>`. Al confirmar, ejecuta la función y cierra el diálogo. Esto evita duplicar lógica de confirmación para cada operación.
+
+---
+
+## Convenciones
+
+- Todos los componentes son **standalone** (sin NgModules)
+- Estado reactivo con **Angular Signals** (`signal`, `computed`, `input()`, `output()`)
+- Sin comentarios en el código
+- Sin `ngModel` — se usa property binding + event binding manual
+- `SlicePipe` y demás pipes de `@angular/common` se importan explícitamente en cada componente que los usa
+
+---
+
 ## Roadmap
 
-### Fase 1 — Core (en progreso)
-- [x] Estructura base (standalone components, lazy routes)
-- [x] SSR configurado
-- [x] Auth con Google Identity Services
+### Fase 1 — Core y Admin (completada)
+- [x] Estructura base (standalone components, lazy routes, SSR)
+- [x] Auth con Google Identity Services + Sanctum
 - [x] i18n con Transloco (5 idiomas, detección automática)
-- [ ] Página de perfil de usuario
-- [ ] Buscador de productos (juegos)
-- [ ] Ficha de producto con triple nota (Global, Pro, Trust)
-- [ ] Formulario de crítica con sliders por categoría
+- [x] Panel de administración (`/administration`) con AdminGuard
+- [x] CRUD Géneros con asignación de categorías y pesos
+- [x] CRUD Categorías, Plataformas, Productos
+- [x] Gestión de Reseñas y Usuarios (banear/desbanear, roles)
+- [x] Importación de juegos desde IGDB
+- [x] DialogComponent reutilizable para confirmaciones
+- [x] Nombres de géneros y categorías multilingüe (`TranslatableName`, `LocalizedNamePipe`)
 
-### Fase 2 — Capa social
-- [ ] Sistema de Follow (Críticos de confianza)
+### Fase 2 — Pública
+- [ ] Listado de productos con triple score (Global, Pro, Trust)
+- [ ] Detalle de producto con reseñas
+- [ ] Formulario de reseña (scores por categoría)
 - [ ] Trust Score en tiempo real
-- [ ] Gráfico de radar por categorías
 
-### Fase 3 — Optimización y SEO
+### Fase 3 — Capa social
+- [ ] Perfil de usuario
+- [ ] Sistema de Follow
+- [ ] Feed de actividad
+
+### Fase 4 — Optimización y SEO
 - [ ] Meta tags dinámicos por producto (OpenGraph)
 - [ ] Sitemap dinámico
 - [ ] Widget para streamers (OBS)

@@ -1,0 +1,114 @@
+<app-dialog
+  [title]="banDialogTitle()"
+  [isOpen]="banDialogOpen()"
+  (closed)="closeBanDialog()"
+>
+  <div class="field">
+    <label>{{ 'admin.users.ban_reason_label' | transloco }} <span class="muted">{{ 'admin.common.optional' | transloco }}</span></label>
+    <input type="text" [value]="banReason()" (input)="banReason.set($any($event.target).value)" [placeholder]="'admin.users.ban_reason_ph' | transloco" (keydown.enter)="confirmBan()" />
+  </div>
+  <div class="form-actions">
+    <button class="btn-primary danger" (click)="confirmBan()">{{ 'admin.users.confirm_ban' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeBanDialog()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<app-dialog
+  [title]="confirmDialogTitle()"
+  [subtitle]="confirmDialogSubtitle()"
+  [isOpen]="confirmDialogOpen()"
+  (closed)="closeConfirm()"
+>
+  <div class="form-actions">
+    <button class="btn-primary" (click)="confirmAction()">{{ 'admin.common.confirm' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeConfirm()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<div class="section-header">
+  <h2>{{ 'admin.users.title' | transloco }}</h2>
+  <div class="filters">
+    <select [value]="filterRole()" (change)="filterRole.set($any($event.target).value); load()">
+      <option value="">{{ 'admin.users.filter_all_roles' | transloco }}</option>
+      <option value="user">{{ 'admin.roles.user' | transloco }}</option>
+      <option value="critic">{{ 'admin.roles.critic' | transloco }}</option>
+      <option value="admin">{{ 'admin.roles.admin' | transloco }}</option>
+    </select>
+    <label class="checkbox-label">
+      <input type="checkbox" [checked]="filterBanned()" (change)="filterBanned.update(v => !v); load()" />
+      {{ 'admin.users.filter_banned' | transloco }}
+    </label>
+  </div>
+</div>
+
+<div class="table-toolbar">
+  <span class="table-meta">@if (page()) { {{ page()!.total }} {{ 'admin.common.records' | transloco }} }</span>
+  <div class="per-page">
+    <span>{{ 'admin.common.per_page' | transloco }}</span>
+    <select [value]="perPage()" (change)="setPerPage(+$any($event.target).value)">
+      <option value="15">15</option><option value="25">25</option>
+      <option value="50">50</option><option value="100">100</option>
+    </select>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th class="sortable" [class.sorted]="sortBy() === 'id'" (click)="setSort('id')">ID{{ sortIcon('id') }}</th>
+      <th class="sortable" [class.sorted]="sortBy() === 'name'" (click)="setSort('name')">{{ 'admin.common.name' | transloco }}{{ sortIcon('name') }}</th>
+      <th class="sortable" [class.sorted]="sortBy() === 'email'" (click)="setSort('email')">{{ 'admin.users.col_email' | transloco }}{{ sortIcon('email') }}</th>
+      <th>{{ 'admin.users.col_role' | transloco }}</th>
+      <th>{{ 'admin.users.col_status' | transloco }}</th>
+      <th class="sortable" [class.sorted]="sortBy() === 'created_at'" (click)="setSort('created_at')">{{ 'admin.users.col_registered' | transloco }}{{ sortIcon('created_at') }}</th>
+      <th></th>
+    </tr>
+    <tr class="filter-row">
+      <th></th>
+      <th colspan="2"><input type="text" [placeholder]="'admin.users.search_ph' | transloco" [value]="filterSearch()" (input)="filterSearch.set($any($event.target).value); load()" /></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (u of page()?.data ?? []; track u.id) {
+      <tr [class.banned-row]="u.banned_at">
+        <td class="muted">{{ u.id }}</td>
+        <td>{{ u.name }}</td>
+        <td class="muted">{{ u.email }}</td>
+        <td>
+          <select [value]="u.role" (change)="changeRole(u.id, $any($event.target).value)">
+            <option value="user">{{ 'admin.roles.user' | transloco }}</option>
+            <option value="critic">{{ 'admin.roles.critic' | transloco }}</option>
+            <option value="admin">{{ 'admin.roles.admin' | transloco }}</option>
+          </select>
+        </td>
+        <td>
+          @if (u.banned_at) {
+            <span class="badge danger" [title]="u.ban_reason ?? ''">{{ 'admin.users.status_banned' | transloco }}</span>
+          } @else {
+            <span class="badge">{{ 'admin.users.status_active' | transloco }}</span>
+          }
+        </td>
+        <td class="muted">{{ u.created_at | slice:0:10 }}</td>
+        <td class="actions">
+          @if (u.banned_at) {
+            <button class="btn-sm" (click)="unban(u)">{{ 'admin.users.action_unban' | transloco }}</button>
+          } @else {
+            <button class="btn-sm danger" (click)="startBan(u)">{{ 'admin.users.action_ban' | transloco }}</button>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@if (page() && page()!.last_page > 1) {
+  <div class="pagination">
+    @for (p of pages(); track p) {
+      <button class="btn-sm" [class.active]="p === page()!.current_page" (click)="goTo(p)">{{ p }}</button>
+    }
+  </div>
+}

@@ -1,0 +1,18 @@
+@if (isOpen()) {
+  <div class="dialog-backdrop" (click)="onBackdropClick($event)">
+    <div class="dialog-panel">
+      <div class="dialog-header">
+        <div>
+          <h2 class="dialog-title">{{ title() }}</h2>
+          @if (subtitle()) {
+            <p class="dialog-subtitle">{{ subtitle() }}</p>
+          }
+        </div>
+        <button class="dialog-close" (click)="closed.emit()">✕</button>
+      </div>
+      <div class="dialog-body">
+        <ng-content />
+      </div>
+    </div>
+  </div>
+}
