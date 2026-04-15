@@ -24,7 +24,12 @@
         <div class="scores-list">
           @for (cat of formData()!.categories; track cat.id) {
             <div class="score-row">
-              <span class="score-cat-name">{{ categoryName(cat) }}</span>
+              <span class="score-cat-name">
+                {{ categoryName(cat) }}
+                @if (categoryDesc(cat)) {
+                  <span class="cat-info" [attr.data-tooltip]="categoryDesc(cat)">!</span>
+                }
+              </span>
               <input
                 class="score-slider"
                 type="range"

@@ -100,7 +100,9 @@
       "title": "Categorias",
       "edit_title": "Editar categoria — {{ name }}",
       "new_title": "Nova categoria",
-      "delete_title": "Excluir \"{{ name }}\""
+      "delete_title": "Excluir \"{{ name }}\"",
+      "description": "Descrição",
+      "description_ph": "Explique o que esta categoria avalia..."
     },
     "genres": {
       "title": "Gêneros",

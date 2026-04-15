@@ -21,7 +21,7 @@
             <span [class]="'grade ' + gradeClass(product()!.scores.global_grade)">
               {{ product()!.scores.global_grade }}
             </span>
-            <span class="score-number">{{ product()!.scores.global_score }}/100</span>
+            <span class="score-number">{{ product()!.scores.global_score }}/10</span>
           </div>
         }
         @if (product()!.scores.pro_score !== null) {
@@ -30,7 +30,7 @@
             <span [class]="'grade ' + gradeClass(product()!.scores.pro_grade)">
               {{ product()!.scores.pro_grade }}
             </span>
-            <span class="score-number">{{ product()!.scores.pro_score }}/100</span>
+            <span class="score-number">{{ product()!.scores.pro_score }}/10</span>
           </div>
         }
 
@@ -41,7 +41,7 @@
               <span [class]="'grade ' + gradeClass(product()!.user_review!.letter_grade)">
                 {{ product()!.user_review!.letter_grade }}
               </span>
-              <span class="score-number">{{ product()!.user_review!.weighted_score }}/100</span>
+              <span class="score-number">{{ product()!.user_review!.weighted_score }}/10</span>
               <a class="btn-edit-review" [routerLink]="['/review/edit', product()!.user_review!.id]" [title]="'product.edit_review' | transloco">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>

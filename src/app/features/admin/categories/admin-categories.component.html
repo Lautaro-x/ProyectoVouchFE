@@ -10,6 +10,23 @@
       />
     </div>
   }
+  <div class="field desc-field">
+    <div class="desc-header">
+      <label>{{ 'admin.categories.description' | transloco }}</label>
+      <select class="desc-lang-select" [value]="descLang()" (change)="descLang.set($any($event.target).value)">
+        @for (locale of locales; track locale.code) {
+          <option [value]="locale.code">{{ locale.label }}</option>
+        }
+      </select>
+    </div>
+    <textarea
+      class="desc-textarea"
+      rows="3"
+      [placeholder]="'admin.categories.description_ph' | transloco"
+      [value]="formDesc()[descLang()]"
+      (input)="updateFormDesc($any($event.target).value)"
+    ></textarea>
+  </div>
   <div class="form-actions">
     <button class="btn-primary" (click)="save()">{{ 'admin.common.save' | transloco }}</button>
     <button class="btn-ghost" (click)="closeFormDialog()">{{ 'admin.common.cancel' | transloco }}</button>

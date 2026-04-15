@@ -12,6 +12,7 @@ export interface Category {
   id: number;
   name: TranslatableName;
   slug: string;
+  description: TranslatableName;
 }
 
 export interface CategoryWithWeight extends Category {

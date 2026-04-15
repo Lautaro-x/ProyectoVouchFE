@@ -198,7 +198,9 @@ Ruta oculta, no enlazada en ningún menú. Accesible sólo escribiendo la URL di
 `CanActivateFn` que lee `currentUser()` del servicio de auth. Redirige a `/` si el usuario no está autenticado o no tiene `role === 'admin'`.
 
 #### Admin Layout (`features/admin/layout/`)
-Shell del panel: sidebar de navegación fija + `<router-outlet>`. Todas las secciones cargan de forma lazy.
+Shell del panel: sidebar de navegación fija + `<router-outlet>`. Todas las secciones cargan de forma lazy. El logo "VOUCH admin" es un enlace (`<a routerLink="/">`) que lleva a la landing.
+
+**Header condicional:** El `<app-header>` global se omite en todas las rutas bajo `/administration`. `App` usa `toSignal(router.events)` para derivar un signal `isAdmin` que detecta si la URL actual empieza por `/administration`. Esto evita duplicar cabeceras en el panel, que tiene su propio sidebar como navegación principal.
 
 #### AdminApiService (`features/admin/services/admin-api.service.ts`)
 Servicio centralizado con métodos tipados para todos los endpoints admin del backend. Devuelve `Observable<T>` usando `HttpClient`.

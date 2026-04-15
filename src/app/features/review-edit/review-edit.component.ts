@@ -69,6 +69,11 @@ export class ReviewEditComponent implements OnInit {
     return category.name[lang] || category.name['en'] || '—';
   }
 
+  categoryDesc(category: { description: Record<string, string> }): string {
+    const lang = this.t.getActiveLang();
+    return category.description?.[lang] || '';
+  }
+
   submit(): void {
     const data = this.formData();
     if (!data || this.submitting()) return;

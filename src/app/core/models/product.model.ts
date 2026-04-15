@@ -4,7 +4,7 @@ export interface ReviewFormData {
   cover_image: string | null;
   type: string;
   slug: string;
-  categories: { id: number; name: Record<string, string> }[];
+  categories: { id: number; name: Record<string, string>; description: Record<string, string> }[];
 }
 
 export interface PaginatedResponse<T> {
