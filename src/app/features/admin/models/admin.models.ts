@@ -26,7 +26,7 @@ export interface Platform {
 }
 
 export interface PlatformWithPivot extends Platform {
-  pivot: { release_year: number | null; purchase_url: string | null };
+  pivot: { release_date: string | null; purchase_url: string | null };
 }
 
 export interface Product {

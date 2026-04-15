@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AuthService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment';
+import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';
 
 declare const google: {
   accounts: {
@@ -17,7 +18,7 @@ declare const google: {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [TranslocoModule],
+  imports: [TranslocoModule, BreadcrumbComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })

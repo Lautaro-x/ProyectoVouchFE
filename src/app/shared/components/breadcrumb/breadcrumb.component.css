@@ -1,0 +1,30 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-item {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+a.breadcrumb-item:hover {
+  color: var(--color-text);
+}
+
+.breadcrumb-item.current {
+  color: var(--color-text);
+  pointer-events: none;
+}
+
+.breadcrumb-sep {
+  color: var(--color-border);
+  user-select: none;
+}

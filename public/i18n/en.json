@@ -3,9 +3,43 @@
     "login": "Sign in",
     "logout": "Sign out"
   },
+  "common": {
+    "home": "Home",
+    "loading": "Loading...",
+    "not_found": "Page not found."
+  },
+  "review": {
+    "create_title": "Write a review",
+    "edit_title": "Edit review",
+    "scores_heading": "Your scores",
+    "body_heading": "Your opinion (optional)",
+    "body_ph": "Share your thoughts about this game...",
+    "submit": "Publish review",
+    "submitting": "Publishing...",
+    "update": "Update review",
+    "updating": "Updating..."
+  },
+  "product": {
+    "score_global": "All users",
+    "score_pro": "Critics",
+    "description": "Description",
+    "development": "Development",
+    "developer": "Developer",
+    "publisher": "Publisher",
+    "platforms": "Platforms",
+    "buy": "Buy",
+    "your_score": "Your score",
+    "create_review": "+ Write my own review",
+    "edit_review": "Edit review"
+  },
   "landing": {
     "title": "Hello, world.",
-    "subtitle": "The review platform that actually understands what you play."
+    "subtitle": "The review platform that actually understands what you play.",
+    "new_relevant": {
+      "title": "New relevant releases",
+      "score_global": "Average score from all users",
+      "score_pro": "Score from specialist critics"
+    }
   },
   "login": {
     "title": "Welcome to Vouch",

@@ -3,4 +3,15 @@
     <h1 class="landing-title">{{ 'landing.title' | transloco }}</h1>
     <p class="landing-subtitle">{{ 'landing.subtitle' | transloco }}</p>
   </section>
+
+  @if (relevantProducts().length) {
+    <section class="landing-section">
+      <h2 class="section-title">{{ 'landing.new_relevant.title' | transloco }}</h2>
+      <div class="cards-grid">
+        @for (product of relevantProducts(); track product.id) {
+          <app-game-card [product]="product" />
+        }
+      </div>
+    </section>
+  }
 </main>

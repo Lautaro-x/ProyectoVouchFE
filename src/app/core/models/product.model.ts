@@ -1,0 +1,49 @@
+export interface ReviewFormData {
+  id: number;
+  title: string;
+  cover_image: string | null;
+  type: string;
+  slug: string;
+  categories: { id: number; name: Record<string, string> }[];
+}
+
+export interface ReviewEditFormData extends ReviewFormData {
+  body: string | null;
+  scores: Record<string, number>;
+}
+
+export interface ProductCard {
+  id: number;
+  type: string;
+  slug: string;
+  title: string;
+  cover_image: string | null;
+  score: number;
+  letter_grade: string;
+  score_type: 'global' | 'pro';
+}
+
+export interface ProductDetail {
+  id: number;
+  type: 'game' | 'movie' | 'series';
+  title: string;
+  slug: string;
+  description: string | null;
+  cover_image: string | null;
+  genres: { id: number; name: Record<string, string> }[];
+  game_details: { developer: string | null; publisher: string | null; igdb_id: number | null } | null;
+  platforms: {
+    id: number;
+    name: string;
+    type: string;
+    release_date: string | null;
+    purchase_url: string | null;
+  }[];
+  scores: {
+    global_score: number | null;
+    global_grade: string | null;
+    pro_score: number | null;
+    pro_grade: string | null;
+  };
+  user_review: { id: number; weighted_score: number; letter_grade: string } | null;
+}

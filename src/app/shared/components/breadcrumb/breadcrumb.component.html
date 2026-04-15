@@ -1,0 +1,16 @@
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a class="breadcrumb-item" routerLink="/">{{ 'common.home' | transloco }}</a>
+
+  @for (item of items(); track $index) {
+    <span class="breadcrumb-sep" aria-hidden="true">›</span>
+    @if (item.link) {
+      <a class="breadcrumb-item" [routerLink]="item.link">
+        @if (item.labelKey) { {{ item.labelKey | transloco }} } @else { {{ item.label }} }
+      </a>
+    } @else {
+      <span class="breadcrumb-item current">
+        @if (item.labelKey) { {{ item.labelKey | transloco }} } @else { {{ item.label }} }
+      </span>
+    }
+  }
+</nav>

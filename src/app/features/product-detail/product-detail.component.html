@@ -1,0 +1,116 @@
+<app-breadcrumb [items]="breadcrumbs()" />
+
+@if (loading()) {
+  <div class="detail-loading">{{ 'common.loading' | transloco }}</div>
+} @else if (error() || !product()) {
+  <div class="detail-error">{{ 'common.not_found' | transloco }}</div>
+} @else {
+  <div class="detail-layout">
+
+    <aside class="detail-aside">
+      @if (product()!.cover_image) {
+        <img class="detail-cover" [src]="product()!.cover_image" [alt]="product()!.title" />
+      } @else {
+        <div class="detail-cover cover-placeholder"></div>
+      }
+
+      <div class="detail-scores">
+        @if (product()!.scores.global_score !== null) {
+          <div class="score-block">
+            <span class="score-label">{{ 'product.score_global' | transloco }}</span>
+            <span [class]="'grade ' + gradeClass(product()!.scores.global_grade)">
+              {{ product()!.scores.global_grade }}
+            </span>
+            <span class="score-number">{{ product()!.scores.global_score }}/100</span>
+          </div>
+        }
+        @if (product()!.scores.pro_score !== null) {
+          <div class="score-block">
+            <span class="score-label">{{ 'product.score_pro' | transloco }}</span>
+            <span [class]="'grade ' + gradeClass(product()!.scores.pro_grade)">
+              {{ product()!.scores.pro_grade }}
+            </span>
+            <span class="score-number">{{ product()!.scores.pro_score }}/100</span>
+          </div>
+        }
+
+        @if (auth.isAuthenticated()) {
+          @if (product()!.user_review) {
+            <div class="user-review-block">
+              <span class="score-label">{{ 'product.your_score' | transloco }}</span>
+              <span [class]="'grade ' + gradeClass(product()!.user_review!.letter_grade)">
+                {{ product()!.user_review!.letter_grade }}
+              </span>
+              <span class="score-number">{{ product()!.user_review!.weighted_score }}/100</span>
+              <a class="btn-edit-review" [routerLink]="['/review/edit', product()!.user_review!.id]" [title]="'product.edit_review' | transloco">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+              </a>
+            </div>
+          } @else {
+            <a class="review-cta" [routerLink]="['/review/new', product()!.id]">
+              {{ 'product.create_review' | transloco }}
+            </a>
+          }
+        }
+      </div>
+    </aside>
+
+    <main class="detail-main">
+      <div class="detail-header">
+        <span class="type-badge">{{ 'admin.types.' + product()!.type | transloco }}</span>
+        <h1 class="detail-title">{{ product()!.title }}</h1>
+        <p class="detail-genres">{{ genreNames() }}</p>
+      </div>
+
+      @if (product()!.description) {
+        <section class="detail-section">
+          <h2 class="section-heading">{{ 'product.description' | transloco }}</h2>
+          <p class="detail-description">{{ product()!.description }}</p>
+        </section>
+      }
+
+      @if (product()!.type === 'game' && product()!.game_details) {
+        <section class="detail-section">
+          <h2 class="section-heading">{{ 'product.development' | transloco }}</h2>
+          <dl class="detail-dl">
+            @if (product()!.game_details!.developer) {
+              <dt>{{ 'product.developer' | transloco }}</dt>
+              <dd>{{ product()!.game_details!.developer }}</dd>
+            }
+            @if (product()!.game_details!.publisher) {
+              <dt>{{ 'product.publisher' | transloco }}</dt>
+              <dd>{{ product()!.game_details!.publisher }}</dd>
+            }
+          </dl>
+        </section>
+      }
+
+      @if (product()!.platforms.length) {
+        <section class="detail-section">
+          <h2 class="section-heading">{{ 'product.platforms' | transloco }}</h2>
+          <ul class="platforms-list">
+            @for (p of product()!.platforms; track p.id) {
+              <li class="platform-item">
+                <div class="platform-info">
+                  <span class="platform-name">{{ p.name }}</span>
+                  @if (p.release_date) {
+                    <span class="platform-year">{{ p.release_date | date:'yyyy' }}</span>
+                  }
+                </div>
+                @if (p.purchase_url) {
+                  <a class="btn-buy" [href]="p.purchase_url" target="_blank" rel="noopener">
+                    {{ 'product.buy' | transloco }}
+                  </a>
+                }
+              </li>
+            }
+          </ul>
+        </section>
+      }
+    </main>
+
+  </div>
+}

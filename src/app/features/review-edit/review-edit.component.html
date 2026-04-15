@@ -1,0 +1,62 @@
+<app-breadcrumb [items]="breadcrumbs()" />
+
+@if (loading()) {
+  <div class="review-loading">{{ 'common.loading' | transloco }}</div>
+} @else if (error() || !formData()) {
+  <div class="review-error">{{ 'common.not_found' | transloco }}</div>
+} @else {
+  <div class="review-layout">
+
+    <aside class="review-aside">
+      @if (formData()!.cover_image) {
+        <img class="review-cover" [src]="formData()!.cover_image" [alt]="formData()!.title" />
+      } @else {
+        <div class="review-cover cover-placeholder"></div>
+      }
+      <h2 class="review-game-title">{{ formData()!.title }}</h2>
+    </aside>
+
+    <main class="review-main">
+      <h1 class="review-title">{{ 'review.edit_title' | transloco }}</h1>
+
+      <section class="review-section">
+        <h2 class="section-heading">{{ 'review.scores_heading' | transloco }}</h2>
+        <div class="scores-list">
+          @for (cat of formData()!.categories; track cat.id) {
+            <div class="score-row">
+              <span class="score-cat-name">{{ categoryName(cat) }}</span>
+              <input
+                class="score-slider"
+                type="range"
+                min="0" max="10" step="1"
+                [value]="scores()[cat.id]"
+                (input)="setScore(cat.id, +$any($event.target).value)"
+              />
+              <span class="score-value">{{ scores()[cat.id] }}/10</span>
+            </div>
+          }
+        </div>
+      </section>
+
+      <section class="review-section">
+        <h2 class="section-heading">{{ 'review.body_heading' | transloco }}</h2>
+        <textarea
+          class="review-body"
+          rows="4"
+          [placeholder]="'review.body_ph' | transloco"
+          [value]="body()"
+          (input)="body.set($any($event.target).value)"
+          maxlength="2000"
+        ></textarea>
+        <span class="char-count" [class.char-warn]="body().length > 1800">{{ body().length }}/2000</span>
+      </section>
+
+      <div class="review-actions">
+        <button class="btn-submit" [disabled]="submitting()" (click)="submit()">
+          {{ submitting() ? ('review.updating' | transloco) : ('review.update' | transloco) }}
+        </button>
+      </div>
+    </main>
+
+  </div>
+}

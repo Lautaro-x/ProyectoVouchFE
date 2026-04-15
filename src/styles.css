@@ -10,11 +10,20 @@
   --color-accent-hover:  #5000d6;
   --color-accent-subtle: rgba(98, 0, 238, 0.15);
 
-  --color-grade-a: #69f0ae;
-  --color-grade-b: #40c4ff;
-  --color-grade-c: #ffd740;
-  --color-grade-d: #ff9100;
-  --color-grade-f: #ff5252;
+  --color-grade-s:      #ffffff;
+  --color-grade-aplus:  #ffd600;
+  --color-grade-a:      #69f0ae;
+  --color-grade-aminus: #1de9b6;
+  --color-grade-bplus:  #00e5ff;
+  --color-grade-b:      #40c4ff;
+  --color-grade-bminus: #448aff;
+  --color-grade-cplus:  #ea80fc;
+  --color-grade-c:      #ffd740;
+  --color-grade-cminus: #ffab40;
+  --color-grade-dplus:  #ff6e40;
+  --color-grade-d:      #ff9100;
+  --color-grade-dminus: #ff3d00;
+  --color-grade-f:      #ff5252;
 }
 
 *,
@@ -39,3 +48,19 @@ a {
 button {
   font-family: inherit;
 }
+
+/* Grade letter colors — global, usable in any component */
+.grade-s      { color: var(--color-grade-s); font-style: italic; }
+.grade-aplus  { color: var(--color-grade-aplus);  }
+.grade-a      { color: var(--color-grade-a);      }
+.grade-aminus { color: var(--color-grade-aminus); }
+.grade-bplus  { color: var(--color-grade-bplus);  }
+.grade-b      { color: var(--color-grade-b);      }
+.grade-bminus { color: var(--color-grade-bminus); }
+.grade-cplus  { color: var(--color-grade-cplus);  }
+.grade-c      { color: var(--color-grade-c);      }
+.grade-cminus { color: var(--color-grade-cminus); }
+.grade-dplus  { color: var(--color-grade-dplus);  }
+.grade-d      { color: var(--color-grade-d);      }
+.grade-dminus { color: var(--color-grade-dminus); }
+.grade-f      { color: var(--color-grade-f);      }

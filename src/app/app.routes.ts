@@ -19,6 +19,21 @@ export const routes: Routes = [
       import('./features/admin/admin.routes').then(m => m.adminRoutes),
   },
   {
+    path: 'review/new/:productId',
+    loadComponent: () =>
+      import('./features/review-create/review-create.component').then(m => m.ReviewCreateComponent),
+  },
+  {
+    path: 'review/edit/:reviewId',
+    loadComponent: () =>
+      import('./features/review-edit/review-edit.component').then(m => m.ReviewEditComponent),
+  },
+  {
+    path: 'product/:type/:slug',
+    loadComponent: () =>
+      import('./features/product-detail/product-detail.component').then(m => m.ProductDetailComponent),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

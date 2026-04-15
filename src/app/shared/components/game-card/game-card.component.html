@@ -1,0 +1,24 @@
+<article class="game-card" [routerLink]="detailLink()">
+  <div class="card-cover">
+    @if (product().cover_image) {
+      <img [src]="product().cover_image" [alt]="product().title" />
+    } @else {
+      <div class="cover-placeholder"></div>
+    }
+  </div>
+  <div class="card-body">
+    <h3 class="card-title">{{ product().title }}</h3>
+    <div class="card-score">
+      <span class="score-label">
+        @if (product().score_type === 'global') {
+          {{ 'landing.new_relevant.score_global' | transloco }}
+        } @else {
+          {{ 'landing.new_relevant.score_pro' | transloco }}
+        }
+      </span>
+      <span class="grade" [class]="'grade-' + gradeClass()">
+        {{ product().letter_grade }}
+      </span>
+    </div>
+  </div>
+</article>

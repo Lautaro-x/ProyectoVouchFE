@@ -3,9 +3,43 @@
     "login": "Accedi",
     "logout": "Esci"
   },
+  "common": {
+    "home": "Home",
+    "loading": "Caricamento...",
+    "not_found": "Pagina non trovata."
+  },
+  "review": {
+    "create_title": "Scrivere una recensione",
+    "edit_title": "Modifica recensione",
+    "scores_heading": "I tuoi voti",
+    "body_heading": "La tua opinione (opzionale)",
+    "body_ph": "Condividi la tua opinione su questo gioco...",
+    "submit": "Pubblica recensione",
+    "submitting": "Pubblicazione...",
+    "update": "Aggiorna recensione",
+    "updating": "Aggiornamento..."
+  },
+  "product": {
+    "score_global": "Utenti",
+    "score_pro": "Critici",
+    "description": "Descrizione",
+    "development": "Sviluppo",
+    "developer": "Sviluppatore",
+    "publisher": "Publisher",
+    "platforms": "Piattaforme",
+    "buy": "Acquista",
+    "your_score": "Il tuo voto",
+    "create_review": "+ Scrivere la mia recensione",
+    "edit_review": "Modifica recensione"
+  },
   "landing": {
     "title": "Ciao, mondo.",
-    "subtitle": "La piattaforma di recensioni che capisce davvero cosa giochi."
+    "subtitle": "La piattaforma di recensioni che capisce davvero cosa giochi.",
+    "new_relevant": {
+      "title": "Nuove uscite rilevanti",
+      "score_global": "Voto medio di tutti gli utenti",
+      "score_pro": "Voto della critica specializzata"
+    }
   },
   "login": {
     "title": "Benvenuto su Vouch",

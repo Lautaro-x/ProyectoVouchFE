@@ -3,9 +3,43 @@
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión"
   },
+  "common": {
+    "home": "Inicio",
+    "loading": "Cargando...",
+    "not_found": "Página no encontrada."
+  },
+  "review": {
+    "create_title": "Escribir una crítica",
+    "edit_title": "Editar crítica",
+    "scores_heading": "Tus puntuaciones",
+    "body_heading": "Tu opinión (opcional)",
+    "body_ph": "Comparte tu opinión sobre este juego...",
+    "submit": "Publicar crítica",
+    "submitting": "Publicando...",
+    "update": "Actualizar crítica",
+    "updating": "Actualizando..."
+  },
+  "product": {
+    "score_global": "Usuarios",
+    "score_pro": "Críticos",
+    "description": "Descripción",
+    "development": "Desarrollo",
+    "developer": "Desarrollador",
+    "publisher": "Distribuidora",
+    "platforms": "Plataformas",
+    "buy": "Comprar",
+    "your_score": "Tu puntuación",
+    "create_review": "+ Crear mi propia crítica",
+    "edit_review": "Editar crítica"
+  },
   "landing": {
-    "title": "Hola, mundo.",
-    "subtitle": "La plataforma de críticas que sí entiende lo que juegas."
+    "title": "Vouch",
+    "subtitle": "Tú eliges de quien fiarte.",
+    "new_relevant": {
+      "title": "Nuevos lanzamientos relevantes",
+      "score_global": "Valoración media de todos los usuarios",
+      "score_pro": "Valoración de la crítica especializada"
+    }
   },
   "login": {
     "title": "Bienvenido a Vouch",
