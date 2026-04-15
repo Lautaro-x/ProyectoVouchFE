@@ -32,7 +32,7 @@ export class ReviewEditComponent implements OnInit {
     const p = this.formData();
     if (!p) return [];
     return [
-      { labelKey: 'admin.types.' + p.type, link: '/product/' + p.type + '/' + p.slug },
+      { labelKey: 'admin.types.' + p.type, link: p.type === 'game' ? '/games' : undefined },
       { label: p.title, link: '/product/' + p.type + '/' + p.slug },
       { labelKey: 'review.edit_title' },
     ];

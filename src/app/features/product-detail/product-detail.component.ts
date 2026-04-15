@@ -28,7 +28,7 @@ export class ProductDetailComponent implements OnInit {
     const p = this.product();
     if (!p) return [];
     return [
-      { labelKey: 'admin.types.' + p.type },
+      { labelKey: 'admin.types.' + p.type, link: p.type === 'game' ? '/games' : undefined },
       { label: p.title },
     ];
   });

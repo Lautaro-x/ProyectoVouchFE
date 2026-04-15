@@ -32,6 +32,11 @@
     "create_review": "+ Escrever minha própria crítica",
     "edit_review": "Editar crítica"
   },
+  "games": {
+    "title": "Jogos",
+    "search_ph": "Buscar jogos...",
+    "no_results": "Nenhum jogo encontrado."
+  },
   "landing": {
     "title": "Olá, mundo.",
     "subtitle": "A plataforma de críticas que realmente entende o que você joga.",

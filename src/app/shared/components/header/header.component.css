@@ -35,6 +35,33 @@
   letter-spacing: 0.05em;
 }
 
+.header-sections {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  padding-left: 2rem;
+}
+
+.header-section-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.header-section-link:hover {
+  color: var(--color-text);
+  background: var(--color-border);
+}
+
+.header-section-link.active {
+  color: var(--color-text);
+  background: var(--color-accent-subtle);
+}
+
 .header-nav {
   display: flex;
   align-items: center;

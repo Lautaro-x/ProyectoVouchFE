@@ -7,6 +7,13 @@ export interface ReviewFormData {
   categories: { id: number; name: Record<string, string> }[];
 }
 
+export interface PaginatedResponse<T> {
+  data: T[];
+  current_page: number;
+  last_page: number;
+  total: number;
+}
+
 export interface ReviewEditFormData extends ReviewFormData {
   body: string | null;
   scores: Record<string, number>;

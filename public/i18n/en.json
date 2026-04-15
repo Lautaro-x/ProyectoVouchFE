@@ -32,6 +32,11 @@
     "create_review": "+ Write my own review",
     "edit_review": "Edit review"
   },
+  "games": {
+    "title": "Games",
+    "search_ph": "Search games...",
+    "no_results": "No games found."
+  },
   "landing": {
     "title": "Hello, world.",
     "subtitle": "The review platform that actually understands what you play.",

@@ -32,6 +32,11 @@
     "create_review": "+ Crear mi propia crítica",
     "edit_review": "Editar crítica"
   },
+  "games": {
+    "title": "Juegos",
+    "search_ph": "Buscar juegos...",
+    "no_results": "No se encontraron juegos."
+  },
   "landing": {
     "title": "Vouch",
     "subtitle": "Tú eliges de quien fiarte.",

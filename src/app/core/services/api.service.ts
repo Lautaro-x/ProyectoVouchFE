@@ -2,12 +2,18 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ProductCard, ProductDetail, ReviewEditFormData, ReviewFormData } from '../models/product.model';
+import { PaginatedResponse, ProductCard, ProductDetail, ReviewEditFormData, ReviewFormData } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly base = environment.apiUrl;
+
+  getGames(search: string, page: number): Observable<PaginatedResponse<ProductCard>> {
+    const params: Record<string, string | number> = { page };
+    if (search) params['search'] = search;
+    return this.http.get<PaginatedResponse<ProductCard>>(`${this.base}/games`, { params });
+  }
 
   getRelevantProducts(): Observable<ProductCard[]> {
     return this.http.get<ProductCard[]>(`${this.base}/products/relevant`);

@@ -32,6 +32,11 @@
     "create_review": "+ Scrivere la mia recensione",
     "edit_review": "Modifica recensione"
   },
+  "games": {
+    "title": "Giochi",
+    "search_ph": "Cerca giochi...",
+    "no_results": "Nessun gioco trovato."
+  },
   "landing": {
     "title": "Ciao, mondo.",
     "subtitle": "La piattaforma di recensioni che capisce davvero cosa giochi.",

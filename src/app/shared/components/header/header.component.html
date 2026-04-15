@@ -4,6 +4,12 @@
       <img src="/logo.png" alt="Vouch" class="header-logo-img" />
       <span class="header-logo-text">Vouch</span>
     </a>
+    <nav class="header-sections">
+      <a class="header-section-link" routerLink="/games" routerLinkActive="active">
+        {{ 'games.title' | transloco }}
+      </a>
+    </nav>
+
     <nav class="header-nav">
       <app-lang-switcher />
       @if (authService.currentUser()) {

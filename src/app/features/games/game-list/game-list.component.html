@@ -1,0 +1,56 @@
+<app-breadcrumb [items]="breadcrumbs" />
+
+<div class="games-page">
+
+  <div class="games-header">
+    <h1 class="games-title">{{ 'games.title' | transloco }}</h1>
+    <input
+      class="games-search"
+      type="search"
+      [placeholder]="'games.search_ph' | transloco"
+      [value]="searchInput()"
+      (input)="onSearchInput($any($event.target).value)"
+    />
+  </div>
+
+  @if (loading()) {
+    <div class="games-loading">{{ 'common.loading' | transloco }}</div>
+  } @else if (games().length === 0) {
+    <div class="games-empty">{{ 'games.no_results' | transloco }}</div>
+  } @else {
+    <div class="games-grid">
+      @for (game of games(); track game.id) {
+        <app-game-card [product]="game" />
+      }
+    </div>
+
+    @if (lastPage() > 1) {
+      <nav class="pagination">
+        <button
+          class="page-btn"
+          [disabled]="page() === 1"
+          (click)="goToPage(page() - 1)"
+        >‹</button>
+
+        @for (p of pageNumbers(); track $index) {
+          @if (p === '…') {
+            <span class="page-ellipsis">…</span>
+          } @else {
+            <button
+              class="page-btn"
+              [class.active]="p === page()"
+              (click)="goToPage(p)"
+            >{{ p }}</button>
+          }
+        }
+
+        <button
+          class="page-btn"
+          [disabled]="page() === lastPage()"
+          (click)="goToPage(page() + 1)"
+        >›</button>
+      </nav>
+    }
+  }
+
+</div>

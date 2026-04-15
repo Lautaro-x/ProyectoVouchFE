@@ -19,6 +19,11 @@ export const routes: Routes = [
       import('./features/admin/admin.routes').then(m => m.adminRoutes),
   },
   {
+    path: 'games',
+    loadComponent: () =>
+      import('./features/games/game-list/game-list.component').then(m => m.GameListComponent),
+  },
+  {
     path: 'review/new/:productId',
     loadComponent: () =>
       import('./features/review-create/review-create.component').then(m => m.ReviewCreateComponent),
