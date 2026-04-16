@@ -33,7 +33,7 @@
     @for (review of reviews(); track review.id) {
       <a class="review-card" [routerLink]="['/product', review.product.type, review.product.slug]">
         @if (review.product.cover_image) {
-          <img class="review-card-cover" [src]="review.product.cover_image" [alt]="review.product.title" />
+          <img class="review-card-cover" [src]="review.product.cover_image | igdbCover:'small'" [alt]="review.product.title" loading="lazy" decoding="async" />
         } @else {
           <div class="review-card-cover review-card-cover--placeholder"></div>
         }

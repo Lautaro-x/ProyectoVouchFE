@@ -3,6 +3,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserCardData } from '../../../core/models/user.model';
+import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
 
 const GRADE_HEX: Record<string, string> = {
   S:  '#ffffff',
@@ -24,7 +25,7 @@ const BADGE_HEX: Record<string, string> = {
 @Component({
   selector: 'app-user-public-profile',
   standalone: true,
-  imports: [TranslocoModule],
+  imports: [TranslocoModule, IgdbCoverPipe],
   templateUrl: './user-public-profile.component.html',
   styleUrl: './user-public-profile.component.css',
 })

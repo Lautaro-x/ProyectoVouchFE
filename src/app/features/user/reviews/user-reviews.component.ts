@@ -3,11 +3,12 @@ import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { UserReviewCard } from '../../../core/models/product.model';
+import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
 
 @Component({
   selector: 'app-user-reviews',
   standalone: true,
-  imports: [RouterLink, TranslocoModule],
+  imports: [RouterLink, TranslocoModule, IgdbCoverPipe],
   templateUrl: './user-reviews.component.html',
   styleUrl: './user-reviews.component.css',
 })

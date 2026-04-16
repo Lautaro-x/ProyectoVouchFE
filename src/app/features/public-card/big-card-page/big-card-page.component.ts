@@ -3,6 +3,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { UserCardData } from '../../../core/models/user.model';
+import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
 
 const GRADE_HEX: Record<string, string> = {
   S: '#ffffff', 'A+': '#ffd600', A: '#69f0ae', 'B+': '#00e5ff', B: '#40c4ff',
@@ -16,7 +17,7 @@ const BADGE_HEX: Record<string, string> = {
 @Component({
   selector: 'app-big-card-page',
   standalone: true,
-  imports: [],
+  imports: [IgdbCoverPipe],
   templateUrl: './big-card-page.component.html',
   styleUrl: './big-card-page.component.css',
 })

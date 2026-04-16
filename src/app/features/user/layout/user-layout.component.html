@@ -8,7 +8,7 @@
 
   <div class="sidebar-identity">
     @if (user()?.avatar && !avatarBroken()) {
-      <img [src]="user()!.avatar!" [alt]="user()!.name" class="sidebar-avatar" (error)="onAvatarError()" />
+      <img [src]="user()!.avatar!" [alt]="user()!.name" class="sidebar-avatar" (error)="onAvatarError()" loading="eager" />
     } @else {
       <div class="sidebar-avatar-placeholder">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

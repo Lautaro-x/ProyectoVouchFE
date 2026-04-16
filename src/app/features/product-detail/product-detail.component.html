@@ -10,7 +10,7 @@
 
     <aside class="detail-aside">
       @if (product()!.cover_image) {
-        <img class="detail-cover" [src]="product()!.cover_image" [alt]="product()!.title" />
+        <img class="detail-cover" [src]="product()!.cover_image" [alt]="product()!.title" loading="eager" fetchpriority="high" />
       } @else {
         <div class="detail-cover cover-placeholder"></div>
       }
@@ -125,7 +125,7 @@
         <div class="review-card">
           <div class="review-header">
             @if (r.user.avatar && !isAvatarBroken(r.user.id)) {
-              <img class="review-avatar" [src]="r.user.avatar" [alt]="r.user.name" (error)="onReviewAvatarError(r.user.id)" />
+              <img class="review-avatar" [src]="r.user.avatar" [alt]="r.user.name" (error)="onReviewAvatarError(r.user.id)" loading="lazy" decoding="async" />
             } @else {
               <div class="review-avatar-ph">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

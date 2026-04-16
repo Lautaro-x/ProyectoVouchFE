@@ -57,7 +57,7 @@
     <div class="igdb-results">
       @for (game of igdbResults(); track game.id) {
         <div class="igdb-card">
-          @if (coverOf(game)) { <img [src]="coverOf(game)" [alt]="game.name" /> }
+          @if (coverOf(game)) { <img [src]="coverOf(game)" [alt]="game.name" loading="lazy" decoding="async" /> }
           <div class="igdb-info">
             <strong>{{ game.name }}</strong>
             <span class="muted">{{ game.platforms?.slice(0,3)?.map(p => p.name)?.join(', ') }}</span>
@@ -157,7 +157,7 @@
       <tr>
         <td class="muted">{{ p.id }}</td>
         <td>
-          @if (p.cover_image) { <img class="cover-thumb" [src]="p.cover_image" [alt]="p.title" /> }
+          @if (p.cover_image) { <img class="cover-thumb" [src]="p.cover_image | igdbCover:'small'" [alt]="p.title" loading="lazy" decoding="async" /> }
           {{ p.title }}
         </td>
         <td><span class="badge">{{ 'admin.types.' + p.type | transloco }}</span></td>

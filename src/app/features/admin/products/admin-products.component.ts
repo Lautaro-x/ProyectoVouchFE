@@ -4,10 +4,11 @@ import { AdminApiService } from '../services/admin-api.service';
 import { Genre, IgdbGame, Paginated, PlatformWithPivot, Product } from '../models/admin.models';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
 import { LocalizedNamePipe } from '../pipes/localized-name.pipe';
+import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
 
 @Component({
   selector: 'app-admin-products',
-  imports: [TranslocoModule, DialogComponent, LocalizedNamePipe],
+  imports: [TranslocoModule, DialogComponent, LocalizedNamePipe, IgdbCoverPipe],
   templateUrl: './admin-products.component.html',
   styleUrl: './admin-products.component.css',
 })

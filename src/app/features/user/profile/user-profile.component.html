@@ -7,7 +7,7 @@
     <aside class="profile-card">
       <div class="profile-avatar-wrap">
         @if (avatarUrl() && !avatarBroken()) {
-          <img [src]="avatarUrl()" [alt]="name()" class="profile-avatar" (error)="onAvatarError()" />
+          <img [src]="avatarUrl()" [alt]="name()" class="profile-avatar" (error)="onAvatarError()" loading="eager" />
         } @else {
           <div class="profile-avatar-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

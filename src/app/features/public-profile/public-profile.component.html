@@ -33,7 +33,7 @@
     <div class="pp-body">
       <div class="pp-avatar-col">
         @if (card()!.avatar && !avatarBroken()) {
-          <img class="pp-avatar" [src]="card()!.avatar!" [alt]="card()!.name" (error)="onAvatarError()" />
+          <img class="pp-avatar" [src]="card()!.avatar!" [alt]="card()!.name" (error)="onAvatarError()" loading="eager" />
         } @else {
           <div class="pp-avatar-ph">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -53,7 +53,7 @@
             @for (r of fullReviews(); track r.product.slug) {
               <div class="pp-rcard">
                 @if (r.product.cover_image) {
-                  <img [src]="r.product.cover_image" [alt]="r.product.title" />
+                  <img [src]="r.product.cover_image | igdbCover:'small'" [alt]="r.product.title" loading="lazy" decoding="async" />
                 }
                 <span class="pp-rscore" [style.color]="gradeHex(r.letter_grade)">{{ r.letter_grade }}</span>
               </div>

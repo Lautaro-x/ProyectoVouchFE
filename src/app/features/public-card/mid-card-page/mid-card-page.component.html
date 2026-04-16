@@ -35,7 +35,7 @@
     </div>
     <div class="vsc-body">
       @if (card()!.avatar && !avatarBroken()) {
-        <img class="vsc-avatar" [src]="card()!.avatar!" [alt]="card()!.name" (error)="onAvatarError()" />
+        <img class="vsc-avatar" [src]="card()!.avatar!" [alt]="card()!.name" (error)="onAvatarError()" loading="eager" />
       } @else {
         <div class="vsc-avatar-ph">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

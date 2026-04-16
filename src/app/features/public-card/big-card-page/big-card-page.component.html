@@ -38,7 +38,7 @@
     <div class="vfc-body">
       <div class="vfc-left">
         @if (card()!.avatar && !avatarBroken()) {
-          <img class="vfc-avatar" [src]="card()!.avatar!" [alt]="card()!.name" (error)="onAvatarError()" />
+          <img class="vfc-avatar" [src]="card()!.avatar!" [alt]="card()!.name" (error)="onAvatarError()" loading="eager" />
         } @else {
           <div class="vfc-avatar-ph">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@
             @for (r of fullReviews(); track r.product.slug) {
               <div class="vfc-rcard">
                 @if (r.product.cover_image) {
-                  <img [src]="r.product.cover_image" [alt]="r.product.title" />
+                  <img [src]="r.product.cover_image | igdbCover:'small'" [alt]="r.product.title" loading="lazy" decoding="async" />
                 }
                 <span class="vfc-rscore" [style.color]="gradeHex(r.letter_grade)">{{ r.letter_grade }}</span>
               </div>

@@ -5,6 +5,7 @@ import { ApiService } from '../../core/services/api.service';
 import { AuthService } from '../../core/services/auth.service';
 import { UserCardData } from '../../core/models/user.model';
 import { DialogComponent } from '../../shared/components/dialog/dialog.component';
+import { IgdbCoverPipe } from '../../shared/pipes/igdb-cover.pipe';
 
 const GRADE_HEX: Record<string, string> = {
   S: '#ffffff', 'A+': '#ffd600', A: '#69f0ae', 'B+': '#00e5ff', B: '#40c4ff',
@@ -18,7 +19,7 @@ const BADGE_HEX: Record<string, string> = {
 @Component({
   selector: 'app-public-profile',
   standalone: true,
-  imports: [DialogComponent],
+  imports: [DialogComponent, IgdbCoverPipe],
   templateUrl: './public-profile.component.html',
   styleUrl: './public-profile.component.css',
 })

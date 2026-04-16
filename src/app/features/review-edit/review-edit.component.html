@@ -9,7 +9,7 @@
 
     <aside class="review-aside">
       @if (formData()!.cover_image) {
-        <img class="review-cover" [src]="formData()!.cover_image" [alt]="formData()!.title" />
+        <img class="review-cover" [src]="formData()!.cover_image" [alt]="formData()!.title" loading="eager" fetchpriority="high" />
       } @else {
         <div class="review-cover cover-placeholder"></div>
       }

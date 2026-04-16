@@ -1,7 +1,7 @@
 <article class="game-card" [routerLink]="detailLink()">
   <div class="card-cover">
     @if (product().cover_image) {
-      <img [src]="product().cover_image" [alt]="product().title" />
+      <img [src]="product().cover_image | igdbCover:'big'" [alt]="product().title" loading="lazy" decoding="async" />
     } @else {
       <div class="cover-placeholder"></div>
     }
