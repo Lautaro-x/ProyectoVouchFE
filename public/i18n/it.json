@@ -1,7 +1,8 @@
 {
   "header": {
     "login": "Accedi",
-    "logout": "Esci"
+    "logout": "Esci",
+    "administration": "Amministrazione"
   },
   "common": {
     "home": "Home",
@@ -30,7 +31,11 @@
     "buy": "Acquista",
     "your_score": "Il tuo voto",
     "create_review": "+ Scrivere la mia recensione",
-    "edit_review": "Modifica recensione"
+    "edit_review": "Modifica recensione",
+    "reviews_section": "Recensioni",
+    "reviews_empty": "Nessuna recensione pubblica per questo gioco.",
+    "review_expand": "Leggi di più",
+    "review_collapse": "Leggi meno"
   },
   "games": {
     "title": "Giochi",
@@ -196,5 +201,53 @@
       "action_unban": "Riabilita",
       "search_ph": "Cerca nome o email..."
     }
+  },
+  "profile": {
+    "nav_profile": "Profilo",
+    "section_identity": "Identità",
+    "name_label": "Nome",
+    "name_ph": "Il tuo nome pubblico",
+    "avatar_label": "URL dell'avatar",
+    "avatar_ph": "https://...",
+    "badges_title": "Risultati",
+    "section_personal": "Dati personali",
+    "email_label": "Email",
+    "show_email_label": "Mostra nel profilo pubblico",
+    "section_social": "Social media",
+    "social_shared": "Condividi",
+    "social_url_ph": "Link al tuo profilo...",
+    "section_settings": "Impostazioni",
+    "reviews_public_label": "Rendi pubbliche le mie recensioni",
+    "reviews_public_hint": "Le tue recensioni continueranno ad essere usate per calcolare i punteggi dei prodotti, ma nessuno vedrà se hai valutato un gioco o meno.",
+    "save": "Salva modifiche",
+    "saving": "Salvataggio...",
+    "saved": "Salvato!"
+  },
+  "public_profile": {
+    "nav": "Il mio profilo pubblico",
+    "card_full_title": "Big Card (720 × 430 px)",
+    "card_summary_title": "Mid Card (480 × 480 px)",
+    "card_mini_title": "Mini Card (360 × 160 px)",
+    "bg_url": "Immagine di sfondo:",
+    "bg_url_ph": "https://... (URL immagine)",
+    "save_bg": "Salva sfondi",
+    "saving_bg": "Salvataggio...",
+    "saved_bg": "Salvato!",
+    "reviews_label": "recensioni",
+    "followers_label": "follower",
+    "last_reviews": "Le mie ultime recensioni",
+    "fiarme": "Fidarmi",
+    "fiarme_self": "Il tuo profilo",
+    "view_profile": "Vedi profilo completo →"
+  },
+  "reviews": {
+    "nav_reviews": "Le mie recensioni",
+    "title": "Le mie recensioni",
+    "tab_games": "Giochi",
+    "search_ph": "Cerca per nome del gioco...",
+    "results": "recensioni",
+    "empty_games": "Non hai ancora scritto nessuna recensione. Questa è la tua occasione per crearne la prima!",
+    "empty_cta": "Vai ai giochi",
+    "no_results": "Nessuna recensione trovata con quel nome."
   }
 }

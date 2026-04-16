@@ -1,7 +1,8 @@
 {
   "header": {
     "login": "Se connecter",
-    "logout": "Se déconnecter"
+    "logout": "Se déconnecter",
+    "administration": "Administration"
   },
   "common": {
     "home": "Accueil",
@@ -30,7 +31,11 @@
     "buy": "Acheter",
     "your_score": "Votre note",
     "create_review": "+ Écrire ma propre critique",
-    "edit_review": "Modifier la critique"
+    "edit_review": "Modifier la critique",
+    "reviews_section": "Critiques",
+    "reviews_empty": "Aucune critique publique pour ce jeu.",
+    "review_expand": "Lire plus",
+    "review_collapse": "Lire moins"
   },
   "games": {
     "title": "Jeux",
@@ -196,5 +201,53 @@
       "action_unban": "Débannir",
       "search_ph": "Rechercher un nom ou un email..."
     }
+  },
+  "profile": {
+    "nav_profile": "Profil",
+    "section_identity": "Identité",
+    "name_label": "Nom",
+    "name_ph": "Votre nom public",
+    "avatar_label": "URL de l'avatar",
+    "avatar_ph": "https://...",
+    "badges_title": "Récompenses",
+    "section_personal": "Données personnelles",
+    "email_label": "E-mail",
+    "show_email_label": "Afficher sur le profil public",
+    "section_social": "Réseaux sociaux",
+    "social_shared": "Partager",
+    "social_url_ph": "Lien vers votre profil...",
+    "section_settings": "Paramètres",
+    "reviews_public_label": "Rendre mes critiques publiques",
+    "reviews_public_hint": "Vos critiques continueront à être utilisées pour calculer les scores des produits, mais personne ne verra si vous avez noté un jeu ou non.",
+    "save": "Enregistrer les modifications",
+    "saving": "Enregistrement...",
+    "saved": "Enregistré !"
+  },
+  "public_profile": {
+    "nav": "Mon profil public",
+    "card_full_title": "Big Card (720 × 430 px)",
+    "card_summary_title": "Mid Card (480 × 480 px)",
+    "card_mini_title": "Mini Card (360 × 160 px)",
+    "bg_url": "Image de fond :",
+    "bg_url_ph": "https://... (URL d'image)",
+    "save_bg": "Sauvegarder les fonds",
+    "saving_bg": "Enregistrement...",
+    "saved_bg": "Enregistré !",
+    "reviews_label": "avis",
+    "followers_label": "abonnés",
+    "last_reviews": "Mes derniers avis",
+    "fiarme": "Me fier",
+    "fiarme_self": "Votre profil",
+    "view_profile": "Voir le profil complet →"
+  },
+  "reviews": {
+    "nav_reviews": "Mes avis",
+    "title": "Mes avis",
+    "tab_games": "Jeux",
+    "search_ph": "Rechercher par nom de jeu...",
+    "results": "avis",
+    "empty_games": "Vous n'avez encore écrit aucun avis. C'est l'occasion de créer le premier !",
+    "empty_cta": "Aller aux jeux",
+    "no_results": "Aucun avis trouvé avec ce nom."
   }
 }

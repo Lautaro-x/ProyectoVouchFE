@@ -1,0 +1,42 @@
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <a class="brand-link" routerLink="/">
+      <span class="brand-vouch">VOUCH</span>
+    </a>
+    <app-lang-switcher />
+  </div>
+
+  <div class="sidebar-identity">
+    @if (user()?.avatar && !avatarBroken()) {
+      <img [src]="user()!.avatar!" [alt]="user()!.name" class="sidebar-avatar" (error)="onAvatarError()" />
+    } @else {
+      <div class="sidebar-avatar-placeholder">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/>
+        </svg>
+      </div>
+    }
+    <span class="sidebar-username">{{ user()?.name }}</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    @for (section of sections; track section.path) {
+      <a
+        [routerLink]="section.path"
+        routerLinkActive="active"
+        class="nav-item"
+      >{{ section.labelKey | transloco }}</a>
+    }
+  </nav>
+
+  <div class="sidebar-footer">
+    @if (user()?.role === 'admin') {
+      <a class="admin-link" routerLink="/administration">{{ 'header.administration' | transloco }}</a>
+    }
+    <button class="logout-btn" (click)="logout()">{{ 'header.logout' | transloco }}</button>
+  </div>
+</aside>
+
+<main class="user-main">
+  <router-outlet />
+</main>

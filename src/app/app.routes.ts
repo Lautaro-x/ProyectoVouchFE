@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './core/guards/admin.guard';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,12 @@ export const routes: Routes = [
     canActivate: [adminGuard],
     loadChildren: () =>
       import('./features/admin/admin.routes').then(m => m.adminRoutes),
+  },
+  {
+    path: 'user',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./features/user/user.routes').then(m => m.userRoutes),
   },
   {
     path: 'games',
@@ -37,6 +44,26 @@ export const routes: Routes = [
     path: 'product/:type/:slug',
     loadComponent: () =>
       import('./features/product-detail/product-detail.component').then(m => m.ProductDetailComponent),
+  },
+  {
+    path: 'u/:id',
+    loadComponent: () =>
+      import('./features/public-profile/public-profile.component').then(m => m.PublicProfileComponent),
+  },
+  {
+    path: 'card/big/:id',
+    loadComponent: () =>
+      import('./features/public-card/big-card-page/big-card-page.component').then(m => m.BigCardPageComponent),
+  },
+  {
+    path: 'card/mid/:id',
+    loadComponent: () =>
+      import('./features/public-card/mid-card-page/mid-card-page.component').then(m => m.MidCardPageComponent),
+  },
+  {
+    path: 'card/mini/:id',
+    loadComponent: () =>
+      import('./features/public-card/mini-card-page/mini-card-page.component').then(m => m.MiniCardPageComponent),
   },
   {
     path: '**',

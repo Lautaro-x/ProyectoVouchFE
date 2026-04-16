@@ -31,6 +31,12 @@ export class AuthService {
       );
   }
 
+  updateUser(partial: Partial<User>): void {
+    const updated = { ...this.currentUser()!, ...partial };
+    this.setItem(this.USER_KEY, JSON.stringify(updated));
+    this.currentUser.set(updated);
+  }
+
   logout(): void {
     this.removeItem(this.TOKEN_KEY);
     this.removeItem(this.USER_KEY);

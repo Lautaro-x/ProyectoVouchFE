@@ -1,0 +1,137 @@
+@if (loading()) {
+  <p class="profile-loading">{{ 'common.loading' | transloco }}</p>
+} @else {
+  <div class="profile-layout">
+
+    <!-- Left sticky card -->
+    <aside class="profile-card">
+      <div class="profile-avatar-wrap">
+        @if (avatarUrl() && !avatarBroken()) {
+          <img [src]="avatarUrl()" [alt]="name()" class="profile-avatar" (error)="onAvatarError()" />
+        } @else {
+          <div class="profile-avatar-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/>
+            </svg>
+          </div>
+        }
+      </div>
+
+      <p class="profile-name-display">{{ name() || '—' }}</p>
+
+      @if (badges().length) {
+        <div class="profile-badges">
+          @for (badge of badges(); track badge) {
+            <span class="profile-badge" [style.background]="badgeColor(badge)">#{{ badge }}</span>
+          }
+        </div>
+      }
+    </aside>
+
+    <!-- Right sections -->
+    <div class="profile-sections">
+
+      <!-- Identity -->
+      <div class="profile-section">
+        <h2 class="section-title">{{ 'profile.section_identity' | transloco }}</h2>
+
+        <div class="field">
+          <label class="field-label">{{ 'profile.name_label' | transloco }}</label>
+          <input
+            class="field-input"
+            type="text"
+            [value]="name()"
+            (input)="name.set($any($event.target).value)"
+            [placeholder]="'profile.name_ph' | transloco"
+            maxlength="25"
+          />
+        </div>
+
+        <div class="field">
+          <label class="field-label">{{ 'profile.avatar_label' | transloco }}</label>
+          <input
+            class="field-input"
+            type="text"
+            [value]="avatarUrl()"
+            (input)="setAvatarUrl($any($event.target).value)"
+            [placeholder]="'profile.avatar_ph' | transloco"
+          />
+        </div>
+      </div>
+
+      <!-- Personal data -->
+      <div class="profile-section">
+        <h2 class="section-title">{{ 'profile.section_personal' | transloco }}</h2>
+
+        <div class="field">
+          <label class="field-label">{{ 'profile.email_label' | transloco }}</label>
+          <input class="field-input field-input--readonly" type="email" [value]="email()" readonly />
+        </div>
+
+        <label class="toggle-row">
+          <input
+            type="checkbox"
+            [checked]="showEmail()"
+            (change)="showEmail.set($any($event.target).checked)"
+          />
+          <span>{{ 'profile.show_email_label' | transloco }}</span>
+        </label>
+      </div>
+
+      <!-- Social links -->
+      <div class="profile-section">
+        <h2 class="section-title">{{ 'profile.section_social' | transloco }}</h2>
+
+        @for (net of SOCIAL_NETWORKS; track net.key) {
+          <div class="social-row">
+            <span class="social-label">{{ net.label }}</span>
+            <input
+              class="field-input social-input"
+              type="text"
+              [value]="getSocialUrl(net.key)"
+              (input)="setSocialUrl(net.key, $any($event.target).value)"
+              [placeholder]="'profile.social_url_ph' | transloco"
+            />
+            <label class="social-toggle">
+              <input
+                type="checkbox"
+                [checked]="getSocialShared(net.key)"
+                (change)="setSocialShared(net.key, $any($event.target).checked)"
+              />
+              <span>{{ 'profile.social_shared' | transloco }}</span>
+            </label>
+          </div>
+        }
+      </div>
+
+      <!-- Settings -->
+      <div class="profile-section">
+        <h2 class="section-title">{{ 'profile.section_settings' | transloco }}</h2>
+
+        <label class="toggle-row">
+          <input
+            type="checkbox"
+            [checked]="reviewsPublic()"
+            (change)="reviewsPublic.set($any($event.target).checked)"
+          />
+          <span>{{ 'profile.reviews_public_label' | transloco }}</span>
+        </label>
+        <p class="setting-hint">{{ 'profile.reviews_public_hint' | transloco }}</p>
+      </div>
+
+      <!-- Actions -->
+      <div class="profile-actions">
+        <button class="btn-save" (click)="save()" [disabled]="saving()">
+          @if (saving()) {
+            {{ 'profile.saving' | transloco }}
+          } @else if (saved()) {
+            {{ 'profile.saved' | transloco }}
+          } @else {
+            {{ 'profile.save' | transloco }}
+          }
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

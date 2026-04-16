@@ -1,7 +1,8 @@
 {
   "header": {
     "login": "Entrar",
-    "logout": "Sair"
+    "logout": "Sair",
+    "administration": "Administração"
   },
   "common": {
     "home": "Início",
@@ -30,7 +31,11 @@
     "buy": "Comprar",
     "your_score": "Sua pontuação",
     "create_review": "+ Escrever minha própria crítica",
-    "edit_review": "Editar crítica"
+    "edit_review": "Editar crítica",
+    "reviews_section": "Críticas",
+    "reviews_empty": "Ainda não há críticas públicas para este jogo.",
+    "review_expand": "Ver mais",
+    "review_collapse": "Ver menos"
   },
   "games": {
     "title": "Jogos",
@@ -196,5 +201,53 @@
       "action_unban": "Desbanir",
       "search_ph": "Buscar nome ou email..."
     }
+  },
+  "profile": {
+    "nav_profile": "Perfil",
+    "section_identity": "Identidade",
+    "name_label": "Nome",
+    "name_ph": "Seu nome público",
+    "avatar_label": "URL do avatar",
+    "avatar_ph": "https://...",
+    "badges_title": "Conquistas",
+    "section_personal": "Dados pessoais",
+    "email_label": "Email",
+    "show_email_label": "Mostrar no perfil público",
+    "section_social": "Redes sociais",
+    "social_shared": "Compartilhar",
+    "social_url_ph": "Link para seu perfil...",
+    "section_settings": "Configurações",
+    "reviews_public_label": "Tornar minhas críticas públicas",
+    "reviews_public_hint": "Suas críticas continuarão sendo usadas para calcular as pontuações dos produtos, mas ninguém verá se você avaliou um jogo ou não.",
+    "save": "Salvar alterações",
+    "saving": "Salvando...",
+    "saved": "Salvo!"
+  },
+  "public_profile": {
+    "nav": "Meu perfil público",
+    "card_full_title": "Big Card (720 × 430 px)",
+    "card_summary_title": "Mid Card (480 × 480 px)",
+    "card_mini_title": "Mini Card (360 × 160 px)",
+    "bg_url": "Imagem de fundo:",
+    "bg_url_ph": "https://... (URL de imagem)",
+    "save_bg": "Salvar fundos",
+    "saving_bg": "Salvando...",
+    "saved_bg": "Salvo!",
+    "reviews_label": "resenhas",
+    "followers_label": "seguidores",
+    "last_reviews": "Minhas últimas resenhas",
+    "fiarme": "Confiar",
+    "fiarme_self": "Seu perfil",
+    "view_profile": "Ver perfil completo →"
+  },
+  "reviews": {
+    "nav_reviews": "Minhas resenhas",
+    "title": "Minhas resenhas",
+    "tab_games": "Jogos",
+    "search_ph": "Buscar por nome do jogo...",
+    "results": "resenhas",
+    "empty_games": "Você ainda não escreveu nenhuma resenha. Esta é a sua chance de criar a primeira!",
+    "empty_cta": "Ir para jogos",
+    "no_results": "Nenhuma resenha encontrada com esse nome."
   }
 }

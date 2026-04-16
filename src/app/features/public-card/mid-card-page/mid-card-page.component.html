@@ -1,0 +1,80 @@
+@if (card()) {
+  <style>
+    .vsc{width:480px;height:480px;position:relative;overflow:hidden;border-radius:12px;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;background:#1c1c1c;color:#F5F5F5}
+    .vsc-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25}
+    .vsc-header{position:relative;z-index:1;display:flex;align-items:center;gap:8px;padding:14px 18px;background:rgba(0,0,0,.55);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+    .vsc-name{font-size:16px;font-weight:700;letter-spacing:.02em}
+    .vsc-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;color:#fff;letter-spacing:.04em}
+    .vsc-body{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;padding:16px 28px;gap:12px;overflow:hidden}
+    .vsc-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2);flex-shrink:0}
+    .vsc-avatar-ph{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .vsc-avatar-ph svg{width:40px;height:40px;fill:rgba(245,245,245,0.4);flex-shrink:0}
+    .vsc-stats{display:flex;gap:24px}
+    .vsc-stat{display:flex;flex-direction:column;align-items:center;gap:2px}
+    .vsc-stat-val{font-size:20px;font-weight:700}
+    .vsc-stat-lbl{font-size:11px;color:rgba(245,245,245,.55)}
+    .vsc-reviews-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(245,245,245,.4);width:100%}
+    .vsc-reviews{width:100%;display:flex;flex-direction:column;gap:6px}
+    .vsc-rrow{font-size:12px;color:rgba(245,245,245,.8);display:flex;align-items:center;gap:6px}
+    .vsc-rdot{font-size:9px;color:rgba(245,245,245,.35)}
+    .vsc-cta{margin-top:auto;background:#6200EE;border:none;color:#fff;padding:8px 22px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',system-ui,sans-serif;text-decoration:none;display:inline-block}
+    .vsc-footer{position:relative;z-index:1;display:flex;align-items:center;gap:14px;padding:10px 18px;background:rgba(0,0,0,.55);border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
+    .vsc-social-link{display:flex;align-items:center;opacity:.75}
+    .vsc-social-link svg{width:18px;height:18px;fill:#F5F5F5}
+  </style>
+
+  <div class="vsc">
+    @if (card()!.card_mid_bg) {
+      <div class="vsc-bg" [style.background-image]="'url(' + card()!.card_mid_bg + ')'"></div>
+    }
+    <div class="vsc-header">
+      <span class="vsc-name">{{ card()!.name }}</span>
+      @for (b of card()!.badges; track b) {
+        <span class="vsc-badge" [style.background]="badgeHex(b)">#{{ b }}</span>
+      }
+    </div>
+    <div class="vsc-body">
+      @if (card()!.avatar && !avatarBroken()) {
+        <img class="vsc-avatar" [src]="card()!.avatar!" [alt]="card()!.name" (error)="onAvatarError()" />
+      } @else {
+        <div class="vsc-avatar-ph">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/>
+          </svg>
+        </div>
+      }
+      <div class="vsc-stats">
+        <div class="vsc-stat">
+          <span class="vsc-stat-val">{{ card()!.reviews_count }}</span>
+          <span class="vsc-stat-lbl">reseñas</span>
+        </div>
+        <div class="vsc-stat">
+          <span class="vsc-stat-val">{{ card()!.followers_count }}</span>
+          <span class="vsc-stat-lbl">seguidores</span>
+        </div>
+      </div>
+      @if (summaryReviews().length) {
+        <p class="vsc-reviews-title">Mis últimas reseñas</p>
+        <div class="vsc-reviews">
+          @for (r of summaryReviews(); track r.product.slug) {
+            <div class="vsc-rrow"><span class="vsc-rdot">▸</span><span>{{ r.product.title }}</span></div>
+          }
+        </div>
+      }
+      <a class="vsc-cta" [href]="publicProfileUrl()">Ver perfil completo →</a>
+    </div>
+    <div class="vsc-footer">
+      @for (e of socialEntries(); track e[0]) {
+        <a class="vsc-social-link" [href]="e[1]" target="_blank" rel="noopener">
+          @switch (e[0]) {
+            @case ('youtube')   { <svg viewBox="0 0 24 24"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.2 5 12 5 12 5s-4.2 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C7 19 12 19 12 19s4.2 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2S22 14.3 22 12.7v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.3 3L10 15z"/></svg> }
+            @case ('twitch')    { <svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg> }
+            @case ('discord')   { <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.045.036.057a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg> }
+            @case ('x')         { <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.213 5.567L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> }
+            @case ('instagram')  { <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.059 1.69.073 4.949.073 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg> }
+          }
+        </a>
+      }
+    </div>
+  </div>
+}

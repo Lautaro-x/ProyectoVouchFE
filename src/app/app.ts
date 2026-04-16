@@ -21,6 +21,7 @@ export class App {
 
   readonly isAdmin = computed(() => {
     this.navEnd();
-    return this.router.url.startsWith('/administration');
+    const url = this.router.url;
+    return url.startsWith('/administration') || url.startsWith('/user') || url.startsWith('/card/');
   });
 }

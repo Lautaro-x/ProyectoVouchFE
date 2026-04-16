@@ -1,0 +1,58 @@
+<div class="reviews-header">
+  <h1 class="reviews-title">{{ 'reviews.title' | transloco }}</h1>
+</div>
+
+<div class="media-tabs">
+  <button class="media-tab media-tab--active">{{ 'reviews.tab_games' | transloco }}</button>
+</div>
+
+<div class="reviews-toolbar">
+  <input
+    class="reviews-search"
+    type="search"
+    [placeholder]="'reviews.search_ph' | transloco"
+    [value]="search()"
+    (input)="onSearch($any($event.target).value)"
+  />
+  @if (!loading()) {
+    <span class="reviews-count">{{ total() }} {{ 'reviews.results' | transloco }}</span>
+  }
+</div>
+
+@if (loading()) {
+  <p class="reviews-loading">{{ 'common.loading' | transloco }}</p>
+} @else if (reviews().length === 0 && !search()) {
+  <div class="reviews-empty">
+    <p class="reviews-empty-text">{{ 'reviews.empty_games' | transloco }}</p>
+    <a class="reviews-empty-link" routerLink="/games">{{ 'reviews.empty_cta' | transloco }}</a>
+  </div>
+} @else if (reviews().length === 0) {
+  <p class="reviews-no-results">{{ 'reviews.no_results' | transloco }}</p>
+} @else {
+  <div class="reviews-grid">
+    @for (review of reviews(); track review.id) {
+      <a class="review-card" [routerLink]="['/product', review.product.type, review.product.slug]">
+        @if (review.product.cover_image) {
+          <img class="review-card-cover" [src]="review.product.cover_image" [alt]="review.product.title" />
+        } @else {
+          <div class="review-card-cover review-card-cover--placeholder"></div>
+        }
+        <span class="review-card-score" [class]="'review-card-score ' + gradeClass(review.letter_grade)">{{ review.letter_grade }}</span>
+      </a>
+    }
+  </div>
+
+  @if (lastPage() > 1) {
+    <div class="reviews-pagination">
+      <button class="page-btn" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">‹</button>
+      @for (p of pages(); track p) {
+        <button
+          class="page-btn"
+          [class.page-btn--active]="p === currentPage()"
+          (click)="goToPage(p)"
+        >{{ p }}</button>
+      }
+      <button class="page-btn" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === lastPage()">›</button>
+    </div>
+  }
+}

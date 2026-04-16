@@ -1,7 +1,8 @@
 {
   "header": {
     "login": "Iniciar sesión",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "administration": "Administración"
   },
   "common": {
     "home": "Inicio",
@@ -30,7 +31,11 @@
     "buy": "Comprar",
     "your_score": "Tu puntuación",
     "create_review": "+ Crear mi propia crítica",
-    "edit_review": "Editar crítica"
+    "edit_review": "Editar crítica",
+    "reviews_section": "Críticas",
+    "reviews_empty": "Aún no hay críticas públicas para este juego.",
+    "review_expand": "Ver más",
+    "review_collapse": "Ver menos"
   },
   "games": {
     "title": "Juegos",
@@ -147,7 +152,7 @@
       "field_genres": "Géneros",
       "field_title": "Título",
       "field_description": "Descripción",
-      "field_cover": "Cover image URL",
+      "field_cover": "URL de la imagen de portada",
       "search_ph": "Buscar título...",
       "filter_all_genres": "Todos los géneros",
       "links_btn": "Links",
@@ -196,5 +201,53 @@
       "action_unban": "Desbanear",
       "search_ph": "Buscar nombre o email..."
     }
+  },
+  "profile": {
+    "nav_profile": "Perfil",
+    "section_identity": "Identidad",
+    "name_label": "Nombre",
+    "name_ph": "Tu nombre público",
+    "avatar_label": "URL del avatar",
+    "avatar_ph": "https://...",
+    "badges_title": "Logros",
+    "section_personal": "Datos personales",
+    "email_label": "Email",
+    "show_email_label": "Mostrar en perfil público",
+    "section_social": "Redes sociales",
+    "social_shared": "Compartir",
+    "social_url_ph": "Enlace a tu perfil...",
+    "section_settings": "Configuración",
+    "reviews_public_label": "Hacer públicas mis críticas",
+    "reviews_public_hint": "Tus críticas seguirán usándose para calcular la puntuación de los productos, pero nadie verá si has puntuado o no un juego.",
+    "save": "Guardar cambios",
+    "saving": "Guardando...",
+    "saved": "¡Guardado!"
+  },
+  "public_profile": {
+    "nav": "Mi perfil público",
+    "card_full_title": "Big Card (720 × 430 px)",
+    "card_summary_title": "Mid Card (480 × 480 px)",
+    "card_mini_title": "Mini Card (360 × 160 px)",
+    "bg_url": "Imagen de fondo:",
+    "bg_url_ph": "https://... (URL de imagen)",
+    "save_bg": "Guardar fondos",
+    "saving_bg": "Guardando...",
+    "saved_bg": "¡Guardado!",
+    "reviews_label": "reseñas",
+    "followers_label": "seguidores",
+    "last_reviews": "Mis últimas reseñas",
+    "fiarme": "Fiarme",
+    "fiarme_self": "Es tu perfil",
+    "view_profile": "Ver perfil completo →"
+  },
+  "reviews": {
+    "nav_reviews": "Mis reseñas",
+    "title": "Mis reseñas",
+    "tab_games": "Juegos",
+    "search_ph": "Buscar por nombre de juego...",
+    "results": "reseñas",
+    "empty_games": "Aún no has escrito ninguna reseña. ¡Esta es tu oportunidad de crear la primera!",
+    "empty_cta": "Ir a juegos",
+    "no_results": "No se encontraron reseñas con ese nombre."
   }
 }

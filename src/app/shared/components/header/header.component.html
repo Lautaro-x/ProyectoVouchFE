@@ -16,7 +16,12 @@
     <nav class="header-nav desktop-only">
       <app-lang-switcher />
       @if (authService.currentUser()) {
-        <span class="header-username">{{ authService.currentUser()!.name }}</span>
+        <a class="header-user" routerLink="/user/profile">
+          <span class="header-username">{{ authService.currentUser()!.name }}</span>
+          @if (authService.currentUser()!.role === 'admin') {
+            <span class="header-staff">Staff</span>
+          }
+        </a>
         <button class="header-btn-logout" (click)="logout()">{{ 'header.logout' | transloco }}</button>
       } @else {
         <a class="header-btn-login" routerLink="/login">{{ 'header.login' | transloco }}</a>
@@ -26,7 +31,12 @@
     <!-- Mobile right side -->
     <div class="header-mobile mobile-only">
       @if (authService.currentUser()) {
-        <span class="header-username">{{ authService.currentUser()!.name }}</span>
+        <a class="header-user" routerLink="/user/profile">
+          <span class="header-username">{{ authService.currentUser()!.name }}</span>
+          @if (authService.currentUser()!.role === 'admin') {
+            <span class="header-staff">Staff</span>
+          }
+        </a>
       }
       <button class="header-burger" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()">
         <span class="burger-line" [class.open]="menuOpen()"></span>

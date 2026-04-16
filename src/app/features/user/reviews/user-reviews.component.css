@@ -1,0 +1,214 @@
+.reviews-header {
+  margin-bottom: 1.25rem;
+}
+
+.reviews-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* ── Media type tabs ─────────────────────────────── */
+
+.media-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.75rem;
+}
+
+.media-tab {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.media-tab--active {
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ── Toolbar ─────────────────────────────────────── */
+
+.reviews-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.reviews-search {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  width: 260px;
+  transition: border-color 0.15s;
+}
+
+.reviews-search:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.reviews-count {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* ── States ─────────────────────────────────────── */
+
+.reviews-loading,
+.reviews-no-results {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.reviews-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.reviews-empty-text {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.reviews-empty-link {
+  background: var(--color-accent);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+
+.reviews-empty-link:hover {
+  opacity: 0.85;
+}
+
+/* ── Grid ────────────────────────────────────────── */
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .reviews-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .reviews-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Review card ─────────────────────────────────── */
+
+.review-card {
+  position: relative;
+  display: block;
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  text-decoration: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.review-card-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.review-card-cover--placeholder {
+  background: var(--color-border);
+}
+
+.review-card-score {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 4px;
+  border-radius: 50%;
+  background: #000;
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ── Pagination ──────────────────────────────────── */
+
+.reviews-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text-muted);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s;
+  min-width: 30px;
+}
+
+.page-btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.page-btn--active {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}

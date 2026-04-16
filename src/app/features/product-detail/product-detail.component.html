@@ -5,6 +5,7 @@
 } @else if (error() || !product()) {
   <div class="detail-error">{{ 'common.not_found' | transloco }}</div>
 } @else {
+
   <div class="detail-layout">
 
     <aside class="detail-aside">
@@ -21,7 +22,6 @@
             <span [class]="'grade ' + gradeClass(product()!.scores.global_grade)">
               {{ product()!.scores.global_grade }}
             </span>
-            <span class="score-number">{{ product()!.scores.global_score }}/10</span>
           </div>
         }
         @if (product()!.scores.pro_score !== null) {
@@ -30,7 +30,6 @@
             <span [class]="'grade ' + gradeClass(product()!.scores.pro_grade)">
               {{ product()!.scores.pro_grade }}
             </span>
-            <span class="score-number">{{ product()!.scores.pro_score }}/10</span>
           </div>
         }
 
@@ -41,7 +40,6 @@
               <span [class]="'grade ' + gradeClass(product()!.user_review!.letter_grade)">
                 {{ product()!.user_review!.letter_grade }}
               </span>
-              <span class="score-number">{{ product()!.user_review!.weighted_score }}/10</span>
               <a class="btn-edit-review" [routerLink]="['/review/edit', product()!.user_review!.id]" [title]="'product.edit_review' | transloco">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
@@ -113,4 +111,52 @@
     </main>
 
   </div>
+
+  <!-- ── Sección de críticas — ocupa el 100% fuera del grid ── -->
+  <section class="reviews-section">
+    <h2 class="reviews-heading">{{ 'product.reviews_section' | transloco }}</h2>
+
+    @if (!reviews().length && !reviewsLoading()) {
+      <p class="reviews-empty">{{ 'product.reviews_empty' | transloco }}</p>
+    }
+
+    <div class="reviews-list">
+      @for (r of reviews(); track r.id) {
+        <div class="review-card">
+          <div class="review-header">
+            @if (r.user.avatar && !isAvatarBroken(r.user.id)) {
+              <img class="review-avatar" [src]="r.user.avatar" [alt]="r.user.name" (error)="onReviewAvatarError(r.user.id)" />
+            } @else {
+              <div class="review-avatar-ph">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/>
+                </svg>
+              </div>
+            }
+            <a class="review-author" [routerLink]="['/u', r.user.id]">{{ r.user.name }}</a>
+            <span class="review-date">{{ r.created_at | date:'dd/MM/yyyy' }}</span>
+            <div class="review-grade-wrap">
+              <span [class]="'grade ' + gradeClass(r.letter_grade)">{{ r.letter_grade }}</span>
+            </div>
+          </div>
+
+          @if (r.body) {
+            <p class="review-body" [class.expanded]="isExpanded(r.id)">{{ r.body }}</p>
+            @if (needsExpand(r.body)) {
+              <button class="review-expand-btn" (click)="toggleExpand(r.id)">
+                {{ isExpanded(r.id) ? ('product.review_collapse' | transloco) : ('product.review_expand' | transloco) }}
+              </button>
+            }
+          }
+        </div>
+      }
+    </div>
+
+    @if (reviewsLoading()) {
+      <p class="reviews-loading">{{ 'common.loading' | transloco }}</p>
+    }
+
+    <div id="reviews-sentinel"></div>
+  </section>
+
 }

@@ -80,12 +80,6 @@
 
 .field textarea { resize: vertical; }
 
-.form-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1.25rem;
-}
-
 .hint {
   font-size: 0.78rem;
   color: var(--color-text-muted);
@@ -178,63 +172,6 @@ tbody tr.banned-row td { opacity: 0.55; }
 .muted { color: var(--color-text-muted); }
 .actions { gap: 0.4rem; justify-content: flex-end; }
 
-.btn-primary {
-  background: var(--color-accent);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.45rem 1rem;
-  font-size: 0.85rem;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.btn-primary:hover { background: var(--color-accent-hover); }
-.btn-primary.danger { background: var(--color-grade-f); }
-.btn-primary.danger:hover { background: #c0392b; }
-
-.btn-ghost {
-  background: transparent;
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 0.45rem 1rem;
-  font-size: 0.85rem;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
-}
-.btn-ghost:hover { border-color: var(--color-text-muted); color: var(--color-text); }
-
-.btn-sm {
-  width: 80px;
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-  border-radius: 4px;
-  padding: 0.25rem 0.6rem;
-  font-size: 0.78rem;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.btn-sm:hover { border-color: var(--color-accent); color: var(--color-accent); }
-.btn-sm.danger:hover { border-color: var(--color-grade-f); color: var(--color-grade-f); }
-.btn-sm.active { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
-
-.badge {
-  display: inline-block;
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: var(--color-border);
-  color: var(--color-text-muted);
-}
-.badge.danger { background: rgba(231,76,60,0.15); color: var(--color-grade-f); }
 
 .pagination {
   display: flex;

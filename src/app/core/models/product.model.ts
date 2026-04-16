@@ -30,6 +30,29 @@ export interface ProductCard {
   score_type: 'global' | 'pro';
 }
 
+export interface UserReviewCard {
+  id: number;
+  weighted_score: number;
+  letter_grade: string;
+  created_at: string;
+  product: {
+    id: number;
+    title: string;
+    slug: string;
+    type: string;
+    cover_image: string | null;
+  };
+}
+
+export interface ProductReview {
+  id: number;
+  user: { id: number; name: string; avatar: string | null };
+  letter_grade: string;
+  weighted_score: number;
+  body: string | null;
+  created_at: string;
+}
+
 export interface ProductDetail {
   id: number;
   type: 'game' | 'movie' | 'series';

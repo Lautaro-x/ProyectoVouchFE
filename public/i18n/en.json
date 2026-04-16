@@ -1,7 +1,8 @@
 {
   "header": {
     "login": "Sign in",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "administration": "Administration"
   },
   "common": {
     "home": "Home",
@@ -30,7 +31,11 @@
     "buy": "Buy",
     "your_score": "Your score",
     "create_review": "+ Write my own review",
-    "edit_review": "Edit review"
+    "edit_review": "Edit review",
+    "reviews_section": "Reviews",
+    "reviews_empty": "No public reviews yet for this game.",
+    "review_expand": "Read more",
+    "review_collapse": "Read less"
   },
   "games": {
     "title": "Games",
@@ -196,5 +201,53 @@
       "action_unban": "Unban",
       "search_ph": "Search name or email..."
     }
+  },
+  "profile": {
+    "nav_profile": "Profile",
+    "section_identity": "Identity",
+    "name_label": "Name",
+    "name_ph": "Your public name",
+    "avatar_label": "Avatar URL",
+    "avatar_ph": "https://...",
+    "badges_title": "Achievements",
+    "section_personal": "Personal details",
+    "email_label": "Email",
+    "show_email_label": "Show on public profile",
+    "section_social": "Social media",
+    "social_shared": "Share",
+    "social_url_ph": "Link to your profile...",
+    "section_settings": "Settings",
+    "reviews_public_label": "Make my reviews public",
+    "reviews_public_hint": "Your reviews will still be used to calculate product scores, but no one will see whether you rated a game or not.",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "saved": "Saved!"
+  },
+  "public_profile": {
+    "nav": "My public profile",
+    "card_full_title": "Big Card (720 × 430 px)",
+    "card_summary_title": "Mid Card (480 × 480 px)",
+    "card_mini_title": "Mini Card (360 × 160 px)",
+    "bg_url": "Background image:",
+    "bg_url_ph": "https://... (image URL)",
+    "save_bg": "Save backgrounds",
+    "saving_bg": "Saving...",
+    "saved_bg": "Saved!",
+    "reviews_label": "reviews",
+    "followers_label": "followers",
+    "last_reviews": "My latest reviews",
+    "fiarme": "Trust",
+    "fiarme_self": "Your profile",
+    "view_profile": "View full profile →"
+  },
+  "reviews": {
+    "nav_reviews": "My reviews",
+    "title": "My reviews",
+    "tab_games": "Games",
+    "search_ph": "Search by game name...",
+    "results": "reviews",
+    "empty_games": "You haven't written any review yet. This is your chance to create your first one!",
+    "empty_cta": "Go to games",
+    "no_results": "No reviews found with that name."
   }
 }
