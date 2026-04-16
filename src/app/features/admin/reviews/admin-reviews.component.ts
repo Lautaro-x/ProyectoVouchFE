@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+} from '@angular/core';
 import { SlicePipe } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
@@ -7,6 +8,7 @@ import { DialogComponent } from '../../../shared/components/dialog/dialog.compon
 
 @Component({
   selector: 'app-admin-reviews',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SlicePipe, TranslocoModule, DialogComponent],
   templateUrl: './admin-reviews.component.html',
   styleUrl: './admin-reviews.component.css',

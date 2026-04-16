@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Paginated, Platform } from '../models/admin.models';
@@ -6,6 +7,7 @@ import { DialogComponent } from '../../../shared/components/dialog/dialog.compon
 
 @Component({
   selector: 'app-admin-platforms',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslocoModule, DialogComponent],
   templateUrl: './admin-platforms.component.html',
   styleUrl: './admin-platforms.component.css',

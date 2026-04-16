@@ -1,4 +1,5 @@
-import { Component, AfterViewInit, NgZone, inject, PLATFORM_ID } from '@angular/core';
+import { Component, AfterViewInit, NgZone, inject, PLATFORM_ID, ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -17,6 +18,7 @@ declare const google: {
 
 @Component({
   selector: 'app-login',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [TranslocoModule, BreadcrumbComponent],
   templateUrl: './login.component.html',

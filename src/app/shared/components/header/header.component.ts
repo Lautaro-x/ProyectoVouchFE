@@ -1,4 +1,6 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal, ChangeDetectionStrategy,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -7,6 +9,7 @@ import { LangSwitcherComponent } from '../lang-switcher/lang-switcher.component'
 
 @Component({
   selector: 'app-header',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [RouterLink, RouterLinkActive, TranslocoModule, LangSwitcherComponent],
   templateUrl: './header.component.html',
@@ -20,7 +23,7 @@ export class HeaderComponent {
 
   constructor() {
     this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
+      .pipe(filter(e => e instanceof NavigationEnd), takeUntilDestroyed())
       .subscribe(() => this.menuOpen.set(false));
   }
 

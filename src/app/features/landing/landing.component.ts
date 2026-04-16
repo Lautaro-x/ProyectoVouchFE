@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, signal, PLATFORM_ID, ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../core/services/api.service';
@@ -7,6 +8,7 @@ import { GameCardComponent } from '../../shared/components/game-card/game-card.c
 
 @Component({
   selector: 'app-landing',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [TranslocoModule, GameCardComponent],
   templateUrl: './landing.component.html',

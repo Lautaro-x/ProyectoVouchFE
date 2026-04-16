@@ -1,5 +1,7 @@
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+import { Component, computed, inject, DestroyRef, OnInit, signal, ChangeDetectionStrategy,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { ProductCard } from '../../../core/models/product.model';
@@ -8,15 +10,16 @@ import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/
 
 @Component({
   selector: 'app-game-list',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [TranslocoModule, GameCardComponent, BreadcrumbComponent],
   templateUrl: './game-list.component.html',
   styleUrl: './game-list.component.css',
 })
-export class GameListComponent implements OnInit, OnDestroy {
-  private api     = inject(ApiService);
-  private destroy = new Subject<void>();
-  private search$ = new Subject<string>();
+export class GameListComponent implements OnInit {
+  private api        = inject(ApiService);
+  private destroyRef = inject(DestroyRef);
+  private search$    = new Subject<string>();
 
   readonly breadcrumbs: BreadcrumbItem[] = [
     { labelKey: 'games.title' },
@@ -51,7 +54,7 @@ export class GameListComponent implements OnInit, OnDestroy {
     this.search$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      takeUntil(this.destroy),
+      takeUntilDestroyed(this.destroyRef),
     ).subscribe(value => {
       this.searchInput.set(value);
       this.page.set(1);
@@ -59,11 +62,6 @@ export class GameListComponent implements OnInit, OnDestroy {
     });
 
     this.load();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
   }
 
   onSearchInput(value: string): void {

@@ -1,4 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
@@ -7,6 +8,7 @@ import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
 
 @Component({
   selector: 'app-user-reviews',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [RouterLink, TranslocoModule, IgdbCoverPipe],
   templateUrl: './user-reviews.component.html',

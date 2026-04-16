@@ -1,4 +1,5 @@
-import { Component, computed, inject, OnInit, signal, DOCUMENT } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, DOCUMENT, ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -24,6 +25,7 @@ const BADGE_HEX: Record<string, string> = {
 
 @Component({
   selector: 'app-user-public-profile',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [TranslocoModule, IgdbCoverPipe],
   templateUrl: './user-public-profile.component.html',

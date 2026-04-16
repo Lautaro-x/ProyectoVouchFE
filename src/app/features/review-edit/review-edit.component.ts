@@ -1,4 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ApiService } from '../../core/services/api.service';
@@ -8,6 +9,7 @@ import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/bre
 
 @Component({
   selector: 'app-review-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [TranslocoModule, BreadcrumbComponent],
   templateUrl: './review-edit.component.html',

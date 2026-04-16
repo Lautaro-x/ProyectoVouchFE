@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -6,6 +7,7 @@ import { SOCIAL_NETWORKS, SocialLinks } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-user-profile',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [TranslocoModule],
   templateUrl: './user-profile.component.html',

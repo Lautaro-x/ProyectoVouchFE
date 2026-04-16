@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Genre, IgdbGame, Paginated, PlatformWithPivot, Product } from '../models/admin.models';
@@ -8,6 +9,7 @@ import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
 
 @Component({
   selector: 'app-admin-products',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslocoModule, DialogComponent, LocalizedNamePipe, IgdbCoverPipe],
   templateUrl: './admin-products.component.html',
   styleUrl: './admin-products.component.css',

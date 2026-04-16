@@ -1,4 +1,5 @@
-import { Component, inject, signal, computed, HostListener, ElementRef } from '@angular/core';
+import { Component, inject, signal, computed, HostListener, ElementRef, ChangeDetectionStrategy,
+} from '@angular/core';
 import { LangService } from '../../../core/services/lang.service';
 
 interface LangOption {
@@ -8,6 +9,7 @@ interface LangOption {
 
 @Component({
   selector: 'app-lang-switcher',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   templateUrl: './lang-switcher.component.html',
   styleUrl: './lang-switcher.component.css',

@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Category, Paginated, TranslatableName } from '../models/admin.models';
@@ -10,6 +11,7 @@ const EMPTY_DESC = (): TranslatableName => ({ en: '', es: '', fr: '', pt: '', it
 
 @Component({
   selector: 'app-admin-categories',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslocoModule, DialogComponent, LocalizedNamePipe],
   templateUrl: './admin-categories.component.html',
   styleUrl: './admin-categories.component.css',

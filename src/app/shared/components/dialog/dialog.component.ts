@@ -3,10 +3,12 @@ import {
   HostListener,
   input,
   output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.css',
 })

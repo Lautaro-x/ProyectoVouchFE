@@ -1,4 +1,5 @@
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -9,6 +10,7 @@ import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/bre
 
 @Component({
   selector: 'app-product-detail',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [TranslocoModule, RouterLink, DatePipe, BreadcrumbComponent],
   templateUrl: './product-detail.component.html',

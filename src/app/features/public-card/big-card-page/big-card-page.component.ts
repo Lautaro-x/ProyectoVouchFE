@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal, computed, DOCUMENT } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, DOCUMENT, ChangeDetectionStrategy,
+} from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
@@ -16,6 +17,7 @@ const BADGE_HEX: Record<string, string> = {
 
 @Component({
   selector: 'app-big-card-page',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [IgdbCoverPipe],
   templateUrl: './big-card-page.component.html',

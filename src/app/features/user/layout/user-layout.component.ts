@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AuthService } from '../../../core/services/auth.service';
@@ -6,6 +7,7 @@ import { LangSwitcherComponent } from '../../../shared/components/lang-switcher/
 
 @Component({
   selector: 'app-user-layout',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive, TranslocoModule, LangSwitcherComponent],
   templateUrl: './user-layout.component.html',
