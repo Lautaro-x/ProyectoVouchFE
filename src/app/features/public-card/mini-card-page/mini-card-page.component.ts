@@ -5,9 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { UserCardData } from '../../../core/models/user.model';
 
-const BADGE_HEX: Record<string, string> = {
-  verified: '#6200EE', top_critic: '#f4a261', early_adopter: '#7c4dff', beta_tester: '#00b894',
-};
 
 @Component({
   selector: 'app-mini-card-page',
@@ -26,6 +23,7 @@ export class MiniCardPageComponent implements OnInit {
 
   readonly card         = signal<UserCardData | null>(null);
   readonly avatarBroken = signal(false);
+  readonly isVerified   = computed(() => this.card()?.badges?.includes('verificado') ?? false);
   readonly socialEntries = computed(() =>
     Object.entries(this.card()?.social_links ?? {}).filter(([, url]) => !!url)
   );
@@ -58,5 +56,4 @@ export class MiniCardPageComponent implements OnInit {
   }
 
   onAvatarError(): void { this.avatarBroken.set(true); }
-  badgeHex(slug: string): string { return BADGE_HEX[slug] ?? '#9e9e9e'; }
 }

@@ -3,8 +3,8 @@
     .vmc{width:360px;height:160px;position:relative;overflow:hidden;border-radius:10px;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;background:#1c1c1c;color:#F5F5F5}
     .vmc-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25}
     .vmc-header{position:relative;z-index:1;display:flex;align-items:center;gap:6px;padding:9px 14px;background:rgba(0,0,0,.55);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
-    .vmc-name{font-size:13px;font-weight:700;letter-spacing:.02em}
-    .vmc-badge{font-size:9px;font-weight:700;padding:1px 6px;border-radius:999px;color:#fff;letter-spacing:.04em}
+    .vmc-name{font-size:13px;font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:4px}
+    .vmc-verified{font-size:9px;font-weight:800;color:#6200EE;background:rgba(98,0,238,.15);border:1px solid rgba(98,0,238,.4);border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
     .vmc-body{position:relative;z-index:1;flex:1;display:flex;align-items:center;gap:14px;padding:10px 14px}
     .vmc-avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2);flex-shrink:0}
     .vmc-avatar-ph{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -24,10 +24,12 @@
       <div class="vmc-bg" [style.background-image]="'url(' + card()!.card_mini_bg + ')'"></div>
     }
     <div class="vmc-header">
-      <span class="vmc-name">{{ card()!.name }}</span>
-      @for (b of card()!.badges; track b) {
-        <span class="vmc-badge" [style.background]="badgeHex(b)">#{{ b }}</span>
-      }
+      <span class="vmc-name">
+        {{ card()!.name }}
+        @if (isVerified()) {
+          <span class="vmc-verified" title="Verificado">✓</span>
+        }
+      </span>
     </div>
     <div class="vmc-body">
       @if (card()!.avatar && !avatarBroken()) {

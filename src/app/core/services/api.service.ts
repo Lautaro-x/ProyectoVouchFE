@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, UserReviewCard } from '../models/product.model';
-import { SocialLinks, UserCardData, UserProfile } from '../models/user.model';
+import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, SocialLinks, UserCardData, UserProfile } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -64,6 +64,30 @@ export class ApiService {
 
   updateProfile(data: Partial<{ name: string; avatar: string | null; show_email: boolean; reviews_public: boolean; social_links: SocialLinks; card_big_bg: string | null; card_mid_bg: string | null; card_mini_bg: string | null }>): Observable<void> {
     return this.http.put<void>(`${this.base}/user/profile`, data);
+  }
+
+  getBadgeProgress(): Observable<BadgesProgress> {
+    return this.http.get<BadgesProgress>(`${this.base}/user/badges`);
+  }
+
+  claimBadge(slug: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/user/badges/${slug}/claim`, {});
+  }
+
+  removeBadge(slug: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/user/badges/${slug}`);
+  }
+
+  getActiveSurveys(): Observable<ActiveSurvey[]> {
+    return this.http.get<ActiveSurvey[]>(`${this.base}/surveys/active`);
+  }
+
+  respondSurvey(surveyId: number, optionId: number): Observable<void> {
+    return this.http.post<void>(`${this.base}/surveys/${surveyId}/respond`, { option_id: optionId });
+  }
+
+  getActiveAnnouncements(): Observable<ActiveAnnouncement[]> {
+    return this.http.get<ActiveAnnouncement[]>(`${this.base}/announcements/active`);
   }
 
   followUser(userId: number): Observable<void> {

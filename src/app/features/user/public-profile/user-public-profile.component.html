@@ -2,10 +2,6 @@
   <p class="pc-loading">{{ 'common.loading' | transloco }}</p>
 } @else {
 
-  <!-- ═══════════════════════════════════════════════════════════
-       CARD 1 — FULL  (720 × 430 px)
-  ═══════════════════════════════════════════════════════════ -->
-  <!-- Botón global para guardar los 3 fondos -->
   <div class="pc-save-row">
     <button class="pc-save-btn" (click)="saveBackgrounds()" [disabled]="savingBg()">
       @if (savingBg()) { {{ 'public_profile.saving_bg' | transloco }} }
@@ -14,6 +10,7 @@
     </button>
   </div>
 
+  <!-- ═══ CARD 1 — FULL (720 × 430 px) ═══ -->
   <section class="pc-section">
     <h2 class="pc-section-title">{{ 'public_profile.card_full_title' | transloco }}</h2>
     <div class="pc-bg-input">
@@ -22,117 +19,20 @@
              (input)="fullBg.set($any($event.target).value)"
              [placeholder]="'public_profile.bg_url_ph' | transloco" />
     </div>
-
     <div class="pc-card-wrap">
-      <style>
-        .vfc{width:720px;height:430px;position:relative;overflow:hidden;border-radius:12px;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;background:#1c1c1c;color:#F5F5F5}
-        .vfc-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25}
-        .vfc-header{position:relative;z-index:1;display:flex;align-items:center;gap:8px;padding:14px 20px;background:rgba(0,0,0,.55);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
-        .vfc-name{font-size:18px;font-weight:700;letter-spacing:.02em}
-        .vfc-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;color:#fff;letter-spacing:.04em}
-        .vfc-body{position:relative;z-index:1;flex:1;display:flex;overflow:hidden}
-        .vfc-left{width:160px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;background:rgba(0,0,0,.35);border-right:1px solid rgba(255,255,255,.08)}
-        .vfc-avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2)}
-        .vfc-avatar-ph{width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center}
-        .vfc-avatar-ph svg{width:46px;height:46px;fill:rgba(245,245,245,0.4);flex-shrink:0}
-        .vfc-right{flex:1;display:flex;flex-direction:column;gap:12px;padding:18px 20px}
-        .vfc-stat{font-size:13px;color:rgba(245,245,245,.65)}
-        .vfc-stat strong{color:#F5F5F5;font-size:22px;margin-right:4px}
-        .vfc-reviews-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(245,245,245,.4);margin-bottom:4px}
-        .vfc-reviews{display:flex;gap:8px}
-        .vfc-rcard{position:relative;width:72px;height:96px;border-radius:6px;overflow:hidden;flex-shrink:0;background:#2c2c2c}
-        .vfc-rcard img{width:100%;height:100%;object-fit:cover;display:block}
-        .vfc-rscore{position:absolute;bottom:5px;right:5px;width:24px;height:24px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1}
-        .vfc-email{font-size:12px;color:rgba(245,245,245,.55)}
-        .vfc-subscribe{margin-top:auto;align-self:flex-start;background:#6200EE;border:none;color:#fff;padding:7px 18px;border-radius:6px;font-size:13px;font-weight:600;font-family:'Inter',system-ui,sans-serif;transition:opacity .15s}
-        .vfc-footer{position:relative;z-index:1;display:flex;align-items:center;gap:14px;padding:10px 20px;background:rgba(0,0,0,.55);border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
-        .vfc-social-link{display:flex;align-items:center;opacity:.75}
-        .vfc-social-link svg{width:20px;height:20px;fill:#F5F5F5}
-      </style>
-
-      <div class="vfc">
-        @if (fullBg()) {
-          <div class="vfc-bg" [style.background-image]="'url(' + fullBg() + ')'"></div>
-        }
-        <div class="vfc-header">
-          <span class="vfc-name">{{ card()?.name }}</span>
-          @for (b of card()?.badges ?? []; track b) {
-            <span class="vfc-badge" [style.background]="badgeHex(b)">#{{ b }}</span>
-          }
-        </div>
-        <div class="vfc-body">
-          <div class="vfc-left">
-            @if (card()?.avatar && !avatarBroken()) {
-              <img class="vfc-avatar" [src]="card()!.avatar!" [alt]="card()!.name" (error)="onAvatarError()" loading="eager" />
-            } @else {
-              <div class="vfc-avatar-ph">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/>
-                </svg>
-              </div>
-            }
-          </div>
-          <div class="vfc-right">
-            <p class="vfc-stat"><strong>{{ card()?.reviews_count }}</strong>{{ 'public_profile.reviews_label' | transloco }}</p>
-            <p class="vfc-stat"><strong>{{ card()?.followers_count }}</strong>{{ 'public_profile.followers_label' | transloco }}</p>
-            @if (fullReviews().length) {
-              <p class="vfc-reviews-title">{{ 'public_profile.last_reviews' | transloco }}</p>
-              <div class="vfc-reviews">
-                @for (r of fullReviews(); track r.product.slug) {
-                  <div class="vfc-rcard">
-                    @if (r.product.cover_image) {
-                      <img [src]="r.product.cover_image | igdbCover:'small'" [alt]="r.product.title" loading="lazy" decoding="async" />
-                    }
-                    <span class="vfc-rscore" [style.color]="gradeHex(r.letter_grade)">{{ r.letter_grade }}</span>
-                  </div>
-                }
-              </div>
-            }
-            @if (card()?.email) {
-              <span class="vfc-email">{{ card()!.email }}</span>
-            }
-            <button class="vfc-subscribe" [disabled]="isSelf()" [style.opacity]="isSelf() ? '0.45' : '1'" [style.cursor]="isSelf() ? 'default' : 'pointer'">
-              {{ isSelf() ? ('public_profile.fiarme_self' | transloco) : ('public_profile.fiarme' | transloco) }}
-            </button>
-          </div>
-        </div>
-        <div class="vfc-footer">
-          @for (e of socialEntries(); track e[0]) {
-            <a class="vfc-social-link" [href]="e[1]" target="_blank" rel="noopener">
-              @switch (e[0]) {
-                @case ('youtube') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.2 5 12 5 12 5s-4.2 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C7 19 12 19 12 19s4.2 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2S22 14.3 22 12.7v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.3 3L10 15z"/></svg>
-                }
-                @case ('twitch') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
-                }
-                @case ('discord') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.045.036.057a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-                }
-                @case ('x') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.213 5.567L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                }
-                @case ('instagram') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.059 1.69.073 4.949.073 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                }
-              }
-            </a>
-          }
-          @if (!socialEntries().length) {
-            <span style="font-size:11px;color:rgba(245,245,245,0.3);">—</span>
-          }
-        </div>
-      </div>
+      <app-user-profile-card
+        [card]="previewBigCard()!"
+        [isSelf]="true"
+        [isAuthenticated]="true"
+      />
     </div>
     <button class="pc-copy-btn" (click)="copyLink('big')">
-      {{ copiedBig() ? '✓ Enlace copiado' : 'Copiar enlace' }}
+      {{ copiedBig() ? ('public_profile.copied_link' | transloco) : ('public_profile.copy_link' | transloco) }}
     </button>
   </section>
 
 
-  <!-- ═══════════════════════════════════════════════════════════
-       CARD 2 — RESUMEN INSTAGRAM  (480 × 480 px)
-  ═══════════════════════════════════════════════════════════ -->
+  <!-- ═══ CARD 2 — RESUMEN INSTAGRAM (480 × 480 px) ═══ -->
   <section class="pc-section">
     <h2 class="pc-section-title">{{ 'public_profile.card_summary_title' | transloco }}</h2>
     <div class="pc-bg-input">
@@ -147,8 +47,9 @@
         .vsc{width:480px;height:480px;position:relative;overflow:hidden;border-radius:12px;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;background:#1c1c1c;color:#F5F5F5}
         .vsc-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25}
         .vsc-header{position:relative;z-index:1;display:flex;align-items:center;gap:8px;padding:14px 18px;background:rgba(0,0,0,.55);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
-        .vsc-name{font-size:16px;font-weight:700;letter-spacing:.02em}
-        .vsc-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;color:#fff;letter-spacing:.04em}
+        .vsc-name{font-size:16px;font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:5px}
+        .vsc-verified{font-size:11px;font-weight:800;color:#6200EE;background:rgba(98,0,238,.15);border:1px solid rgba(98,0,238,.4);border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+        .vsc-badge{font-size:10px;font-weight:700;padding:2px 10px;border-radius:999px;color:rgba(245,245,245,.85);letter-spacing:.04em;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
         .vsc-body{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;padding:16px 28px;gap:12px;overflow:hidden}
         .vsc-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2);flex-shrink:0}
         .vsc-avatar-ph{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -158,9 +59,11 @@
         .vsc-stat-val{font-size:20px;font-weight:700}
         .vsc-stat-lbl{font-size:11px;color:rgba(245,245,245,.55)}
         .vsc-reviews-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(245,245,245,.4);width:100%}
-        .vsc-reviews{width:100%;display:flex;flex-direction:column;gap:6px}
-        .vsc-rrow{font-size:12px;color:rgba(245,245,245,.8);display:flex;align-items:center;gap:6px}
+        .vsc-reviews-wrap{width:100%;display:flex;gap:12px;align-items:flex-start}
+        .vsc-reviews{flex:1;display:flex;flex-direction:column;gap:6px}
+        .vsc-rrow{font-size:12px;color:rgba(245,245,245,.8);display:flex;align-items:center;gap:6px;text-decoration:none}
         .vsc-rdot{font-size:9px;color:rgba(245,245,245,.35)}
+        .vsc-badges{display:flex;flex-direction:column;gap:5px;align-items:flex-end;margin-right:4px;padding-top:2px}
         .vsc-cta{margin-top:auto;background:#6200EE;border:none;color:#fff;padding:8px 22px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',system-ui,sans-serif;text-decoration:none;display:inline-block}
         .vsc-footer{position:relative;z-index:1;display:flex;align-items:center;gap:14px;padding:10px 18px;background:rgba(0,0,0,.55);border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
         .vsc-social-link{display:flex;align-items:center;opacity:.75}
@@ -172,9 +75,14 @@
           <div class="vsc-bg" [style.background-image]="'url(' + midBg() + ')'"></div>
         }
         <div class="vsc-header">
-          <span class="vsc-name">{{ card()?.name }}</span>
-          @for (b of card()?.badges ?? []; track b) {
-            <span class="vsc-badge" [style.background]="badgeHex(b)">#{{ b }}</span>
+          <span class="vsc-name">
+            {{ card()?.name }}
+            @if (isVerified(card()?.badges ?? [])) {
+              <span class="vsc-verified" title="Verificado">✓</span>
+            }
+          </span>
+          @for (b of displayBadges(card()?.badges ?? []); track b) {
+            <span class="vsc-badge">{{ 'badges.' + b | transloco }}</span>
           }
         </div>
         <div class="vsc-body">
@@ -199,38 +107,34 @@
           </div>
           @if (summaryReviews().length) {
             <p class="vsc-reviews-title">{{ 'public_profile.last_reviews' | transloco }}</p>
-            <div class="vsc-reviews">
-              @for (r of summaryReviews(); track r.product.slug) {
-                <div class="vsc-rrow">
-                  <span class="vsc-rdot">▸</span>
-                  <span>{{ r.product.title }}</span>
+            <div class="vsc-reviews-wrap">
+              <div class="vsc-reviews">
+                @for (r of summaryReviews(); track r.product.slug) {
+                  <a class="vsc-rrow" [href]="'/product/' + r.product.type + '/' + r.product.slug" target="_blank" rel="noopener">
+                    <span class="vsc-rdot">▸</span><span>{{ r.product.title }}</span>
+                  </a>
+                }
+              </div>
+              @if (displayBadges(card()?.badges ?? []).length) {
+                <div class="vsc-badges">
+                  @for (b of displayBadges(card()?.badges ?? []); track b) {
+                    <span class="vsc-badge">{{ 'badges.' + b | transloco }}</span>
+                  }
                 </div>
               }
             </div>
           }
-          <a class="vsc-cta" [href]="publicProfileUrl()">
-            {{ 'public_profile.view_profile' | transloco }}
-          </a>
+          <a class="vsc-cta" [href]="publicProfileUrl()">{{ 'public_profile.view_profile' | transloco }}</a>
         </div>
         <div class="vsc-footer">
           @for (e of socialEntries(); track e[0]) {
             <a class="vsc-social-link" [href]="e[1]" target="_blank" rel="noopener">
               @switch (e[0]) {
-                @case ('youtube') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.2 5 12 5 12 5s-4.2 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C7 19 12 19 12 19s4.2 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2S22 14.3 22 12.7v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.3 3L10 15z"/></svg>
-                }
-                @case ('twitch') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
-                }
-                @case ('discord') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.045.036.057a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-                }
-                @case ('x') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.213 5.567L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                }
-                @case ('instagram') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.059 1.69.073 4.949.073 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                }
+                @case ('youtube')   { <svg viewBox="0 0 24 24"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.2 5 12 5 12 5s-4.2 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C7 19 12 19 12 19s4.2 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2S22 14.3 22 12.7v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.3 3L10 15z"/></svg> }
+                @case ('twitch')    { <svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg> }
+                @case ('discord')   { <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.045.036.057a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg> }
+                @case ('x')         { <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.213 5.567L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> }
+                @case ('instagram')  { <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.059 1.69.073 4.949.073 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg> }
               }
             </a>
           }
@@ -241,14 +145,12 @@
       </div>
     </div>
     <button class="pc-copy-btn" (click)="copyLink('mid')">
-      {{ copiedMid() ? '✓ Enlace copiado' : 'Copiar enlace' }}
+      {{ copiedMid() ? ('public_profile.copied_link' | transloco) : ('public_profile.copy_link' | transloco) }}
     </button>
   </section>
 
 
-  <!-- ═══════════════════════════════════════════════════════════
-       CARD 3 — MINI WHATSAPP  (360 × 160 px)
-  ═══════════════════════════════════════════════════════════ -->
+  <!-- ═══ CARD 3 — MINI WHATSAPP (360 × 160 px) ═══ -->
   <section class="pc-section">
     <h2 class="pc-section-title">{{ 'public_profile.card_mini_title' | transloco }}</h2>
     <div class="pc-bg-input">
@@ -263,8 +165,9 @@
         .vmc{width:360px;height:160px;position:relative;overflow:hidden;border-radius:10px;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;background:#1c1c1c;color:#F5F5F5}
         .vmc-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25}
         .vmc-header{position:relative;z-index:1;display:flex;align-items:center;gap:6px;padding:9px 14px;background:rgba(0,0,0,.55);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
-        .vmc-name{font-size:13px;font-weight:700;letter-spacing:.02em}
-        .vmc-badge{font-size:9px;font-weight:700;padding:1px 6px;border-radius:999px;color:#fff;letter-spacing:.04em}
+        .vmc-name{font-size:13px;font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:4px}
+        .vmc-verified{font-size:9px;font-weight:800;color:#6200EE;background:rgba(98,0,238,.15);border:1px solid rgba(98,0,238,.4);border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+        .vmc-badge{font-size:9px;font-weight:700;padding:1px 8px;border-radius:999px;color:rgba(245,245,245,.85);letter-spacing:.04em;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
         .vmc-body{position:relative;z-index:1;flex:1;display:flex;align-items:center;gap:14px;padding:10px 14px}
         .vmc-avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2);flex-shrink:0}
         .vmc-avatar-ph{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -284,10 +187,12 @@
           <div class="vmc-bg" [style.background-image]="'url(' + miniBg() + ')'"></div>
         }
         <div class="vmc-header">
-          <span class="vmc-name">{{ card()?.name }}</span>
-          @for (b of card()?.badges ?? []; track b) {
-            <span class="vmc-badge" [style.background]="badgeHex(b)">#{{ b }}</span>
-          }
+          <span class="vmc-name">
+            {{ card()?.name }}
+            @if (isVerified(card()?.badges ?? [])) {
+              <span class="vmc-verified" title="Verificado">✓</span>
+            }
+          </span>
         </div>
         <div class="vmc-body">
           @if (card()?.avatar && !avatarBroken()) {
@@ -309,29 +214,17 @@
               <span class="vmc-stat-lbl">{{ 'public_profile.followers_label' | transloco }}</span>
             </div>
           </div>
-          <a class="vmc-cta" [href]="publicProfileUrl()">
-            {{ 'public_profile.view_profile' | transloco }}
-          </a>
+          <a class="vmc-cta" [href]="publicProfileUrl()">{{ 'public_profile.view_profile' | transloco }}</a>
         </div>
         <div class="vmc-footer">
           @for (e of socialEntries(); track e[0]) {
             <a class="vmc-social-link" [href]="e[1]" target="_blank" rel="noopener">
               @switch (e[0]) {
-                @case ('youtube') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.2 5 12 5 12 5s-4.2 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C7 19 12 19 12 19s4.2 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2S22 14.3 22 12.7v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.3 3L10 15z"/></svg>
-                }
-                @case ('twitch') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
-                }
-                @case ('discord') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.045.036.057a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-                }
-                @case ('x') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.213 5.567L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                }
-                @case ('instagram') {
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.059 1.69.073 4.949.073 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                }
+                @case ('youtube')   { <svg viewBox="0 0 24 24"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.2 5 12 5 12 5s-4.2 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C7 19 12 19 12 19s4.2 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2S22 14.3 22 12.7v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.3 3L10 15z"/></svg> }
+                @case ('twitch')    { <svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg> }
+                @case ('discord')   { <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.045.036.057a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg> }
+                @case ('x')         { <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.213 5.567L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> }
+                @case ('instagram')  { <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.059 1.69.073 4.949.073 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg> }
               }
             </a>
           }
@@ -342,7 +235,7 @@
       </div>
     </div>
     <button class="pc-copy-btn" (click)="copyLink('mini')">
-      {{ copiedMini() ? '✓ Enlace copiado' : 'Copiar enlace' }}
+      {{ copiedMini() ? ('public_profile.copied_link' | transloco) : ('public_profile.copy_link' | transloco) }}
     </button>
   </section>
 

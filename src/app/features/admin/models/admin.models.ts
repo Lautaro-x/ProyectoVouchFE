@@ -70,6 +70,7 @@ export interface AdminUser {
   email: string;
   role: 'user' | 'critic' | 'admin';
   avatar: string | null;
+  badges: string[];
   banned_at: string | null;
   ban_reason: string | null;
   created_at: string;
@@ -80,6 +81,44 @@ export interface Paginated<T> {
   current_page: number;
   last_page: number;
   total: number;
+}
+
+export interface SurveyOption {
+  id: number;
+  text: Record<string, string>;
+  order: number;
+}
+
+export interface Survey {
+  id: number;
+  title: Record<string, string>;
+  question: Record<string, string>;
+  starts_at: string;
+  ends_at: string;
+  responses_count?: number;
+  status?: 'upcoming' | 'active' | 'ended' | 'missing_translations';
+  options?: SurveyOption[];
+}
+
+export interface SurveyResultOption {
+  id: number;
+  text: Record<string, string>;
+  count: number;
+  percent: number;
+}
+
+export interface SurveyResults {
+  total: number;
+  options: SurveyResultOption[];
+}
+
+export interface Announcement {
+  id: number;
+  title: Record<string, string>;
+  body: Record<string, string>;
+  starts_at: string;
+  ends_at: string;
+  status?: 'upcoming' | 'active' | 'ended' | 'missing_translations';
 }
 
 export interface IgdbGame {

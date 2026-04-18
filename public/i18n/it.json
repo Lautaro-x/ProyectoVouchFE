@@ -23,6 +23,7 @@
   "product": {
     "score_global": "Utenti",
     "score_pro": "Critici",
+    "score_trust": "Voto fidato",
     "description": "Descrizione",
     "development": "Sviluppo",
     "developer": "Sviluppatore",
@@ -99,6 +100,8 @@
       "products": "Prodotti",
       "reviews": "Recensioni",
       "users": "Utenti",
+      "surveys": "Sondaggi",
+      "announcements": "Annunci",
       "logout": "Esci"
     },
     "categories": {
@@ -200,7 +203,57 @@
       "action_ban": "Banna",
       "action_unban": "Riabilita",
       "search_ph": "Cerca nome o email..."
+    },
+    "surveys": {
+      "title": "Sondaggi",
+      "new_title": "Nuovo sondaggio",
+      "edit_title": "Modifica sondaggio",
+      "delete_title": "Elimina sondaggio",
+      "col_starts": "Inizio",
+      "col_ends": "Fine",
+      "col_responses": "Risposte",
+      "col_status": "Stato",
+      "status_active": "Attivo",
+      "status_upcoming": "In arrivo",
+      "status_ended": "Terminato",
+      "status_missing_translations": "Traduzioni mancanti",
+      "question_label": "Domanda",
+      "question_ph": "Scrivi la domanda...",
+      "title_ph": "Titolo del sondaggio...",
+      "starts_label": "Data di inizio",
+      "ends_label": "Data di fine",
+      "options_label": "Opzioni di risposta",
+      "option_ph": "Scrivi un'opzione...",
+      "add_option": "Aggiungi opzione",
+      "translations_label": "Traduzioni",
+      "results_btn": "Risultati",
+      "results_total": "Totale risposte"
+    },
+    "announcements": {
+      "title": "Annunci",
+      "new_title": "Nuovo annuncio",
+      "edit_title": "Modifica annuncio",
+      "delete_title": "Elimina annuncio",
+      "col_starts": "Inizio",
+      "col_ends": "Fine",
+      "col_status": "Stato",
+      "status_active": "Attivo",
+      "status_upcoming": "In arrivo",
+      "status_ended": "Terminato",
+      "status_missing_translations": "Traduzioni mancanti",
+      "title_ph": "Titolo dell'annuncio...",
+      "body_label": "Contenuto",
+      "body_ph": "Scrivi il contenuto dell'annuncio...",
+      "starts_label": "Data di inizio",
+      "ends_label": "Data di fine",
+      "translations_label": "Traduzioni"
     }
+  },
+  "survey": {
+    "icon_title": "Ci sono sondaggi attivi",
+    "submit": "Invia",
+    "submitting": "Invio...",
+    "thanks": "Grazie per la tua risposta!"
   },
   "profile": {
     "nav_profile": "Profilo",
@@ -221,7 +274,9 @@
     "reviews_public_hint": "Le tue recensioni continueranno ad essere usate per calcolare i punteggi dei prodotti, ma nessuno vedrà se hai valutato un gioco o meno.",
     "save": "Salva modifiche",
     "saving": "Salvataggio...",
-    "saved": "Salvato!"
+    "saved": "Salvato!",
+    "badge_claim": "Riscatta",
+    "badge_claiming": "Riscattando..."
   },
   "public_profile": {
     "nav": "Il mio profilo pubblico",
@@ -238,7 +293,39 @@
     "last_reviews": "Le mie ultime recensioni",
     "fiarme": "Fidarmi",
     "fiarme_self": "Il tuo profilo",
+    "following": "Ti fidi di questo critico",
+    "copy_link": "Copia link",
+    "copied_link": "✓ Link copiato",
     "view_profile": "Vedi profilo completo →"
+  },
+  "badges": {
+    "nav": "Obiettivi",
+    "show_completed": "Mostra i completati",
+    "remove": "Rimuovi",
+    "critico-rapido":     "Critico Veloce",
+    "critico-novel":      "Critico Esordiente",
+    "critico-junior":     "Critico Junior",
+    "critico-senior":     "Critico Senior",
+    "critico-maestro":    "Critico Maestro",
+    "el-critico":         "Il Critico",
+    "critico-amigo":      "Critico Amico",
+    "critico-solicitado": "Critico Richiesto",
+    "critico-fiable":     "Critico Affidabile",
+    "critico-famoso":     "Critico Famoso",
+    "critico-influyente": "Critico Influente",
+    "desc": {
+      "critico-rapido":     "Sii il primo a recensire un prodotto.",
+      "critico-novel":      "Scrivi 10 recensioni.",
+      "critico-junior":     "Scrivi 20 recensioni.",
+      "critico-senior":     "Scrivi 50 recensioni.",
+      "critico-maestro":    "Scrivi 100 recensioni.",
+      "el-critico":         "Scrivi 200 recensioni.",
+      "critico-amigo":      "Raggiungi 10 follower.",
+      "critico-solicitado": "Raggiungi 100 follower.",
+      "critico-fiable":     "Raggiungi 1.000 follower.",
+      "critico-famoso":     "Raggiungi 3.000 follower.",
+      "critico-influyente": "Raggiungi 6.000 follower."
+    }
   },
   "reviews": {
     "nav_reviews": "Le mie recensioni",
@@ -249,5 +336,8 @@
     "empty_games": "Non hai ancora scritto nessuna recensione. Questa è la tua occasione per crearne la prima!",
     "empty_cta": "Vai ai giochi",
     "no_results": "Nessuna recensione trovata con quel nome."
+  },
+  "announcement": {
+    "icon_title": "Ci sono annunci attivi"
   }
 }

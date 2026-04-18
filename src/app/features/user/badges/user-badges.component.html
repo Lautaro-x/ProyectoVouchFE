@@ -1,0 +1,46 @@
+@if (!badgeProgress()) {
+  <p class="ub-loading">{{ 'common.loading' | transloco }}</p>
+} @else {
+  <label class="ub-toggle">
+    <input type="checkbox" [checked]="showCompleted()" (change)="showCompleted.set($any($event.target).checked)" />
+    <span>{{ 'badges.show_completed' | transloco }}</span>
+  </label>
+
+  <div class="ub-list">
+    @for (slug of visibleBadges(); track slug) {
+      @let bp = badgeProgress()![slug];
+      <div class="ub-item" [class.ub-item--awarded]="bp.awarded">
+        <div class="ub-item-header">
+          <span class="ub-item-name">{{ 'badges.' + slug | transloco }}</span>
+          <span class="ub-item-count">{{ bp.current }} / {{ bp.threshold }}</span>
+        </div>
+        <p class="ub-item-desc">{{ 'badges.desc.' + slug | transloco }}</p>
+        @if (bp.claimable || (isAdmin() && !bp.awarded)) {
+          <button class="ub-claim-btn"
+                  [disabled]="claiming() === slug"
+                  (click)="claimBadge(slug)">
+            {{ claiming() === slug ? ('profile.badge_claiming' | transloco) : ('profile.badge_claim' | transloco) }}
+          </button>
+        }
+        @if (bp.awarded) {
+          <div class="ub-awarded-row">
+            <span class="ub-awarded-label">✓</span>
+            @if (isAdmin()) {
+              <button class="ub-remove-btn"
+                      [disabled]="removing() === slug"
+                      (click)="removeBadge(slug)">
+                {{ 'badges.remove' | transloco }}
+              </button>
+            }
+          </div>
+        }
+        <div class="ub-bar-track">
+          <div class="ub-bar-fill"
+               [class.ub-bar-fill--done]="bp.awarded"
+               [style.width.%]="(bp.current / bp.threshold) * 100">
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}

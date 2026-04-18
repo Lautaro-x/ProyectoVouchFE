@@ -1,9 +1,18 @@
 <article class="game-card" [routerLink]="detailLink()">
   <div class="card-cover">
-    @if (product().cover_image) {
-      <img [src]="product().cover_image | igdbCover:'big'" [alt]="product().title" loading="lazy" decoding="async" />
-    } @else {
-      <div class="cover-placeholder"></div>
+    <div class="cover-img-wrap">
+      @if (product().cover_image) {
+        <img [src]="product().cover_image | igdbCover:'big'" [alt]="product().title" loading="lazy" decoding="async" />
+      } @else {
+        <div class="cover-placeholder"></div>
+      }
+    </div>
+    @if (product().trust_grade) {
+      <div class="trust-star-outer" [class.vibrate]="hovered()">
+        <div class="trust-star-inner">
+          <span [class]="'grade-star grade-' + trustGradeClass()">{{ product().trust_grade }}</span>
+        </div>
+      </div>
     }
   </div>
   <div class="card-body">

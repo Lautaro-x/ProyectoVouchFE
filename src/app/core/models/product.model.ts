@@ -28,6 +28,7 @@ export interface ProductCard {
   score: number;
   letter_grade: string;
   score_type: 'global' | 'pro';
+  trust_grade?: string | null;
 }
 
 export interface UserReviewCard {
@@ -46,7 +47,7 @@ export interface UserReviewCard {
 
 export interface ProductReview {
   id: number;
-  user: { id: number; name: string; avatar: string | null };
+  user: { id: number; name: string; avatar: string | null; badges: string[] };
   letter_grade: string;
   weighted_score: number;
   body: string | null;
@@ -74,6 +75,8 @@ export interface ProductDetail {
     global_grade: string | null;
     pro_score: number | null;
     pro_grade: string | null;
+    trust_score: number | null;
+    trust_grade: string | null;
   };
   user_review: { id: number; weighted_score: number; letter_grade: string } | null;
 }

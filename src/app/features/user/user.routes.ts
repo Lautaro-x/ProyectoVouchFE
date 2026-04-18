@@ -26,6 +26,11 @@ export const userRoutes: Routes = [
         loadComponent: () =>
           import('./reviews/user-reviews.component').then(m => m.UserReviewsComponent),
       },
+      {
+        path: 'badges',
+        loadComponent: () =>
+          import('./badges/user-badges.component').then(m => m.UserBadgesComponent),
+      },
     ],
   },
 ];

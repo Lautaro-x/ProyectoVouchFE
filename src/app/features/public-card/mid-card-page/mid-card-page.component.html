@@ -3,8 +3,9 @@
     .vsc{width:480px;height:480px;position:relative;overflow:hidden;border-radius:12px;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;background:#1c1c1c;color:#F5F5F5}
     .vsc-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25}
     .vsc-header{position:relative;z-index:1;display:flex;align-items:center;gap:8px;padding:14px 18px;background:rgba(0,0,0,.55);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
-    .vsc-name{font-size:16px;font-weight:700;letter-spacing:.02em}
-    .vsc-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;color:#fff;letter-spacing:.04em}
+    .vsc-name{font-size:16px;font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:5px}
+    .vsc-verified{font-size:11px;font-weight:800;color:#6200EE;background:rgba(98,0,238,.15);border:1px solid rgba(98,0,238,.4);border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+    .vsc-badge{font-size:10px;font-weight:700;padding:2px 10px;border-radius:999px;color:rgba(245,245,245,.85);letter-spacing:.04em;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
     .vsc-body{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;padding:16px 28px;gap:12px;overflow:hidden}
     .vsc-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2);flex-shrink:0}
     .vsc-avatar-ph{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -14,9 +15,12 @@
     .vsc-stat-val{font-size:20px;font-weight:700}
     .vsc-stat-lbl{font-size:11px;color:rgba(245,245,245,.55)}
     .vsc-reviews-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(245,245,245,.4);width:100%}
-    .vsc-reviews{width:100%;display:flex;flex-direction:column;gap:6px}
-    .vsc-rrow{font-size:12px;color:rgba(245,245,245,.8);display:flex;align-items:center;gap:6px}
+    .vsc-reviews-wrap{width:100%;display:flex;gap:12px;align-items:flex-start}
+    .vsc-reviews{flex:1;display:flex;flex-direction:column;gap:6px}
+    .vsc-rrow{font-size:12px;color:rgba(245,245,245,.8);display:flex;align-items:center;gap:6px;text-decoration:none}
+    .vsc-rrow:hover{color:#fff}
     .vsc-rdot{font-size:9px;color:rgba(245,245,245,.35)}
+    .vsc-badges{display:flex;flex-direction:column;gap:5px;align-items:flex-end;margin-right:4px;padding-top:2px}
     .vsc-cta{margin-top:auto;background:#6200EE;border:none;color:#fff;padding:8px 22px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',system-ui,sans-serif;text-decoration:none;display:inline-block}
     .vsc-footer{position:relative;z-index:1;display:flex;align-items:center;gap:14px;padding:10px 18px;background:rgba(0,0,0,.55);border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
     .vsc-social-link{display:flex;align-items:center;opacity:.75}
@@ -28,10 +32,12 @@
       <div class="vsc-bg" [style.background-image]="'url(' + card()!.card_mid_bg + ')'"></div>
     }
     <div class="vsc-header">
-      <span class="vsc-name">{{ card()!.name }}</span>
-      @for (b of card()!.badges; track b) {
-        <span class="vsc-badge" [style.background]="badgeHex(b)">#{{ b }}</span>
-      }
+      <span class="vsc-name">
+        {{ card()!.name }}
+        @if (isVerified()) {
+          <span class="vsc-verified" title="Verificado">✓</span>
+        }
+      </span>
     </div>
     <div class="vsc-body">
       @if (card()!.avatar && !avatarBroken()) {
@@ -46,22 +52,33 @@
       <div class="vsc-stats">
         <div class="vsc-stat">
           <span class="vsc-stat-val">{{ card()!.reviews_count }}</span>
-          <span class="vsc-stat-lbl">reseñas</span>
+          <span class="vsc-stat-lbl">{{ 'public_profile.reviews_label' | transloco }}</span>
         </div>
         <div class="vsc-stat">
           <span class="vsc-stat-val">{{ card()!.followers_count }}</span>
-          <span class="vsc-stat-lbl">seguidores</span>
+          <span class="vsc-stat-lbl">{{ 'public_profile.followers_label' | transloco }}</span>
         </div>
       </div>
       @if (summaryReviews().length) {
-        <p class="vsc-reviews-title">Mis últimas reseñas</p>
-        <div class="vsc-reviews">
-          @for (r of summaryReviews(); track r.product.slug) {
-            <div class="vsc-rrow"><span class="vsc-rdot">▸</span><span>{{ r.product.title }}</span></div>
+        <p class="vsc-reviews-title">{{ 'public_profile.last_reviews' | transloco }}</p>
+        <div class="vsc-reviews-wrap">
+          <div class="vsc-reviews">
+            @for (r of summaryReviews(); track r.product.slug) {
+              <a class="vsc-rrow" [href]="'/product/' + r.product.type + '/' + r.product.slug" target="_blank" rel="noopener">
+                <span class="vsc-rdot">▸</span><span>{{ r.product.title }}</span>
+              </a>
+            }
+          </div>
+          @if (displayBadges().length) {
+            <div class="vsc-badges">
+              @for (b of displayBadges(); track b) {
+                <span class="vsc-badge">{{ 'badges.' + b | transloco }}</span>
+              }
+            </div>
           }
         </div>
       }
-      <a class="vsc-cta" [href]="publicProfileUrl()">Ver perfil completo →</a>
+      <a class="vsc-cta" [href]="publicProfileUrl()">{{ 'public_profile.view_profile' | transloco }}</a>
     </div>
     <div class="vsc-footer">
       @for (e of socialEntries(); track e[0]) {

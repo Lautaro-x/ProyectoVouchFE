@@ -1,0 +1,121 @@
+<div class="admin-toolbar">
+  <h1 class="admin-page-title">{{ 'admin.announcements.title' | transloco }}</h1>
+  <button class="btn-primary" (click)="openCreate()">{{ 'admin.common.new_masc' | transloco }}</button>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>{{ 'admin.common.name' | transloco }}</th>
+        <th>{{ 'admin.surveys.col_starts' | transloco }}</th>
+        <th>{{ 'admin.surveys.col_ends' | transloco }}</th>
+        <th>{{ 'admin.surveys.col_status' | transloco }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (a of announcements(); track a.id) {
+        <tr>
+          <td>{{ titleFor(a.title) }}</td>
+          <td>{{ utcToLocal(a.starts_at) }}</td>
+          <td>{{ utcToLocal(a.ends_at) }}</td>
+          <td>
+            <span class="status-pill status-{{ statusClass(a.status) }}">
+              {{ 'admin.surveys.status_' + a.status | transloco }}
+            </span>
+          </td>
+          <td class="admin-table-actions">
+            <button class="btn-sm" (click)="openEdit(a)">{{ 'admin.common.edit' | transloco }}</button>
+            <button class="btn-sm btn-danger" (click)="openDelete(a)">{{ 'admin.common.delete' | transloco }}</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<!-- Create / Edit dialog -->
+<app-dialog
+  [isOpen]="editOpen()"
+  [title]="target() ? ('admin.announcements.edit_title' | transloco) : ('admin.announcements.new_title' | transloco)"
+  (closed)="editOpen.set(false)">
+
+  <div class="announcement-form">
+
+    <div class="lang-tabs">
+      @for (lang of LANGS; track lang) {
+        <button
+          class="lang-tab"
+          [class.active]="activeLang() === lang"
+          [class.complete]="isLangComplete(lang)"
+          (click)="activeLang.set(lang)">
+          {{ lang.toUpperCase() }}
+          @if (isLangComplete(lang)) {
+            <span class="lang-check">✓</span>
+          }
+        </button>
+      }
+    </div>
+
+    <div class="field">
+      <label>{{ 'admin.common.name' | transloco }}</label>
+      <input type="text"
+             [value]="form().title[activeLang()] || ''"
+             (input)="setTitle(activeLang(), $any($event.target).value)"
+             [placeholder]="'admin.announcements.title_ph' | transloco" />
+    </div>
+
+    <div class="field">
+      <label>{{ 'admin.announcements.body_label' | transloco }}</label>
+      <textarea
+        [value]="form().body[activeLang()] || ''"
+        (input)="setBody(activeLang(), $any($event.target).value)"
+        [placeholder]="'admin.announcements.body_ph' | transloco"></textarea>
+    </div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label>{{ 'admin.surveys.starts_label' | transloco }}</label>
+        <input type="datetime-local" [value]="form().starts_at"
+               (input)="setField('starts_at', $any($event.target).value)" />
+      </div>
+      <div class="field">
+        <label>{{ 'admin.surveys.ends_label' | transloco }}</label>
+        <input type="datetime-local" [value]="form().ends_at"
+               (input)="setField('ends_at', $any($event.target).value)" />
+      </div>
+    </div>
+
+    <div class="lang-progress">
+      <span class="lang-progress-label">{{ 'admin.surveys.translations_label' | transloco }}:</span>
+      @for (lang of LANGS; track lang) {
+        <span class="lang-dot" [class.done]="isLangComplete(lang)" [title]="lang.toUpperCase()">
+          {{ lang.toUpperCase() }}
+        </span>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-secondary" (click)="editOpen.set(false)" type="button">
+        {{ 'admin.common.cancel' | transloco }}
+      </button>
+      <button class="btn-primary" [disabled]="saving() || !canSave()" (click)="save()" type="button">
+        {{ saving() ? ('admin.common.save' | transloco) + '...' : ('admin.common.save' | transloco) }}
+      </button>
+    </div>
+  </div>
+</app-dialog>
+
+<!-- Delete dialog -->
+<app-dialog
+  [isOpen]="deleteOpen()"
+  [title]="'admin.announcements.delete_title' | transloco"
+  (closed)="deleteOpen.set(false)">
+
+  <p class="delete-warning">{{ 'admin.common.irreversible' | transloco }}</p>
+  <div class="form-actions">
+    <button class="btn-secondary" (click)="deleteOpen.set(false)">{{ 'admin.common.cancel' | transloco }}</button>
+    <button class="btn-danger" (click)="confirmDelete()">{{ 'admin.common.confirm' | transloco }}</button>
+  </div>
+</app-dialog>

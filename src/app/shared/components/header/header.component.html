@@ -16,6 +16,42 @@
     <nav class="header-nav desktop-only">
       <app-lang-switcher />
       @if (authService.currentUser()) {
+        @if (activeAnnouncements().length > 0) {
+          <div class="survey-wrap" (click)="$event.stopPropagation()">
+            <button class="survey-icon announcement-icon" (click)="toggleAnnouncementTooltip()" [title]="'announcement.icon_title' | transloco">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 11V3l-5 2.5L8 6H4a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h1l1.5 6H9v-6h2l7 3.5V11z"/>
+              </svg>
+            </button>
+            @if (announcementTooltipOpen()) {
+              <div class="survey-tooltip">
+                @for (a of activeAnnouncements(); track a.id) {
+                  <button class="survey-tooltip-item" (click)="openAnnouncement(a)">
+                    {{ t(a.title) }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        }
+        @if (activeSurveys().length > 0) {
+          <div class="survey-wrap" (click)="$event.stopPropagation()">
+            <button class="survey-icon" (click)="toggleTooltip()" [title]="'survey.icon_title' | transloco">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm1 9h-2v-6h2v6z"/>
+              </svg>
+            </button>
+            @if (tooltipOpen()) {
+              <div class="survey-tooltip">
+                @for (s of activeSurveys(); track s.id) {
+                  <button class="survey-tooltip-item" (click)="openSurvey(s)">
+                    {{ t(s.title) }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        }
         <a class="header-user" routerLink="/user/profile">
           <span class="header-username">{{ authService.currentUser()!.name }}</span>
           @if (authService.currentUser()!.role === 'admin') {
@@ -31,6 +67,42 @@
     <!-- Mobile right side -->
     <div class="header-mobile mobile-only">
       @if (authService.currentUser()) {
+        @if (activeAnnouncements().length > 0) {
+          <div class="survey-wrap" (click)="$event.stopPropagation()">
+            <button class="survey-icon announcement-icon" (click)="toggleAnnouncementTooltip()" [title]="'announcement.icon_title' | transloco">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 11V3l-5 2.5L8 6H4a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h1l1.5 6H9v-6h2l7 3.5V11z"/>
+              </svg>
+            </button>
+            @if (announcementTooltipOpen()) {
+              <div class="survey-tooltip survey-tooltip-left">
+                @for (a of activeAnnouncements(); track a.id) {
+                  <button class="survey-tooltip-item" (click)="openAnnouncement(a)">
+                    {{ t(a.title) }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        }
+        @if (activeSurveys().length > 0) {
+          <div class="survey-wrap" (click)="$event.stopPropagation()">
+            <button class="survey-icon" (click)="toggleTooltip()" [title]="'survey.icon_title' | transloco">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm1 9h-2v-6h2v6z"/>
+              </svg>
+            </button>
+            @if (tooltipOpen()) {
+              <div class="survey-tooltip survey-tooltip-left">
+                @for (s of activeSurveys(); track s.id) {
+                  <button class="survey-tooltip-item" (click)="openSurvey(s)">
+                    {{ t(s.title) }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        }
         <a class="header-user" routerLink="/user/profile">
           <span class="header-username">{{ authService.currentUser()!.name }}</span>
           @if (authService.currentUser()!.role === 'admin') {
@@ -67,3 +139,42 @@
     </div>
   }
 </header>
+
+<!-- Announcement dialog -->
+<app-dialog
+  [isOpen]="announcementOpen()"
+  [title]="selectedAnnouncement() ? t(selectedAnnouncement()!.title) : ''"
+  (closed)="announcementOpen.set(false)">
+  @if (selectedAnnouncement()) {
+    <p class="announcement-body">{{ t(selectedAnnouncement()!.body) }}</p>
+  }
+</app-dialog>
+
+<!-- Survey dialog -->
+<app-dialog
+  [isOpen]="surveyOpen()"
+  [title]="selectedSurvey() ? t(selectedSurvey()!.title) : ''"
+  (closed)="surveyOpen.set(false)">
+
+  @if (surveyDone()) {
+    <p class="survey-thanks">{{ 'survey.thanks' | transloco }}</p>
+  } @else if (selectedSurvey()) {
+    <div class="survey-body">
+      <p class="survey-question">{{ t(selectedSurvey()!.question) }}</p>
+      <div class="survey-options">
+        @for (opt of selectedSurvey()!.options; track opt.id) {
+          <label class="survey-option" [class.selected]="selectedOption() === opt.id">
+            <input type="radio" name="survey" [value]="opt.id"
+                   (change)="selectedOption.set(opt.id)" />
+            {{ t(opt.text) }}
+          </label>
+        }
+      </div>
+      <button class="survey-submit"
+              [disabled]="selectedOption() === null || submitting()"
+              (click)="submitSurvey()">
+        {{ submitting() ? ('survey.submitting' | transloco) : ('survey.submit' | transloco) }}
+      </button>
+    </div>
+  }
+</app-dialog>

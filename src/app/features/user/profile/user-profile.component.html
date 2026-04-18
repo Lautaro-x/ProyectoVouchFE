@@ -17,12 +17,19 @@
         }
       </div>
 
-      <p class="profile-name-display">{{ name() || '—' }}</p>
+      <p class="profile-name-display">
+        {{ name() || '—' }}
+        @if (badges().includes('verificado')) {
+          <span class="profile-verified" title="Verificado">✓</span>
+        }
+      </p>
 
       @if (badges().length) {
         <div class="profile-badges">
           @for (badge of badges(); track badge) {
-            <span class="profile-badge" [style.background]="badgeColor(badge)">#{{ badge }}</span>
+            @if (badge !== 'verificado') {
+              <span class="profile-badge">{{ 'badges.' + badge | transloco }}</span>
+            }
           }
         </div>
       }

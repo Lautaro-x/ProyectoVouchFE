@@ -24,6 +24,8 @@ export class AdminLayoutComponent {
     { path: 'products',   labelKey: 'admin.nav.products' },
     { path: 'reviews',    labelKey: 'admin.nav.reviews' },
     { path: 'users',      labelKey: 'admin.nav.users' },
+    { path: 'surveys',       labelKey: 'admin.nav.surveys' },
+    { path: 'announcements', labelKey: 'admin.nav.announcements' },
   ];
 
   logout(): void {

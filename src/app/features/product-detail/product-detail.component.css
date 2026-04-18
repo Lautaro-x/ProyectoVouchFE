@@ -54,6 +54,11 @@
   padding: 0.65rem 1rem;
 }
 
+.score-block--trust {
+  border-color: var(--color-primary);
+  border-style: dashed;
+}
+
 .score-label {
   flex: 1;
   font-size: 0.78rem;
@@ -289,6 +294,24 @@
   font-weight: 600;
   color: var(--color-text);
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.review-verified {
+  font-size: 9px;
+  font-weight: 800;
+  color: #6200EE;
+  background: rgba(98, 0, 238, 0.15);
+  border: 1px solid rgba(98, 0, 238, 0.4);
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .review-author:hover {

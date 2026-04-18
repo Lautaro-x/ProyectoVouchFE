@@ -1,4 +1,4 @@
-import { Component, computed, input, ChangeDetectionStrategy,
+import { Component, computed, HostListener, input, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -16,9 +16,19 @@ import { IgdbCoverPipe } from '../../pipes/igdb-cover.pipe';
 export class GameCardComponent {
   product = input.required<ProductCard>();
 
+  readonly hovered = signal(false);
+
   gradeClass = computed(() =>
     this.product().letter_grade.replace('+', 'plus').replace('-', 'minus').toLowerCase()
   );
 
+  trustGradeClass = computed(() => {
+    const g = this.product().trust_grade;
+    return g ? g.replace('+', 'plus').replace('-', 'minus').toLowerCase() : '';
+  });
+
   detailLink = computed(() => ['/product', this.product().type, this.product().slug]);
+
+  @HostListener('mouseenter') onMouseEnter(): void { this.hovered.set(true); }
+  @HostListener('mouseleave') onMouseLeave(): void { this.hovered.set(false); }
 }

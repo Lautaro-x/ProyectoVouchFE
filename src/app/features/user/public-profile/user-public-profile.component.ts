@@ -4,30 +4,16 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserCardData } from '../../../core/models/user.model';
-import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
+import { UserProfileCardComponent } from '../../../shared/components/user-profile-card/user-profile-card.component';
 
-const GRADE_HEX: Record<string, string> = {
-  S:  '#ffffff',
-  'A+': '#ffd600', A:  '#69f0ae',
-  'B+': '#00e5ff', B:  '#40c4ff',
-  'C+': '#ea80fc', C:  '#ffd740',
-  'D+': '#ff6e40', D:  '#ff9100',
-  'E+': '#ff3d00', E:  '#ff1744',
-  F:  '#ff5252',
-};
-
-const BADGE_HEX: Record<string, string> = {
-  verified:      '#6200EE',
-  top_critic:    '#f4a261',
-  early_adopter: '#7c4dff',
-  beta_tester:   '#00b894',
-};
+const REVIEW_LADDER   = ['el-critico', 'critico-maestro', 'critico-senior', 'critico-junior', 'critico-novel'];
+const FOLLOWER_LADDER = ['critico-influyente', 'critico-famoso', 'critico-fiable', 'critico-solicitado', 'critico-amigo'];
 
 @Component({
   selector: 'app-user-public-profile',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, IgdbCoverPipe],
+  imports: [TranslocoModule, UserProfileCardComponent],
   templateUrl: './user-public-profile.component.html',
   styleUrl: './user-public-profile.component.css',
 })
@@ -46,36 +32,24 @@ export class UserPublicProfileComponent implements OnInit {
   readonly midBg   = signal('');
   readonly miniBg  = signal('');
 
-  readonly isSelf = computed(() =>
-    this.card()?.id === this.auth.currentUser()?.id
-  );
-
   readonly copiedBig  = signal(false);
   readonly copiedMid  = signal(false);
   readonly copiedMini = signal(false);
 
-  copyLink(type: 'big' | 'mid' | 'mini'): void {
-    const id  = this.card()?.id;
-    if (!id) return;
-    const url = `${this.doc.location.origin}/card/${type}/${id}`;
-    navigator.clipboard.writeText(url).then(() => {
-      if (type === 'big')  { this.copiedBig.set(true);  setTimeout(() => this.copiedBig.set(false),  2000); }
-      if (type === 'mid')  { this.copiedMid.set(true);  setTimeout(() => this.copiedMid.set(false),  2000); }
-      if (type === 'mini') { this.copiedMini.set(true); setTimeout(() => this.copiedMini.set(false), 2000); }
-    });
-  }
+  readonly previewBigCard = computed<UserCardData | null>(() => {
+    const c = this.card();
+    if (!c) return null;
+    return { ...c, card_big_bg: this.fullBg() || null };
+  });
 
   readonly socialEntries = computed(() =>
     Object.entries(this.card()?.social_links ?? {}).filter(([, url]) => !!url)
   );
-
-  readonly fullReviews    = computed(() => this.card()?.last_reviews?.slice(0, 3) ?? []);
   readonly summaryReviews = computed(() => this.card()?.last_reviews?.slice(0, 5) ?? []);
 
   readonly publicProfileUrl = computed(() => {
     const id = this.card()?.id;
-    if (!id) return '';
-    return `${this.doc.location.origin}/u/${id}`;
+    return id ? `${this.doc.location.origin}/u/${id}` : '';
   });
 
   ngOnInit(): void {
@@ -91,7 +65,6 @@ export class UserPublicProfileComponent implements OnInit {
   saveBackgrounds(): void {
     this.savingBg.set(true);
     this.savedBg.set(false);
-
     this.api.updateProfile({
       card_big_bg:  this.fullBg() || null,
       card_mid_bg:  this.midBg() || null,
@@ -103,13 +76,28 @@ export class UserPublicProfileComponent implements OnInit {
     });
   }
 
+  copyLink(type: 'big' | 'mid' | 'mini'): void {
+    const id = this.card()?.id;
+    if (!id) return;
+    const url = `${this.doc.location.origin}/card/${type}/${id}`;
+    navigator.clipboard.writeText(url).then(() => {
+      if (type === 'big')  { this.copiedBig.set(true);  setTimeout(() => this.copiedBig.set(false),  2000); }
+      if (type === 'mid')  { this.copiedMid.set(true);  setTimeout(() => this.copiedMid.set(false),  2000); }
+      if (type === 'mini') { this.copiedMini.set(true); setTimeout(() => this.copiedMini.set(false), 2000); }
+    });
+  }
+
   onAvatarError(): void { this.avatarBroken.set(true); }
 
-  gradeHex(grade: string): string {
-    return GRADE_HEX[grade] ?? '#9e9e9e';
+  displayBadges(badges: string[]): string[] {
+    const result: string[] = [];
+    const topReview   = REVIEW_LADDER.find(b => badges.includes(b));
+    const topFollower = FOLLOWER_LADDER.find(b => badges.includes(b));
+    if (topReview)   result.push(topReview);
+    if (topFollower) result.push(topFollower);
+    if (badges.includes('critico-rapido')) result.push('critico-rapido');
+    return result;
   }
 
-  badgeHex(slug: string): string {
-    return BADGE_HEX[slug] ?? '#9e9e9e';
-  }
+  isVerified(badges: string[]): boolean { return badges.includes('verificado'); }
 }

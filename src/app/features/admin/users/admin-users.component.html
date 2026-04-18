@@ -76,7 +76,7 @@
     @for (u of page()?.data ?? []; track u.id) {
       <tr [class.banned-row]="u.banned_at">
         <td class="muted">{{ u.id }}</td>
-        <td>{{ u.name }}</td>
+        <td><a class="user-link" [routerLink]="['/u', u.id]">{{ u.name }}</a></td>
         <td class="muted">{{ u.email }}</td>
         <td>
           <select [value]="u.role" (change)="changeRole(u.id, $any($event.target).value)">
@@ -94,6 +94,12 @@
         </td>
         <td class="muted">{{ u.created_at | slice:0:10 }}</td>
         <td class="actions">
+          <button
+            class="btn-sm"
+            [class.active]="u.badges.includes('verificado')"
+            [title]="u.badges.includes('verificado') ? ('admin.users.revoke_verified' | transloco) : ('admin.users.grant_verified' | transloco)"
+            (click)="toggleVerified(u)"
+          >✓</button>
           @if (u.banned_at) {
             <button class="btn-sm" (click)="unban(u)">{{ 'admin.users.action_unban' | transloco }}</button>
           } @else {

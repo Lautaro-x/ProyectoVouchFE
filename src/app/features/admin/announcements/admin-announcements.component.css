@@ -1,0 +1,15 @@
+@import '../admin-shared.css';
+@import '../surveys/admin-surveys.component.css';
+
+.announcement-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 560px;
+  max-width: 100%;
+}
+
+.announcement-form .field textarea {
+  min-height: 120px;
+  resize: vertical;
+}

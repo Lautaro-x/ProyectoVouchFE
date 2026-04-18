@@ -1,0 +1,298 @@
+.upc-card {
+  position: relative;
+  width: 720px;
+  height: 430px;
+  overflow: hidden;
+  border-radius: 12px;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  background: #1c1c1c;
+  color: #F5F5F5;
+}
+
+.upc-card.upc-responsive {
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+  overflow: visible;
+  border-radius: 14px;
+}
+
+.upc-bg {
+  position: absolute;
+  inset: 0;
+  background-image: var(--upc-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.upc-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  background: rgba(0, 0, 0, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.upc-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.upc-verified {
+  font-size: 11px;
+  font-weight: 800;
+  color: #6200EE;
+  background: rgba(98, 0, 238, 0.15);
+  border: 1px solid rgba(98, 0, 238, 0.4);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.upc-body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.upc-card.upc-responsive .upc-body {
+  overflow: visible;
+}
+
+.upc-avatar-col {
+  width: 160px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.35);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.upc-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.upc-avatar-ph {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upc-avatar-ph svg {
+  width: 46px;
+  height: 46px;
+  fill: rgba(245, 245, 245, 0.4);
+  flex-shrink: 0;
+}
+
+.upc-badges {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.upc-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 999px;
+  color: rgba(245, 245, 245, 0.85);
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  text-align: center;
+}
+
+.upc-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 20px;
+}
+
+.upc-stat {
+  font-size: 13px;
+  color: rgba(245, 245, 245, 0.65);
+  margin: 0;
+}
+
+.upc-stat strong {
+  color: #F5F5F5;
+  font-size: 22px;
+  margin-right: 4px;
+}
+
+.upc-reviews-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(245, 245, 245, 0.4);
+  margin: 0;
+}
+
+.upc-reviews {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.upc-rcard {
+  position: relative;
+  width: 72px;
+  height: 96px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #2c2c2c;
+  display: block;
+  text-decoration: none;
+}
+
+.upc-rcard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.upc-rscore {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.upc-email {
+  font-size: 12px;
+  color: rgba(245, 245, 245, 0.55);
+}
+
+.upc-follow-btn {
+  margin-top: auto;
+  align-self: flex-start;
+  background: #6200EE;
+  border: none;
+  color: #fff;
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', system-ui, sans-serif;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.upc-follow-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.upc-follow-btn.following {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(245, 245, 245, 0.7);
+}
+
+.upc-follow-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.upc-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.55);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.upc-social-link {
+  display: flex;
+  align-items: center;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+}
+
+.upc-social-link:hover {
+  opacity: 1;
+}
+
+.upc-social-link svg {
+  width: 20px;
+  height: 20px;
+  fill: #F5F5F5;
+}
+
+@media (max-width: 480px) {
+  .upc-card.upc-responsive .upc-avatar-col {
+    width: 100px;
+    padding: 16px 12px;
+  }
+
+  .upc-card.upc-responsive .upc-avatar,
+  .upc-card.upc-responsive .upc-avatar-ph {
+    width: 70px;
+    height: 70px;
+  }
+
+  .upc-card.upc-responsive .upc-avatar-ph svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .upc-card.upc-responsive .upc-info {
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .upc-card.upc-responsive .upc-stat strong {
+    font-size: 18px;
+  }
+}

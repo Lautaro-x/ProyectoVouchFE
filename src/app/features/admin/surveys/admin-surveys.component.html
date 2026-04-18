@@ -1,0 +1,181 @@
+<div class="admin-toolbar">
+  <h1 class="admin-page-title">{{ 'admin.surveys.title' | transloco }}</h1>
+  <button class="btn-primary" (click)="openCreate()">{{ 'admin.common.new_fem' | transloco }}</button>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>{{ 'admin.common.name' | transloco }}</th>
+        <th>{{ 'admin.surveys.col_starts' | transloco }}</th>
+        <th>{{ 'admin.surveys.col_ends' | transloco }}</th>
+        <th>{{ 'admin.surveys.col_responses' | transloco }}</th>
+        <th>{{ 'admin.surveys.col_status' | transloco }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (s of surveys(); track s.id) {
+        <tr>
+          <td>{{ titleFor(s.title) }}</td>
+          <td>{{ utcToLocal(s.starts_at) }}</td>
+          <td>{{ utcToLocal(s.ends_at) }}</td>
+          <td>{{ s.responses_count }}</td>
+          <td>
+            <span class="status-pill status-{{ statusClass(s.status) }}">
+              {{ 'admin.surveys.status_' + s.status | transloco }}
+            </span>
+          </td>
+          <td class="admin-table-actions">
+            <button class="btn-sm" (click)="openResults(s)">{{ 'admin.surveys.results_btn' | transloco }}</button>
+            <button class="btn-sm" (click)="openEdit(s)">{{ 'admin.common.edit' | transloco }}</button>
+            <button class="btn-sm btn-danger" (click)="openDelete(s)">{{ 'admin.common.delete' | transloco }}</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<!-- Create / Edit dialog -->
+<app-dialog
+  [isOpen]="editOpen()"
+  [title]="target() ? ('admin.surveys.edit_title' | transloco) : ('admin.surveys.new_title' | transloco)"
+  (closed)="editOpen.set(false)">
+
+  <div class="survey-form">
+
+    <!-- Language tabs -->
+    <div class="lang-tabs">
+      @for (lang of LANGS; track lang) {
+        <button
+          class="lang-tab"
+          [class.active]="activeLang() === lang"
+          [class.complete]="isLangComplete(lang)"
+          (click)="activeLang.set(lang)">
+          {{ lang.toUpperCase() }}
+          @if (isLangComplete(lang)) {
+            <span class="lang-check">✓</span>
+          }
+        </button>
+      }
+    </div>
+
+    <!-- Title -->
+    <div class="field">
+      <label>{{ 'admin.common.name' | transloco }}</label>
+      <input type="text"
+             [value]="form().title[activeLang()] || ''"
+             (input)="setTitle(activeLang(), $any($event.target).value)"
+             [placeholder]="'admin.surveys.title_ph' | transloco" />
+    </div>
+
+    <!-- Question -->
+    <div class="field">
+      <label>{{ 'admin.surveys.question_label' | transloco }}</label>
+      <textarea
+        [value]="form().question[activeLang()] || ''"
+        (input)="setQuestion(activeLang(), $any($event.target).value)"
+        [placeholder]="'admin.surveys.question_ph' | transloco"></textarea>
+    </div>
+
+    <!-- Dates (language-agnostic) -->
+    <div class="form-grid">
+      <div class="field">
+        <label>{{ 'admin.surveys.starts_label' | transloco }}</label>
+        <input type="datetime-local" [value]="form().starts_at"
+               (input)="setField('starts_at', $any($event.target).value)" />
+      </div>
+      <div class="field">
+        <label>{{ 'admin.surveys.ends_label' | transloco }}</label>
+        <input type="datetime-local" [value]="form().ends_at"
+               (input)="setField('ends_at', $any($event.target).value)" />
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div class="field">
+      <label>{{ 'admin.surveys.options_label' | transloco }}</label>
+      <div class="options-list">
+        @for (opt of form().options; track $index) {
+          <div class="option-row">
+            <span class="option-num">{{ $index + 1 }}</span>
+            <input type="text"
+                   [value]="opt[activeLang()] || ''"
+                   (input)="setOption($index, activeLang(), $any($event.target).value)"
+                   [placeholder]="'admin.surveys.option_ph' | transloco" />
+            @if (form().options.length > 2) {
+              <button class="btn-remove-option" (click)="removeOption($index)" type="button">✕</button>
+            }
+          </div>
+        }
+      </div>
+      <button class="btn-add-option" (click)="addOption()" type="button">
+        + {{ 'admin.surveys.add_option' | transloco }}
+      </button>
+    </div>
+
+    <!-- Translation progress -->
+    <div class="lang-progress">
+      <span class="lang-progress-label">{{ 'admin.surveys.translations_label' | transloco }}:</span>
+      @for (lang of LANGS; track lang) {
+        <span class="lang-dot" [class.done]="isLangComplete(lang)" [title]="lang.toUpperCase()">
+          {{ lang.toUpperCase() }}
+        </span>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-secondary" (click)="editOpen.set(false)" type="button">
+        {{ 'admin.common.cancel' | transloco }}
+      </button>
+      <button class="btn-primary" [disabled]="saving() || !canSave()" (click)="save()" type="button">
+        {{ saving() ? ('admin.common.save' | transloco) + '...' : ('admin.common.save' | transloco) }}
+      </button>
+    </div>
+  </div>
+</app-dialog>
+
+<!-- Results dialog -->
+<app-dialog
+  [isOpen]="resultsOpen()"
+  [title]="target() ? titleFor(target()!.title) : ''"
+  (closed)="resultsOpen.set(false)">
+
+  @if (!results()) {
+    <p class="results-loading">{{ 'common.loading' | transloco }}</p>
+  } @else {
+    <div class="results-body">
+      <p class="results-total">
+        {{ 'admin.surveys.results_total' | transloco }}: <strong>{{ results()!.total }}</strong>
+      </p>
+      <div class="results-options">
+        @for (opt of results()!.options; track opt.id) {
+          <div class="result-option">
+            <div class="result-option-header">
+              <span class="result-option-text">{{ titleFor(opt.text) }}</span>
+              <span class="result-option-stats">{{ opt.count }} &nbsp;·&nbsp; {{ opt.percent }}%</span>
+            </div>
+            <div class="result-bar-track">
+              <div class="result-bar-fill" [style.width.%]="opt.percent"></div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</app-dialog>
+
+<!-- Delete dialog -->
+<app-dialog
+  [isOpen]="deleteOpen()"
+  [title]="'admin.surveys.delete_title' | transloco"
+  (closed)="deleteOpen.set(false)">
+
+  <p class="delete-warning">{{ 'admin.common.irreversible' | transloco }}</p>
+  <div class="form-actions">
+    <button class="btn-secondary" (click)="deleteOpen.set(false)">{{ 'admin.common.cancel' | transloco }}</button>
+    <button class="btn-danger" (click)="confirmDelete()">{{ 'admin.common.confirm' | transloco }}</button>
+  </div>
+</app-dialog>

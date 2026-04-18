@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { SlicePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { AdminUser, Paginated } from '../models/admin.models';
@@ -9,7 +10,7 @@ import { DialogComponent } from '../../../shared/components/dialog/dialog.compon
 @Component({
   selector: 'app-admin-users',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SlicePipe, TranslocoModule, DialogComponent],
+  imports: [SlicePipe, RouterLink, TranslocoModule, DialogComponent],
   templateUrl: './admin-users.component.html',
   styleUrl: './admin-users.component.css',
 })
@@ -92,6 +93,17 @@ export class AdminUsersComponent implements OnInit {
 
   changeRole(id: number, role: string): void {
     this.api.updateUserRole(id, role).subscribe(() => this.load(this.page()?.current_page ?? 1));
+  }
+
+  toggleVerified(user: AdminUser): void {
+    const isVerified = user.badges?.includes('verificado') ?? false;
+    const req = isVerified ? this.api.revokeVerified(user.id) : this.api.grantVerified(user.id);
+    req.subscribe(res => {
+      this.page.update(p => p ? {
+        ...p,
+        data: p.data.map(u => u.id === user.id ? { ...u, badges: res.badges } : u),
+      } : p);
+    });
   }
 
   openConfirm(title: string, subtitle: string, action: () => void): void {

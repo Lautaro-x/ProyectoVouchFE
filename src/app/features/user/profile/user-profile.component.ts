@@ -19,25 +19,17 @@ export class UserProfileComponent implements OnInit {
 
   readonly SOCIAL_NETWORKS = SOCIAL_NETWORKS;
 
-  readonly BADGE_COLORS: Record<string, string> = {
-    verified:      'var(--color-accent)',
-    top_critic:    '#f4a261',
-    early_adopter: '#7c4dff',
-    beta_tester:   '#00b894',
-  };
-
-  readonly loading      = signal(true);
-  readonly saving       = signal(false);
-  readonly saved        = signal(false);
-  readonly email        = signal('');
-  readonly badges       = signal<string[]>([]);
-  readonly avatarBroken = signal(false);
-
-  readonly name          = signal('');
-  readonly avatarUrl     = signal('');
-  readonly showEmail     = signal(false);
-  readonly reviewsPublic = signal(true);
-  readonly socialLinks   = signal<SocialLinks>({});
+  readonly loading        = signal(true);
+  readonly saving         = signal(false);
+  readonly saved          = signal(false);
+  readonly email          = signal('');
+  readonly badges         = signal<string[]>([]);
+  readonly avatarBroken   = signal(false);
+  readonly name           = signal('');
+  readonly avatarUrl      = signal('');
+  readonly showEmail      = signal(false);
+  readonly reviewsPublic  = signal(true);
+  readonly socialLinks    = signal<SocialLinks>({});
 
   ngOnInit(): void {
     this.api.getProfile().subscribe(profile => {
@@ -50,10 +42,6 @@ export class UserProfileComponent implements OnInit {
       this.badges.set(profile.badges ?? []);
       this.loading.set(false);
     });
-  }
-
-  badgeColor(slug: string): string {
-    return this.BADGE_COLORS[slug] ?? 'var(--color-text-muted)';
   }
 
   setAvatarUrl(url: string): void {
@@ -90,7 +78,6 @@ export class UserProfileComponent implements OnInit {
   save(): void {
     this.saving.set(true);
     this.saved.set(false);
-
     this.api.updateProfile({
       name:           this.name(),
       avatar:         this.avatarUrl() || null,

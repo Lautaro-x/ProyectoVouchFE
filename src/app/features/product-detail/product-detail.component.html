@@ -16,11 +16,11 @@
       }
 
       <div class="detail-scores">
-        @if (product()!.scores.global_score !== null) {
-          <div class="score-block">
-            <span class="score-label">{{ 'product.score_global' | transloco }}</span>
-            <span [class]="'grade ' + gradeClass(product()!.scores.global_grade)">
-              {{ product()!.scores.global_grade }}
+        @if (auth.isAuthenticated() && product()!.scores.trust_score !== null) {
+          <div class="score-block score-block--trust">
+            <span class="score-label">{{ 'product.score_trust' | transloco }}</span>
+            <span [class]="'grade ' + gradeClass(product()!.scores.trust_grade)">
+              {{ product()!.scores.trust_grade }}
             </span>
           </div>
         }
@@ -29,6 +29,14 @@
             <span class="score-label">{{ 'product.score_pro' | transloco }}</span>
             <span [class]="'grade ' + gradeClass(product()!.scores.pro_grade)">
               {{ product()!.scores.pro_grade }}
+            </span>
+          </div>
+        }
+        @if (product()!.scores.global_score !== null) {
+          <div class="score-block">
+            <span class="score-label">{{ 'product.score_global' | transloco }}</span>
+            <span [class]="'grade ' + gradeClass(product()!.scores.global_grade)">
+              {{ product()!.scores.global_grade }}
             </span>
           </div>
         }
@@ -133,7 +141,12 @@
                 </svg>
               </div>
             }
-            <a class="review-author" [routerLink]="['/u', r.user.id]">{{ r.user.name }}</a>
+            <a class="review-author" [routerLink]="['/u', r.user.id]">
+              {{ r.user.name }}
+              @if (r.user.badges.includes('verificado')) {
+                <span class="review-verified" title="Verificado">✓</span>
+              }
+            </a>
             <span class="review-date">{{ r.created_at | date:'dd/MM/yyyy' }}</span>
             <div class="review-grade-wrap">
               <span [class]="'grade ' + gradeClass(r.letter_grade)">{{ r.letter_grade }}</span>

@@ -48,6 +48,33 @@ export interface UserCardData {
   is_following: boolean;
 }
 
+export interface ActiveSurveyOption {
+  id: number;
+  text: Record<string, string>;
+}
+
+export interface ActiveSurvey {
+  id: number;
+  title: Record<string, string>;
+  question: Record<string, string>;
+  options: ActiveSurveyOption[];
+}
+
+export interface ActiveAnnouncement {
+  id: number;
+  title: Record<string, string>;
+  body: Record<string, string>;
+}
+
+export interface BadgeProgress {
+  current: number;
+  threshold: number;
+  awarded: boolean;
+  claimable: boolean;
+}
+
+export type BadgesProgress = Record<string, BadgeProgress>;
+
 export const SOCIAL_NETWORKS: { key: string; label: string }[] = [
   { key: 'youtube',   label: 'YouTube' },
   { key: 'twitch',    label: 'Twitch' },

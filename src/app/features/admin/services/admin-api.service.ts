@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
-  AdminReview, AdminUser, Category, Genre, IgdbGame,
-  Paginated, Platform, Product,
+  AdminReview, AdminUser, Announcement, Category, Genre, IgdbGame,
+  Paginated, Platform, Product, Survey, SurveyResults,
 } from '../models/admin.models';
 
 @Injectable({ providedIn: 'root' })
@@ -104,5 +104,46 @@ export class AdminApiService {
   }
   updateUserRole(id: number, role: string): Observable<AdminUser> {
     return this.http.patch<AdminUser>(`${this.base}/users/${id}/role`, { role });
+  }
+  getSurveys(): Observable<Survey[]> {
+    return this.http.get<Survey[]>(`${this.base}/surveys`);
+  }
+  getSurvey(id: number): Observable<Survey> {
+    return this.http.get<Survey>(`${this.base}/surveys/${id}`);
+  }
+  createSurvey(data: object): Observable<Survey> {
+    return this.http.post<Survey>(`${this.base}/surveys`, data);
+  }
+  updateSurvey(id: number, data: object): Observable<Survey> {
+    return this.http.put<Survey>(`${this.base}/surveys/${id}`, data);
+  }
+  deleteSurvey(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/surveys/${id}`);
+  }
+  getSurveyResults(id: number): Observable<SurveyResults> {
+    return this.http.get<SurveyResults>(`${this.base}/surveys/${id}/results`);
+  }
+
+  getAnnouncements(): Observable<Announcement[]> {
+    return this.http.get<Announcement[]>(`${this.base}/announcements`);
+  }
+  getAnnouncement(id: number): Observable<Announcement> {
+    return this.http.get<Announcement>(`${this.base}/announcements/${id}`);
+  }
+  createAnnouncement(data: object): Observable<Announcement> {
+    return this.http.post<Announcement>(`${this.base}/announcements`, data);
+  }
+  updateAnnouncement(id: number, data: object): Observable<Announcement> {
+    return this.http.put<Announcement>(`${this.base}/announcements/${id}`, data);
+  }
+  deleteAnnouncement(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/announcements/${id}`);
+  }
+
+  grantVerified(id: number): Observable<{ badges: string[] }> {
+    return this.http.post<{ badges: string[] }>(`${this.base}/users/${id}/badge/verify`, {});
+  }
+  revokeVerified(id: number): Observable<{ badges: string[] }> {
+    return this.http.delete<{ badges: string[] }>(`${this.base}/users/${id}/badge/verify`);
   }
 }

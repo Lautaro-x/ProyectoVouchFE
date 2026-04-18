@@ -2,18 +2,18 @@ import { Component, inject, OnInit, signal, computed, DOCUMENT, ChangeDetectionS
 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { UserCardData } from '../../../core/models/user.model';
 
-const BADGE_HEX: Record<string, string> = {
-  verified: '#6200EE', top_critic: '#f4a261', early_adopter: '#7c4dff', beta_tester: '#00b894',
-};
+const REVIEW_LADDER   = ['el-critico', 'critico-maestro', 'critico-senior', 'critico-junior', 'critico-novel'];
+const FOLLOWER_LADDER = ['critico-influyente', 'critico-famoso', 'critico-fiable', 'critico-solicitado', 'critico-amigo'];
 
 @Component({
   selector: 'app-mid-card-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [],
+  imports: [TranslocoModule],
   templateUrl: './mid-card-page.component.html',
   styleUrl: './mid-card-page.component.css',
 })
@@ -30,6 +30,20 @@ export class MidCardPageComponent implements OnInit {
     Object.entries(this.card()?.social_links ?? {}).filter(([, url]) => !!url)
   );
   readonly summaryReviews = computed(() => this.card()?.last_reviews?.slice(0, 5) ?? []);
+
+  readonly isVerified = computed(() =>
+    this.card()?.badges?.includes('verificado') ?? false
+  );
+  readonly displayBadges = computed(() => {
+    const badges = this.card()?.badges ?? [];
+    const result: string[] = [];
+    const topReview   = REVIEW_LADDER.find(b => badges.includes(b));
+    const topFollower = FOLLOWER_LADDER.find(b => badges.includes(b));
+    if (topReview)   result.push(topReview);
+    if (topFollower) result.push(topFollower);
+    if (badges.includes('critico-rapido')) result.push('critico-rapido');
+    return result;
+  });
   readonly publicProfileUrl = computed(() => {
     const id = this.card()?.id;
     return id ? `${this.doc.location.origin}/u/${id}` : '';
@@ -59,5 +73,4 @@ export class MidCardPageComponent implements OnInit {
   }
 
   onAvatarError(): void { this.avatarBroken.set(true); }
-  badgeHex(slug: string): string { return BADGE_HEX[slug] ?? '#9e9e9e'; }
 }

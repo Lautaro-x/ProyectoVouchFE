@@ -31,6 +31,14 @@ export const adminRoutes: Routes = [
         path: 'users',
         loadComponent: () => import('./users/admin-users.component').then(m => m.AdminUsersComponent),
       },
+      {
+        path: 'surveys',
+        loadComponent: () => import('./surveys/admin-surveys.component').then(m => m.AdminSurveysComponent),
+      },
+      {
+        path: 'announcements',
+        loadComponent: () => import('./announcements/admin-announcements.component').then(m => m.AdminAnnouncementsComponent),
+      },
     ],
   },
 ];
