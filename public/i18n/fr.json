@@ -24,6 +24,7 @@
     "score_global": "Utilisateurs",
     "score_pro": "Critiques",
     "score_trust": "Note fiable",
+    "score_follower": "Note de mes abonnés",
     "description": "Description",
     "development": "Développement",
     "developer": "Développeur",
@@ -339,6 +340,19 @@
     "empty_games": "Vous n'avez encore écrit aucun avis. C'est l'occasion de créer le premier !",
     "empty_cta": "Aller aux jeux",
     "no_results": "Aucun avis trouvé avec ce nom."
+  },
+  "consents": {
+    "nav": "Consentements",
+    "title": "Mes consentements",
+    "intro": "Contrôlez quelles données vous sont visibles par les autres utilisateurs.",
+    "show_email_label": "Afficher l'e-mail sur mon profil public",
+    "show_email_desc": "Votre adresse e-mail sera visible sur votre profil public.",
+    "follower_score_label": "Afficher la note des utilisateurs qui me font confiance",
+    "follower_score_desc": "Affiche sur les produits une note calculée à partir des avis de vos abonnés.",
+    "follower_score_only_verified": "Disponible uniquement pour les critiques vérifiés.",
+    "save": "Enregistrer les modifications",
+    "saving": "Enregistrement...",
+    "saved": "Enregistré !"
   },
   "announcement": {
     "icon_title": "Il y a des annonces actives"

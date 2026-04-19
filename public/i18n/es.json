@@ -24,6 +24,7 @@
     "score_global": "Usuarios",
     "score_pro": "Críticos",
     "score_trust": "Nota fiable",
+    "score_follower": "Nota de mis seguidores",
     "description": "Descripción",
     "development": "Desarrollo",
     "developer": "Desarrollador",
@@ -341,6 +342,19 @@
     "submit": "Enviar",
     "submitting": "Enviando...",
     "thanks": "¡Gracias por tu respuesta!"
+  },
+  "consents": {
+    "nav": "Consentimientos",
+    "title": "Mis consentimientos",
+    "intro": "Controla qué datos tuyos son visibles para otros usuarios.",
+    "show_email_label": "Mostrar email en mi perfil público",
+    "show_email_desc": "Tu dirección de email aparecerá visible en tu perfil público.",
+    "follower_score_label": "Ver nota de los usuarios que creen en mí",
+    "follower_score_desc": "Muestra en los productos una nota calculada con las reseñas de tus seguidores.",
+    "follower_score_only_verified": "Solo disponible para críticos verificados.",
+    "save": "Guardar cambios",
+    "saving": "Guardando...",
+    "saved": "¡Guardado!"
   },
   "announcement": {
     "icon_title": "Hay avisos activos"

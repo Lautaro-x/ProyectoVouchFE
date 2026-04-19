@@ -74,15 +74,6 @@
           <label class="field-label">{{ 'profile.email_label' | transloco }}</label>
           <input class="field-input field-input--readonly" type="email" [value]="email()" readonly />
         </div>
-
-        <label class="toggle-row">
-          <input
-            type="checkbox"
-            [checked]="showEmail()"
-            (change)="showEmail.set($any($event.target).checked)"
-          />
-          <span>{{ 'profile.show_email_label' | transloco }}</span>
-        </label>
       </div>
 
       <!-- Social links -->

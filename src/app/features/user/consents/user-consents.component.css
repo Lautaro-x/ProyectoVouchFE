@@ -1,0 +1,103 @@
+.consents-loading {
+  padding: 2rem;
+  color: var(--text-muted);
+}
+
+.consents-layout {
+  max-width: 640px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.consents-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.consents-intro {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.consent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.consent-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.consent-item--locked {
+  opacity: 0.6;
+}
+
+.consent-label {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.consent-label input[type="checkbox"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.consent-label input[disabled] {
+  cursor: not-allowed;
+}
+
+.consent-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.consent-text strong {
+  font-size: 0.95rem;
+}
+
+.consent-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.consent-locked {
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-style: italic;
+}
+
+.consents-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-save {
+  padding: 0.6rem 1.4rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -21,8 +21,13 @@ export interface UserProfile {
   avatar: string | null;
   role: 'user' | 'critic' | 'admin';
   badges: string[];
-  show_email: boolean;
   social_links: SocialLinks;
+}
+
+export interface UserConsents {
+  show_email: boolean;
+  consent_follower_score: boolean;
+  is_verified: boolean;
 }
 
 export interface UserCardReview {

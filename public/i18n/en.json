@@ -24,6 +24,7 @@
     "score_global": "All users",
     "score_pro": "Critics",
     "score_trust": "Trust score",
+    "score_follower": "My followers' score",
     "description": "Description",
     "development": "Development",
     "developer": "Developer",
@@ -341,6 +342,19 @@
     "empty_games": "You haven't written any review yet. This is your chance to create your first one!",
     "empty_cta": "Go to games",
     "no_results": "No reviews found with that name."
+  },
+  "consents": {
+    "nav": "Consents",
+    "title": "My consents",
+    "intro": "Control which of your data is visible to other users.",
+    "show_email_label": "Show email on my public profile",
+    "show_email_desc": "Your email address will be visible on your public profile.",
+    "follower_score_label": "Show score from users who trust me",
+    "follower_score_desc": "Displays a score on products calculated from your followers' reviews.",
+    "follower_score_only_verified": "Only available for verified critics.",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "saved": "Saved!"
   },
   "announcement": {
     "icon_title": "There are active announcements"

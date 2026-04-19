@@ -77,6 +77,8 @@ export interface ProductDetail {
     pro_grade: string | null;
     trust_score: number | null;
     trust_grade: string | null;
+    follower_score: number | null;
+    follower_grade: string | null;
   };
   user_review: { id: number; weighted_score: number; letter_grade: string } | null;
 }

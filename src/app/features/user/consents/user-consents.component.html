@@ -1,0 +1,56 @@
+@if (loading()) {
+  <p class="consents-loading">{{ 'common.loading' | transloco }}</p>
+} @else {
+  <div class="consents-layout">
+    <h1 class="consents-title">{{ 'consents.title' | transloco }}</h1>
+    <p class="consents-intro">{{ 'consents.intro' | transloco }}</p>
+
+    <div class="consent-list">
+
+      <div class="consent-item">
+        <label class="consent-label">
+          <input
+            type="checkbox"
+            [checked]="showEmail()"
+            (change)="showEmail.set($any($event.target).checked)"
+          />
+          <span class="consent-text">
+            <strong>{{ 'consents.show_email_label' | transloco }}</strong>
+            <span class="consent-desc">{{ 'consents.show_email_desc' | transloco }}</span>
+          </span>
+        </label>
+      </div>
+
+      <div class="consent-item" [class.consent-item--locked]="!isVerified()">
+        <label class="consent-label">
+          <input
+            type="checkbox"
+            [checked]="consentFollower()"
+            [disabled]="!isVerified()"
+            (change)="consentFollower.set($any($event.target).checked)"
+          />
+          <span class="consent-text">
+            <strong>{{ 'consents.follower_score_label' | transloco }}</strong>
+            <span class="consent-desc">{{ 'consents.follower_score_desc' | transloco }}</span>
+            @if (!isVerified()) {
+              <span class="consent-locked">{{ 'consents.follower_score_only_verified' | transloco }}</span>
+            }
+          </span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="consents-actions">
+      <button class="btn-save" (click)="save()" [disabled]="saving()">
+        @if (saving()) {
+          {{ 'consents.saving' | transloco }}
+        } @else if (saved()) {
+          {{ 'consents.saved' | transloco }}
+        } @else {
+          {{ 'consents.save' | transloco }}
+        }
+      </button>
+    </div>
+  </div>
+}

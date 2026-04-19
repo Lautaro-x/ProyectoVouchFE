@@ -24,6 +24,7 @@
     "score_global": "Utenti",
     "score_pro": "Critici",
     "score_trust": "Voto fidato",
+    "score_follower": "Voto dei miei follower",
     "description": "Descrizione",
     "development": "Sviluppo",
     "developer": "Sviluppatore",
@@ -339,6 +340,19 @@
     "empty_games": "Non hai ancora scritto nessuna recensione. Questa è la tua occasione per crearne la prima!",
     "empty_cta": "Vai ai giochi",
     "no_results": "Nessuna recensione trovata con quel nome."
+  },
+  "consents": {
+    "nav": "Consensi",
+    "title": "I miei consensi",
+    "intro": "Controlla quali tuoi dati sono visibili agli altri utenti.",
+    "show_email_label": "Mostra email nel mio profilo pubblico",
+    "show_email_desc": "Il tuo indirizzo email sarà visibile nel tuo profilo pubblico.",
+    "follower_score_label": "Mostra il voto degli utenti che si fidano di me",
+    "follower_score_desc": "Mostra sui prodotti un voto calcolato dalle recensioni dei tuoi follower.",
+    "follower_score_only_verified": "Disponibile solo per i critici verificati.",
+    "save": "Salva modifiche",
+    "saving": "Salvataggio...",
+    "saved": "Salvato!"
   },
   "announcement": {
     "icon_title": "Ci sono annunci attivi"

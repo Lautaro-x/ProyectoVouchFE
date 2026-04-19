@@ -16,6 +16,14 @@
       }
 
       <div class="detail-scores">
+        @if (auth.isAuthenticated() && product()!.scores.follower_score !== null) {
+          <div class="score-block score-block--follower">
+            <span class="score-label">{{ 'product.score_follower' | transloco }}</span>
+            <span [class]="'grade ' + gradeClass(product()!.scores.follower_grade)">
+              {{ product()!.scores.follower_grade }}
+            </span>
+          </div>
+        }
         @if (auth.isAuthenticated() && product()!.scores.trust_score !== null) {
           <div class="score-block score-block--trust">
             <span class="score-label">{{ 'product.score_trust' | transloco }}</span>

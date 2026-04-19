@@ -24,6 +24,7 @@
     "score_global": "Usuários",
     "score_pro": "Críticos",
     "score_trust": "Nota confiável",
+    "score_follower": "Nota dos meus seguidores",
     "description": "Descrição",
     "development": "Desenvolvimento",
     "developer": "Desenvolvedor",
@@ -339,6 +340,19 @@
     "empty_games": "Você ainda não escreveu nenhuma resenha. Esta é a sua chance de criar a primeira!",
     "empty_cta": "Ir para jogos",
     "no_results": "Nenhuma resenha encontrada com esse nome."
+  },
+  "consents": {
+    "nav": "Consentimentos",
+    "title": "Meus consentimentos",
+    "intro": "Controle quais dados seus são visíveis para outros usuários.",
+    "show_email_label": "Mostrar email no meu perfil público",
+    "show_email_desc": "Seu endereço de email ficará visível no seu perfil público.",
+    "follower_score_label": "Ver nota dos usuários que confiam em mim",
+    "follower_score_desc": "Exibe nos produtos uma nota calculada com as resenhas dos seus seguidores.",
+    "follower_score_only_verified": "Disponível apenas para críticos verificados.",
+    "save": "Salvar alterações",
+    "saving": "Salvando...",
+    "saved": "Salvo!"
   },
   "announcement": {
     "icon_title": "Há avisos ativos"

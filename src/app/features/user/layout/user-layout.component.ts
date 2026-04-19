@@ -25,6 +25,7 @@ export class UserLayoutComponent {
 
   readonly sections = [
     { path: 'profile',         labelKey: 'profile.nav_profile' },
+    { path: 'consents',        labelKey: 'consents.nav' },
     { path: 'public-profile',  labelKey: 'public_profile.nav' },
     { path: 'reviews',         labelKey: 'reviews.nav_reviews' },
     { path: 'badges',          labelKey: 'badges.nav' },

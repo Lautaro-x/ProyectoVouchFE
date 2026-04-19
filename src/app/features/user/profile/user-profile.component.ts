@@ -27,7 +27,6 @@ export class UserProfileComponent implements OnInit {
   readonly avatarBroken   = signal(false);
   readonly name           = signal('');
   readonly avatarUrl      = signal('');
-  readonly showEmail   = signal(false);
   readonly socialLinks = signal<SocialLinks>({});
 
   ngOnInit(): void {
@@ -35,7 +34,6 @@ export class UserProfileComponent implements OnInit {
       this.email.set(profile.email);
       this.name.set(profile.name);
       this.avatarUrl.set(profile.avatar ?? '');
-      this.showEmail.set(profile.show_email);
       this.socialLinks.set(profile.social_links ?? {});
       this.badges.set(profile.badges ?? []);
       this.loading.set(false);
@@ -79,7 +77,6 @@ export class UserProfileComponent implements OnInit {
     this.api.updateProfile({
       name:         this.name(),
       avatar:       this.avatarUrl() || null,
-      show_email:   this.showEmail(),
       social_links: this.socialLinks(),
     }).subscribe(() => {
       this.auth.updateUser({ name: this.name(), avatar: this.avatarUrl() || null });

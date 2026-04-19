@@ -17,6 +17,11 @@ export const userRoutes: Routes = [
           import('./profile/user-profile.component').then(m => m.UserProfileComponent),
       },
       {
+        path: 'consents',
+        loadComponent: () =>
+          import('./consents/user-consents.component').then(m => m.UserConsentsComponent),
+      },
+      {
         path: 'public-profile',
         loadComponent: () =>
           import('./public-profile/user-public-profile.component').then(m => m.UserPublicProfileComponent),

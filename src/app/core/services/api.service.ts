@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, UserReviewCard } from '../models/product.model';
-import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, SocialLinks, UserCardData, UserProfile } from '../models/user.model';
+import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, SocialLinks, UserCardData, UserConsents, UserProfile } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -62,8 +62,16 @@ export class ApiService {
     return this.http.get<UserProfile>(`${this.base}/user/profile`);
   }
 
-  updateProfile(data: Partial<{ name: string; avatar: string | null; show_email: boolean; social_links: SocialLinks; card_big_bg: string | null; card_mid_bg: string | null; card_mini_bg: string | null }>): Observable<void> {
+  updateProfile(data: Partial<{ name: string; avatar: string | null; social_links: SocialLinks; card_big_bg: string | null; card_mid_bg: string | null; card_mini_bg: string | null }>): Observable<void> {
     return this.http.put<void>(`${this.base}/user/profile`, data);
+  }
+
+  getConsents(): Observable<UserConsents> {
+    return this.http.get<UserConsents>(`${this.base}/user/consents`);
+  }
+
+  updateConsents(data: Partial<UserConsents>): Observable<void> {
+    return this.http.patch<void>(`${this.base}/user/consents`, data);
   }
 
   getBadgeProgress(): Observable<BadgesProgress> {
