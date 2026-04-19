@@ -1,7 +1,7 @@
-import { Component, computed, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy,
+import { Component, computed, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy, PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, isPlatformBrowser } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ApiService } from '../../core/services/api.service';
 import { ProductDetail, ProductReview } from '../../core/models/product.model';
@@ -17,10 +17,11 @@ import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/bre
   styleUrl: './product-detail.component.css',
 })
 export class ProductDetailComponent implements OnInit, OnDestroy {
-  private readonly route = inject(ActivatedRoute);
-  private readonly api   = inject(ApiService);
-  private readonly t     = inject(TranslocoService);
-  readonly auth          = inject(AuthService);
+  private readonly route      = inject(ActivatedRoute);
+  private readonly api        = inject(ApiService);
+  private readonly t          = inject(TranslocoService);
+  private readonly platformId = inject(PLATFORM_ID);
+  readonly auth               = inject(AuthService);
 
   product  = signal<ProductDetail | null>(null);
   loading  = signal(true);
@@ -80,6 +81,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   private setupObserver(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     const sentinel = document.getElementById('reviews-sentinel');
     if (!sentinel) return;
     this.observer?.disconnect();

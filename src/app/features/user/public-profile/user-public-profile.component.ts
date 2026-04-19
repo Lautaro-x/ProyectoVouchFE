@@ -1,5 +1,6 @@
-import { Component, computed, inject, OnInit, signal, DOCUMENT, ChangeDetectionStrategy,
+import { Component, computed, inject, OnInit, signal, DOCUMENT, PLATFORM_ID, ChangeDetectionStrategy,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -18,9 +19,10 @@ const FOLLOWER_LADDER = ['critico-influyente', 'critico-famoso', 'critico-fiable
   styleUrl: './user-public-profile.component.css',
 })
 export class UserPublicProfileComponent implements OnInit {
-  private readonly api  = inject(ApiService);
-  private readonly auth = inject(AuthService);
-  private readonly doc  = inject(DOCUMENT);
+  private readonly api        = inject(ApiService);
+  private readonly auth       = inject(AuthService);
+  private readonly doc        = inject(DOCUMENT);
+  private readonly platformId = inject(PLATFORM_ID);
 
   readonly loading      = signal(true);
   readonly card         = signal<UserCardData | null>(null);
@@ -77,6 +79,7 @@ export class UserPublicProfileComponent implements OnInit {
   }
 
   copyLink(type: 'big' | 'mid' | 'mini'): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     const id = this.card()?.id;
     if (!id) return;
     const url = `${this.doc.location.origin}/card/${type}/${id}`;
