@@ -11,6 +11,7 @@
         <th>{{ 'admin.surveys.col_starts' | transloco }}</th>
         <th>{{ 'admin.surveys.col_ends' | transloco }}</th>
         <th>{{ 'admin.surveys.col_status' | transloco }}</th>
+        <th>{{ 'admin.announcements.col_audience' | transloco }}</th>
         <th></th>
       </tr>
     </thead>
@@ -25,9 +26,16 @@
               {{ 'admin.surveys.status_' + a.status | transloco }}
             </span>
           </td>
+          <td>
+            <span class="audience-pill audience-{{ a.audience }}">
+              {{ 'admin.announcements.audience_' + a.audience | transloco }}
+            </span>
+          </td>
           <td class="admin-table-actions">
-            <button class="btn-sm" (click)="openEdit(a)">{{ 'admin.common.edit' | transloco }}</button>
-            <button class="btn-sm btn-danger" (click)="openDelete(a)">{{ 'admin.common.delete' | transloco }}</button>
+            @if (a.status !== 'ended') {
+              <button class="btn-sm" (click)="openEdit(a)">{{ 'admin.common.edit' | transloco }}</button>
+              <button class="btn-sm btn-danger" (click)="openDelete(a)">{{ 'admin.common.delete' | transloco }}</button>
+            }
           </td>
         </tr>
       }
@@ -72,6 +80,16 @@
         [value]="form().body[activeLang()] || ''"
         (input)="setBody(activeLang(), $any($event.target).value)"
         [placeholder]="'admin.announcements.body_ph' | transloco"></textarea>
+    </div>
+
+    <!-- Audience -->
+    <div class="field">
+      <label>{{ 'admin.announcements.audience_label' | transloco }}</label>
+      <select [value]="form().audience" (change)="setAudience($any($event.target).value)">
+        <option value="all">{{ 'admin.announcements.audience_all' | transloco }}</option>
+        <option value="verified">{{ 'admin.announcements.audience_verified' | transloco }}</option>
+        <option value="press">{{ 'admin.announcements.audience_press' | transloco }}</option>
+      </select>
     </div>
 
     <div class="form-grid">

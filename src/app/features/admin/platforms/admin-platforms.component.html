@@ -17,17 +17,6 @@
   </div>
 </app-dialog>
 
-<app-dialog
-  [title]="confirmDialogTitle()"
-  [subtitle]="confirmDialogSubtitle()"
-  [isOpen]="confirmDialogOpen()"
-  (closed)="closeConfirm()"
->
-  <div class="form-actions">
-    <button class="btn-primary danger" (click)="confirmAction()">{{ 'admin.common.confirm' | transloco }}</button>
-    <button class="btn-ghost" (click)="closeConfirm()">{{ 'admin.common.cancel' | transloco }}</button>
-  </div>
-</app-dialog>
 
 <div class="section-header">
   <h2>{{ 'admin.platforms.title' | transloco }}</h2>
@@ -73,10 +62,7 @@
         <td class="muted">{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td><span class="badge">{{ 'admin.types.' + item.type | transloco }}</span></td>
-        <td class="actions">
-          <button class="btn-sm" (click)="openEdit(item)">{{ 'admin.common.edit' | transloco }}</button>
-          <button class="btn-sm danger" (click)="delete(item)">{{ 'admin.common.delete' | transloco }}</button>
-        </td>
+        <td></td>
       </tr>
     }
   </tbody>

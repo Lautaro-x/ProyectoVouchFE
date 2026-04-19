@@ -95,6 +95,7 @@ export interface Survey {
   question: Record<string, string>;
   starts_at: string;
   ends_at: string;
+  audience: 'all' | 'verified' | 'press';
   responses_count?: number;
   status?: 'upcoming' | 'active' | 'ended' | 'missing_translations';
   options?: SurveyOption[];
@@ -118,6 +119,7 @@ export interface Announcement {
   body: Record<string, string>;
   starts_at: string;
   ends_at: string;
+  audience: 'all' | 'verified' | 'press';
   status?: 'upcoming' | 'active' | 'ended' | 'missing_translations';
 }
 

@@ -230,7 +230,13 @@
       "add_option": "Add option",
       "translations_label": "Translations",
       "results_btn": "Results",
-      "results_total": "Total responses"
+      "duplicate_btn": "Duplicate",
+      "results_total": "Total responses",
+      "col_audience": "Audience",
+      "audience_label": "Audience",
+      "audience_all": "Everyone",
+      "audience_verified": "Verified only",
+      "audience_press": "Press only"
     },
     "announcements": {
       "title": "Announcements",
@@ -249,8 +255,17 @@
       "body_ph": "Write the announcement content...",
       "starts_label": "Start date",
       "ends_label": "End date",
-      "translations_label": "Translations"
+      "translations_label": "Translations",
+      "col_audience": "Audience",
+      "audience_label": "Audience",
+      "audience_all": "Everyone",
+      "audience_verified": "Verified only",
+      "audience_press": "Press only"
     }
+  },
+  "audience": {
+    "verified": "For verified critics only",
+    "press": "For press only"
   },
   "not_found": {
     "title": "This page doesn't exist",

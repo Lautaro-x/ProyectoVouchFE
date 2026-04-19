@@ -21,7 +21,6 @@ export class AdminPlatformsComponent extends AdminTableBase<Platform> implements
 
   formDialogOpen  = signal(false);
   formDialogTitle = signal('');
-  editingId       = signal<number | null>(null);
   formName        = signal('');
   formType        = signal<'console' | 'pc' | 'streaming'>('console');
 
@@ -40,37 +39,19 @@ export class AdminPlatformsComponent extends AdminTableBase<Platform> implements
   }
 
   openCreate(): void {
-    this.editingId.set(null);
     this.formName.set('');
     this.formType.set('console');
     this.formDialogTitle.set(this.t.translate('admin.platforms.new_title'));
     this.formDialogOpen.set(true);
   }
 
-  openEdit(item: Platform): void {
-    this.editingId.set(item.id);
-    this.formName.set(item.name);
-    this.formType.set(item.type);
-    this.formDialogTitle.set(this.t.translate('admin.platforms.edit_title', { name: item.name }));
-    this.formDialogOpen.set(true);
-  }
-
   save(): void {
-    const id = this.editingId();
     const payload = { name: this.formName(), type: this.formType() };
-    const req = id
-      ? this.api.updatePlatform(id, payload)
-      : this.api.createPlatform(payload);
-    req.subscribe(() => { this.formDialogOpen.set(false); this.load(this.page()?.current_page ?? 1); });
+    this.api.createPlatform(payload).subscribe(() => {
+      this.formDialogOpen.set(false);
+      this.load(this.page()?.current_page ?? 1);
+    });
   }
 
   closeFormDialog(): void { this.formDialogOpen.set(false); }
-
-  delete(item: Platform): void {
-    this.openConfirm(
-      this.t.translate('admin.platforms.delete_title', { name: item.name }),
-      this.t.translate('admin.common.irreversible'),
-      () => this.api.deletePlatform(item.id).subscribe(() => this.load(this.page()?.current_page ?? 1))
-    );
-  }
 }

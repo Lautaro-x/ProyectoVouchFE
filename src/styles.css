@@ -188,6 +188,21 @@ button {
   border: 1px solid var(--color-border);
 }
 
+/* Audience badge — shown in survey/announcement modals */
+.audience-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.audience-badge.audience-verified { background: color-mix(in srgb, #6200EE 15%, transparent); color: #b388ff; }
+.audience-badge.audience-press    { background: color-mix(in srgb, #00bcd4 15%, transparent); color: #00bcd4; }
+
 /* Grade letter colors — global, usable in any component */
 .grade-s     { color: var(--color-grade-s); font-style: italic; }
 .grade-aplus { color: var(--color-grade-aplus); }

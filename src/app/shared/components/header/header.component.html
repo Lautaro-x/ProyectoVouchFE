@@ -146,6 +146,11 @@
   [title]="selectedAnnouncement() ? t(selectedAnnouncement()!.title) : ''"
   (closed)="announcementOpen.set(false)">
   @if (selectedAnnouncement()) {
+    @if (selectedAnnouncement()!.audience !== 'all') {
+      <p class="audience-badge audience-{{ selectedAnnouncement()!.audience }}">
+        {{ 'audience.' + selectedAnnouncement()!.audience | transloco }}
+      </p>
+    }
     <p class="announcement-body">{{ t(selectedAnnouncement()!.body) }}</p>
   }
 </app-dialog>
@@ -160,6 +165,11 @@
     <p class="survey-thanks">{{ 'survey.thanks' | transloco }}</p>
   } @else if (selectedSurvey()) {
     <div class="survey-body">
+      @if (selectedSurvey()!.audience !== 'all') {
+        <p class="audience-badge audience-{{ selectedSurvey()!.audience }}">
+          {{ 'audience.' + selectedSurvey()!.audience | transloco }}
+        </p>
+      }
       <p class="survey-question">{{ t(selectedSurvey()!.question) }}</p>
       <div class="survey-options">
         @for (opt of selectedSurvey()!.options; track opt.id) {

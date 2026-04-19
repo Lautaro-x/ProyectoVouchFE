@@ -230,7 +230,13 @@
       "add_option": "Añadir opción",
       "translations_label": "Traducciones",
       "results_btn": "Resultados",
-      "results_total": "Total de respuestas"
+      "duplicate_btn": "Duplicar",
+      "results_total": "Total de respuestas",
+      "col_audience": "Audiencia",
+      "audience_label": "Audiencia",
+      "audience_all": "Todos",
+      "audience_verified": "Solo verificados",
+      "audience_press": "Solo prensa"
     },
     "announcements": {
       "title": "Avisos",
@@ -249,8 +255,17 @@
       "body_ph": "Escribe el contenido del aviso...",
       "starts_label": "Fecha de inicio",
       "ends_label": "Fecha de fin",
-      "translations_label": "Traducciones"
+      "translations_label": "Traducciones",
+      "col_audience": "Audiencia",
+      "audience_label": "Audiencia",
+      "audience_all": "Todos",
+      "audience_verified": "Solo verificados",
+      "audience_press": "Solo prensa"
     }
+  },
+  "audience": {
+    "verified": "Solo para críticos verificados",
+    "press": "Solo para la prensa"
   },
   "profile": {
     "nav_profile": "Perfil",

@@ -262,3 +262,19 @@
   font-size: 0.9rem;
   margin: 0 0 1rem;
 }
+
+/* ── Audience pills ─────────────────────────────────── */
+.audience-pill {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.audience-all      { background: color-mix(in srgb, #9e9e9e 15%, transparent); color: #9e9e9e; }
+.audience-verified { background: color-mix(in srgb, #6200EE 15%, transparent); color: #b388ff; }
+.audience-press    { background: color-mix(in srgb, #00bcd4 15%, transparent); color: #00bcd4; }

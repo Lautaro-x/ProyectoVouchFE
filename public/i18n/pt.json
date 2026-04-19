@@ -228,7 +228,13 @@
       "add_option": "Adicionar opção",
       "translations_label": "Traduções",
       "results_btn": "Resultados",
-      "results_total": "Total de respostas"
+      "duplicate_btn": "Duplicar",
+      "results_total": "Total de respostas",
+      "col_audience": "Audiência",
+      "audience_label": "Audiência",
+      "audience_all": "Todos",
+      "audience_verified": "Somente verificados",
+      "audience_press": "Somente imprensa"
     },
     "announcements": {
       "title": "Avisos",
@@ -247,8 +253,17 @@
       "body_ph": "Escreva o conteúdo do aviso...",
       "starts_label": "Data de início",
       "ends_label": "Data de fim",
-      "translations_label": "Traduções"
+      "translations_label": "Traduções",
+      "col_audience": "Audiência",
+      "audience_label": "Audiência",
+      "audience_all": "Todos",
+      "audience_verified": "Somente verificados",
+      "audience_press": "Somente imprensa"
     }
+  },
+  "audience": {
+    "verified": "Somente para críticos verificados",
+    "press": "Somente para a imprensa"
   },
   "not_found": {
     "title": "Esta página não existe",

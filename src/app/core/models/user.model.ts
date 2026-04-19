@@ -61,6 +61,7 @@ export interface ActiveSurvey {
   id: number;
   title: Record<string, string>;
   question: Record<string, string>;
+  audience: 'all' | 'verified' | 'press';
   options: ActiveSurveyOption[];
 }
 
@@ -68,6 +69,7 @@ export interface ActiveAnnouncement {
   id: number;
   title: Record<string, string>;
   body: Record<string, string>;
+  audience: 'all' | 'verified' | 'press';
 }
 
 export interface BadgeProgress {

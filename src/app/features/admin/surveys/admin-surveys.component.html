@@ -12,6 +12,7 @@
         <th>{{ 'admin.surveys.col_ends' | transloco }}</th>
         <th>{{ 'admin.surveys.col_responses' | transloco }}</th>
         <th>{{ 'admin.surveys.col_status' | transloco }}</th>
+        <th>{{ 'admin.surveys.col_audience' | transloco }}</th>
         <th></th>
       </tr>
     </thead>
@@ -27,10 +28,18 @@
               {{ 'admin.surveys.status_' + s.status | transloco }}
             </span>
           </td>
+          <td>
+            <span class="audience-pill audience-{{ s.audience }}">
+              {{ 'admin.surveys.audience_' + s.audience | transloco }}
+            </span>
+          </td>
           <td class="admin-table-actions">
             <button class="btn-sm" (click)="openResults(s)">{{ 'admin.surveys.results_btn' | transloco }}</button>
-            <button class="btn-sm" (click)="openEdit(s)">{{ 'admin.common.edit' | transloco }}</button>
-            <button class="btn-sm btn-danger" (click)="openDelete(s)">{{ 'admin.common.delete' | transloco }}</button>
+            <button class="btn-sm" (click)="openDuplicate(s)">{{ 'admin.surveys.duplicate_btn' | transloco }}</button>
+            @if (s.status !== 'ended') {
+              <button class="btn-sm" (click)="openEdit(s)">{{ 'admin.common.edit' | transloco }}</button>
+              <button class="btn-sm btn-danger" (click)="openDelete(s)">{{ 'admin.common.delete' | transloco }}</button>
+            }
           </td>
         </tr>
       }
@@ -78,6 +87,16 @@
         [value]="form().question[activeLang()] || ''"
         (input)="setQuestion(activeLang(), $any($event.target).value)"
         [placeholder]="'admin.surveys.question_ph' | transloco"></textarea>
+    </div>
+
+    <!-- Audience -->
+    <div class="field">
+      <label>{{ 'admin.surveys.audience_label' | transloco }}</label>
+      <select [value]="form().audience" (change)="setAudience($any($event.target).value)">
+        <option value="all">{{ 'admin.surveys.audience_all' | transloco }}</option>
+        <option value="verified">{{ 'admin.surveys.audience_verified' | transloco }}</option>
+        <option value="press">{{ 'admin.surveys.audience_press' | transloco }}</option>
+      </select>
     </div>
 
     <!-- Dates (language-agnostic) -->

@@ -15,6 +15,7 @@ interface AnnouncementForm {
   body:      LangRecord;
   starts_at: string;
   ends_at:   string;
+  audience:  'all' | 'verified' | 'press';
 }
 
 @Component({
@@ -57,7 +58,7 @@ export class AdminAnnouncementsComponent implements OnInit {
 
   private emptyForm(): AnnouncementForm {
     const empty = Object.fromEntries(LANGS.map(l => [l, '']));
-    return { title: { ...empty }, body: { ...empty }, starts_at: '', ends_at: '' };
+    return { title: { ...empty }, body: { ...empty }, starts_at: '', ends_at: '', audience: 'all' };
   }
 
   openCreate(): void {
@@ -77,6 +78,7 @@ export class AdminAnnouncementsComponent implements OnInit {
         body:      { ...empty, ...data.body },
         starts_at: utcToLocal(data.starts_at),
         ends_at:   utcToLocal(data.ends_at),
+        audience:  data.audience ?? 'all',
       });
       this.editOpen.set(true);
     });
@@ -99,6 +101,10 @@ export class AdminAnnouncementsComponent implements OnInit {
     this.form.update(f => ({ ...f, body: { ...f.body, [lang]: value } }));
   }
 
+  setAudience(value: 'all' | 'verified' | 'press'): void {
+    this.form.update(f => ({ ...f, audience: value }));
+  }
+
   isLangComplete(lang: string): boolean {
     const f = this.form();
     return !!(f.title[lang]?.trim() && f.body[lang]?.trim());
@@ -117,6 +123,7 @@ export class AdminAnnouncementsComponent implements OnInit {
       body:      f.body,
       starts_at: localToUTC(f.starts_at),
       ends_at:   localToUTC(f.ends_at),
+      audience:  f.audience,
     };
     const req = this.target()
       ? this.api.updateAnnouncement(this.target()!.id, payload)

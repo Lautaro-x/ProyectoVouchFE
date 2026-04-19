@@ -15,6 +15,7 @@ interface SurveyForm {
   question:  LangRecord;
   starts_at: string;
   ends_at:   string;
+  audience:  'all' | 'verified' | 'press';
   options:   LangRecord[];
 }
 
@@ -67,6 +68,7 @@ export class AdminSurveysComponent implements OnInit {
       question:  { ...empty },
       starts_at: '',
       ends_at:   '',
+      audience:  'all',
       options:   [{ ...empty }, { ...empty }],
     };
   }
@@ -88,6 +90,24 @@ export class AdminSurveysComponent implements OnInit {
         question:  { ...empty, ...s.question },
         starts_at: utcToLocal(s.starts_at),
         ends_at:   utcToLocal(s.ends_at),
+        audience:  s.audience ?? 'all',
+        options:   s.options?.map(o => ({ ...empty, ...o.text })) ?? [{ ...empty }, { ...empty }],
+      });
+      this.editOpen.set(true);
+    });
+  }
+
+  openDuplicate(survey: Survey): void {
+    this.target.set(null);
+    this.activeLang.set('es');
+    this.api.getSurvey(survey.id).subscribe(s => {
+      const empty = Object.fromEntries(LANGS.map(l => [l, '']));
+      this.form.set({
+        title:     { ...empty, ...s.title },
+        question:  { ...empty, ...s.question },
+        starts_at: '',
+        ends_at:   '',
+        audience:  s.audience ?? 'all',
         options:   s.options?.map(o => ({ ...empty, ...o.text })) ?? [{ ...empty }, { ...empty }],
       });
       this.editOpen.set(true);
@@ -116,6 +136,10 @@ export class AdminSurveysComponent implements OnInit {
 
   setQuestion(lang: string, value: string): void {
     this.form.update(f => ({ ...f, question: { ...f.question, [lang]: value } }));
+  }
+
+  setAudience(value: 'all' | 'verified' | 'press'): void {
+    this.form.update(f => ({ ...f, audience: value }));
   }
 
   setOption(index: number, lang: string, value: string): void {
@@ -152,6 +176,7 @@ export class AdminSurveysComponent implements OnInit {
       question:  f.question,
       starts_at: localToUTC(f.starts_at),
       ends_at:   localToUTC(f.ends_at),
+      audience:  f.audience,
       options:   f.options,
     };
     const req = this.target()
