@@ -13,7 +13,7 @@ import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/bre
   standalone: true,
   imports: [TranslocoModule, BreadcrumbComponent],
   templateUrl: './review-create.component.html',
-  styleUrl: './review-create.component.css',
+  styleUrls: ['../review-form.css', './review-create.component.css'],
 })
 export class ReviewCreateComponent implements OnInit {
   private route  = inject(ActivatedRoute);

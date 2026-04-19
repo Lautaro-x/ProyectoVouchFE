@@ -251,6 +251,11 @@
       "translations_label": "Translations"
     }
   },
+  "not_found": {
+    "title": "This page doesn't exist",
+    "hint": "The URL you're looking for doesn't exist or has been removed.",
+    "back": "Back to home"
+  },
   "survey": {
     "icon_title": "There are active surveys",
     "submit": "Submit",
@@ -272,8 +277,6 @@
     "social_shared": "Share",
     "social_url_ph": "Link to your profile...",
     "section_settings": "Settings",
-    "reviews_public_label": "Make my reviews public",
-    "reviews_public_hint": "Your reviews will still be used to calculate product scores, but no one will see whether you rated a game or not.",
     "save": "Save changes",
     "saving": "Saving...",
     "saved": "Saved!",

@@ -266,8 +266,6 @@
     "social_shared": "Compartir",
     "social_url_ph": "Enlace a tu perfil...",
     "section_settings": "Configuración",
-    "reviews_public_label": "Hacer públicas mis críticas",
-    "reviews_public_hint": "Tus críticas seguirán usándose para calcular la puntuación de los productos, pero nadie verá si has puntuado o no un juego.",
     "save": "Guardar cambios",
     "saving": "Guardando...",
     "saved": "¡Guardado!",
@@ -332,6 +330,11 @@
     "empty_games": "Aún no has escrito ninguna reseña. ¡Esta es tu oportunidad de crear la primera!",
     "empty_cta": "Ir a juegos",
     "no_results": "No se encontraron reseñas con ese nombre."
+  },
+  "not_found": {
+    "title": "Esta página no existe",
+    "hint": "La URL que buscas no existe o fue eliminada.",
+    "back": "Volver al inicio"
   },
   "survey": {
     "icon_title": "Hay encuestas activas",

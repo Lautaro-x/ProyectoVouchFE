@@ -2,9 +2,11 @@ import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
-import { Category, Paginated, TranslatableName } from '../models/admin.models';
+import { Category, TranslatableName } from '../models/admin.models';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
-import { LocalizedNamePipe } from '../pipes/localized-name.pipe';
+import { LocalizedNamePipe } from '../../../shared/pipes/localized-name.pipe';
+import { AdminTableBase } from '../admin-table.base';
+import { LANG_LOCALES } from '../../../core/constants/langs';
 
 const EMPTY_NAME = (): TranslatableName => ({ en: '', es: '', fr: '', pt: '', it: '' });
 const EMPTY_DESC = (): TranslatableName => ({ en: '', es: '', fr: '', pt: '', it: '' });
@@ -16,23 +18,11 @@ const EMPTY_DESC = (): TranslatableName => ({ en: '', es: '', fr: '', pt: '', it
   templateUrl: './admin-categories.component.html',
   styleUrl: './admin-categories.component.css',
 })
-export class AdminCategoriesComponent implements OnInit {
+export class AdminCategoriesComponent extends AdminTableBase<Category> implements OnInit {
   private api = inject(AdminApiService);
   private t   = inject(TranslocoService);
 
-  readonly locales = [
-    { code: 'en', label: 'English (EN) *' },
-    { code: 'es', label: 'Español (ES)' },
-    { code: 'fr', label: 'Français (FR)' },
-    { code: 'pt', label: 'Português (PT)' },
-    { code: 'it', label: 'Italiano (IT)' },
-  ];
-
-  page      = signal<Paginated<Category> | null>(null);
-  perPage   = signal(25);
-  sortBy    = signal('id');
-  sortDir   = signal<'asc' | 'desc'>('asc');
-  filterSearch = signal('');
+  readonly locales = LANG_LOCALES;
 
   formDialogOpen  = signal(false);
   formDialogTitle = signal('');
@@ -40,11 +30,6 @@ export class AdminCategoriesComponent implements OnInit {
   formName        = signal<TranslatableName>(EMPTY_NAME());
   formDesc        = signal<TranslatableName>(EMPTY_DESC());
   descLang        = signal('en');
-
-  confirmDialogOpen     = signal(false);
-  confirmDialogTitle    = signal('');
-  confirmDialogSubtitle = signal('');
-  private pendingAction = signal<(() => void) | null>(null);
 
   ngOnInit(): void { this.load(); }
 
@@ -58,19 +43,6 @@ export class AdminCategoriesComponent implements OnInit {
     if (this.filterSearch()) params['search'] = this.filterSearch();
     this.api.getCategories(params).subscribe(data => this.page.set(data));
   }
-
-  setSort(col: string): void {
-    if (this.sortBy() === col) this.sortDir.update(d => d === 'asc' ? 'desc' : 'asc');
-    else { this.sortBy.set(col); this.sortDir.set('asc'); }
-    this.load();
-  }
-
-  sortIcon(col: string): string {
-    if (this.sortBy() !== col) return '';
-    return this.sortDir() === 'asc' ? ' ▲' : ' ▼';
-  }
-
-  setPerPage(n: number): void { this.perPage.set(n); this.load(); }
 
   updateFormName(locale: string, value: string): void {
     this.formName.update(n => ({ ...n, [locale]: value }));
@@ -117,22 +89,5 @@ export class AdminCategoriesComponent implements OnInit {
       this.t.translate('admin.common.irreversible'),
       () => this.api.deleteCategory(item.id).subscribe(() => this.load(this.page()?.current_page ?? 1))
     );
-  }
-
-  openConfirm(title: string, subtitle: string, action: () => void): void {
-    this.confirmDialogTitle.set(title);
-    this.confirmDialogSubtitle.set(subtitle);
-    this.pendingAction.set(action);
-    this.confirmDialogOpen.set(true);
-  }
-
-  confirmAction(): void { this.pendingAction()?.(); this.closeConfirm(); }
-  closeConfirm(): void { this.confirmDialogOpen.set(false); this.pendingAction.set(null); }
-
-  goTo(p: number): void { this.load(p); }
-
-  pages(): number[] {
-    const last = this.page()?.last_page ?? 1;
-    return Array.from({ length: last }, (_, i) => i + 1);
   }
 }

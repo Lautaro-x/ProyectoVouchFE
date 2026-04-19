@@ -249,6 +249,11 @@
       "translations_label": "Traductions"
     }
   },
+  "not_found": {
+    "title": "Cette page n'existe pas",
+    "hint": "L'URL que vous cherchez n'existe pas ou a été supprimée.",
+    "back": "Retour à l'accueil"
+  },
   "survey": {
     "icon_title": "Il y a des sondages actifs",
     "submit": "Envoyer",
@@ -270,8 +275,6 @@
     "social_shared": "Partager",
     "social_url_ph": "Lien vers votre profil...",
     "section_settings": "Paramètres",
-    "reviews_public_label": "Rendre mes critiques publiques",
-    "reviews_public_hint": "Vos critiques continueront à être utilisées pour calculer les scores des produits, mais personne ne verra si vous avez noté un jeu ou non.",
     "save": "Enregistrer les modifications",
     "saving": "Enregistrement...",
     "saved": "Enregistré !",

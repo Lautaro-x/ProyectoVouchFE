@@ -22,7 +22,6 @@ export interface UserProfile {
   role: 'user' | 'critic' | 'admin';
   badges: string[];
   show_email: boolean;
-  reviews_public: boolean;
   social_links: SocialLinks;
 }
 

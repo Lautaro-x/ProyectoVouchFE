@@ -10,7 +10,7 @@ import { LangSwitcherComponent } from '../../../shared/components/lang-switcher/
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet, RouterLink, RouterLinkActive, TranslocoModule, LangSwitcherComponent],
   templateUrl: './admin-layout.component.html',
-  styleUrl: './admin-layout.component.css',
+  styleUrls: ['../../layout-sidebar.css', './admin-layout.component.css'],
 })
 export class AdminLayoutComponent {
   private auth = inject(AuthService);

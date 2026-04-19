@@ -143,6 +143,26 @@ button {
 }
 .badge.danger { background: rgba(231,76,60,0.15); color: var(--color-grade-f); }
 
+/* Section heading — global, usable in any component */
+.section-heading {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Cover placeholder — global, usable in any component */
+.cover-placeholder {
+  aspect-ratio: 3 / 4;
+  background: var(--color-surface);
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+}
+
 /* Grade letter colors — global, usable in any component */
 .grade-s     { color: var(--color-grade-s); font-style: italic; }
 .grade-aplus { color: var(--color-grade-aplus); }

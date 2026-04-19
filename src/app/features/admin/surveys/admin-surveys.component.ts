@@ -4,6 +4,9 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Survey, SurveyResults } from '../models/admin.models';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
+import { LANGS } from '../../../core/constants/langs';
+import { utcToLocal, localToUTC } from '../../../core/utils/datetime.utils';
+import { localizedValue } from '../../../core/utils/localized-value';
 
 type LangRecord = Record<string, string>;
 
@@ -26,7 +29,8 @@ export class AdminSurveysComponent implements OnInit {
   private readonly api       = inject(AdminApiService);
   private readonly transloco = inject(TranslocoService);
 
-  readonly LANGS = ['es', 'en', 'fr', 'pt', 'it'];
+  readonly LANGS = LANGS;
+  readonly utcToLocal = utcToLocal;
 
   readonly surveys      = signal<Survey[]>([]);
   readonly editOpen     = signal(false);
@@ -41,7 +45,7 @@ export class AdminSurveysComponent implements OnInit {
 
   readonly canSave = computed(() => {
     const f = this.form();
-    return this.LANGS.every(lang =>
+    return LANGS.every(lang =>
       f.title[lang]?.trim() &&
       f.question[lang]?.trim() &&
       f.options.every(o => o[lang]?.trim())
@@ -57,7 +61,7 @@ export class AdminSurveysComponent implements OnInit {
   }
 
   private emptyForm(): SurveyForm {
-    const empty = Object.fromEntries(this.LANGS.map(l => [l, '']));
+    const empty = Object.fromEntries(LANGS.map(l => [l, '']));
     return {
       title:     { ...empty },
       question:  { ...empty },
@@ -78,12 +82,12 @@ export class AdminSurveysComponent implements OnInit {
     this.target.set(survey);
     this.activeLang.set('es');
     this.api.getSurvey(survey.id).subscribe(s => {
-      const empty = Object.fromEntries(this.LANGS.map(l => [l, '']));
+      const empty = Object.fromEntries(LANGS.map(l => [l, '']));
       this.form.set({
         title:     { ...empty, ...s.title },
         question:  { ...empty, ...s.question },
-        starts_at: this.utcToLocal(s.starts_at),
-        ends_at:   this.utcToLocal(s.ends_at),
+        starts_at: utcToLocal(s.starts_at),
+        ends_at:   utcToLocal(s.ends_at),
         options:   s.options?.map(o => ({ ...empty, ...o.text })) ?? [{ ...empty }, { ...empty }],
       });
       this.editOpen.set(true);
@@ -122,7 +126,7 @@ export class AdminSurveysComponent implements OnInit {
   }
 
   addOption(): void {
-    const empty = Object.fromEntries(this.LANGS.map(l => [l, '']));
+    const empty = Object.fromEntries(LANGS.map(l => [l, '']));
     this.form.update(f => ({ ...f, options: [...f.options, { ...empty }] }));
   }
 
@@ -136,20 +140,7 @@ export class AdminSurveysComponent implements OnInit {
   }
 
   titleFor(title: LangRecord): string {
-    const lang = this.transloco.getActiveLang();
-    return title[lang] || title['es'] || Object.values(title)[0] || '';
-  }
-
-  utcToLocal(dt: string): string {
-    if (!dt) return dt;
-    const d = new Date(dt.replace(' ', 'T') + 'Z');
-    const offset = d.getTimezoneOffset() * 60000;
-    return new Date(d.getTime() - offset).toISOString().slice(0, 16);
-  }
-
-  private localToUTC(dt: string): string {
-    if (!dt) return dt;
-    return new Date(dt).toISOString().slice(0, 16);
+    return localizedValue(title, this.transloco.getActiveLang());
   }
 
   save(): void {
@@ -159,8 +150,8 @@ export class AdminSurveysComponent implements OnInit {
     const payload = {
       title:     f.title,
       question:  f.question,
-      starts_at: this.localToUTC(f.starts_at),
-      ends_at:   this.localToUTC(f.ends_at),
+      starts_at: localToUTC(f.starts_at),
+      ends_at:   localToUTC(f.ends_at),
       options:   f.options,
     };
     const req = this.target()

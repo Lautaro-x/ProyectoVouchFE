@@ -11,7 +11,7 @@ import { LangSwitcherComponent } from '../../../shared/components/lang-switcher/
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive, TranslocoModule, LangSwitcherComponent],
   templateUrl: './user-layout.component.html',
-  styleUrl: './user-layout.component.css',
+  styleUrls: ['../../layout-sidebar.css', './user-layout.component.css'],
 })
 export class UserLayoutComponent {
   private auth = inject(AuthService);

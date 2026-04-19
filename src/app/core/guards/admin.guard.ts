@@ -8,5 +8,5 @@ export const adminGuard: CanActivateFn = () => {
 
   if (auth.currentUser()?.role === 'admin') return true;
 
-  return router.createUrlTree(['/']);
+  return router.createUrlTree(['/not-found']);
 };

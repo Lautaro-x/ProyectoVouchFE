@@ -66,7 +66,12 @@ export const routes: Routes = [
       import('./features/public-card/mini-card-page/mini-card-page.component').then(m => m.MiniCardPageComponent),
   },
   {
+    path: 'not-found',
+    loadComponent: () =>
+      import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
+  },
+  {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'not-found',
   },
 ];

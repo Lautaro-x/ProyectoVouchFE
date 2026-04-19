@@ -111,21 +111,6 @@
         }
       </div>
 
-      <!-- Settings -->
-      <div class="profile-section">
-        <h2 class="section-title">{{ 'profile.section_settings' | transloco }}</h2>
-
-        <label class="toggle-row">
-          <input
-            type="checkbox"
-            [checked]="reviewsPublic()"
-            (change)="reviewsPublic.set($any($event.target).checked)"
-          />
-          <span>{{ 'profile.reviews_public_label' | transloco }}</span>
-        </label>
-        <p class="setting-hint">{{ 'profile.reviews_public_hint' | transloco }}</p>
-      </div>
-
       <!-- Actions -->
       <div class="profile-actions">
         <button class="btn-save" (click)="save()" [disabled]="saving()">

@@ -62,7 +62,7 @@ export class ApiService {
     return this.http.get<UserProfile>(`${this.base}/user/profile`);
   }
 
-  updateProfile(data: Partial<{ name: string; avatar: string | null; show_email: boolean; reviews_public: boolean; social_links: SocialLinks; card_big_bg: string | null; card_mid_bg: string | null; card_mini_bg: string | null }>): Observable<void> {
+  updateProfile(data: Partial<{ name: string; avatar: string | null; show_email: boolean; social_links: SocialLinks; card_big_bg: string | null; card_mid_bg: string | null; card_mini_bg: string | null }>): Observable<void> {
     return this.http.put<void>(`${this.base}/user/profile`, data);
   }
 

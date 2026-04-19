@@ -2,10 +2,11 @@ import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
-import { Genre, IgdbGame, Paginated, PlatformWithPivot, Product } from '../models/admin.models';
+import { Genre, IgdbGame, PlatformWithPivot, Product } from '../models/admin.models';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
-import { LocalizedNamePipe } from '../pipes/localized-name.pipe';
+import { LocalizedNamePipe } from '../../../shared/pipes/localized-name.pipe';
 import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
+import { AdminTableBase } from '../admin-table.base';
 
 @Component({
   selector: 'app-admin-products',
@@ -14,16 +15,13 @@ import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
   templateUrl: './admin-products.component.html',
   styleUrl: './admin-products.component.css',
 })
-export class AdminProductsComponent implements OnInit {
+export class AdminProductsComponent extends AdminTableBase<Product> implements OnInit {
   private api = inject(AdminApiService);
   private t   = inject(TranslocoService);
 
-  page    = signal<Paginated<Product> | null>(null);
-  genres  = signal<Genre[]>([]);
-  perPage = signal(25);
-  sortBy  = signal('title');
-  sortDir = signal<'asc' | 'desc'>('asc');
-  filterSearch  = signal('');
+  override sortBy = signal('title');
+
+  genres        = signal<Genre[]>([]);
   filterType    = signal('');
   filterGenreId = signal(0);
 
@@ -49,11 +47,6 @@ export class AdminProductsComponent implements OnInit {
   linksProductId   = signal<number | null>(null);
   linksPlatforms   = signal<{ id: number; name: string; url: string }[]>([]);
 
-  confirmDialogOpen     = signal(false);
-  confirmDialogTitle    = signal('');
-  confirmDialogSubtitle = signal('');
-  private pendingAction = signal<(() => void) | null>(null);
-
   ngOnInit(): void {
     this.load();
     this.api.getAllGenres().subscribe(g => this.genres.set(g));
@@ -71,19 +64,6 @@ export class AdminProductsComponent implements OnInit {
     if (this.filterGenreId()) params['genre_id'] = String(this.filterGenreId());
     this.api.getProducts(params).subscribe(data => this.page.set(data));
   }
-
-  setSort(col: string): void {
-    if (this.sortBy() === col) this.sortDir.update(d => d === 'asc' ? 'desc' : 'asc');
-    else { this.sortBy.set(col); this.sortDir.set('asc'); }
-    this.load();
-  }
-
-  sortIcon(col: string): string {
-    if (this.sortBy() !== col) return '';
-    return this.sortDir() === 'asc' ? ' ▲' : ' ▼';
-  }
-
-  setPerPage(n: number): void { this.perPage.set(n); this.load(); }
 
   openCreate(): void {
     this.editingId.set(null);
@@ -112,7 +92,6 @@ export class AdminProductsComponent implements OnInit {
     const req = id
       ? this.api.updateProduct(id, this.form())
       : this.api.createProduct(this.form());
-
     req.subscribe(() => { this.formDialogOpen.set(false); this.load(this.page()?.current_page ?? 1); });
   }
 
@@ -137,6 +116,15 @@ export class AdminProductsComponent implements OnInit {
     this.api.searchIgdb(this.igdbQuery()).subscribe(r => this.igdbResults.set(r));
   }
 
+  importIgdb(igdbId: number): void {
+    this.api.importFromIgdb(igdbId).subscribe(() => {
+      this.igdbDialogOpen.set(false);
+      this.load(1);
+    });
+  }
+
+  closeIgdbDialog(): void { this.igdbDialogOpen.set(false); }
+
   toggleGenre(id: number, checked: boolean): void {
     this.form.update(f => ({
       ...f,
@@ -148,15 +136,6 @@ export class AdminProductsComponent implements OnInit {
     const lang = this.t.getActiveLang();
     return product.genres?.map(g => g.name[lang] || g.name['en']).join(', ') || '—';
   }
-
-  importIgdb(igdbId: number): void {
-    this.api.importFromIgdb(igdbId).subscribe(() => {
-      this.igdbDialogOpen.set(false);
-      this.load(1);
-    });
-  }
-
-  closeIgdbDialog(): void { this.igdbDialogOpen.set(false); }
 
   openLinks(product: Product): void {
     this.linksProductId.set(product.id);
@@ -195,24 +174,7 @@ export class AdminProductsComponent implements OnInit {
     this.form.update(f => ({ ...f, [field]: value }));
   }
 
-  openConfirm(title: string, subtitle: string, action: () => void): void {
-    this.confirmDialogTitle.set(title);
-    this.confirmDialogSubtitle.set(subtitle);
-    this.pendingAction.set(action);
-    this.confirmDialogOpen.set(true);
-  }
-
-  confirmAction(): void { this.pendingAction()?.(); this.closeConfirm(); }
-  closeConfirm(): void { this.confirmDialogOpen.set(false); this.pendingAction.set(null); }
-
   coverOf(g: IgdbGame): string {
     return g.cover ? 'https:' + g.cover.url.replace('t_thumb', 't_cover_small') : '';
-  }
-
-  goTo(p: number): void { this.load(p); }
-
-  pages(): number[] {
-    const last = this.page()?.last_page ?? 1;
-    return Array.from({ length: last }, (_, i) => i + 1);
   }
 }

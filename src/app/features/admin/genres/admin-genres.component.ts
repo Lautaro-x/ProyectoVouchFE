@@ -2,9 +2,11 @@ import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
-import { Category, Genre, Paginated, TranslatableName } from '../models/admin.models';
+import { Category, Genre, TranslatableName } from '../models/admin.models';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
-import { LocalizedNamePipe } from '../pipes/localized-name.pipe';
+import { LocalizedNamePipe } from '../../../shared/pipes/localized-name.pipe';
+import { AdminTableBase } from '../admin-table.base';
+import { LANG_LOCALES } from '../../../core/constants/langs';
 
 interface WeightRow { id: number; name: string; weight: number; }
 
@@ -17,23 +19,11 @@ const EMPTY_NAME = (): TranslatableName => ({ en: '', es: '', fr: '', pt: '', it
   templateUrl: './admin-genres.component.html',
   styleUrl: './admin-genres.component.css',
 })
-export class AdminGenresComponent implements OnInit {
+export class AdminGenresComponent extends AdminTableBase<Genre> implements OnInit {
   private api = inject(AdminApiService);
   private t   = inject(TranslocoService);
 
-  readonly locales = [
-    { code: 'en', label: 'English (EN) *' },
-    { code: 'es', label: 'Español (ES)' },
-    { code: 'fr', label: 'Français (FR)' },
-    { code: 'pt', label: 'Português (PT)' },
-    { code: 'it', label: 'Italiano (IT)' },
-  ];
-
-  page    = signal<Paginated<Genre> | null>(null);
-  perPage = signal(25);
-  sortBy  = signal('id');
-  sortDir = signal<'asc' | 'desc'>('asc');
-  filterSearch = signal('');
+  readonly locales = LANG_LOCALES;
 
   formDialogOpen  = signal(false);
   formDialogTitle = signal('');
@@ -46,11 +36,6 @@ export class AdminGenresComponent implements OnInit {
   allCategories      = signal<Category[]>([]);
   assignedRows       = signal<WeightRow[]>([]);
   addingCategoryId   = signal<number>(0);
-
-  confirmDialogOpen     = signal(false);
-  confirmDialogTitle    = signal('');
-  confirmDialogSubtitle = signal('');
-  private pendingAction = signal<(() => void) | null>(null);
 
   availableCategories = computed(() => {
     const assignedIds = new Set(this.assignedRows().map(r => r.id));
@@ -72,19 +57,6 @@ export class AdminGenresComponent implements OnInit {
     if (this.filterSearch()) params['search'] = this.filterSearch();
     this.api.getGenres(params).subscribe(data => this.page.set(data));
   }
-
-  setSort(col: string): void {
-    if (this.sortBy() === col) this.sortDir.update(d => d === 'asc' ? 'desc' : 'asc');
-    else { this.sortBy.set(col); this.sortDir.set('asc'); }
-    this.load();
-  }
-
-  sortIcon(col: string): string {
-    if (this.sortBy() !== col) return '';
-    return this.sortDir() === 'asc' ? ' ▲' : ' ▼';
-  }
-
-  setPerPage(n: number): void { this.perPage.set(n); this.load(); }
 
   updateFormName(locale: string, value: string): void {
     this.formName.update(n => ({ ...n, [locale]: value }));
@@ -176,21 +148,4 @@ export class AdminGenresComponent implements OnInit {
   }
 
   closeWeightsDialog(): void { this.weightsDialogOpen.set(false); }
-
-  openConfirm(title: string, subtitle: string, action: () => void): void {
-    this.confirmDialogTitle.set(title);
-    this.confirmDialogSubtitle.set(subtitle);
-    this.pendingAction.set(action);
-    this.confirmDialogOpen.set(true);
-  }
-
-  confirmAction(): void { this.pendingAction()?.(); this.closeConfirm(); }
-  closeConfirm(): void { this.confirmDialogOpen.set(false); this.pendingAction.set(null); }
-
-  goTo(p: number): void { this.load(p); }
-
-  pages(): number[] {
-    const last = this.page()?.last_page ?? 1;
-    return Array.from({ length: last }, (_, i) => i + 1);
-  }
 }

@@ -4,6 +4,9 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Announcement } from '../models/admin.models';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
+import { LANGS } from '../../../core/constants/langs';
+import { utcToLocal, localToUTC } from '../../../core/utils/datetime.utils';
+import { localizedValue } from '../../../core/utils/localized-value';
 
 type LangRecord = Record<string, string>;
 
@@ -25,7 +28,8 @@ export class AdminAnnouncementsComponent implements OnInit {
   private readonly api       = inject(AdminApiService);
   private readonly transloco = inject(TranslocoService);
 
-  readonly LANGS = ['es', 'en', 'fr', 'pt', 'it'];
+  readonly LANGS = LANGS;
+  readonly utcToLocal = utcToLocal;
 
   readonly announcements = signal<Announcement[]>([]);
   readonly editOpen      = signal(false);
@@ -38,7 +42,7 @@ export class AdminAnnouncementsComponent implements OnInit {
 
   readonly canSave = computed(() => {
     const f = this.form();
-    return this.LANGS.every(lang =>
+    return LANGS.every(lang =>
       f.title[lang]?.trim() && f.body[lang]?.trim()
     );
   });
@@ -52,7 +56,7 @@ export class AdminAnnouncementsComponent implements OnInit {
   }
 
   private emptyForm(): AnnouncementForm {
-    const empty = Object.fromEntries(this.LANGS.map(l => [l, '']));
+    const empty = Object.fromEntries(LANGS.map(l => [l, '']));
     return { title: { ...empty }, body: { ...empty }, starts_at: '', ends_at: '' };
   }
 
@@ -67,12 +71,12 @@ export class AdminAnnouncementsComponent implements OnInit {
     this.target.set(a);
     this.activeLang.set('es');
     this.api.getAnnouncement(a.id).subscribe(data => {
-      const empty = Object.fromEntries(this.LANGS.map(l => [l, '']));
+      const empty = Object.fromEntries(LANGS.map(l => [l, '']));
       this.form.set({
         title:     { ...empty, ...data.title },
         body:      { ...empty, ...data.body },
-        starts_at: this.utcToLocal(data.starts_at),
-        ends_at:   this.utcToLocal(data.ends_at),
+        starts_at: utcToLocal(data.starts_at),
+        ends_at:   utcToLocal(data.ends_at),
       });
       this.editOpen.set(true);
     });
@@ -101,19 +105,7 @@ export class AdminAnnouncementsComponent implements OnInit {
   }
 
   titleFor(title: LangRecord): string {
-    const lang = this.transloco.getActiveLang();
-    return title[lang] || title['es'] || Object.values(title)[0] || '';
-  }
-
-  utcToLocal(dt: string): string {
-    if (!dt) return dt;
-    const d = new Date(dt.replace(' ', 'T') + 'Z');
-    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-  }
-
-  private localToUTC(dt: string): string {
-    if (!dt) return dt;
-    return new Date(dt).toISOString().slice(0, 16);
+    return localizedValue(title, this.transloco.getActiveLang());
   }
 
   save(): void {
@@ -123,8 +115,8 @@ export class AdminAnnouncementsComponent implements OnInit {
     const payload = {
       title:     f.title,
       body:      f.body,
-      starts_at: this.localToUTC(f.starts_at),
-      ends_at:   this.localToUTC(f.ends_at),
+      starts_at: localToUTC(f.starts_at),
+      ends_at:   localToUTC(f.ends_at),
     };
     const req = this.target()
       ? this.api.updateAnnouncement(this.target()!.id, payload)

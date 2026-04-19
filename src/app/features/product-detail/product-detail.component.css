@@ -31,12 +31,6 @@
   border: 1px solid var(--color-border);
 }
 
-.cover-placeholder {
-  aspect-ratio: 3 / 4;
-  background: var(--color-surface);
-  border-radius: 10px;
-  border: 1px solid var(--color-border);
-}
 
 .detail-scores {
   display: flex;
@@ -144,16 +138,6 @@
 
 .detail-section { margin-bottom: 2rem; }
 
-.section-heading {
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-  margin: 0 0 0.75rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--color-border);
-}
 
 .detail-description {
   font-size: 0.95rem;
