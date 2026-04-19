@@ -29,6 +29,7 @@ export class UserLayoutComponent {
     { path: 'public-profile',  labelKey: 'public_profile.nav' },
     { path: 'reviews',         labelKey: 'reviews.nav_reviews' },
     { path: 'badges',          labelKey: 'badges.nav' },
+    { path: 'followers',       labelKey: 'followers.nav' },
   ];
 
   logout(): void {

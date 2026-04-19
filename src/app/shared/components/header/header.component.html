@@ -58,9 +58,9 @@
             <span class="header-staff">Staff</span>
           }
         </a>
-        <button class="header-btn-logout" (click)="logout()">{{ 'header.logout' | transloco }}</button>
+        <button class="btn-secondary" (click)="logout()">{{ 'header.logout' | transloco }}</button>
       } @else {
-        <a class="header-btn-login" routerLink="/login">{{ 'header.login' | transloco }}</a>
+        <a class="btn-primary" routerLink="/login">{{ 'header.login' | transloco }}</a>
       }
     </nav>
 
@@ -131,9 +131,9 @@
       <div class="dropdown-auth">
         <app-lang-switcher />
         @if (authService.currentUser()) {
-          <button class="header-btn-logout" (click)="logout()">{{ 'header.logout' | transloco }}</button>
+          <button class="btn-secondary" (click)="logout()">{{ 'header.logout' | transloco }}</button>
         } @else {
-          <a class="header-btn-login" routerLink="/login">{{ 'header.login' | transloco }}</a>
+          <a class="btn-primary" routerLink="/login">{{ 'header.login' | transloco }}</a>
         }
       </div>
     </div>
@@ -170,7 +170,7 @@
           </label>
         }
       </div>
-      <button class="survey-submit"
+      <button class="survey-submit btn-primary"
               [disabled]="selectedOption() === null || submitting()"
               (click)="submitSurvey()">
         {{ submitting() ? ('survey.submitting' | transloco) : ('survey.submit' | transloco) }}

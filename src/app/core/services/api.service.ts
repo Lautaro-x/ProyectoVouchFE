@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, UserReviewCard } from '../models/product.model';
-import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, SocialLinks, UserCardData, UserConsents, UserProfile } from '../models/user.model';
+import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, SocialLinks, UserCardData, UserConsents, UserProfile } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -72,6 +72,10 @@ export class ApiService {
 
   updateConsents(data: Partial<UserConsents>): Observable<void> {
     return this.http.patch<void>(`${this.base}/user/consents`, data);
+  }
+
+  getFollowers(): Observable<FollowersResponse> {
+    return this.http.get<FollowersResponse>(`${this.base}/user/followers`);
   }
 
   getBadgeProgress(): Observable<BadgesProgress> {

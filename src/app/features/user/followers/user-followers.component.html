@@ -1,0 +1,31 @@
+@if (loading()) {
+  <p class="uf-loading">{{ 'common.loading' | transloco }}</p>
+} @else {
+  <div class="uf-layout">
+    <div class="uf-header">
+      <span class="uf-count">{{ total() }}</span>
+      <span class="uf-count-label">{{ 'followers.title' | transloco }}</span>
+    </div>
+
+    @if (!followers().length) {
+      <p class="uf-empty">{{ 'followers.empty' | transloco }}</p>
+    } @else {
+      <ul class="uf-grid">
+        @for (f of followers(); track f.id) {
+          <li class="uf-item">
+            <a class="uf-link" [routerLink]="['/u', f.id]">
+              {{ f.name }}
+              @if (f.verified) {
+                <span class="uf-verified" title="Verificado">✓</span>
+              }
+            </a>
+          </li>
+        }
+      </ul>
+
+      @if (total() > followers().length) {
+        <p class="uf-more">{{ 'followers.showing' | transloco : { shown: followers().length, total: total() } }}</p>
+      }
+    }
+  </div>
+}

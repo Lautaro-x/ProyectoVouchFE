@@ -341,6 +341,12 @@
     "empty_cta": "Vai ai giochi",
     "no_results": "Nessuna recensione trovata con quel nome."
   },
+  "followers": {
+    "nav": "Follower",
+    "title": "follower",
+    "empty": "Non hai ancora follower.",
+    "showing": "Mostrando i primi {{ shown }} di {{ total }} follower."
+  },
   "consents": {
     "nav": "Consensi",
     "title": "I miei consensi",

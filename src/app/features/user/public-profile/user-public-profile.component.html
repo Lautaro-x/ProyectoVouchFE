@@ -3,7 +3,7 @@
 } @else {
 
   <div class="pc-save-row">
-    <button class="pc-save-btn" (click)="saveBackgrounds()" [disabled]="savingBg()">
+    <button class="btn-primary" (click)="saveBackgrounds()" [disabled]="savingBg()">
       @if (savingBg()) { {{ 'public_profile.saving_bg' | transloco }} }
       @else if (savedBg()) { {{ 'public_profile.saved_bg' | transloco }} }
       @else { {{ 'public_profile.save_bg' | transloco }} }
@@ -26,7 +26,7 @@
         [isAuthenticated]="true"
       />
     </div>
-    <button class="pc-copy-btn" (click)="copyLink('big')">
+    <button class="btn-secondary" (click)="copyLink('big')">
       {{ copiedBig() ? ('public_profile.copied_link' | transloco) : ('public_profile.copy_link' | transloco) }}
     </button>
   </section>
@@ -144,7 +144,7 @@
         </div>
       </div>
     </div>
-    <button class="pc-copy-btn" (click)="copyLink('mid')">
+    <button class="btn-secondary" (click)="copyLink('mid')">
       {{ copiedMid() ? ('public_profile.copied_link' | transloco) : ('public_profile.copy_link' | transloco) }}
     </button>
   </section>
@@ -234,7 +234,7 @@
         </div>
       </div>
     </div>
-    <button class="pc-copy-btn" (click)="copyLink('mini')">
+    <button class="btn-secondary" (click)="copyLink('mini')">
       {{ copiedMini() ? ('public_profile.copied_link' | transloco) : ('public_profile.copy_link' | transloco) }}
     </button>
   </section>

@@ -78,34 +78,59 @@ button {
   opacity: 1;
 }
 
-/* Shared buttons — global, usable in any component */
+/* ── Shared buttons — global, usable in any component ── */
+
+/* Primary: save, submit, follow, login, claim */
 .btn-primary {
   background: var(--color-accent);
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 0.45rem 1rem;
-  font-size: 0.85rem;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   transition: background 0.15s;
 }
-.btn-primary:hover { background: var(--color-accent-hover); }
-.btn-primary.danger { background: var(--color-grade-f); }
-.btn-primary.danger:hover { background: #c0392b; }
+.btn-primary:hover:not(:disabled) { background: var(--color-accent-hover); }
+.btn-primary:disabled              { opacity: 0.5; cursor: not-allowed; }
+.btn-primary.danger                { background: var(--color-grade-f); }
+.btn-primary.danger:hover:not(:disabled) { background: #c0392b; }
 
+/* Secondary: logout, cancel, unfollow, copy — .btn-ghost is kept as alias */
+.btn-secondary,
 .btn-ghost {
   background: transparent;
   color: var(--color-text-muted);
   border: 1px solid var(--color-border);
   border-radius: 6px;
-  padding: 0.45rem 1rem;
-  font-size: 0.85rem;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s;
 }
+.btn-secondary:hover:not(:disabled),
 .btn-ghost:hover { border-color: var(--color-text-muted); color: var(--color-text); }
+.btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Danger: delete, ban, destructive confirm */
+.btn-danger {
+  background: var(--color-grade-f);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-danger:hover:not(:disabled) { background: #c0392b; }
+.btn-danger:disabled              { opacity: 0.5; cursor: not-allowed; }
 
 .btn-sm {
   width: 80px;

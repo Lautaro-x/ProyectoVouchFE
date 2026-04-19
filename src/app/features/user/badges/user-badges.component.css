@@ -64,20 +64,6 @@
 
 .ub-claim-btn {
   align-self: flex-start;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 0.22rem 0.8rem;
-  border-radius: 6px;
-  border: none;
-  background: var(--color-accent);
-  color: #fff;
-  cursor: pointer;
-  letter-spacing: 0.03em;
-}
-
-.ub-claim-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .ub-awarded-row {

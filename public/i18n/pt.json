@@ -341,6 +341,12 @@
     "empty_cta": "Ir para jogos",
     "no_results": "Nenhuma resenha encontrada com esse nome."
   },
+  "followers": {
+    "nav": "Seguidores",
+    "title": "seguidores",
+    "empty": "Você ainda não tem seguidores.",
+    "showing": "Mostrando os primeiros {{ shown }} de {{ total }} seguidores."
+  },
   "consents": {
     "nav": "Consentimentos",
     "title": "Meus consentimentos",

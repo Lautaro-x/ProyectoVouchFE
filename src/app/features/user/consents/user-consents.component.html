@@ -42,7 +42,7 @@
     </div>
 
     <div class="consents-actions">
-      <button class="btn-save" (click)="save()" [disabled]="saving()">
+      <button class="btn-primary" (click)="save()" [disabled]="saving()">
         @if (saving()) {
           {{ 'consents.saving' | transloco }}
         } @else if (saved()) {

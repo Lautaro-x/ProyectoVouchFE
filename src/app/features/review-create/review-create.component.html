@@ -57,7 +57,7 @@
       </section>
 
       <div class="review-actions">
-        <button class="btn-submit" [disabled]="submitting()" (click)="submit()">
+        <button class="btn-primary" [disabled]="submitting()" (click)="submit()">
           {{ submitting() ? ('review.submitting' | transloco) : ('review.submit' | transloco) }}
         </button>
       </div>

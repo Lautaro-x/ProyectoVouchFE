@@ -341,6 +341,12 @@
     "empty_cta": "Aller aux jeux",
     "no_results": "Aucun avis trouvé avec ce nom."
   },
+  "followers": {
+    "nav": "Abonnés",
+    "title": "abonnés",
+    "empty": "Vous n'avez pas encore d'abonnés.",
+    "showing": "Affichage des {{ shown }} premiers sur {{ total }} abonnés."
+  },
   "consents": {
     "nav": "Consentements",
     "title": "Mes consentements",

@@ -62,19 +62,3 @@
   margin-top: 1rem;
 }
 
-.logout-btn {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-  padding: 0.35rem 0.75rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  text-align: left;
-  transition: border-color 0.15s, color 0.15s;
-}
-
-.logout-btn:hover {
-  border-color: var(--color-text-muted);
-  color: var(--color-text);
-}

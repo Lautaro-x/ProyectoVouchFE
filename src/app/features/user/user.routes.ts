@@ -36,6 +36,11 @@ export const userRoutes: Routes = [
         loadComponent: () =>
           import('./badges/user-badges.component').then(m => m.UserBadgesComponent),
       },
+      {
+        path: 'followers',
+        loadComponent: () =>
+          import('./followers/user-followers.component').then(m => m.UserFollowersComponent),
+      },
     ],
   },
 ];

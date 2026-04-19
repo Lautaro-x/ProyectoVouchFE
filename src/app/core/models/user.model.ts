@@ -79,6 +79,17 @@ export interface BadgeProgress {
 
 export type BadgesProgress = Record<string, BadgeProgress>;
 
+export interface FollowerUser {
+  id: number;
+  name: string;
+  verified: boolean;
+}
+
+export interface FollowersResponse {
+  total: number;
+  followers: FollowerUser[];
+}
+
 export const SOCIAL_NETWORKS: { key: string; label: string }[] = [
   { key: 'youtube',   label: 'YouTube' },
   { key: 'twitch',    label: 'Twitch' },

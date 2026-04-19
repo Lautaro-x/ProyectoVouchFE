@@ -343,6 +343,12 @@
     "submitting": "Enviando...",
     "thanks": "¡Gracias por tu respuesta!"
   },
+  "followers": {
+    "nav": "Seguidores",
+    "title": "seguidores",
+    "empty": "Aún no tienes seguidores.",
+    "showing": "Mostrando los primeros {{ shown }} de {{ total }} seguidores."
+  },
   "consents": {
     "nav": "Consentimientos",
     "title": "Mis consentimientos",

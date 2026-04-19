@@ -343,6 +343,12 @@
     "empty_cta": "Go to games",
     "no_results": "No reviews found with that name."
   },
+  "followers": {
+    "nav": "Followers",
+    "title": "followers",
+    "empty": "You don't have any followers yet.",
+    "showing": "Showing the first {{ shown }} of {{ total }} followers."
+  },
   "consents": {
     "nav": "Consents",
     "title": "My consents",

@@ -16,7 +16,7 @@
         </div>
         <p class="ub-item-desc">{{ 'badges.desc.' + slug | transloco }}</p>
         @if (bp.claimable || (isAdmin() && !bp.awarded)) {
-          <button class="ub-claim-btn"
+          <button class="ub-claim-btn btn-primary"
                   [disabled]="claiming() === slug"
                   (click)="claimBadge(slug)">
             {{ claiming() === slug ? ('profile.badge_claiming' | transloco) : ('profile.badge_claim' | transloco) }}

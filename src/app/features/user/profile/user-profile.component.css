@@ -233,31 +233,7 @@
   border-left: 3px solid var(--color-accent);
 }
 
-/* ── Save button ─────────────────────────────────────── */
-
 .profile-actions {
   display: flex;
   justify-content: flex-end;
-}
-
-.btn-save {
-  background: var(--color-accent);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1.5rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s;
-  font-family: inherit;
-}
-
-.btn-save:hover:not(:disabled) {
-  opacity: 0.85;
-}
-
-.btn-save:disabled {
-  opacity: 0.6;
-  cursor: default;
 }

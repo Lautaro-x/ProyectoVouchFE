@@ -33,7 +33,7 @@
     @if (user()?.role === 'admin') {
       <a class="admin-link" routerLink="/administration">{{ 'header.administration' | transloco }}</a>
     }
-    <button class="logout-btn" (click)="logout()">{{ 'header.logout' | transloco }}</button>
+    <button class="btn-secondary" (click)="logout()">{{ 'header.logout' | transloco }}</button>
   </div>
 </aside>
 

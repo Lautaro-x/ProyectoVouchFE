@@ -138,17 +138,3 @@
   justify-content: flex-end;
 }
 
-.btn-submit {
-  background: var(--color-accent);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.65rem 2rem;
-  font-size: 0.9rem;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.btn-submit:hover:not(:disabled) { background: var(--color-accent-hover); }
-.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }

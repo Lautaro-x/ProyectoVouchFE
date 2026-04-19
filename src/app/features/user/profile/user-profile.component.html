@@ -104,7 +104,7 @@
 
       <!-- Actions -->
       <div class="profile-actions">
-        <button class="btn-save" (click)="save()" [disabled]="saving()">
+        <button class="btn-primary" (click)="save()" [disabled]="saving()">
           @if (saving()) {
             {{ 'profile.saving' | transloco }}
           } @else if (saved()) {

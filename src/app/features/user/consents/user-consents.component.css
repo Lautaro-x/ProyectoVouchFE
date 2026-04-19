@@ -1,6 +1,6 @@
 .consents-loading {
   padding: 2rem;
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 .consents-layout {
@@ -18,7 +18,7 @@
 }
 
 .consents-intro {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -29,8 +29,8 @@
 }
 
 .consent-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 1rem 1.25rem;
 }
@@ -51,7 +51,7 @@
   flex-shrink: 0;
   width: 16px;
   height: 16px;
-  accent-color: var(--accent);
+  accent-color: var(--color-accent);
   cursor: pointer;
 }
 
@@ -71,33 +71,16 @@
 
 .consent-desc {
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 .consent-locked {
   font-size: 0.8rem;
-  color: var(--accent);
+  color: var(--color-accent);
   font-style: italic;
 }
 
 .consents-actions {
   display: flex;
   gap: 1rem;
-}
-
-.btn-save {
-  padding: 0.6rem 1.4rem;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.btn-save:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
