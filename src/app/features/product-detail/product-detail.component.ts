@@ -122,8 +122,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     return 'grade-' + grade.replace('+', 'plus').replace('-', 'minus').toLowerCase();
   }
 
-  genreNames(): string {
+  genreList = computed(() => {
     const lang = this.t.getActiveLang();
-    return this.product()?.genres.map(g => g.name[lang] || g.name['en']).join(', ') || '—';
-  }
+    return this.product()?.genres.map(g => ({
+      id:    g.id,
+      label: g.name[lang] || g.name['en'] || '',
+    })) ?? [];
+  });
 }

@@ -53,7 +53,16 @@
   "games": {
     "title": "Games",
     "search_ph": "Search games...",
-    "no_results": "No games found."
+    "no_results": "No games found.",
+    "filter_by": "Filtered by",
+    "filter_clear": "Clear filter",
+    "filter_type_genre": "Genre",
+    "filter_type_developer": "Developer",
+    "filter_type_publisher": "Publisher",
+    "filter_type_theme": "Theme",
+    "filter_type_game_mode": "Game Mode",
+    "filter_type_player_perspective": "Perspective",
+    "filter_type_franchise": "Franchise"
   },
   "landing": {
     "title": "Hello, world.",

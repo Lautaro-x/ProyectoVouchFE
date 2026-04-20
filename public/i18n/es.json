@@ -53,7 +53,16 @@
   "games": {
     "title": "Juegos",
     "search_ph": "Buscar juegos...",
-    "no_results": "No se encontraron juegos."
+    "no_results": "No se encontraron juegos.",
+    "filter_by": "Lista filtrada por",
+    "filter_clear": "Quitar filtro",
+    "filter_type_genre": "Género",
+    "filter_type_developer": "Desarrollador",
+    "filter_type_publisher": "Distribuidora",
+    "filter_type_theme": "Temática",
+    "filter_type_game_mode": "Modo de juego",
+    "filter_type_player_perspective": "Perspectiva",
+    "filter_type_franchise": "Franquicia"
   },
   "landing": {
     "title": "Vouch",

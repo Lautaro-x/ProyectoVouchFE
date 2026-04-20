@@ -10,9 +10,11 @@ export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly base = environment.apiUrl;
 
-  getGames(search: string, page: number): Observable<PaginatedResponse<ProductCard>> {
+  getGames(search: string, page: number, filterType?: string, filterValue?: string): Observable<PaginatedResponse<ProductCard>> {
     const params: Record<string, string | number> = { page };
-    if (search) params['search'] = search;
+    if (search)      params['search']       = search;
+    if (filterType)  params['filter_type']  = filterType;
+    if (filterValue) params['filter_value'] = filterValue;
     return this.http.get<PaginatedResponse<ProductCard>>(`${this.base}/games`, { params });
   }
 

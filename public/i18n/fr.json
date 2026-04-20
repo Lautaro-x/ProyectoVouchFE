@@ -53,7 +53,16 @@
   "games": {
     "title": "Jeux",
     "search_ph": "Rechercher des jeux...",
-    "no_results": "Aucun jeu trouvé."
+    "no_results": "Aucun jeu trouvé.",
+    "filter_by": "Filtré par",
+    "filter_clear": "Supprimer le filtre",
+    "filter_type_genre": "Genre",
+    "filter_type_developer": "Développeur",
+    "filter_type_publisher": "Éditeur",
+    "filter_type_theme": "Thème",
+    "filter_type_game_mode": "Mode de jeu",
+    "filter_type_player_perspective": "Perspective",
+    "filter_type_franchise": "Franchise"
   },
   "landing": {
     "title": "Bonjour, monde.",

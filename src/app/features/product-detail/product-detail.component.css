@@ -218,6 +218,21 @@
   line-height: 1.15;
 }
 
+.detail-filter-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.detail-filter-link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+.detail-genres-sep {
+  color: var(--color-text-muted);
+}
+
 .detail-genres {
   font-size: 0.9rem;
   color: var(--color-text-muted);

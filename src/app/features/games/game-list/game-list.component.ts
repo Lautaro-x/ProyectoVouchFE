@@ -1,6 +1,7 @@
 import { Component, computed, inject, DestroyRef, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
@@ -19,6 +20,8 @@ import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/
 export class GameListComponent implements OnInit {
   private api        = inject(ApiService);
   private destroyRef = inject(DestroyRef);
+  private route      = inject(ActivatedRoute);
+  private router     = inject(Router);
   private search$    = new Subject<string>();
 
   readonly breadcrumbs: BreadcrumbItem[] = [
@@ -31,6 +34,14 @@ export class GameListComponent implements OnInit {
   page        = signal(1);
   lastPage    = signal(1);
   total       = signal(0);
+  filterType  = signal('');
+  filterValue = signal('');
+  filterLabel = signal('');
+
+  filterTypeKey = computed(() => {
+    const t = this.filterType();
+    return t ? 'games.filter_type_' + t : '';
+  });
 
   pageNumbers = computed<(number | '…')[]>(() => {
     const last    = this.lastPage();
@@ -51,6 +62,14 @@ export class GameListComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    const params = this.route.snapshot.queryParamMap;
+    const ft = params.get('filterType') ?? '';
+    const fv = params.get('filterValue') ?? '';
+    const fl = params.get('filterLabel') ?? fv;
+    this.filterType.set(ft);
+    this.filterValue.set(fv);
+    this.filterLabel.set(fl);
+
     this.search$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -74,9 +93,18 @@ export class GameListComponent implements OnInit {
     this.load();
   }
 
+  clearFilter(): void {
+    this.filterType.set('');
+    this.filterValue.set('');
+    this.filterLabel.set('');
+    this.router.navigate(['/games']);
+  }
+
   private load(): void {
     this.loading.set(true);
-    this.api.getGames(this.searchInput(), this.page()).subscribe({
+    const ft = this.filterType() || undefined;
+    const fv = this.filterValue() || undefined;
+    this.api.getGames(this.searchInput(), this.page(), ft, fv).subscribe({
       next: res => {
         this.games.set(res.data);
         this.lastPage.set(res.last_page);

@@ -53,7 +53,16 @@
   "games": {
     "title": "Jogos",
     "search_ph": "Buscar jogos...",
-    "no_results": "Nenhum jogo encontrado."
+    "no_results": "Nenhum jogo encontrado.",
+    "filter_by": "Filtrado por",
+    "filter_clear": "Remover filtro",
+    "filter_type_genre": "Gênero",
+    "filter_type_developer": "Desenvolvedor",
+    "filter_type_publisher": "Distribuidora",
+    "filter_type_theme": "Tema",
+    "filter_type_game_mode": "Modo de jogo",
+    "filter_type_player_perspective": "Perspectiva",
+    "filter_type_franchise": "Franquia"
   },
   "landing": {
     "title": "Olá, mundo.",

@@ -4,13 +4,21 @@
 
   <div class="games-header">
     <h1 class="games-title">{{ 'games.title' | transloco }}</h1>
-    <input
-      class="games-search"
-      type="search"
-      [placeholder]="'games.search_ph' | transloco"
-      [value]="searchInput()"
-      (input)="onSearchInput($any($event.target).value)"
-    />
+    <div class="games-header-right">
+      @if (filterType()) {
+        <span class="filter-chip">
+          {{ 'games.filter_by' | transloco }} {{ filterTypeKey() | transloco }} = {{ filterLabel() }}
+          <button class="filter-clear" (click)="clearFilter()" [title]="'games.filter_clear' | transloco">×</button>
+        </span>
+      }
+      <input
+        class="games-search"
+        type="search"
+        [placeholder]="'games.search_ph' | transloco"
+        [value]="searchInput()"
+        (input)="onSearchInput($any($event.target).value)"
+      />
+    </div>
   </div>
 
   @if (loading()) {

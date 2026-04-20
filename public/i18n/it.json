@@ -53,7 +53,16 @@
   "games": {
     "title": "Giochi",
     "search_ph": "Cerca giochi...",
-    "no_results": "Nessun gioco trovato."
+    "no_results": "Nessun gioco trovato.",
+    "filter_by": "Filtrato per",
+    "filter_clear": "Rimuovi filtro",
+    "filter_type_genre": "Genere",
+    "filter_type_developer": "Sviluppatore",
+    "filter_type_publisher": "Publisher",
+    "filter_type_theme": "Tema",
+    "filter_type_game_mode": "Modalità di gioco",
+    "filter_type_player_perspective": "Prospettiva",
+    "filter_type_franchise": "Franchise"
   },
   "landing": {
     "title": "Ciao, mondo.",
