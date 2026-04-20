@@ -30,6 +30,8 @@
     "developer": "Sviluppatore",
     "publisher": "Publisher",
     "platforms": "Piattaforme",
+    "score_igdb": "Voto secondo IGDB",
+    "be_first": "Sii il primo a recensire questo gioco.",
     "buy": "Acquista",
     "your_score": "Il tuo voto",
     "create_review": "+ Scrivere la mia recensione",
@@ -103,7 +105,8 @@
       "users": "Utenti",
       "surveys": "Sondaggi",
       "announcements": "Annunci",
-      "logout": "Esci"
+      "logout": "Esci",
+      "verify_requests": "Verifiche"
     },
     "categories": {
       "title": "Categorie",
@@ -259,6 +262,28 @@
       "audience_all": "Tutti",
       "audience_verified": "Solo verificati",
       "audience_press": "Solo stampa"
+    },
+    "verify_requests": {
+      "title": "Richieste di verifica",
+      "col_user": "Utente",
+      "col_type": "Tipo",
+      "col_date": "Data",
+      "col_status": "Stato",
+      "type_verified": "Verificato",
+      "type_press": "Stampa",
+      "status_pending": "In attesa",
+      "status_approved": "Approvata",
+      "status_rejected": "Rifiutata",
+      "review_btn": "Esamina",
+      "detail_title": "Richiesta di verifica",
+      "social_network": "Social network",
+      "press_url": "URL del media",
+      "press_contact": "Contatto",
+      "admin_note_label": "Nota interna",
+      "admin_note_ph": "Motivo del rifiuto o osservazioni...",
+      "approve_btn": "Approva",
+      "reject_btn": "Rifiuta",
+      "empty": "Nessuna richiesta con questo stato."
     }
   },
   "audience": {
@@ -295,7 +320,9 @@
     "saving": "Salvataggio...",
     "saved": "Salvato!",
     "badge_claim": "Riscatta",
-    "badge_claiming": "Riscattando..."
+    "badge_claiming": "Riscattando...",
+    "section_verification": "Verifica",
+    "verification_hint": "Ottieni il badge verificato come creatore di contenuti o registrati come testata giornalistica."
   },
   "public_profile": {
     "nav": "Il mio profilo pubblico",
@@ -377,5 +404,30 @@
   },
   "announcement": {
     "icon_title": "Ci sono annunci attivi"
+  },
+  "verify_request": {
+    "cta": "Richiedi verifica",
+    "cta_full": "Richiedi la verifica o registrati come stampa",
+    "type_label": "Tipo di verifica",
+    "type_verified": "Verificato (creatore di contenuti)",
+    "type_press": "Stampa",
+    "verified_explain": "Per ottenere il badge verificato, inviaci un messaggio diretto da uno dei seguenti account ufficiali di Vouch:",
+    "verified_explain2": "Includi il tuo nome utente o email di Vouch nel messaggio per permetterci di identificarti.",
+    "social_network_label": "Social network",
+    "social_username_label": "Il tuo nome utente su quel social",
+    "social_username_ph": "@tuonome",
+    "press_explain": "Per ottenere accesso stampa, fornisci l'URL della tua testata e un contatto.",
+    "press_url_label": "URL della testata",
+    "press_contact_label": "Nome e contatto del redattore",
+    "press_contact_ph": "Nome Cognome — email@testata.it",
+    "press_email_alt": "Puoi anche scriverci a ",
+    "submit": "Invia richiesta",
+    "submitting": "Invio...",
+    "sent_title": "Richiesta inviata",
+    "sent_body": "Esamineremo la tua richiesta e ti notificheremo non appena sarà risolta.",
+    "approved_title": "Verifica approvata!",
+    "approved_body": "Il tuo badge verificato è ora nel tuo profilo.",
+    "rejected_title": "Richiesta rifiutata",
+    "rejected_hint": "Se ritieni che sia un errore, puoi inviare una nuova richiesta."
   }
 }

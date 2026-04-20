@@ -39,6 +39,10 @@ export const adminRoutes: Routes = [
         path: 'announcements',
         loadComponent: () => import('./announcements/admin-announcements.component').then(m => m.AdminAnnouncementsComponent),
       },
+      {
+        path: 'verify-requests',
+        loadComponent: () => import('./verify-requests/admin-verify-requests.component').then(m => m.AdminVerifyRequestsComponent),
+      },
     ],
   },
 ];

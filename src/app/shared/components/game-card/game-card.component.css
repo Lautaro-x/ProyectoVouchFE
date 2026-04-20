@@ -120,6 +120,20 @@
   line-height: 1.3;
 }
 
+.score-label--igdb {
+  font-style: italic;
+}
+
+.score-label--first {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  line-height: 1.35;
+}
+
+.grade--igdb {
+  opacity: 0.6;
+}
+
 .grade {
   font-size: 1.4rem;
   font-weight: 700;

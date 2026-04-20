@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, UserReviewCard } from '../models/product.model';
-import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, SocialLinks, UserCardData, UserConsents, UserProfile } from '../models/user.model';
+import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, SocialLinks, UserCardData, UserConsents, UserProfile, VerificationRequest } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -100,6 +100,14 @@ export class ApiService {
 
   getActiveAnnouncements(): Observable<ActiveAnnouncement[]> {
     return this.http.get<ActiveAnnouncement[]>(`${this.base}/announcements/active`);
+  }
+
+  getVerifyRequest(): Observable<VerificationRequest | null> {
+    return this.http.get<VerificationRequest | null>(`${this.base}/user/verify-request`);
+  }
+
+  submitVerifyRequest(data: Partial<VerificationRequest>): Observable<VerificationRequest> {
+    return this.http.post<VerificationRequest>(`${this.base}/user/verify-request`, data);
   }
 
   followUser(userId: number): Observable<void> {

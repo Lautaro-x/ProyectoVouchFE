@@ -70,7 +70,7 @@ export interface AdminUser {
   email: string;
   role: 'user' | 'critic' | 'admin';
   avatar: string | null;
-  badges: string[];
+  badges: string[] | null;
   banned_at: string | null;
   ban_reason: string | null;
   created_at: string;
@@ -121,6 +121,20 @@ export interface Announcement {
   ends_at: string;
   audience: 'all' | 'verified' | 'press';
   status?: 'upcoming' | 'active' | 'ended' | 'missing_translations';
+}
+
+export interface VerificationRequestAdmin {
+  id: number;
+  type: 'verified' | 'press';
+  social_network:  string | null;
+  social_username: string | null;
+  press_url:       string | null;
+  press_contact:   string | null;
+  status: 'pending' | 'approved' | 'rejected';
+  admin_note: string | null;
+  reviewed_at: string | null;
+  created_at: string;
+  user: { id: number; name: string; email: string; role: string; badges: string[] };
 }
 
 export interface IgdbGame {

@@ -1,0 +1,99 @@
+@if (loading()) {
+  <p class="vr-loading">{{ 'common.loading' | transloco }}</p>
+} @else if (saved() || existing()?.status === 'pending') {
+  <div class="vr-status vr-status--pending">
+    <p class="vr-status-icon">⏳</p>
+    <p class="vr-status-title">{{ 'verify_request.sent_title' | transloco }}</p>
+    <p class="vr-status-body">{{ 'verify_request.sent_body' | transloco }}</p>
+  </div>
+} @else if (existing()?.status === 'approved') {
+  <div class="vr-status vr-status--approved">
+    <p class="vr-status-icon">✓</p>
+    <p class="vr-status-title">{{ 'verify_request.approved_title' | transloco }}</p>
+    <p class="vr-status-body">{{ 'verify_request.approved_body' | transloco }}</p>
+  </div>
+} @else if (existing()?.status === 'rejected') {
+  <div class="vr-status vr-status--rejected">
+    <p class="vr-status-icon">✕</p>
+    <p class="vr-status-title">{{ 'verify_request.rejected_title' | transloco }}</p>
+    @if (existing()!.admin_note) {
+      <p class="vr-status-note">{{ existing()!.admin_note }}</p>
+    }
+  </div>
+  <p class="vr-rejected-hint">{{ 'verify_request.rejected_hint' | transloco }}</p>
+} @else {
+
+  <!-- Type selector -->
+  <div class="field">
+    <label class="field-label">{{ 'verify_request.type_label' | transloco }}</label>
+    <select class="field-input" [value]="type()" (change)="type.set($any($event.target).value)">
+      <option value="verified">{{ 'verify_request.type_verified' | transloco }}</option>
+      <option value="press">{{ 'verify_request.type_press' | transloco }}</option>
+    </select>
+  </div>
+
+  <!-- ── VERIFIED FORM ──────────────────────────────── -->
+  @if (type() === 'verified') {
+    <div class="vr-block">
+      <p class="vr-explain">{{ 'verify_request.verified_explain' | transloco }}</p>
+      <ul class="vr-socials">
+        @for (s of vouchSocials; track s.label) {
+          <li><a [href]="s.url" target="_blank" rel="noopener">{{ s.label }}</a></li>
+        }
+      </ul>
+      <p class="vr-explain vr-explain--small">{{ 'verify_request.verified_explain2' | transloco }}</p>
+    </div>
+
+    <div class="field">
+      <label class="field-label">{{ 'verify_request.social_network_label' | transloco }}</label>
+      <select class="field-input" [value]="socialNetwork()" (change)="socialNetwork.set($any($event.target).value)">
+        @for (net of socialNetworks; track net.key) {
+          <option [value]="net.key">{{ net.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="field-label">{{ 'verify_request.social_username_label' | transloco }}</label>
+      <input class="field-input" type="text"
+             [value]="socialUsername()"
+             (input)="socialUsername.set($any($event.target).value)"
+             [placeholder]="'verify_request.social_username_ph' | transloco" />
+    </div>
+  }
+
+  <!-- ── PRESS FORM ─────────────────────────────────── -->
+  @if (type() === 'press') {
+    <div class="vr-block">
+      <p class="vr-explain">{{ 'verify_request.press_explain' | transloco }}</p>
+    </div>
+
+    <div class="field">
+      <label class="field-label">{{ 'verify_request.press_url_label' | transloco }}</label>
+      <input class="field-input" type="url"
+             [value]="pressUrl()"
+             (input)="pressUrl.set($any($event.target).value)"
+             placeholder="https://..." />
+    </div>
+
+    <div class="field">
+      <label class="field-label">{{ 'verify_request.press_contact_label' | transloco }}</label>
+      <input class="field-input" type="text"
+             [value]="pressContact()"
+             (input)="pressContact.set($any($event.target).value)"
+             [placeholder]="'verify_request.press_contact_ph' | transloco" />
+    </div>
+
+    <div class="vr-block vr-block--alt">
+      <p class="vr-explain vr-explain--small">{{ 'verify_request.press_email_alt' | transloco }}
+        <a [href]="'mailto:' + pressEmail">{{ pressEmail }}</a>
+      </p>
+    </div>
+  }
+
+  <div class="vr-actions">
+    <button class="btn-primary" [disabled]="saving() || !canSubmit()" (click)="submit()">
+      {{ saving() ? ('verify_request.submitting' | transloco) : ('verify_request.submit' | transloco) }}
+    </button>
+  </div>
+}

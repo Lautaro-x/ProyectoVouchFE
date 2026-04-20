@@ -1,5 +1,6 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -9,7 +10,7 @@ import { SOCIAL_NETWORKS, SocialLinks } from '../../../core/models/user.model';
   selector: 'app-user-profile',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule],
+  imports: [TranslocoModule, RouterLink],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css',
 })
@@ -18,6 +19,11 @@ export class UserProfileComponent implements OnInit {
   private readonly auth = inject(AuthService);
 
   readonly SOCIAL_NETWORKS = SOCIAL_NETWORKS;
+
+  readonly canRequestVerification = computed(() => {
+    const u = this.auth.currentUser();
+    return u && u.role !== 'admin' && u.role !== 'critic' && !this.badges().includes('verificado');
+  });
 
   readonly loading        = signal(true);
   readonly saving         = signal(false);

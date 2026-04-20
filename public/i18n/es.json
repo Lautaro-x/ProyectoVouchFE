@@ -30,6 +30,8 @@
     "developer": "Desarrollador",
     "publisher": "Distribuidora",
     "platforms": "Plataformas",
+    "score_igdb": "Nota según IGDB",
+    "be_first": "Sé el primero en reseñar este juego.",
     "buy": "Comprar",
     "your_score": "Tu puntuación",
     "create_review": "+ Crear mi propia crítica",
@@ -103,7 +105,8 @@
       "users": "Usuarios",
       "surveys": "Encuestas",
       "announcements": "Avisos",
-      "logout": "Salir"
+      "logout": "Salir",
+      "verify_requests": "Verificaciones"
     },
     "categories": {
       "title": "Categorías",
@@ -261,6 +264,28 @@
       "audience_all": "Todos",
       "audience_verified": "Solo verificados",
       "audience_press": "Solo prensa"
+    },
+    "verify_requests": {
+      "title": "Solicitudes de verificación",
+      "col_user": "Usuario",
+      "col_type": "Tipo",
+      "col_date": "Fecha",
+      "col_status": "Estado",
+      "type_verified": "Verificado",
+      "type_press": "Prensa",
+      "status_pending": "Pendiente",
+      "status_approved": "Aprobada",
+      "status_rejected": "Rechazada",
+      "review_btn": "Revisar",
+      "detail_title": "Solicitud de verificación",
+      "social_network": "Red social",
+      "press_url": "URL del medio",
+      "press_contact": "Contacto",
+      "admin_note_label": "Nota interna",
+      "admin_note_ph": "Motivo del rechazo u observaciones...",
+      "approve_btn": "Aprobar",
+      "reject_btn": "Rechazar",
+      "empty": "No hay solicitudes con este estado."
     }
   },
   "audience": {
@@ -286,7 +311,9 @@
     "saving": "Guardando...",
     "saved": "¡Guardado!",
     "badge_claim": "Reclamar",
-    "badge_claiming": "Reclamando..."
+    "badge_claiming": "Reclamando...",
+    "section_verification": "Verificación",
+    "verification_hint": "Obtén el badge de verificado como creador de contenido o regístrate como medio de prensa."
   },
   "public_profile": {
     "nav": "Mi perfil público",
@@ -379,5 +406,30 @@
   },
   "announcement": {
     "icon_title": "Hay avisos activos"
+  },
+  "verify_request": {
+    "cta": "Solicitar verificación",
+    "cta_full": "Solicitar verificación o registrarme como prensa",
+    "type_label": "Tipo de verificación",
+    "type_verified": "Verificado (creador de contenido)",
+    "type_press": "Prensa",
+    "verified_explain": "Para obtener el badge de verificado, necesitamos que nos envíes un mensaje directo desde alguna de las siguientes cuentas oficiales de Vouch:",
+    "verified_explain2": "Incluye tu nombre de usuario o email de Vouch en el mensaje para que podamos identificarte.",
+    "social_network_label": "Red social",
+    "social_username_label": "Tu usuario en esa red",
+    "social_username_ph": "@tuusuario",
+    "press_explain": "Para obtener acceso de prensa, facilítanos la URL de tu medio y un contacto.",
+    "press_url_label": "URL del medio",
+    "press_contact_label": "Nombre y contacto del redactor",
+    "press_contact_ph": "Nombre Apellido — email@medio.com",
+    "press_email_alt": "También puedes enviarnos un correo a ",
+    "submit": "Enviar solicitud",
+    "submitting": "Enviando...",
+    "sent_title": "Solicitud enviada",
+    "sent_body": "Revisaremos tu solicitud y te notificaremos en cuanto esté resuelta.",
+    "approved_title": "¡Verificación aprobada!",
+    "approved_body": "Ya tienes el badge de verificado en tu perfil.",
+    "rejected_title": "Solicitud rechazada",
+    "rejected_hint": "Si crees que ha sido un error, puedes volver a enviar una nueva solicitud."
   }
 }

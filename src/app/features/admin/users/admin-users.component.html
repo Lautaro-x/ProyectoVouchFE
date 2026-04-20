@@ -96,8 +96,8 @@
         <td class="actions">
           <button
             class="btn-sm"
-            [class.active]="u.badges.includes('verificado')"
-            [title]="u.badges.includes('verificado') ? ('admin.users.revoke_verified' | transloco) : ('admin.users.grant_verified' | transloco)"
+            [class.active]="u.badges?.includes('verificado')"
+            [title]="u.badges?.includes('verificado') ? ('admin.users.revoke_verified' | transloco) : ('admin.users.grant_verified' | transloco)"
             (click)="toggleVerified(u)"
           >✓</button>
           @if (u.banned_at) {

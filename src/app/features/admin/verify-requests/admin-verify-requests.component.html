@@ -1,0 +1,129 @@
+<div class="vr-toolbar">
+  <h1 class="page-title">{{ 'admin.verify_requests.title' | transloco }}</h1>
+  <div class="vr-filters">
+    @for (s of ['pending','approved','rejected']; track s) {
+      <button
+        class="filter-btn"
+        [class.filter-btn--active]="filterStatus() === s"
+        (click)="setFilter($any(s))">
+        {{ 'admin.verify_requests.status_' + s | transloco }}
+      </button>
+    }
+  </div>
+</div>
+
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>{{ 'admin.verify_requests.col_user' | transloco }}</th>
+      <th>{{ 'admin.verify_requests.col_type' | transloco }}</th>
+      <th>{{ 'admin.verify_requests.col_date' | transloco }}</th>
+      <th>{{ 'admin.verify_requests.col_status' | transloco }}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (req of requests(); track req.id) {
+      <tr>
+        <td>
+          <span class="vr-user-name">{{ req.user.name }}</span>
+          <span class="vr-user-email">{{ req.user.email }}</span>
+        </td>
+        <td>
+          <span class="type-pill type-{{ req.type }}">
+            {{ 'admin.verify_requests.type_' + req.type | transloco }}
+          </span>
+        </td>
+        <td class="col-date">{{ req.created_at | slice:0:10 }}</td>
+        <td>
+          <span class="status-pill status-{{ req.status }}">
+            {{ 'admin.verify_requests.status_' + req.status | transloco }}
+          </span>
+        </td>
+        <td>
+          <button class="btn-ghost" (click)="open(req)">
+            {{ 'admin.verify_requests.review_btn' | transloco }}
+          </button>
+        </td>
+      </tr>
+    } @empty {
+      <tr>
+        <td colspan="5" class="empty-row">{{ 'admin.verify_requests.empty' | transloco }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@if (detailOpen()) {
+  <app-dialog [title]="'admin.verify_requests.detail_title' | transloco" (close)="close()">
+    @let req = selected()!;
+
+    <div class="detail-section">
+      <p class="detail-label">{{ 'admin.verify_requests.col_user' | transloco }}</p>
+      <p class="detail-value">{{ req.user.name }} — {{ req.user.email }} ({{ req.user.role }})</p>
+    </div>
+
+    <div class="detail-section">
+      <p class="detail-label">{{ 'admin.verify_requests.col_type' | transloco }}</p>
+      <p class="detail-value">{{ 'admin.verify_requests.type_' + req.type | transloco }}</p>
+    </div>
+
+    @if (req.type === 'verified') {
+      <div class="detail-section">
+        <p class="detail-label">{{ 'admin.verify_requests.social_network' | transloco }}</p>
+        <p class="detail-value">{{ req.social_network }} — @{{ req.social_username }}</p>
+      </div>
+    }
+
+    @if (req.type === 'press') {
+      <div class="detail-section">
+        <p class="detail-label">{{ 'admin.verify_requests.press_url' | transloco }}</p>
+        <p class="detail-value"><a [href]="req.press_url" target="_blank" rel="noopener">{{ req.press_url }}</a></p>
+      </div>
+      <div class="detail-section">
+        <p class="detail-label">{{ 'admin.verify_requests.press_contact' | transloco }}</p>
+        <p class="detail-value">{{ req.press_contact }}</p>
+      </div>
+    }
+
+    @if (req.status !== 'pending') {
+      <div class="detail-section">
+        <p class="detail-label">{{ 'admin.verify_requests.col_status' | transloco }}</p>
+        <p class="detail-value">
+          <span class="status-pill status-{{ req.status }}">
+            {{ 'admin.verify_requests.status_' + req.status | transloco }}
+          </span>
+        </p>
+      </div>
+      @if (req.admin_note) {
+        <div class="detail-section">
+          <p class="detail-label">{{ 'admin.verify_requests.admin_note_label' | transloco }}</p>
+          <p class="detail-value">{{ req.admin_note }}</p>
+        </div>
+      }
+    }
+
+    @if (req.status === 'pending') {
+      <div class="detail-section">
+        <label class="detail-label" for="admin-note">{{ 'admin.verify_requests.admin_note_label' | transloco }} {{ 'admin.common.optional' | transloco }}</label>
+        <textarea
+          id="admin-note"
+          class="detail-textarea"
+          rows="3"
+          [value]="adminNote()"
+          (input)="adminNote.set($any($event.target).value)"
+          [placeholder]="'admin.verify_requests.admin_note_ph' | transloco">
+        </textarea>
+      </div>
+
+      <div class="detail-actions">
+        <button class="btn-primary" [disabled]="saving()" (click)="approve()">
+          {{ 'admin.verify_requests.approve_btn' | transloco }}
+        </button>
+        <button class="btn-danger" [disabled]="saving()" (click)="reject()">
+          {{ 'admin.verify_requests.reject_btn' | transloco }}
+        </button>
+      </div>
+    }
+  </app-dialog>
+}

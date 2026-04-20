@@ -18,9 +18,10 @@ export class GameCardComponent {
 
   readonly hovered = signal(false);
 
-  gradeClass = computed(() =>
-    this.product().letter_grade.replace('+', 'plus').replace('-', 'minus').toLowerCase()
-  );
+  gradeClass = computed(() => {
+    const g = this.product().letter_grade;
+    return g ? g.replace('+', 'plus').replace('-', 'minus').toLowerCase() : '';
+  });
 
   trustGradeClass = computed(() => {
     const g = this.product().trust_grade;

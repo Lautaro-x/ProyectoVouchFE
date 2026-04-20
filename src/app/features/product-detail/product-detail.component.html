@@ -48,6 +48,18 @@
             </span>
           </div>
         }
+        @if (product()!.scores.global_score === null && product()!.scores.pro_score === null) {
+          @if (product()!.game_details?.igdb_grade) {
+            <div class="score-block score-block--igdb">
+              <span class="score-label">{{ 'product.score_igdb' | transloco }}</span>
+              <span [class]="'grade ' + gradeClass(product()!.game_details!.igdb_grade)">
+                {{ product()!.game_details!.igdb_grade }}
+              </span>
+            </div>
+          } @else {
+            <p class="score-first">{{ 'product.be_first' | transloco }}</p>
+          }
+        }
 
         @if (auth.isAuthenticated()) {
           @if (product()!.user_review) {
@@ -151,7 +163,7 @@
             }
             <a class="review-author" [routerLink]="['/u', r.user.id]">
               {{ r.user.name }}
-              @if (r.user.badges.includes('verificado')) {
+              @if (r.user.badges?.includes('verificado')) {
                 <span class="review-verified" title="Verificado">✓</span>
               }
             </a>

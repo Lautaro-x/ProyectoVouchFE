@@ -81,6 +81,21 @@ export interface BadgeProgress {
 
 export type BadgesProgress = Record<string, BadgeProgress>;
 
+export type VerificationRequestType   = 'verified' | 'press';
+export type VerificationRequestStatus = 'pending' | 'approved' | 'rejected';
+
+export interface VerificationRequest {
+  id: number;
+  type: VerificationRequestType;
+  social_network:  string | null;
+  social_username: string | null;
+  press_url:       string | null;
+  press_contact:   string | null;
+  status:    VerificationRequestStatus;
+  admin_note: string | null;
+  created_at: string;
+}
+
 export interface FollowerUser {
   id: number;
   name: string;

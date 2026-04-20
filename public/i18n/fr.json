@@ -30,6 +30,8 @@
     "developer": "Développeur",
     "publisher": "Éditeur",
     "platforms": "Plateformes",
+    "score_igdb": "Note selon IGDB",
+    "be_first": "Soyez le premier à noter ce jeu.",
     "buy": "Acheter",
     "your_score": "Votre note",
     "create_review": "+ Écrire ma propre critique",
@@ -103,7 +105,8 @@
       "users": "Utilisateurs",
       "surveys": "Sondages",
       "announcements": "Annonces",
-      "logout": "Se déconnecter"
+      "logout": "Se déconnecter",
+      "verify_requests": "Vérifications"
     },
     "categories": {
       "title": "Catégories",
@@ -259,6 +262,28 @@
       "audience_all": "Tout le monde",
       "audience_verified": "Vérifiés uniquement",
       "audience_press": "Presse uniquement"
+    },
+    "verify_requests": {
+      "title": "Demandes de vérification",
+      "col_user": "Utilisateur",
+      "col_type": "Type",
+      "col_date": "Date",
+      "col_status": "Statut",
+      "type_verified": "Vérifié",
+      "type_press": "Presse",
+      "status_pending": "En attente",
+      "status_approved": "Approuvée",
+      "status_rejected": "Rejetée",
+      "review_btn": "Examiner",
+      "detail_title": "Demande de vérification",
+      "social_network": "Réseau social",
+      "press_url": "URL du média",
+      "press_contact": "Contact",
+      "admin_note_label": "Note interne",
+      "admin_note_ph": "Motif du refus ou observations...",
+      "approve_btn": "Approuver",
+      "reject_btn": "Rejeter",
+      "empty": "Aucune demande avec ce statut."
     }
   },
   "audience": {
@@ -295,7 +320,9 @@
     "saving": "Enregistrement...",
     "saved": "Enregistré !",
     "badge_claim": "Réclamer",
-    "badge_claiming": "Réclamation..."
+    "badge_claiming": "Réclamation...",
+    "section_verification": "Vérification",
+    "verification_hint": "Obtenez le badge vérifié en tant que créateur de contenu ou inscrivez-vous comme média de presse."
   },
   "public_profile": {
     "nav": "Mon profil public",
@@ -377,5 +404,30 @@
   },
   "announcement": {
     "icon_title": "Il y a des annonces actives"
+  },
+  "verify_request": {
+    "cta": "Demander la vérification",
+    "cta_full": "Demander la vérification ou s'inscrire comme presse",
+    "type_label": "Type de vérification",
+    "type_verified": "Vérifié (créateur de contenu)",
+    "type_press": "Presse",
+    "verified_explain": "Pour obtenir le badge vérifié, envoyez-nous un message direct depuis l'un des comptes officiels Vouch suivants :",
+    "verified_explain2": "Incluez votre nom d'utilisateur ou email Vouch dans le message pour que nous puissions vous identifier.",
+    "social_network_label": "Réseau social",
+    "social_username_label": "Votre pseudo sur ce réseau",
+    "social_username_ph": "@votrenom",
+    "press_explain": "Pour obtenir un accès presse, fournissez l'URL de votre média et un contact.",
+    "press_url_label": "URL du média",
+    "press_contact_label": "Nom et contact du rédacteur",
+    "press_contact_ph": "Prénom Nom — email@media.fr",
+    "press_email_alt": "Vous pouvez aussi nous écrire à ",
+    "submit": "Envoyer la demande",
+    "submitting": "Envoi...",
+    "sent_title": "Demande envoyée",
+    "sent_body": "Nous examinerons votre demande et vous informerons dès qu'elle sera traitée.",
+    "approved_title": "Vérification approuvée !",
+    "approved_body": "Votre badge vérifié est maintenant sur votre profil.",
+    "rejected_title": "Demande rejetée",
+    "rejected_hint": "Si vous pensez que c'est une erreur, vous pouvez soumettre une nouvelle demande."
   }
 }

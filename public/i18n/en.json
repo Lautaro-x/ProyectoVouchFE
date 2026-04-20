@@ -30,6 +30,8 @@
     "developer": "Developer",
     "publisher": "Publisher",
     "platforms": "Platforms",
+    "score_igdb": "IGDB Score",
+    "be_first": "Be the first to review this game.",
     "buy": "Buy",
     "your_score": "Your score",
     "create_review": "+ Write my own review",
@@ -103,7 +105,8 @@
       "users": "Users",
       "surveys": "Surveys",
       "announcements": "Announcements",
-      "logout": "Sign out"
+      "logout": "Sign out",
+      "verify_requests": "Verifications"
     },
     "categories": {
       "title": "Categories",
@@ -261,6 +264,28 @@
       "audience_all": "Everyone",
       "audience_verified": "Verified only",
       "audience_press": "Press only"
+    },
+    "verify_requests": {
+      "title": "Verification Requests",
+      "col_user": "User",
+      "col_type": "Type",
+      "col_date": "Date",
+      "col_status": "Status",
+      "type_verified": "Verified",
+      "type_press": "Press",
+      "status_pending": "Pending",
+      "status_approved": "Approved",
+      "status_rejected": "Rejected",
+      "review_btn": "Review",
+      "detail_title": "Verification Request",
+      "social_network": "Social network",
+      "press_url": "Media URL",
+      "press_contact": "Contact",
+      "admin_note_label": "Internal note",
+      "admin_note_ph": "Reason for rejection or observations...",
+      "approve_btn": "Approve",
+      "reject_btn": "Reject",
+      "empty": "No requests with this status."
     }
   },
   "audience": {
@@ -297,7 +322,9 @@
     "saving": "Saving...",
     "saved": "Saved!",
     "badge_claim": "Claim",
-    "badge_claiming": "Claiming..."
+    "badge_claiming": "Claiming...",
+    "section_verification": "Verification",
+    "verification_hint": "Get the verified badge as a content creator or register as a press outlet."
   },
   "public_profile": {
     "nav": "My public profile",
@@ -379,5 +406,30 @@
   },
   "announcement": {
     "icon_title": "There are active announcements"
+  },
+  "verify_request": {
+    "cta": "Request verification",
+    "cta_full": "Request verification or register as press",
+    "type_label": "Verification type",
+    "type_verified": "Verified (content creator)",
+    "type_press": "Press",
+    "verified_explain": "To obtain the verified badge, send us a direct message from one of the following official Vouch accounts:",
+    "verified_explain2": "Include your Vouch username or email in the message so we can identify you.",
+    "social_network_label": "Social network",
+    "social_username_label": "Your username on that network",
+    "social_username_ph": "@yourusername",
+    "press_explain": "To obtain press access, provide the URL of your media outlet and a contact.",
+    "press_url_label": "Media URL",
+    "press_contact_label": "Writer name and contact",
+    "press_contact_ph": "First Last — email@outlet.com",
+    "press_email_alt": "You can also email us at ",
+    "submit": "Send request",
+    "submitting": "Sending...",
+    "sent_title": "Request sent",
+    "sent_body": "We will review your request and notify you once it has been resolved.",
+    "approved_title": "Verification approved!",
+    "approved_body": "Your verified badge is now on your profile.",
+    "rejected_title": "Request rejected",
+    "rejected_hint": "If you think this was a mistake, you can submit a new request."
   }
 }

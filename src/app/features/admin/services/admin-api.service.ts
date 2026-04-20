@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
   AdminReview, AdminUser, Announcement, Category, Genre, IgdbGame,
-  Paginated, Platform, Product, Survey, SurveyResults,
+  Paginated, Platform, Product, Survey, SurveyResults, VerificationRequestAdmin,
 } from '../models/admin.models';
 
 @Injectable({ providedIn: 'root' })
@@ -145,5 +145,15 @@ export class AdminApiService {
   }
   revokeVerified(id: number): Observable<{ badges: string[] }> {
     return this.http.delete<{ badges: string[] }>(`${this.base}/users/${id}/badge/verify`);
+  }
+
+  getVerifyRequests(status = 'pending'): Observable<VerificationRequestAdmin[]> {
+    return this.http.get<VerificationRequestAdmin[]>(`${this.base}/verify-requests`, { params: { status } });
+  }
+  approveVerifyRequest(id: number, admin_note?: string): Observable<VerificationRequestAdmin> {
+    return this.http.post<VerificationRequestAdmin>(`${this.base}/verify-requests/${id}/approve`, { admin_note });
+  }
+  rejectVerifyRequest(id: number, admin_note?: string): Observable<VerificationRequestAdmin> {
+    return this.http.post<VerificationRequestAdmin>(`${this.base}/verify-requests/${id}/reject`, { admin_note });
   }
 }

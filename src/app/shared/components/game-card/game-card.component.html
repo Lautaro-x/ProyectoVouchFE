@@ -18,16 +18,22 @@
   <div class="card-body">
     <h3 class="card-title">{{ product().title }}</h3>
     <div class="card-score">
-      <span class="score-label">
-        @if (product().score_type === 'global') {
-          {{ 'landing.new_relevant.score_global' | transloco }}
-        } @else {
-          {{ 'landing.new_relevant.score_pro' | transloco }}
-        }
-      </span>
-      <span class="grade" [class]="'grade-' + gradeClass()">
-        {{ product().letter_grade }}
-      </span>
+      @if (product().score_type === 'none') {
+        <span class="score-label score-label--first">{{ 'product.be_first' | transloco }}</span>
+      } @else {
+        <span class="score-label" [class.score-label--igdb]="product().score_type === 'igdb'">
+          @if (product().score_type === 'global') {
+            {{ 'landing.new_relevant.score_global' | transloco }}
+          } @else if (product().score_type === 'pro') {
+            {{ 'landing.new_relevant.score_pro' | transloco }}
+          } @else {
+            {{ 'product.score_igdb' | transloco }}
+          }
+        </span>
+        <span class="grade" [class]="'grade-' + gradeClass()" [class.grade--igdb]="product().score_type === 'igdb'">
+          {{ product().letter_grade }}
+        </span>
+      }
     </div>
   </div>
 </article>

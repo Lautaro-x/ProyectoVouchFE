@@ -1,0 +1,133 @@
+.vr-loading {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+/* ── Status screens ───────────────────────────────── */
+.vr-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  max-width: 460px;
+}
+
+.vr-status-icon {
+  font-size: 2rem;
+  margin: 0;
+  line-height: 1;
+}
+
+.vr-status-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.vr-status-body {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.vr-status-note {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.vr-status--pending  { border-color: #ffd600; }
+.vr-status--approved { border-color: #00c853; }
+.vr-status--rejected { border-color: var(--color-grade-f); }
+
+.vr-rejected-hint {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin: 1rem 0 0;
+}
+
+/* ── Form ─────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.field-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.field-input {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+/* ── Explanation blocks ───────────────────────────── */
+.vr-block {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.vr-block--alt {
+  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  background: var(--color-accent-subtle);
+}
+
+.vr-explain {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin: 0 0 0.75rem;
+}
+
+.vr-explain:last-child { margin-bottom: 0; }
+
+.vr-explain--small {
+  font-size: 0.82rem;
+}
+
+.vr-socials {
+  margin: 0 0 0.75rem 1.25rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+}
+
+.vr-socials li {
+  font-size: 0.875rem;
+}
+
+.vr-socials a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.vr-socials a:hover { text-decoration: underline; }
+
+.vr-actions {
+  margin-top: 0.5rem;
+}

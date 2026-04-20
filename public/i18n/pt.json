@@ -30,6 +30,8 @@
     "developer": "Desenvolvedor",
     "publisher": "Distribuidora",
     "platforms": "Plataformas",
+    "score_igdb": "Nota segundo o IGDB",
+    "be_first": "Seja o primeiro a avaliar este jogo.",
     "buy": "Comprar",
     "your_score": "Sua pontuação",
     "create_review": "+ Escrever minha própria crítica",
@@ -103,7 +105,8 @@
       "users": "Usuários",
       "surveys": "Pesquisas",
       "announcements": "Avisos",
-      "logout": "Sair"
+      "logout": "Sair",
+      "verify_requests": "Verificações"
     },
     "categories": {
       "title": "Categorias",
@@ -259,6 +262,28 @@
       "audience_all": "Todos",
       "audience_verified": "Somente verificados",
       "audience_press": "Somente imprensa"
+    },
+    "verify_requests": {
+      "title": "Solicitações de verificação",
+      "col_user": "Usuário",
+      "col_type": "Tipo",
+      "col_date": "Data",
+      "col_status": "Status",
+      "type_verified": "Verificado",
+      "type_press": "Imprensa",
+      "status_pending": "Pendente",
+      "status_approved": "Aprovada",
+      "status_rejected": "Rejeitada",
+      "review_btn": "Revisar",
+      "detail_title": "Solicitação de verificação",
+      "social_network": "Rede social",
+      "press_url": "URL do veículo",
+      "press_contact": "Contato",
+      "admin_note_label": "Nota interna",
+      "admin_note_ph": "Motivo da rejeição ou observações...",
+      "approve_btn": "Aprovar",
+      "reject_btn": "Rejeitar",
+      "empty": "Nenhuma solicitação com este status."
     }
   },
   "audience": {
@@ -295,7 +320,9 @@
     "saving": "Salvando...",
     "saved": "Salvo!",
     "badge_claim": "Reivindicar",
-    "badge_claiming": "Reivindicando..."
+    "badge_claiming": "Reivindicando...",
+    "section_verification": "Verificação",
+    "verification_hint": "Obtenha o badge verificado como criador de conteúdo ou registre-se como veículo de imprensa."
   },
   "public_profile": {
     "nav": "Meu perfil público",
@@ -377,5 +404,30 @@
   },
   "announcement": {
     "icon_title": "Há avisos ativos"
+  },
+  "verify_request": {
+    "cta": "Solicitar verificação",
+    "cta_full": "Solicitar verificação ou registrar-me como imprensa",
+    "type_label": "Tipo de verificação",
+    "type_verified": "Verificado (criador de conteúdo)",
+    "type_press": "Imprensa",
+    "verified_explain": "Para obter o badge verificado, envie-nos uma mensagem direta de uma das seguintes contas oficiais do Vouch:",
+    "verified_explain2": "Inclua seu nome de usuário ou email do Vouch na mensagem para que possamos identificá-lo.",
+    "social_network_label": "Rede social",
+    "social_username_label": "Seu usuário nessa rede",
+    "social_username_ph": "@seunome",
+    "press_explain": "Para obter acesso de imprensa, forneça a URL do seu veículo e um contato.",
+    "press_url_label": "URL do veículo",
+    "press_contact_label": "Nome e contato do redator",
+    "press_contact_ph": "Nome Sobrenome — email@veiculo.com",
+    "press_email_alt": "Você também pode nos enviar um e-mail em ",
+    "submit": "Enviar solicitação",
+    "submitting": "Enviando...",
+    "sent_title": "Solicitação enviada",
+    "sent_body": "Vamos analisar sua solicitação e notificá-lo assim que for resolvida.",
+    "approved_title": "Verificação aprovada!",
+    "approved_body": "Seu badge verificado já está no seu perfil.",
+    "rejected_title": "Solicitação rejeitada",
+    "rejected_hint": "Se achar que foi um erro, pode enviar uma nova solicitação."
   }
 }

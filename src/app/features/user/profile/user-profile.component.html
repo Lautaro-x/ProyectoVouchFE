@@ -33,6 +33,7 @@
           }
         </div>
       }
+
     </aside>
 
     <!-- Right sections -->
@@ -101,6 +102,17 @@
           </div>
         }
       </div>
+
+      <!-- Verification CTA -->
+      @if (canRequestVerification()) {
+        <div class="profile-section">
+          <h2 class="section-title">{{ 'profile.section_verification' | transloco }}</h2>
+          <p class="vr-section-hint">{{ 'profile.verification_hint' | transloco }}</p>
+          <a routerLink="/user/verify-request" class="btn-secondary vr-link">
+            {{ 'verify_request.cta_full' | transloco }}
+          </a>
+        </div>
+      }
 
       <!-- Actions -->
       <div class="profile-actions">

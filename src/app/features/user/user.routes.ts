@@ -41,6 +41,11 @@ export const userRoutes: Routes = [
         loadComponent: () =>
           import('./followers/user-followers.component').then(m => m.UserFollowersComponent),
       },
+      {
+        path: 'verify-request',
+        loadComponent: () =>
+          import('./verify-request/user-verify-request.component').then(m => m.UserVerifyRequestComponent),
+      },
     ],
   },
 ];

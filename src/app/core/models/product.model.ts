@@ -25,9 +25,8 @@ export interface ProductCard {
   slug: string;
   title: string;
   cover_image: string | null;
-  score: number;
-  letter_grade: string;
-  score_type: 'global' | 'pro';
+  letter_grade: string | null;
+  score_type: 'global' | 'pro' | 'igdb' | 'none';
   trust_grade?: string | null;
 }
 
@@ -47,7 +46,7 @@ export interface UserReviewCard {
 
 export interface ProductReview {
   id: number;
-  user: { id: number; name: string; avatar: string | null; badges: string[] };
+  user: { id: number; name: string; avatar: string | null; badges: string[] | null };
   letter_grade: string;
   weighted_score: number;
   body: string | null;
@@ -62,7 +61,23 @@ export interface ProductDetail {
   description: string | null;
   cover_image: string | null;
   genres: { id: number; name: Record<string, string> }[];
-  game_details: { developer: string | null; publisher: string | null; igdb_id: number | null } | null;
+  game_details: {
+    developer: string | null;
+    publisher: string | null;
+    igdb_id: number | null;
+    igdb_rating: number | null;
+    igdb_grade: string | null;
+    franchise: string | null;
+    pegi_rating: string | null;
+    esrb_rating: string | null;
+    game_modes: string[] | null;
+    themes: string[] | null;
+    trailer_youtube_id: string | null;
+    screenshots: string[] | null;
+    gog_url: string | null;
+    epic_url: string | null;
+    official_url: string | null;
+  } | null;
   platforms: {
     id: number;
     name: string;
