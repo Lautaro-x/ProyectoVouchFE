@@ -72,6 +72,7 @@ export interface ProductDetail {
     esrb_rating: string | null;
     game_modes: string[] | null;
     themes: string[] | null;
+    player_perspectives: string[] | null;
     trailer_youtube_id: string | null;
     screenshots: string[] | null;
     gog_url: string | null;

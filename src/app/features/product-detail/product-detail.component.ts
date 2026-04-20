@@ -7,12 +7,13 @@ import { ApiService } from '../../core/services/api.service';
 import { ProductDetail, ProductReview } from '../../core/models/product.model';
 import { AuthService } from '../../core/services/auth.service';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/breadcrumb/breadcrumb.component';
+import { SafeUrlPipe } from '../../shared/pipes/safe-url.pipe';
 
 @Component({
   selector: 'app-product-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, RouterLink, DatePipe, BreadcrumbComponent],
+  imports: [TranslocoModule, RouterLink, DatePipe, BreadcrumbComponent, SafeUrlPipe],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
@@ -26,6 +27,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   product  = signal<ProductDetail | null>(null);
   loading  = signal(true);
   error    = signal(false);
+  activeTab = signal<'presentation' | 'data' | 'characteristics'>('presentation');
 
   reviews          = signal<ProductReview[]>([]);
   reviewsPage      = signal(0);

@@ -91,50 +91,104 @@
         <p class="detail-genres">{{ genreNames() }}</p>
       </div>
 
-      @if (product()!.description) {
-        <section class="detail-section">
-          <h2 class="section-heading">{{ 'product.description' | transloco }}</h2>
-          <p class="detail-description">{{ product()!.description }}</p>
-        </section>
-      }
+      @if (product()!.type === 'game') {
+        <nav class="detail-tabs">
+          <button class="detail-tab" [class.detail-tab--active]="activeTab() === 'presentation'" (click)="activeTab.set('presentation')">
+            {{ 'product.tab_presentation' | transloco }}
+          </button>
+          <button class="detail-tab" [class.detail-tab--active]="activeTab() === 'data'" (click)="activeTab.set('data')">
+            {{ 'product.tab_data' | transloco }}
+          </button>
+          <button class="detail-tab" [class.detail-tab--active]="activeTab() === 'characteristics'" (click)="activeTab.set('characteristics')">
+            {{ 'product.tab_characteristics' | transloco }}
+          </button>
+        </nav>
 
-      @if (product()!.type === 'game' && product()!.game_details) {
-        <section class="detail-section">
-          <h2 class="section-heading">{{ 'product.development' | transloco }}</h2>
+        <!-- Presentación -->
+        @if (activeTab() === 'presentation') {
+          @if (product()!.game_details?.trailer_youtube_id) {
+            <div class="detail-trailer">
+              <iframe
+                [src]="'https://www.youtube.com/embed/' + product()!.game_details!.trailer_youtube_id | safeUrl"
+                frameborder="0"
+                allowfullscreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                loading="lazy">
+              </iframe>
+            </div>
+          }
+          @if (product()!.description) {
+            <p class="detail-description">{{ product()!.description }}</p>
+          }
+          @if (!product()!.description && !product()!.game_details?.trailer_youtube_id) {
+            <p class="detail-empty">{{ 'product.no_presentation' | transloco }}</p>
+          }
+        }
+
+        <!-- Datos básicos -->
+        @if (activeTab() === 'data') {
           <dl class="detail-dl">
-            @if (product()!.game_details!.developer) {
+            @if (product()!.game_details?.developer) {
               <dt>{{ 'product.developer' | transloco }}</dt>
               <dd>{{ product()!.game_details!.developer }}</dd>
             }
-            @if (product()!.game_details!.publisher) {
+            @if (product()!.game_details?.publisher) {
               <dt>{{ 'product.publisher' | transloco }}</dt>
               <dd>{{ product()!.game_details!.publisher }}</dd>
             }
-          </dl>
-        </section>
-      }
-
-      @if (product()!.platforms.length) {
-        <section class="detail-section">
-          <h2 class="section-heading">{{ 'product.platforms' | transloco }}</h2>
-          <ul class="platforms-list">
-            @for (p of product()!.platforms; track p.id) {
-              <li class="platform-item">
-                <div class="platform-info">
-                  <span class="platform-name">{{ p.name }}</span>
-                  @if (p.release_date) {
-                    <span class="platform-year">{{ p.release_date | date:'yyyy' }}</span>
-                  }
-                </div>
-                @if (p.purchase_url) {
-                  <a class="btn-buy" [href]="p.purchase_url" target="_blank" rel="noopener">
-                    {{ 'product.buy' | transloco }}
-                  </a>
-                }
-              </li>
+            @if (product()!.game_details?.franchise) {
+              <dt>{{ 'product.franchise' | transloco }}</dt>
+              <dd>{{ product()!.game_details!.franchise }}</dd>
             }
-          </ul>
-        </section>
+          </dl>
+
+          @if (product()!.platforms.length) {
+            <h3 class="detail-subheading">{{ 'product.platforms' | transloco }}</h3>
+            <ul class="platforms-list">
+              @for (p of product()!.platforms; track p.id) {
+                <li class="platform-item">
+                  <div class="platform-info">
+                    <span class="platform-name">{{ p.name }}</span>
+                    @if (p.release_date) {
+                      <span class="platform-year">{{ p.release_date | date:'yyyy' }}</span>
+                    }
+                  </div>
+                  @if (p.purchase_url) {
+                    <a class="btn-buy" [href]="p.purchase_url" target="_blank" rel="noopener">
+                      {{ 'product.buy' | transloco }}
+                    </a>
+                  }
+                </li>
+              }
+            </ul>
+          }
+        }
+
+        <!-- Características -->
+        @if (activeTab() === 'characteristics') {
+          <dl class="detail-dl">
+            @if (product()!.game_details?.themes?.length) {
+              <dt>{{ 'product.themes' | transloco }}</dt>
+              <dd>{{ product()!.game_details!.themes!.join(', ') }}</dd>
+            }
+            @if (product()!.game_details?.game_modes?.length) {
+              <dt>{{ 'product.game_modes' | transloco }}</dt>
+              <dd>{{ product()!.game_details!.game_modes!.join(', ') }}</dd>
+            }
+            @if (product()!.game_details?.player_perspectives?.length) {
+              <dt>{{ 'product.player_perspectives' | transloco }}</dt>
+              <dd>{{ product()!.game_details!.player_perspectives!.join(', ') }}</dd>
+            }
+          </dl>
+          @if (!product()!.game_details?.themes?.length && !product()!.game_details?.game_modes?.length && !product()!.game_details?.player_perspectives?.length) {
+            <p class="detail-empty">{{ 'product.no_data' | transloco }}</p>
+          }
+        }
+
+      } @else {
+        @if (product()!.description) {
+          <p class="detail-description">{{ product()!.description }}</p>
+        }
       }
     </main>
 
