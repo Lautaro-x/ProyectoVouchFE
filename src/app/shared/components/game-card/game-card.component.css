@@ -44,7 +44,7 @@
 
 .trust-star-outer {
   position: absolute;
-  top: 10px;
+  top: -10px;
   left: -16px;
   width: 50px;
   height: 50px;
@@ -53,8 +53,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.65));
+  z-index: 4;
+  filter:
+    drop-shadow(0 6px 16px rgba(0, 0, 0, 0.85))
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
 }
 
 .trust-star-inner {
@@ -88,6 +90,39 @@
 
 .trust-star-outer.vibrate {
   animation: trust-shake 0.7s ease-in-out infinite;
+}
+
+/* ── Nota de seguido ── */
+
+.follower-review {
+  position: absolute;
+  top: 7px;
+  left: -20px;
+  z-index: 4;
+  background: rgba(10, 10, 15, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 5px;
+  padding: 0.22rem 0.55rem;
+  font-size: 0.66rem;
+  color: #fff;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: rotate(-20deg);
+  transform-origin: center center;
+  box-shadow:
+    3px 6px 18px rgba(0, 0, 0, 0.7),
+    0 2px 5px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.follower-name {
+  font-weight: 700;
+}
+
+.follower-grade {
+  font-weight: 800;
+  font-size: 0.74rem;
 }
 
 .card-body {

@@ -14,6 +14,13 @@
         </div>
       </div>
     }
+    @if (product().follower_review) {
+      <div class="follower-review">
+        <strong class="follower-name">{{ truncateName(product().follower_review!.user_name) }}</strong>
+        {{ 'games.follower_rated' | transloco }}
+        <span [class]="'follower-grade grade-' + followerGradeClass()">{{ product().follower_review!.letter_grade }}</span>
+      </div>
+    }
   </div>
   <div class="card-body">
     <h3 class="card-title">{{ product().title }}</h3>

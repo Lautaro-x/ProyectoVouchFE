@@ -30,6 +30,15 @@ export class GameCardComponent {
 
   detailLink = computed(() => ['/product', this.product().type, this.product().slug]);
 
+  followerGradeClass = computed(() => {
+    const g = this.product().follower_review?.letter_grade;
+    return g ? g.replace('+', 'plus').replace('-', 'minus').toLowerCase() : '';
+  });
+
+  truncateName(name: string): string {
+    return name.length > 15 ? name.slice(0, 15) + '…' : name;
+  }
+
   @HostListener('mouseenter') onMouseEnter(): void { this.hovered.set(true); }
   @HostListener('mouseleave') onMouseLeave(): void { this.hovered.set(false); }
 }

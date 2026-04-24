@@ -28,6 +28,7 @@ export interface ProductCard {
   letter_grade: string | null;
   score_type: 'global' | 'pro' | 'igdb' | 'none';
   trust_grade?: string | null;
+  follower_review?: { user_name: string; letter_grade: string } | null;
 }
 
 export interface UserReviewCard {
