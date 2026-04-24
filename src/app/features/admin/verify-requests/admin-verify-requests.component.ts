@@ -44,20 +44,26 @@ export class AdminVerifyRequestsComponent implements OnInit {
   approve(): void {
     const req = this.selected()!;
     this.saving.set(true);
-    this.api.approveVerifyRequest(req.id, this.adminNote() || undefined).subscribe(updated => {
-      this.requests.update(list => list.filter(r => r.id !== updated.id));
-      this.saving.set(false);
-      this.detailOpen.set(false);
+    this.api.approveVerifyRequest(req.id, this.adminNote() || undefined).subscribe({
+      next: updated => {
+        this.requests.update(list => list.filter(r => r.id !== updated.id));
+        this.saving.set(false);
+        this.detailOpen.set(false);
+      },
+      error: () => this.saving.set(false),
     });
   }
 
   reject(): void {
     const req = this.selected()!;
     this.saving.set(true);
-    this.api.rejectVerifyRequest(req.id, this.adminNote() || undefined).subscribe(updated => {
-      this.requests.update(list => list.filter(r => r.id !== updated.id));
-      this.saving.set(false);
-      this.detailOpen.set(false);
+    this.api.rejectVerifyRequest(req.id, this.adminNote() || undefined).subscribe({
+      next: updated => {
+        this.requests.update(list => list.filter(r => r.id !== updated.id));
+        this.saving.set(false);
+        this.detailOpen.set(false);
+      },
+      error: () => this.saving.set(false),
     });
   }
 }

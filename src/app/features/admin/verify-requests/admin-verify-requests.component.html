@@ -54,10 +54,12 @@
   </tbody>
 </table>
 
-@if (detailOpen()) {
-  <app-dialog [title]="'admin.verify_requests.detail_title' | transloco" (close)="close()">
-    @let req = selected()!;
+<app-dialog
+  [title]="'admin.verify_requests.detail_title' | transloco"
+  [isOpen]="detailOpen()"
+  (closed)="close()">
 
+  @if (selected(); as req) {
     <div class="detail-section">
       <p class="detail-label">{{ 'admin.verify_requests.col_user' | transloco }}</p>
       <p class="detail-value">{{ req.user.name }} — {{ req.user.email }} ({{ req.user.role }})</p>
@@ -125,5 +127,5 @@
         </button>
       </div>
     }
-  </app-dialog>
-}
+  }
+</app-dialog>
