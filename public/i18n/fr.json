@@ -463,6 +463,8 @@
     "share_btn": "Partager",
     "tab_simple": "Simple",
     "tab_detailed": "Détaillé",
+    "section_bg": "Arrière-plan",
+    "overlay_alpha": "Overlay (assombrissement)",
     "section_info": "Informations",
     "section_chart": "Graphique",
     "text_size": "Taille",

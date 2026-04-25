@@ -61,6 +61,15 @@
           </div>
 
           <div class="control-group">
+            <div class="backdrop-header">
+              <label class="control-label">{{ 'share.show_body' | transloco }}</label>
+              <button class="toggle-btn" [class.active]="showBody()" (click)="showBody.set(!showBody()); redraw()">
+                {{ showBody() ? 'ON' : 'OFF' }}
+              </button>
+            </div>
+          </div>
+
+          <div class="control-group">
             <label class="control-label">{{ 'share.layout' | transloco }}</label>
             <div class="option-row">
               @for (l of layouts; track l.key) {
@@ -150,14 +159,6 @@
               </div>
             </div>
 
-            <div class="control-group">
-              <div class="backdrop-header">
-                <label class="control-label">{{ 'share.show_body' | transloco }}</label>
-                <button class="toggle-btn" [class.active]="showBody()" (click)="showBody.set(!showBody()); redraw()">
-                  {{ showBody() ? 'ON' : 'OFF' }}
-                </button>
-              </div>
-            </div>
           </div>
 
           <div class="detail-section">
@@ -191,6 +192,18 @@
               <div class="color-row">
                 <input type="color" class="color-input" [value]="chartColor()" (input)="onChartColorChange($event)" />
                 <span class="color-value">{{ chartColor() }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <span class="section-title">{{ 'share.section_bg' | transloco }}</span>
+            <div class="control-group">
+              <label class="control-label">{{ 'share.overlay_alpha' | transloco }}</label>
+              <div class="color-row">
+                <input type="range" class="alpha-slider" min="0" max="100"
+                  [value]="overlayAlpha() * 100" (input)="onOverlayAlphaChange($event)" />
+                <span class="color-value">{{ (overlayAlpha() * 100).toFixed(0) }}%</span>
               </div>
             </div>
           </div>

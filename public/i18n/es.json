@@ -465,6 +465,8 @@
     "share_btn": "Compartir",
     "tab_simple": "Simple",
     "tab_detailed": "Detallado",
+    "section_bg": "Fondo",
+    "overlay_alpha": "Overlay (oscurecimiento)",
     "section_info": "Información",
     "section_chart": "Gráfica",
     "text_size": "Tamaño",

@@ -51,6 +51,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   backdropEnabled   = signal(false);
   backdropColor     = signal('#000000');
   backdropAlpha     = signal(0.45);
+  overlayAlpha      = signal(0);
   copySuccess       = signal(false);
 
   readonly formats: { key: FormatKey; w: number; h: number; labelKey: string }[] = [
@@ -176,6 +177,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   onChartColorChange(e: Event):       void { this.chartColor.set((e.target as HTMLInputElement).value);       this.redraw(); }
   onFontColorChange(e: Event):        void { this.fontColor.set((e.target as HTMLInputElement).value);        this.redraw(); }
   onChartLabelColorChange(e: Event):  void { this.chartLabelColor.set((e.target as HTMLInputElement).value);  this.redraw(); }
+  onOverlayAlphaChange(e: Event):     void { this.overlayAlpha.set(+(e.target as HTMLInputElement).value / 100); this.redraw(); }
 
   onInfoScaleChange(e: Event): void {
     const v = +(e.target as HTMLInputElement).value;
@@ -301,10 +303,16 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     const bg = this.bgType();
     if (bg === 'cover' && this.coverImg) {
       this.drawImageFill(ctx, this.coverImg, 0, 0, W, H);
-      ctx.fillStyle = 'rgba(0,0,0,0.62)';
-      ctx.fillRect(0, 0, W, H);
+      if (this.overlayAlpha() > 0) {
+        ctx.fillStyle = `rgba(0,0,0,${this.overlayAlpha()})`;
+        ctx.fillRect(0, 0, W, H);
+      }
     } else if ((bg === 'image' || bg === 'upload') && this.bgImg) {
       this.drawImageFill(ctx, this.bgImg, 0, 0, W, H);
+      if (this.overlayAlpha() > 0) {
+        ctx.fillStyle = `rgba(0,0,0,${this.overlayAlpha()})`;
+        ctx.fillRect(0, 0, W, H);
+      }
     } else {
       ctx.fillStyle = this.bgColor();
       ctx.fillRect(0, 0, W, H);
