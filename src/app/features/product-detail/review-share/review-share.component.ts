@@ -9,6 +9,7 @@ import { ReviewShareData } from '../../../core/models/product.model';
 type LayoutKey = 'cover-left' | 'cover-right' | 'minimalist';
 type ChartKey  = 'radar' | 'bar-h' | 'bar-v';
 type BgTypeKey = 'solid' | 'image' | 'cover' | 'upload';
+type FormatKey = 'square' | 'stories' | 'banner';
 
 @Component({
   selector: 'app-review-share',
@@ -32,6 +33,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
 
   activeTab = signal<'simple' | 'detailed'>('simple');
 
+  format    = signal<FormatKey>('square');
   layout    = signal<LayoutKey>('cover-left');
   chartType = signal<ChartKey>('radar');
   bgType    = signal<BgTypeKey>('solid');
@@ -42,12 +44,20 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   fontColor         = signal('#ffffff');
   infoScale         = signal(1);
   fontOpacity       = signal(1);
+  showBody          = signal(true);
   chartLabelColor   = signal('#ffffff');
   chartLabelScale   = signal(1);
   chartLabelOpacity = signal(0.65);
   backdropEnabled   = signal(false);
   backdropColor     = signal('#000000');
   backdropAlpha     = signal(0.45);
+  copySuccess       = signal(false);
+
+  readonly formats: { key: FormatKey; w: number; h: number; labelKey: string }[] = [
+    { key: 'square',  w: 1080, h: 1080, labelKey: 'share.format_square'  },
+    { key: 'stories', w: 1080, h: 1920, labelKey: 'share.format_stories' },
+    { key: 'banner',  w: 1920, h: 1080, labelKey: 'share.format_banner'  },
+  ];
 
   readonly layouts: { key: LayoutKey; labelKey: string }[] = [
     { key: 'cover-left',  labelKey: 'share.layout_cover_left' },
@@ -66,6 +76,13 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     { key: 'cover',  labelKey: 'share.bg_cover' },
     { key: 'image',  labelKey: 'share.bg_image' },
     { key: 'upload', labelKey: 'share.bg_upload' },
+  ];
+
+  readonly themes: { key: string; labelKey: string; bg: string; font: string; chart: string; label: string }[] = [
+    { key: 'dark',   labelKey: 'share.theme_dark',   bg: '#0f0f1a', font: '#ffffff', chart: '#6200ee', label: '#ffffff' },
+    { key: 'light',  labelKey: 'share.theme_light',  bg: '#f0f0f5', font: '#111111', chart: '#5200cc', label: '#333333' },
+    { key: 'amoled', labelKey: 'share.theme_amoled', bg: '#000000', font: '#ffffff', chart: '#bb86fc', label: '#dddddd' },
+    { key: 'neon',   labelKey: 'share.theme_neon',   bg: '#050511', font: '#00ffdd', chart: '#ff00aa', label: '#00ffdd' },
   ];
 
   private coverImg: HTMLImageElement | null = null;
@@ -102,6 +119,47 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.viewReady = true;
     if (this.data()) this.redraw();
+  }
+
+  setFormat(k: FormatKey): void {
+    this.format.set(k);
+    const fmt = this.formats.find(f => f.key === k)!;
+    const canvas = this.canvasRef.nativeElement;
+    canvas.width  = fmt.w;
+    canvas.height = fmt.h;
+    this.redraw();
+  }
+
+  applyTheme(t: typeof this.themes[0]): void {
+    this.bgType.set('solid');
+    this.bgColor.set(t.bg);
+    this.fontColor.set(t.font);
+    this.chartColor.set(t.chart);
+    this.chartLabelColor.set(t.label);
+    this.redraw();
+  }
+
+  copyToClipboard(): void {
+    this.canvasRef.nativeElement.toBlob(async blob => {
+      if (!blob) return;
+      try {
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+        this.copySuccess.set(true);
+        setTimeout(() => this.copySuccess.set(false), 2000);
+      } catch { this.download(); }
+    }, 'image/png');
+  }
+
+  shareImage(): void {
+    const d = this.data();
+    if (!d) return;
+    this.canvasRef.nativeElement.toBlob(async blob => {
+      if (!blob) return;
+      const filename = `vouch-${d.product.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`;
+      const file = new File([blob], filename, { type: 'image/png' });
+      if (!('share' in navigator) || !navigator.canShare({ files: [file] })) { this.download(); return; }
+      try { await navigator.share({ files: [file], title: d.product.title }); } catch { /* cancelled */ }
+    }, 'image/png');
   }
 
   setLayout(k: LayoutKey): void   { this.layout.set(k);    this.redraw(); }
@@ -217,10 +275,10 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private redraw(): void {
+  redraw(): void {
     if (!this.viewReady || !this.data()) return;
     const canvas = this.canvasRef.nativeElement;
-    this.drawCanvas(canvas.getContext('2d')!, 1080, 1080, this.data()!);
+    this.drawCanvas(canvas.getContext('2d')!, canvas.width, canvas.height, this.data()!);
   }
 
   // ─── Main draw ─────────────────────────────────────────────────
@@ -260,9 +318,13 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     ctx: CanvasRenderingContext2D, W: number, H: number,
     d: ReviewShareData, lang: string, grade: string, side: 'left' | 'right'
   ): void {
-    const coverX   = side === 'left' ? 0 : W - 420;
-    const infoX    = side === 'left' ? 470 : 50;
-    const infoW    = W - 420 - 100;
+    const pH = H / 1080;
+    const pW = W / 1080;
+
+    const coverW   = Math.round(420 * pW);
+    const coverX   = side === 'left' ? 0 : W - coverW;
+    const infoX    = side === 'left' ? Math.round(470 * pW) : Math.round(50 * pW);
+    const infoW    = W - coverW - Math.round(100 * pW);
     const overlapW = Math.round(W * 0.05);
 
     if (this.coverImg) {
@@ -277,18 +339,20 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
       const offCtx = off.getContext('2d')!;
       offCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, cX, 0, cW, H);
 
-      const fadeStart = side === 'left' ? infoX - overlapW : infoX + infoW;
-      const fadeEnd   = side === 'left' ? infoX             : infoX + infoW + overlapW;
-      const fade      = offCtx.createLinearGradient(fadeStart, 0, fadeEnd, 0);
-      fade.addColorStop(0, side === 'left' ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,1)');
-      fade.addColorStop(1, side === 'left' ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0)');
-      offCtx.globalCompositeOperation = 'destination-out';
-      offCtx.fillStyle = fade;
-      offCtx.fillRect(0, 0, W, H);
+      if (this.format() !== 'banner') {
+        const fadeStart = side === 'left' ? infoX - overlapW : infoX + infoW;
+        const fadeEnd   = side === 'left' ? infoX             : infoX + infoW + overlapW;
+        const fade      = offCtx.createLinearGradient(fadeStart, 0, fadeEnd, 0);
+        fade.addColorStop(0, side === 'left' ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,1)');
+        fade.addColorStop(1, side === 'left' ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0)');
+        offCtx.globalCompositeOperation = 'destination-out';
+        offCtx.fillStyle = fade;
+        offCtx.fillRect(0, 0, W, H);
+      }
 
       ctx.drawImage(off, 0, 0);
     } else {
-      this.drawCoverPlaceholder(ctx, coverX, 0, 420, H);
+      this.drawCoverPlaceholder(ctx, coverX, 0, coverW, H);
     }
 
     const s  = this.infoScale();
@@ -296,12 +360,15 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     const fc = this.fontColor();
     const gc = this.GRADE_COLORS[grade] ?? fc;
 
+    const gradeY = Math.round(190 * pH);
+    const titleY = Math.round(330 * pH);
+
     ctx.save();
     ctx.font = `800 ${130 * s}px system-ui, sans-serif`;
     ctx.fillStyle = this.alphaColor(gc, fo);
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(grade, infoX, 190);
+    ctx.fillText(grade, infoX, gradeY);
     ctx.restore();
 
     ctx.save();
@@ -309,10 +376,25 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     ctx.fillStyle = this.alphaColor(fc, fo);
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
-    this.fillWrappedText(ctx, d.product.title, infoX, 330, infoW, 52 * s, 2);
+    this.fillWrappedText(ctx, d.product.title, infoX, titleY, infoW, 52 * s, 2);
     ctx.restore();
 
-    const chartY = 440, chartH = H - chartY - 130;
+    let contentY = titleY + 2 * (52 * s) + Math.round(20 * pH);
+    if (this.showBody() && d.review.body) {
+      ctx.save();
+      ctx.font = `400 ${22 * s}px system-ui, sans-serif`;
+      ctx.fillStyle = this.alphaColor(fc, 0.72 * fo);
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+      this.fillWrappedText(ctx, d.review.body, infoX, contentY, infoW, 32 * s, 3);
+      ctx.restore();
+      contentY += 3 * (32 * s) + Math.round(20 * pH);
+    }
+
+    const chartY = Math.max(contentY, Math.round(440 * pH));
+    const authorY = H - Math.round(50 * pH);
+    const chartH  = authorY - chartY - Math.round(20 * pH);
+
     if (this.backdropEnabled()) this.drawBackdrop(ctx, infoX, chartY, infoW, chartH);
     this.drawChart(ctx, d.scores, infoX, chartY, infoW, chartH, lang);
 
@@ -321,7 +403,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     ctx.fillStyle = this.alphaColor(fc, 0.55 * fo);
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(d.user.name, infoX, H - 50);
+    ctx.fillText(d.user.name, infoX, authorY);
     ctx.restore();
   }
 
@@ -339,18 +421,22 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     ctx: CanvasRenderingContext2D, W: number, H: number,
     d: ReviewShareData, lang: string, grade: string
   ): void {
-    const pad = 80;
+    const pH = H / 1080;
+    const pad = Math.round(80 * (W / 1080));
     const s   = this.infoScale();
     const fo  = this.fontOpacity();
     const fc  = this.fontColor();
     const gc  = this.GRADE_COLORS[grade] ?? fc;
+
+    const gradeY = Math.round(200 * pH);
+    const titleY = Math.round(310 * pH);
 
     ctx.save();
     ctx.font = `800 ${160 * s}px system-ui, sans-serif`;
     ctx.fillStyle = this.alphaColor(gc, fo);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(grade, W / 2, 200);
+    ctx.fillText(grade, W / 2, gradeY);
     ctx.restore();
 
     ctx.save();
@@ -358,10 +444,25 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     ctx.fillStyle = this.alphaColor(fc, fo);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'alphabetic';
-    this.fillWrappedTextCentered(ctx, d.product.title, W / 2, 300, W - pad * 2, 56 * s, 2);
+    this.fillWrappedTextCentered(ctx, d.product.title, W / 2, titleY, W - pad * 2, 56 * s, 2);
     ctx.restore();
 
-    const chartY = 420, chartH = H - chartY - 130;
+    let contentY = titleY + 2 * (56 * s) + Math.round(20 * pH);
+    if (this.showBody() && d.review.body) {
+      ctx.save();
+      ctx.font = `400 ${24 * s}px system-ui, sans-serif`;
+      ctx.fillStyle = this.alphaColor(fc, 0.72 * fo);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+      this.fillWrappedTextCentered(ctx, d.review.body, W / 2, contentY, W - pad * 2, 34 * s, 3);
+      ctx.restore();
+      contentY += 3 * (34 * s) + Math.round(20 * pH);
+    }
+
+    const authorY = H - Math.round(48 * pH);
+    const chartY  = Math.max(contentY, Math.round(420 * pH));
+    const chartH  = authorY - chartY - Math.round(20 * pH);
+
     if (this.backdropEnabled()) this.drawBackdrop(ctx, pad, chartY, W - pad * 2, chartH);
     this.drawChart(ctx, d.scores, pad, chartY, W - pad * 2, chartH, lang);
 
@@ -370,7 +471,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     ctx.fillStyle = this.alphaColor(fc, 0.55 * fo);
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(d.user.name, pad, H - 48);
+    ctx.fillText(d.user.name, pad, authorY);
     ctx.restore();
   }
 

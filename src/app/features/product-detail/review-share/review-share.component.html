@@ -37,6 +37,30 @@
         @if (activeTab() === 'simple') {
 
           <div class="control-group">
+            <label class="control-label">{{ 'share.format' | transloco }}</label>
+            <div class="option-row">
+              @for (f of formats; track f.key) {
+                <button class="opt-btn" [class.active]="format() === f.key" (click)="setFormat(f.key)">
+                  {{ f.labelKey | transloco }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">{{ 'share.themes' | transloco }}</label>
+            <div class="themes-row">
+              @for (th of themes; track th.key) {
+                <button class="theme-btn" (click)="applyTheme(th)"
+                  [style.background]="th.bg" [style.color]="th.font"
+                  [style.border-color]="th.chart">
+                  {{ th.labelKey | transloco }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="control-group">
             <label class="control-label">{{ 'share.layout' | transloco }}</label>
             <div class="option-row">
               @for (l of layouts; track l.key) {
@@ -125,6 +149,15 @@
                 <span class="color-value">{{ (fontOpacity() * 100).toFixed(0) }}%</span>
               </div>
             </div>
+
+            <div class="control-group">
+              <div class="backdrop-header">
+                <label class="control-label">{{ 'share.show_body' | transloco }}</label>
+                <button class="toggle-btn" [class.active]="showBody()" (click)="showBody.set(!showBody()); redraw()">
+                  {{ showBody() ? 'ON' : 'OFF' }}
+                </button>
+              </div>
+            </div>
           </div>
 
           <div class="detail-section">
@@ -182,9 +215,17 @@
 
         }
 
-        <button class="btn-primary share-download" (click)="download()" [disabled]="loading()">
-          {{ 'share.download' | transloco }}
-        </button>
+        <div class="action-row">
+          <button class="btn-primary action-btn" (click)="download()" [disabled]="loading()">
+            {{ 'share.download' | transloco }}
+          </button>
+          <button class="btn-secondary action-btn" (click)="copyToClipboard()" [disabled]="loading()">
+            {{ copySuccess() ? ('share.copied' | transloco) : ('share.copy' | transloco) }}
+          </button>
+          <button class="btn-secondary action-btn" (click)="shareImage()" [disabled]="loading()">
+            {{ 'share.share_btn' | transloco }}
+          </button>
+        </div>
 
       </aside>
     </div>
