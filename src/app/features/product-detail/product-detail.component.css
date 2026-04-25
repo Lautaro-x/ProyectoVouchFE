@@ -89,20 +89,29 @@
   padding: 0.65rem 1rem;
 }
 
-.btn-edit-review {
+.btn-edit-review,
+.btn-share-review {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
   padding: 0.2rem;
   color: var(--color-text-muted);
   border-radius: 4px;
   transition: color 0.15s;
   flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
-.btn-edit-review:hover { color: var(--color-accent); }
-.btn-edit-review svg { width: 14px; height: 14px; }
+.btn-edit-review { margin-left: auto; }
+
+.btn-edit-review:hover,
+.btn-share-review:hover { color: var(--color-accent); }
+
+.btn-edit-review svg,
+.btn-share-review svg { width: 14px; height: 14px; }
 
 .review-cta {
   display: block;

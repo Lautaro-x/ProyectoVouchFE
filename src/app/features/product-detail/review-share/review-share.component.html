@@ -1,0 +1,192 @@
+<div class="share-overlay" (click)="onOverlayClick($event)">
+  <div class="share-panel">
+
+    <header class="share-header">
+      <h2 class="share-title">{{ 'share.title' | transloco }}</h2>
+      <button class="share-close" (click)="closed.emit()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="share-body">
+
+      <!-- Canvas preview -->
+      <div class="share-preview-wrap">
+        @if (loading()) {
+          <div class="share-canvas-loading">{{ 'common.loading' | transloco }}</div>
+        }
+        <canvas #canvas width="1080" height="1080" [class.hidden]="loading()"></canvas>
+      </div>
+
+      <!-- Controls -->
+      <aside class="share-controls">
+
+        <!-- Tabs -->
+        <div class="tab-bar">
+          <button class="tab-btn" [class.active]="activeTab() === 'simple'" (click)="activeTab.set('simple')">
+            {{ 'share.tab_simple' | transloco }}
+          </button>
+          <button class="tab-btn" [class.active]="activeTab() === 'detailed'" (click)="activeTab.set('detailed')">
+            {{ 'share.tab_detailed' | transloco }}
+          </button>
+        </div>
+
+        <!-- ── SIMPLE ── -->
+        @if (activeTab() === 'simple') {
+
+          <div class="control-group">
+            <label class="control-label">{{ 'share.layout' | transloco }}</label>
+            <div class="option-row">
+              @for (l of layouts; track l.key) {
+                <button class="opt-btn" [class.active]="layout() === l.key" (click)="setLayout(l.key)">
+                  {{ l.labelKey | transloco }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">{{ 'share.chart' | transloco }}</label>
+            <div class="option-row">
+              @for (c of chartTypes; track c.key) {
+                <button class="opt-btn" [class.active]="chartType() === c.key" (click)="setChartType(c.key)">
+                  {{ c.labelKey | transloco }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">{{ 'share.bg' | transloco }}</label>
+            <div class="option-row">
+              @for (b of bgTypes; track b.key) {
+                <button class="opt-btn" [class.active]="bgType() === b.key" (click)="setBgType(b.key)">
+                  {{ b.labelKey | transloco }}
+                </button>
+              }
+            </div>
+            @if (bgType() === 'solid') {
+              <div class="color-row">
+                <input type="color" class="color-input" [value]="bgColor()" (input)="onBgColorChange($event)" />
+                <span class="color-value">{{ bgColor() }}</span>
+              </div>
+            }
+            @if (bgType() === 'image') {
+              <input type="text" class="url-input" [value]="bgUrl()" (input)="onBgUrlChange($event)"
+                [placeholder]="'share.bg_url_ph' | transloco" />
+            }
+            @if (bgType() === 'upload') {
+              <label class="file-label">
+                <input type="file" class="file-input" accept="image/jpeg,image/png,image/webp,image/avif"
+                  (change)="onFileUpload($event)" />
+                <span class="file-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+                    <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+                  </svg>
+                  {{ 'share.bg_upload' | transloco }}
+                </span>
+              </label>
+              @if (uploadError()) {
+                <span class="upload-error">{{ uploadError()! | transloco }}</span>
+              }
+            }
+          </div>
+
+        }
+
+        <!-- ── DETALLADO ── -->
+        @if (activeTab() === 'detailed') {
+
+          <div class="detail-section">
+            <span class="section-title">{{ 'share.section_info' | transloco }}</span>
+
+            <div class="control-group">
+              <label class="control-label">{{ 'share.text_size' | transloco }}</label>
+              <input type="number" class="scale-input" [value]="infoScale()" min="0.5" max="4" step="0.1"
+                (change)="onInfoScaleChange($event)" />
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">{{ 'share.font_color' | transloco }}</label>
+              <div class="color-row">
+                <input type="color" class="color-input" [value]="fontColor()" (input)="onFontColorChange($event)" />
+                <span class="color-value">{{ fontColor() }}</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">{{ 'share.text_opacity' | transloco }}</label>
+              <div class="color-row">
+                <input type="range" class="alpha-slider" min="0" max="100"
+                  [value]="fontOpacity() * 100" (input)="onFontOpacityChange($event)" />
+                <span class="color-value">{{ (fontOpacity() * 100).toFixed(0) }}%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <span class="section-title">{{ 'share.section_chart' | transloco }}</span>
+
+            <div class="control-group">
+              <label class="control-label">{{ 'share.chart_label_color' | transloco }}</label>
+              <div class="color-row">
+                <input type="color" class="color-input" [value]="chartLabelColor()" (input)="onChartLabelColorChange($event)" />
+                <span class="color-value">{{ chartLabelColor() }}</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">{{ 'share.chart_label_size' | transloco }}</label>
+              <input type="number" class="scale-input" [value]="chartLabelScale()" min="0.5" max="4" step="0.1"
+                (change)="onChartLabelScaleChange($event)" />
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">{{ 'share.text_opacity' | transloco }}</label>
+              <div class="color-row">
+                <input type="range" class="alpha-slider" min="0" max="100"
+                  [value]="chartLabelOpacity() * 100" (input)="onChartLabelOpacityChange($event)" />
+                <span class="color-value">{{ (chartLabelOpacity() * 100).toFixed(0) }}%</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">{{ 'share.chart_color' | transloco }}</label>
+              <div class="color-row">
+                <input type="color" class="color-input" [value]="chartColor()" (input)="onChartColorChange($event)" />
+                <span class="color-value">{{ chartColor() }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="backdrop-header">
+              <label class="control-label">{{ 'share.backdrop' | transloco }}</label>
+              <button class="toggle-btn" [class.active]="backdropEnabled()" (click)="toggleBackdrop()">
+                {{ backdropEnabled() ? 'ON' : 'OFF' }}
+              </button>
+            </div>
+            @if (backdropEnabled()) {
+              <div class="color-row">
+                <input type="color" class="color-input" [value]="backdropColor()" (input)="onBackdropColorChange($event)" />
+                <span class="control-label" style="text-transform:none">{{ 'share.backdrop_alpha' | transloco }}</span>
+                <input type="range" class="alpha-slider" min="0" max="100"
+                  [value]="backdropAlpha() * 100" (input)="onBackdropAlphaChange($event)" />
+                <span class="color-value">{{ (backdropAlpha() * 100).toFixed(0) }}%</span>
+              </div>
+            }
+          </div>
+
+        }
+
+        <button class="btn-primary share-download" (click)="download()" [disabled]="loading()">
+          {{ 'share.download' | transloco }}
+        </button>
+
+      </aside>
+    </div>
+  </div>
+</div>

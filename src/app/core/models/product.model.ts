@@ -54,6 +54,13 @@ export interface ProductReview {
   created_at: string;
 }
 
+export interface ReviewShareData {
+  review:  { id: number; body: string | null; letter_grade: string; weighted_score: number };
+  product: { title: string; cover_image: string | null };
+  user:    { name: string; avatar: string | null };
+  scores:  { category_id: number; name: Record<string, string>; score: number }[];
+}
+
 export interface ProductDetail {
   id: number;
   type: 'game' | 'movie' | 'series';

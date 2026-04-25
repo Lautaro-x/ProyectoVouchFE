@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, UserReviewCard } from '../models/product.model';
+import { PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, UserReviewCard } from '../models/product.model';
 import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, SocialLinks, UserCardData, UserConsents, UserProfile, VerificationRequest } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -40,6 +40,10 @@ export class ApiService {
 
   getReviewEditForm(reviewId: number): Observable<ReviewEditFormData> {
     return this.http.get<ReviewEditFormData>(`${this.base}/reviews/${reviewId}/edit-form`);
+  }
+
+  getReviewShareData(reviewId: number): Observable<ReviewShareData> {
+    return this.http.get<ReviewShareData>(`${this.base}/reviews/${reviewId}/share-data`);
   }
 
   updateReview(reviewId: number, data: { body: string; scores: { category_id: number; score: number }[] }): Observable<void> {

@@ -65,15 +65,21 @@
           @if (product()!.user_review) {
             <div class="user-review-block">
               <span class="score-label">{{ 'product.your_score' | transloco }}</span>
-              <span [class]="'grade ' + gradeClass(product()!.user_review!.letter_grade)">
-                {{ product()!.user_review!.letter_grade }}
-              </span>
+              <button class="btn-share-review" (click)="shareOpen.set(true)" [title]="'product.share_review' | transloco">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>
+                  <line x1="14" y1="15" x2="18" y2="15"/><line x1="14" y1="18" x2="16" y2="18"/>
+                </svg>
+              </button>
               <a class="btn-edit-review" [routerLink]="['/review/edit', product()!.user_review!.id]" [title]="'product.edit_review' | transloco">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                   <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                 </svg>
               </a>
+              <span [class]="'grade ' + gradeClass(product()!.user_review!.letter_grade)">
+                {{ product()!.user_review!.letter_grade }}
+              </span>
             </div>
           } @else {
             <a class="review-cta" [routerLink]="['/review/new', product()!.id]">
@@ -261,5 +267,9 @@
 
     <div id="reviews-sentinel"></div>
   </section>
+
+  @if (shareOpen() && product()!.user_review) {
+    <app-review-share [reviewId]="product()!.user_review!.id" (closed)="shareOpen.set(false)" />
+  }
 
 }

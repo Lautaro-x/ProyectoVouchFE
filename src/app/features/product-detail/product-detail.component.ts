@@ -8,12 +8,13 @@ import { ProductDetail, ProductReview } from '../../core/models/product.model';
 import { AuthService } from '../../core/services/auth.service';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { SafeUrlPipe } from '../../shared/pipes/safe-url.pipe';
+import { ReviewShareComponent } from './review-share/review-share.component';
 
 @Component({
   selector: 'app-product-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, RouterLink, DatePipe, BreadcrumbComponent, SafeUrlPipe],
+  imports: [TranslocoModule, RouterLink, DatePipe, BreadcrumbComponent, SafeUrlPipe, ReviewShareComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
@@ -28,6 +29,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   loading  = signal(true);
   error    = signal(false);
   activeTab = signal<'presentation' | 'data' | 'characteristics'>('presentation');
+
+  shareOpen = signal(false);
 
   reviews          = signal<ProductReview[]>([]);
   reviewsPage      = signal(0);
