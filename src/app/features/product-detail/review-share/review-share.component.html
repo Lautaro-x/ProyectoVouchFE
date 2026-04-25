@@ -17,7 +17,8 @@
         @if (loading()) {
           <div class="share-canvas-loading">{{ 'common.loading' | transloco }}</div>
         }
-        <canvas #canvas width="1080" height="1080" [class.hidden]="loading()"></canvas>
+        <canvas #canvas width="1080" height="1080" [class.hidden]="loading()"
+          role="img" [attr.aria-label]="('share.title' | transloco)"></canvas>
       </div>
 
       <!-- Controls -->
@@ -63,7 +64,7 @@
           <div class="control-group">
             <div class="backdrop-header">
               <label class="control-label">{{ 'share.show_body' | transloco }}</label>
-              <button class="toggle-btn" [class.active]="showBody()" (click)="showBody.set(!showBody()); redraw()">
+              <button class="toggle-btn" [class.active]="showBody()" [attr.aria-pressed]="showBody()" (click)="showBody.set(!showBody()); redraw()">
                 {{ showBody() ? 'ON' : 'OFF' }}
               </button>
             </div>
@@ -211,7 +212,7 @@
           <div class="control-group">
             <div class="backdrop-header">
               <label class="control-label">{{ 'share.backdrop' | transloco }}</label>
-              <button class="toggle-btn" [class.active]="backdropEnabled()" (click)="toggleBackdrop()">
+              <button class="toggle-btn" [class.active]="backdropEnabled()" [attr.aria-pressed]="backdropEnabled()" (click)="toggleBackdrop()">
                 {{ backdropEnabled() ? 'ON' : 'OFF' }}
               </button>
             </div>

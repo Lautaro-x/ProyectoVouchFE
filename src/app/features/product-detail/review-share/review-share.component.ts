@@ -1,7 +1,8 @@
 import {
-  AfterViewInit, ChangeDetectionStrategy, Component, ElementRef,
-  EventEmitter, inject, Input, OnInit, Output, signal, ViewChild,
+  AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef,
+  ElementRef, EventEmitter, inject, Input, OnInit, Output, signal, ViewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { ReviewShareData } from '../../../core/models/product.model';
@@ -24,8 +25,9 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   @Output() closed = new EventEmitter<void>();
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  private readonly api = inject(ApiService);
-  private readonly t   = inject(TranslocoService);
+  private readonly api        = inject(ApiService);
+  private readonly t          = inject(TranslocoService);
+  private readonly destroyRef = inject(DestroyRef);
 
   data         = signal<ReviewShareData | null>(null);
   loading      = signal(true);
@@ -86,9 +88,11 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     { key: 'neon',   labelKey: 'share.theme_neon',   bg: '#050511', font: '#00ffdd', chart: '#ff00aa', label: '#00ffdd' },
   ];
 
-  private coverImg: HTMLImageElement | null = null;
-  private bgImg:    HTMLImageElement | null = null;
+  private coverImg:  HTMLImageElement | null = null;
+  private bgImg:     HTMLImageElement | null = null;
+  private offCanvas: HTMLCanvasElement | null = null;
   private viewReady = false;
+  private rafId = 0;
 
   private readonly GRADE_COLORS: Record<string, string> = {
     'S':  '#ffffff',
@@ -101,20 +105,28 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit(): void {
-    this.api.getReviewShareData(this.reviewId).subscribe({
-      next: d => {
-        this.data.set(d);
-        this.loading.set(false);
-        if (d.product.cover_image) {
-          this.loadImage(this.igdbHiRes(d.product.cover_image))
-            .then(img => { this.coverImg = img; this.redraw(); })
-            .catch(() => this.redraw());
-        } else {
-          this.redraw();
-        }
-      },
-      error: () => this.loading.set(false),
+    this.destroyRef.onDestroy(() => {
+      this.coverImg  = null;
+      this.bgImg     = null;
+      this.offCanvas = null;
     });
+
+    this.api.getReviewShareData(this.reviewId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: d => {
+          this.data.set(d);
+          this.loading.set(false);
+          if (d.product.cover_image) {
+            this.loadImage(this.igdbHiRes(d.product.cover_image))
+              .then(img => { this.coverImg = img; this.redraw(); })
+              .catch(() => this.redraw());
+          } else {
+            this.redraw();
+          }
+        },
+        error: () => this.loading.set(false),
+      });
   }
 
   ngAfterViewInit(): void {
@@ -141,26 +153,31 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   }
 
   copyToClipboard(): void {
-    this.canvasRef.nativeElement.toBlob(async blob => {
-      if (!blob) return;
-      try {
-        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-        this.copySuccess.set(true);
-        setTimeout(() => this.copySuccess.set(false), 2000);
-      } catch { this.download(); }
-    }, 'image/png');
+    if (typeof ClipboardItem === 'undefined') { this.download(); return; }
+    try {
+      this.canvasRef.nativeElement.toBlob(async blob => {
+        if (!blob) return;
+        try {
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          this.copySuccess.set(true);
+          setTimeout(() => this.copySuccess.set(false), 2000);
+        } catch { this.download(); }
+      }, 'image/png');
+    } catch { this.download(); }
   }
 
   shareImage(): void {
     const d = this.data();
     if (!d) return;
-    this.canvasRef.nativeElement.toBlob(async blob => {
-      if (!blob) return;
-      const filename = `vouch-${d.product.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`;
-      const file = new File([blob], filename, { type: 'image/png' });
-      if (!('share' in navigator) || !navigator.canShare({ files: [file] })) { this.download(); return; }
-      try { await navigator.share({ files: [file], title: d.product.title }); } catch { /* cancelled */ }
-    }, 'image/png');
+    try {
+      this.canvasRef.nativeElement.toBlob(async blob => {
+        if (!blob) return;
+        const filename = `vouch-${d.product.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`;
+        const file = new File([blob], filename, { type: 'image/png' });
+        if (!('share' in navigator) || !navigator.canShare({ files: [file] })) { this.download(); return; }
+        try { await navigator.share({ files: [file], title: d.product.title }); } catch { /* cancelled */ }
+      }, 'image/png');
+    } catch { this.download(); }
   }
 
   setLayout(k: LayoutKey): void   { this.layout.set(k);    this.redraw(); }
@@ -173,11 +190,11 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     this.redraw();
   }
 
-  onBgColorChange(e: Event):          void { this.bgColor.set((e.target as HTMLInputElement).value);          this.redraw(); }
-  onChartColorChange(e: Event):       void { this.chartColor.set((e.target as HTMLInputElement).value);       this.redraw(); }
-  onFontColorChange(e: Event):        void { this.fontColor.set((e.target as HTMLInputElement).value);        this.redraw(); }
-  onChartLabelColorChange(e: Event):  void { this.chartLabelColor.set((e.target as HTMLInputElement).value);  this.redraw(); }
-  onOverlayAlphaChange(e: Event):     void { this.overlayAlpha.set(+(e.target as HTMLInputElement).value / 100); this.redraw(); }
+  onBgColorChange(e: Event):          void { this.bgColor.set((e.target as HTMLInputElement).value);          this.scheduleRedraw(); }
+  onChartColorChange(e: Event):       void { this.chartColor.set((e.target as HTMLInputElement).value);       this.scheduleRedraw(); }
+  onFontColorChange(e: Event):        void { this.fontColor.set((e.target as HTMLInputElement).value);        this.scheduleRedraw(); }
+  onChartLabelColorChange(e: Event):  void { this.chartLabelColor.set((e.target as HTMLInputElement).value);  this.scheduleRedraw(); }
+  onOverlayAlphaChange(e: Event):     void { this.overlayAlpha.set(+(e.target as HTMLInputElement).value / 100); this.scheduleRedraw(); }
 
   onInfoScaleChange(e: Event): void {
     const v = +(e.target as HTMLInputElement).value;
@@ -186,7 +203,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
 
   onFontOpacityChange(e: Event): void {
     this.fontOpacity.set(+(e.target as HTMLInputElement).value / 100);
-    this.redraw();
+    this.scheduleRedraw();
   }
 
   onChartLabelScaleChange(e: Event): void {
@@ -196,17 +213,17 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
 
   onChartLabelOpacityChange(e: Event): void {
     this.chartLabelOpacity.set(+(e.target as HTMLInputElement).value / 100);
-    this.redraw();
+    this.scheduleRedraw();
   }
 
   onBackdropColorChange(e: Event): void {
     this.backdropColor.set((e.target as HTMLInputElement).value);
-    this.redraw();
+    this.scheduleRedraw();
   }
 
   onBackdropAlphaChange(e: Event): void {
     this.backdropAlpha.set(+(e.target as HTMLInputElement).value / 100);
-    this.redraw();
+    this.scheduleRedraw();
   }
 
   toggleBackdrop(): void {
@@ -252,10 +269,12 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   download(): void {
     const d = this.data();
     if (!d) return;
-    const a = document.createElement('a');
-    a.download = `vouch-${d.product.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`;
-    a.href = this.canvasRef.nativeElement.toDataURL('image/png');
-    a.click();
+    try {
+      const a = document.createElement('a');
+      a.download = `vouch-${d.product.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`;
+      a.href = this.canvasRef.nativeElement.toDataURL('image/png');
+      a.click();
+    } catch { /* tainted canvas */ }
   }
 
   onOverlayClick(e: MouseEvent): void {
@@ -280,7 +299,14 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   redraw(): void {
     if (!this.viewReady || !this.data()) return;
     const canvas = this.canvasRef.nativeElement;
-    this.drawCanvas(canvas.getContext('2d')!, canvas.width, canvas.height, this.data()!);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    this.drawCanvas(ctx, canvas.width, canvas.height, this.data()!);
+  }
+
+  private scheduleRedraw(): void {
+    cancelAnimationFrame(this.rafId);
+    this.rafId = requestAnimationFrame(() => this.redraw());
   }
 
   // ─── Main draw ─────────────────────────────────────────────────
@@ -341,7 +367,8 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
       const cW     = H * aspect;
       const cX     = side === 'left' ? 0 : W - cW;
 
-      const off    = document.createElement('canvas');
+      if (!this.offCanvas) this.offCanvas = document.createElement('canvas');
+      const off    = this.offCanvas;
       off.width    = W;
       off.height   = H;
       const offCtx = off.getContext('2d')!;
@@ -767,6 +794,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
   }
 
   private hexToRgb(hex: string): { r: number; g: number; b: number } {
+    if (!/^#[0-9a-f]{6}$/i.test(hex)) return { r: 0, g: 0, b: 0 };
     return {
       r: parseInt(hex.slice(1, 3), 16),
       g: parseInt(hex.slice(3, 5), 16),
@@ -776,11 +804,6 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
 
   private alphaColor(hex: string, alpha: number): string {
     if (hex.startsWith('rgba') || hex.startsWith('rgb')) return hex;
-    const { r, g, b } = this.hexToRgb(hex);
-    return `rgba(${r},${g},${b},${alpha})`;
-  }
-
-  private alphaHex(hex: string, alpha: number): string {
     const { r, g, b } = this.hexToRgb(hex);
     return `rgba(${r},${g},${b},${alpha})`;
   }
