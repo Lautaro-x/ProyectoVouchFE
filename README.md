@@ -467,6 +467,41 @@ Renderiza el icono SVG de una tienda a partir de una clave. Claves soportadas: `
 
 ---
 
+## Checklist de producción
+
+Todo lo que hay que hacer antes de subir el frontend a un servidor real.
+
+### Variables de entorno y configuración
+
+- [ ] Actualizar `src/environments/environment.ts` (o crear `environment.prod.ts`) con valores reales:
+  - `baseUrl` → dominio real del frontend (ej: `https://vouch.gg`)
+  - `apiUrl` → dominio real del backend (ej: `https://api.vouch.gg/api`)
+  - `googleClientId` → mismo Client ID que el backend
+  - `pressEmail` → email real de prensa
+  - `vouchSocials` → URLs reales de las redes sociales de Vouch
+- [ ] Configurar la variable de entorno `API_URL` en el servidor Node.js / PM2 apuntando al backend sin `/api` (ej: `https://api.vouch.gg`) — la usa `server.ts` para el proxy del sitemap
+- [ ] Actualizar `public/robots.txt`: línea `Sitemap:` con la URL definitiva (ej: `Sitemap: https://vouch.gg/sitemap.xml`)
+
+### Build y servidor
+
+- [ ] `npm run build` (genera `dist/` con browser + server bundles)
+- [ ] Configurar proceso Node.js persistente con PM2 u otro process manager:
+  ```bash
+  pm2 start dist/proyectovouchfe/server/server.mjs --name vouch-ssr
+  ```
+- [ ] Configurar nginx/Apache como reverse proxy al proceso Node (puerto 4000 por defecto)
+
+### Verificación post-deploy
+
+- [ ] `view-source:https://vouch.gg/games` → debe mostrar HTML con contenido real, no `<app-root></app-root>` vacío
+- [ ] `view-source:https://vouch.gg/product/game/{slug}` → debe incluir `<title>` y `<meta property="og:*">` con datos del juego
+- [ ] Verificar OG tags con [Facebook Debugger](https://developers.facebook.com/tools/debug/) o Twitter Card Validator
+- [ ] `https://vouch.gg/sitemap.xml` devuelve XML con todas las rutas de productos
+- [ ] Registrar `https://vouch.gg/sitemap.xml` en Google Search Console
+- [ ] `https://vouch.gg/robots.txt` accesible y con la URL del sitemap correcta
+
+---
+
 ## Novedades recientes
 
 - **Sitemap dinámico** — `GET /sitemap.xml` en el frontend (Express en `server.ts`) actúa como proxy hacia el endpoint `GET /sitemap.xml` del backend Laravel. Laravel genera el XML con `SitemapController` + vista Blade `sitemap.blade.php`, incluyendo `/`, `/games` y todas las rutas `/product/{type}/{slug}` con `lastmod` real. La URL base del frontend se lee de la variable de entorno `FRONTEND_URL`. `public/robots.txt` creado con `Disallow` para rutas privadas y directiva `Sitemap:`. En producción hay que actualizar la URL del sitemap en `robots.txt` con el dominio real.
