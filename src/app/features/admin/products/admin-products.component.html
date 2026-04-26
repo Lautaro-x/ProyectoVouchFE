@@ -62,7 +62,11 @@
             <strong>{{ game.name }}</strong>
             <span class="muted">{{ game.platforms?.slice(0,3)?.map(p => p.name)?.join(', ') }}</span>
           </div>
-          <button class="btn-sm" (click)="importIgdb(game.id)">{{ 'admin.common.import' | transloco }}</button>
+          @if (game.already_imported) {
+            <span class="igdb-imported-badge">{{ 'admin.products.already_imported' | transloco }}</span>
+          } @else {
+            <button class="btn-sm" (click)="importIgdb(game.id)">{{ 'admin.common.import' | transloco }}</button>
+          }
         </div>
       }
     </div>
@@ -78,9 +82,18 @@
   } @else {
     <div class="links-list">
       @for (p of linksPlatforms(); track p.id; let i = $index) {
-        <div class="links-row">
+        <div class="links-platform">
           <span class="links-platform-name">{{ p.name }}</span>
-          <input type="text" [placeholder]="'admin.products.links_url_ph' | transloco" [value]="p.url" (input)="updateLinkUrl(i, $any($event.target).value)" />
+          @if (storeKeysForPlatform(p).length === 0) {
+            <span class="muted links-no-stores">{{ 'admin.products.links_no_stores' | transloco }}</span>
+          } @else {
+            @for (key of storeKeysForPlatform(p); track key) {
+              <div class="links-row">
+                <span class="links-store-name">{{ STORE_LABELS[key] }}</span>
+                <input type="text" placeholder="https://..." [value]="p.urls[key] ?? ''" (input)="updateLinkUrl(i, key, $any($event.target).value)" />
+              </div>
+            }
+          }
         </div>
       }
     </div>
@@ -88,6 +101,32 @@
   <div class="form-actions">
     <button class="btn-primary" (click)="saveLinks()">{{ 'admin.common.save' | transloco }}</button>
     <button class="btn-ghost" (click)="closeLinksDialog()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
+<app-dialog [title]="'admin.products.import_report_title' | transloco" [isOpen]="importReportOpen()" (closed)="closeReportDialog()">
+  @if (importReport(); as report) {
+    <div class="report-section">
+      <h4 class="report-heading">{{ 'admin.products.report_imported' | transloco }} ({{ report.imported.length }})</h4>
+      @if (report.imported.length) {
+        <ul class="report-list">@for (n of report.imported; track n) { <li>{{ n }}</li> }</ul>
+      } @else { <p class="muted">—</p> }
+    </div>
+    <div class="report-section">
+      <h4 class="report-heading">{{ 'admin.products.report_skipped' | transloco }} ({{ report.skipped.length }})</h4>
+      @if (report.skipped.length) {
+        <ul class="report-list">@for (n of report.skipped; track n) { <li>{{ n }}</li> }</ul>
+      } @else { <p class="muted">—</p> }
+    </div>
+    <div class="report-section">
+      <h4 class="report-heading report-errors">{{ 'admin.products.report_errors' | transloco }} ({{ report.errors.length }})</h4>
+      @if (report.errors.length) {
+        <ul class="report-list report-errors">@for (n of report.errors; track n) { <li>{{ n }}</li> }</ul>
+      } @else { <p class="muted">—</p> }
+    </div>
+  }
+  <div class="form-actions">
+    <button class="btn-ghost" (click)="closeReportDialog()">{{ 'admin.common.close' | transloco }}</button>
   </div>
 </app-dialog>
 
@@ -106,6 +145,7 @@
 <div class="section-header">
   <h2>{{ 'admin.products.title' | transloco }}</h2>
   <div class="header-actions">
+    <button class="btn-ghost" (click)="importRecent()">{{ 'admin.products.import_recent_btn' | transloco }}</button>
     <button class="btn-ghost" (click)="openIgdb()">{{ 'admin.products.import_btn' | transloco }}</button>
     <button class="btn-primary" (click)="openCreate()">{{ 'admin.common.new_masc' | transloco }}</button>
   </div>
@@ -165,6 +205,12 @@
         <td class="muted">{{ p.platforms?.length ?? 0 }}</td>
         <td class="actions">
           <button class="btn-sm" (click)="openLinks(p)">{{ 'admin.products.links_btn' | transloco }}</button>
+          @if (p.type === 'game') {
+            <button class="btn-sm btn-sync" (click)="syncProduct(p)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              IGDB
+            </button>
+          }
           <button class="btn-sm" (click)="openEdit(p)">{{ 'admin.common.edit' | transloco }}</button>
           <button class="btn-sm danger" (click)="delete(p)">{{ 'admin.common.delete' | transloco }}</button>
         </td>

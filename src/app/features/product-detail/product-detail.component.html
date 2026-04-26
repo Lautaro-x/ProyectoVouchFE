@@ -164,9 +164,13 @@
                     }
                   </div>
                   @if (p.purchase_url) {
-                    <a class="btn-buy" [href]="p.purchase_url" target="_blank" rel="noopener">
-                      {{ 'product.buy' | transloco }}
-                    </a>
+                    <div class="buy-links">
+                      @for (entry of p.purchase_url | keyvalue; track entry.key) {
+                        <a class="btn-buy" [href]="entry.value" target="_blank" rel="noopener" [title]="'product.store.' + entry.key | transloco">
+                          <app-store-icon [key]="entry.key" />
+                        </a>
+                      }
+                    </div>
                   }
                 </li>
               }

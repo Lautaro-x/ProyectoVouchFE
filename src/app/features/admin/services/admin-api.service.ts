@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
-  AdminReview, AdminUser, Announcement, Category, Genre, IgdbGame,
+  AdminReview, AdminUser, Announcement, Category, Genre, IgdbGame, IgdbImportReport,
   Paginated, Platform, Product, Survey, SurveyResults, VerificationRequestAdmin,
 } from '../models/admin.models';
 
@@ -79,7 +79,13 @@ export class AdminApiService {
   importFromIgdb(igdb_id: number): Observable<Product> {
     return this.http.post<Product>(`${this.base}/igdb/import`, { igdb_id });
   }
-  updatePurchaseLinks(productId: number, platforms: { platform_id: number; purchase_url: string | null }[]): Observable<Product> {
+  importRecentFromIgdb(): Observable<IgdbImportReport> {
+    return this.http.post<IgdbImportReport>(`${this.base}/igdb/import-recent`, {});
+  }
+  syncProductFromIgdb(productId: number): Observable<IgdbImportReport> {
+    return this.http.post<IgdbImportReport>(`${this.base}/products/${productId}/sync-igdb`, {});
+  }
+  updatePurchaseLinks(productId: number, platforms: { platform_id: number; purchase_url: Record<string, string> | null }[]): Observable<Product> {
     return this.http.put<Product>(`${this.base}/products/${productId}/purchase-links`, { platforms });
   }
 

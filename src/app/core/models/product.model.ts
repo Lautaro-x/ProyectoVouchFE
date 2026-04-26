@@ -83,8 +83,6 @@ export interface ProductDetail {
     player_perspectives: string[] | null;
     trailer_youtube_id: string | null;
     screenshots: string[] | null;
-    gog_url: string | null;
-    epic_url: string | null;
     official_url: string | null;
   } | null;
   platforms: {
@@ -92,7 +90,7 @@ export interface ProductDetail {
     name: string;
     type: string;
     release_date: string | null;
-    purchase_url: string | null;
+    purchase_url: Record<string, string> | null;
   }[];
   scores: {
     global_score: number | null;

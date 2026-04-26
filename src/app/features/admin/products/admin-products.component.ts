@@ -2,11 +2,22 @@ import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
-import { Genre, IgdbGame, PlatformWithPivot, Product } from '../models/admin.models';
+import { Genre, IgdbGame, IgdbImportReport, PlatformWithPivot, Product } from '../models/admin.models';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
 import { LocalizedNamePipe } from '../../../shared/pipes/localized-name.pipe';
 import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
 import { AdminTableBase } from '../admin-table.base';
+
+type LinksPlatform = { id: number; name: string; type: string; urls: Partial<Record<string, string>> };
+
+const STORE_LABELS: Record<string, string> = {
+  steam:    'Steam',
+  gog:      'GOG',
+  epic:     'Epic Games',
+  ps_store: 'PlayStation Store',
+  xbox:     'Xbox',
+  eshop:    'Nintendo eShop',
+};
 
 @Component({
   selector: 'app-admin-products',
@@ -45,7 +56,12 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
   linksDialogOpen  = signal(false);
   linksDialogTitle = signal('');
   linksProductId   = signal<number | null>(null);
-  linksPlatforms   = signal<{ id: number; name: string; url: string }[]>([]);
+  linksPlatforms   = signal<LinksPlatform[]>([]);
+
+  importReport     = signal<IgdbImportReport | null>(null);
+  importReportOpen = signal(false);
+
+  readonly STORE_LABELS = STORE_LABELS;
 
   ngOnInit(): void {
     this.load();
@@ -125,6 +141,24 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
 
   closeIgdbDialog(): void { this.igdbDialogOpen.set(false); }
 
+  importRecent(): void {
+    this.api.importRecentFromIgdb().subscribe(report => {
+      this.importReport.set(report);
+      this.importReportOpen.set(true);
+      this.load(1);
+    });
+  }
+
+  syncProduct(product: Product): void {
+    this.api.syncProductFromIgdb(product.id).subscribe(report => {
+      this.importReport.set(report);
+      this.importReportOpen.set(true);
+      this.load(this.page()?.current_page ?? 1);
+    });
+  }
+
+  closeReportDialog(): void { this.importReportOpen.set(false); }
+
   toggleGenre(id: number, checked: boolean): void {
     this.form.update(f => ({
       ...f,
@@ -142,26 +176,43 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
     this.linksDialogTitle.set(this.t.translate('admin.products.links_title', { name: product.title }));
     this.linksPlatforms.set(
       (product.platforms ?? []).map((p: PlatformWithPivot) => ({
-        id: p.id,
+        id:   p.id,
         name: p.name,
-        url: p.pivot?.purchase_url ?? '',
+        type: p.type,
+        urls: p.pivot?.purchase_url ?? {},
       }))
     );
     this.linksDialogOpen.set(true);
   }
 
-  updateLinkUrl(index: number, url: string): void {
-    const list = [...this.linksPlatforms()];
-    list[index] = { ...list[index], url };
-    this.linksPlatforms.set(list);
+  storeKeysForPlatform(p: LinksPlatform): string[] {
+    const n = p.name.toLowerCase();
+    let defined: string[];
+    if (n.includes('playstation'))      defined = ['ps_store'];
+    else if (n.includes('xbox'))        defined = ['xbox'];
+    else if (n.includes('switch'))      defined = ['eshop'];
+    else if (p.type === 'pc')           defined = ['steam', 'gog', 'epic'];
+    else                                defined = [];
+    return [...new Set([...defined, ...Object.keys(p.urls)])];
+  }
+
+  updateLinkUrl(index: number, storeKey: string, url: string): void {
+    this.linksPlatforms.update(list =>
+      list.map((p, i) => i === index ? { ...p, urls: { ...p.urls, [storeKey]: url } } : p)
+    );
   }
 
   saveLinks(): void {
     const id = this.linksProductId()!;
-    const platforms = this.linksPlatforms().map(p => ({
-      platform_id:  p.id,
-      purchase_url: p.url.trim() || null,
-    }));
+    const platforms = this.linksPlatforms().map(p => {
+      const filtered = Object.fromEntries(
+        Object.entries(p.urls).filter(([, v]) => v?.trim())
+      ) as Record<string, string>;
+      return {
+        platform_id:  p.id,
+        purchase_url: Object.keys(filtered).length ? filtered : null,
+      };
+    });
     this.api.updatePurchaseLinks(id, platforms).subscribe(() => {
       this.linksDialogOpen.set(false);
       this.load(this.page()?.current_page ?? 1);

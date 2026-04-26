@@ -27,7 +27,13 @@ export interface Platform {
 }
 
 export interface PlatformWithPivot extends Platform {
-  pivot: { release_date: string | null; purchase_url: string | null };
+  pivot: { release_date: string | null; purchase_url: Record<string, string> | null };
+}
+
+export interface IgdbImportReport {
+  imported: string[];
+  skipped:  string[];
+  errors:   string[];
 }
 
 export interface Product {
@@ -144,4 +150,5 @@ export interface IgdbGame {
   first_release_date?: number;
   platforms?: { name: string }[];
   genres?: { name: string }[];
+  already_imported?: boolean;
 }

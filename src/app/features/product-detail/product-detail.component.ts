@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy, PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DatePipe, isPlatformBrowser } from '@angular/common';
+import { DatePipe, isPlatformBrowser, KeyValuePipe } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ApiService } from '../../core/services/api.service';
 import { ProductDetail, ProductReview } from '../../core/models/product.model';
@@ -9,12 +9,13 @@ import { AuthService } from '../../core/services/auth.service';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { SafeUrlPipe } from '../../shared/pipes/safe-url.pipe';
 import { ReviewShareComponent } from './review-share/review-share.component';
+import { StoreIconComponent } from '../../shared/components/store-icon/store-icon.component';
 
 @Component({
   selector: 'app-product-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, RouterLink, DatePipe, BreadcrumbComponent, SafeUrlPipe, ReviewShareComponent],
+  imports: [TranslocoModule, RouterLink, DatePipe, KeyValuePipe, BreadcrumbComponent, SafeUrlPipe, ReviewShareComponent, StoreIconComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
