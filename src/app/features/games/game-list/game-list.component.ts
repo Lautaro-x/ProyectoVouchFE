@@ -3,6 +3,7 @@ import { Component, computed, inject, DestroyRef, OnInit, signal, ChangeDetectio
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { Meta, Title } from '@angular/platform-browser';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { ProductCard } from '../../../core/models/product.model';
@@ -22,6 +23,8 @@ export class GameListComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private route      = inject(ActivatedRoute);
   private router     = inject(Router);
+  private meta       = inject(Meta);
+  private titleSvc   = inject(Title);
   private search$    = new Subject<string>();
 
   readonly breadcrumbs: BreadcrumbItem[] = [
@@ -70,6 +73,8 @@ export class GameListComponent implements OnInit {
     this.filterValue.set(fv);
     this.filterLabel.set(fl);
 
+    this.setOgTags(fl || fv);
+
     this.search$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -98,6 +103,19 @@ export class GameListComponent implements OnInit {
     this.filterValue.set('');
     this.filterLabel.set('');
     this.router.navigate(['/games']);
+  }
+
+  private setOgTags(filterLabel: string): void {
+    const pageTitle = filterLabel ? `Juegos de ${filterLabel} — Vouch` : 'Juegos — Vouch';
+    const desc      = 'Explora y descubre videojuegos con críticas ponderadas en Vouch.';
+    this.titleSvc.setTitle(pageTitle);
+    this.meta.updateTag({ name: 'description',         content: desc });
+    this.meta.updateTag({ property: 'og:type',         content: 'website' });
+    this.meta.updateTag({ property: 'og:title',        content: pageTitle });
+    this.meta.updateTag({ property: 'og:description',  content: desc });
+    this.meta.updateTag({ name: 'twitter:card',        content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title',       content: pageTitle });
+    this.meta.updateTag({ name: 'twitter:description', content: desc });
   }
 
   private load(): void {

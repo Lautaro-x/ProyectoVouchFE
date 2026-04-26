@@ -1,7 +1,8 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy, PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DatePipe, isPlatformBrowser, KeyValuePipe } from '@angular/common';
+import { DatePipe, DOCUMENT, isPlatformBrowser, KeyValuePipe } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ApiService } from '../../core/services/api.service';
 import { ProductDetail, ProductReview } from '../../core/models/product.model';
@@ -24,6 +25,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   private readonly api        = inject(ApiService);
   private readonly t          = inject(TranslocoService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly meta       = inject(Meta);
+  private readonly titleSvc   = inject(Title);
+  private readonly doc        = inject(DOCUMENT);
   readonly auth               = inject(AuthService);
 
   product  = signal<ProductDetail | null>(null);
@@ -59,6 +63,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       next: p => {
         this.product.set(p);
         this.loading.set(false);
+        this.setOgTags(p);
         this.loadReviews(p.id, 1, true);
       },
       error: () => { this.error.set(true); this.loading.set(false); },
@@ -133,4 +138,21 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       label: g.name[lang] || g.name['en'] || '',
     })) ?? [];
   });
+
+  private setOgTags(p: ProductDetail): void {
+    const url   = `${this.doc.location.origin}/product/${p.type}/${p.slug}`;
+    const desc  = p.description ? p.description.slice(0, 160) : 'Crítica ponderada en Vouch.';
+    const image = p.cover_image ?? '';
+    this.titleSvc.setTitle(`${p.title} — Vouch`);
+    this.meta.updateTag({ name: 'description',            content: desc });
+    this.meta.updateTag({ property: 'og:type',            content: 'website' });
+    this.meta.updateTag({ property: 'og:url',             content: url });
+    this.meta.updateTag({ property: 'og:title',           content: `${p.title} — Vouch` });
+    this.meta.updateTag({ property: 'og:description',     content: desc });
+    this.meta.updateTag({ property: 'og:image',           content: image });
+    this.meta.updateTag({ name: 'twitter:card',           content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title',          content: `${p.title} — Vouch` });
+    this.meta.updateTag({ name: 'twitter:description',    content: desc });
+    this.meta.updateTag({ name: 'twitter:image',          content: image });
+  }
 }

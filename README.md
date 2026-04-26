@@ -455,7 +455,7 @@ Renderiza el icono SVG de una tienda a partir de una clave. Claves soportadas: `
 - [x] SSR en rutas públicas y de cards para OG tags e indexación
 
 ### Fase 5 — Pre-producción
-- [ ] Meta tags dinámicos por producto y usuario (OpenGraph completo)
+- [x] Meta tags dinámicos por producto y usuario (OpenGraph completo)
 - [ ] Sitemap dinámico
 - [ ] Identidad visual definitiva (tipografía, paleta, personalidad)
 
@@ -469,6 +469,7 @@ Renderiza el icono SVG de una tienda a partir de una clave. Claves soportadas: `
 
 ## Novedades recientes
 
+- **Meta tags dinámicos (OpenGraph completo)** — `<title>` y tags OG/Twitter configurados por ruta: detalle de producto (título del juego + portada + descripción truncada a 160 chars), listado de juegos (con label del filtro activo si aplica), landing (tags estáticos de la plataforma). Las páginas de perfil público y cards ya tenían meta tags. `index.html` corregido: título base "Vouch — Críticas ponderadas de videojuegos", `twitter:card` corregido a `summary_large_image`. Con SSR activo en las rutas públicas, los crawlers (Google, Discord, WhatsApp, Twitter) reciben el HTML pre-renderizado con los tags correctos.
 - **StoreIconComponent** — nuevo componente compartido con iconos SVG (Simple Icons, CC0) para Steam, GOG, Epic Games, PlayStation Store, Xbox y Nintendo eShop. Se usa en el detalle de producto para los links de compra por plataforma; hereda color del tema vía `currentColor`.
 - **IGDB API v4** — campo `category` renombrado a `game_type`; detección de tienda por dominio de URL en lugar de `external_games.category` (eliminado en v4); filtros `version_parent = null` + `game_type ∈ {0,4,8,9}` para excluir DLCs/mods/ediciones; badge "ya importado" en el diálogo de búsqueda IGDB.
 - **Links de tienda en admin** — diálogo con inputs agrupados por plataforma y tienda; botón Sync IGDB (icono SVG) por producto; "Importar últimas 48h" con reporte de importados/omitidos/errores.
