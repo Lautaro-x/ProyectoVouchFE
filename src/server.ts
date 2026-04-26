@@ -25,6 +25,21 @@ const angularApp = new AngularNodeAppEngine();
  */
 
 /**
+ * Proxy /sitemap.xml to the Laravel backend so it lives on the frontend domain.
+ */
+app.get('/sitemap.xml', async (_req, res) => {
+  try {
+    const beUrl  = (process.env['API_URL'] ?? 'http://proyectovouchbe.local').replace(/\/api$/, '');
+    const response = await fetch(`${beUrl}/sitemap.xml`);
+    const xml    = await response.text();
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    res.send(xml);
+  } catch {
+    res.status(503).send('Sitemap temporarily unavailable');
+  }
+});
+
+/**
  * Serve static files from /browser
  */
 app.use(

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /administration/
+Disallow: /user/
+
+Sitemap: http://localhost:4200/sitemap.xml

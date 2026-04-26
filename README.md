@@ -456,19 +456,20 @@ Renderiza el icono SVG de una tienda a partir de una clave. Claves soportadas: `
 
 ### Fase 5 — Pre-producción
 - [x] Meta tags dinámicos por producto y usuario (OpenGraph completo)
-- [ ] Sitemap dinámico
+- [x] Sitemap dinámico
 - [ ] Identidad visual definitiva (tipografía, paleta, personalidad)
 
 ### Fase 6 — Post-producción
 - [ ] Verificar SSR en producción (view-source, Facebook Debugger)
 - [ ] Widget para streamers (OBS)
-- [ ] Generador de infografías para redes sociales
+- [x] Generador de infografías para redes sociales
 - [ ] Juegos recomendados al usuario (ML o scoring heurístico)
 
 ---
 
 ## Novedades recientes
 
+- **Sitemap dinámico** — `GET /sitemap.xml` en el frontend (Express en `server.ts`) actúa como proxy hacia el endpoint `GET /sitemap.xml` del backend Laravel. Laravel genera el XML con `SitemapController` + vista Blade `sitemap.blade.php`, incluyendo `/`, `/games` y todas las rutas `/product/{type}/{slug}` con `lastmod` real. La URL base del frontend se lee de la variable de entorno `FRONTEND_URL`. `public/robots.txt` creado con `Disallow` para rutas privadas y directiva `Sitemap:`. En producción hay que actualizar la URL del sitemap en `robots.txt` con el dominio real.
 - **Meta tags dinámicos (OpenGraph completo)** — `<title>` y tags OG/Twitter configurados por ruta: detalle de producto (título del juego + portada + descripción truncada a 160 chars), listado de juegos (con label del filtro activo si aplica), landing (tags estáticos de la plataforma). Las páginas de perfil público y cards ya tenían meta tags. `index.html` corregido: título base "Vouch — Críticas ponderadas de videojuegos", `twitter:card` corregido a `summary_large_image`. Con SSR activo en las rutas públicas, los crawlers (Google, Discord, WhatsApp, Twitter) reciben el HTML pre-renderizado con los tags correctos.
 - **StoreIconComponent** — nuevo componente compartido con iconos SVG (Simple Icons, CC0) para Steam, GOG, Epic Games, PlayStation Store, Xbox y Nintendo eShop. Se usa en el detalle de producto para los links de compra por plataforma; hereda color del tema vía `currentColor`.
 - **IGDB API v4** — campo `category` renombrado a `game_type`; detección de tienda por dominio de URL en lugar de `external_games.category` (eliminado en v4); filtros `version_parent = null` + `game_type ∈ {0,4,8,9}` para excluir DLCs/mods/ediciones; badge "ya importado" en el diálogo de búsqueda IGDB.
