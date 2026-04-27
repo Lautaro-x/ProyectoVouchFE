@@ -1,0 +1,10 @@
+@if (products().length) {
+  <section class="relevant-releases">
+    <h2 class="section-title">{{ 'landing.new_relevant.title' | transloco }}</h2>
+    <div class="cards-grid">
+      @for (product of products(); track product.id) {
+        <app-game-card [product]="product" />
+      }
+    </div>
+  </section>
+}

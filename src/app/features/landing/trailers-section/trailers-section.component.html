@@ -1,0 +1,46 @@
+@if (trailers().length) {
+  <section #trailerSection class="trailers-section">
+    <h2 class="section-title">{{ trailerTitle() ?? ('landing.trailers.title' | transloco) }}</h2>
+    <div class="trailers-layout">
+      <div class="bookshelf">
+        <div class="shelf">
+          @for (t of trailersLeft(); track t.id) {
+            <button
+              class="spine"
+              [class.active]="selectedTrailer()?.id === t.id"
+              (click)="selectTrailer(t)"
+              [title]="t.title"
+            >
+              <span class="spine-label">{{ t.title }}</span>
+            </button>
+          }
+        </div>
+        <div class="shelf shelf--right">
+          @for (t of trailersRight(); track t.id) {
+            <button
+              class="spine"
+              [class.active]="selectedTrailer()?.id === t.id"
+              (click)="selectTrailer(t)"
+              [title]="t.title"
+            >
+              <span class="spine-label">{{ t.title }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="trailer-player">
+        @if (playerVisible()) {
+          @if (youtubeUrl(); as url) {
+            <iframe
+              [src]="url | safeUrl"
+              frameborder="0"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          }
+        }
+      </div>
+    </div>
+  </section>
+}
