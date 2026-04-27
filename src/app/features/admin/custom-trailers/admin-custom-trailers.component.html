@@ -1,0 +1,114 @@
+<h1 class="page-title">{{ 'admin.custom_trailers.title' | transloco }}</h1>
+
+<div class="form-card">
+  <h3>{{ 'admin.custom_trailers.settings_card' | transloco }}</h3>
+
+  <div class="lang-tabs">
+    @for (lang of LANGS; track lang) {
+      <button
+        class="lang-tab"
+        [class.active]="activeLang() === lang"
+        [class.complete]="!!title()[lang]"
+        (click)="activeLang.set(lang)"
+        type="button"
+      >{{ lang.toUpperCase() }}</button>
+    }
+  </div>
+
+  <div class="field">
+    <label>{{ 'admin.custom_trailers.section_title_label' | transloco }}</label>
+    <input
+      type="text"
+      [value]="title()[activeLang()] || ''"
+      (input)="setTitle(activeLang(), $any($event.target).value)"
+      [placeholder]="'admin.custom_trailers.section_title_ph' | transloco"
+      maxlength="100"
+    />
+  </div>
+
+  <div class="field toggle-field">
+    <label>{{ 'admin.custom_trailers.toggle_label' | transloco }}</label>
+    <label class="toggle">
+      <input
+        type="checkbox"
+        [checked]="isActive()"
+        (change)="isActive.set($any($event.target).checked)"
+      />
+      <span class="toggle-track">
+        <span class="toggle-thumb"></span>
+      </span>
+      <span class="toggle-label">
+        {{ (isActive() ? 'admin.custom_trailers.toggle_on' : 'admin.custom_trailers.toggle_off') | transloco }}
+      </span>
+    </label>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn-primary" [disabled]="saving()" (click)="saveSection()">
+      {{ (saving() ? 'admin.custom_trailers.saving' : 'admin.custom_trailers.save') | transloco }}
+    </button>
+  </div>
+</div>
+
+<div class="form-card">
+  <h3>{{ 'admin.custom_trailers.add_card' | transloco }}</h3>
+  <div class="form-grid">
+    <div class="field">
+      <label>{{ 'admin.custom_trailers.name_label' | transloco }}</label>
+      <input
+        type="text"
+        [value]="newName()"
+        (input)="newName.set($any($event.target).value)"
+        [placeholder]="'admin.custom_trailers.name_ph' | transloco"
+        maxlength="150"
+      />
+    </div>
+    <div class="field">
+      <label>{{ 'admin.custom_trailers.url_label' | transloco }}</label>
+      <input
+        type="url"
+        [value]="newUrl()"
+        (input)="newUrl.set($any($event.target).value)"
+        [placeholder]="'admin.custom_trailers.url_ph' | transloco"
+      />
+    </div>
+  </div>
+  <div class="form-actions">
+    <button
+      class="btn-primary"
+      [disabled]="adding() || !newName().trim() || !newUrl().trim()"
+      (click)="addItem()"
+    >
+      {{ (adding() ? 'admin.custom_trailers.adding' : 'admin.custom_trailers.add') | transloco }}
+    </button>
+  </div>
+</div>
+
+@if (items().length) {
+  <div class="items-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'admin.custom_trailers.col_num' | transloco }}</th>
+          <th>{{ 'admin.custom_trailers.col_name' | transloco }}</th>
+          <th>{{ 'admin.custom_trailers.col_url' | transloco }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items(); track item.id; let i = $index) {
+          <tr>
+            <td class="muted">{{ i + 1 }}</td>
+            <td>{{ item.name }}</td>
+            <td class="url-cell muted">{{ item.youtube_url }}</td>
+            <td class="actions">
+              <button class="btn-sm danger" (click)="removeItem(item.id)">
+                {{ 'admin.custom_trailers.delete' | transloco }}
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

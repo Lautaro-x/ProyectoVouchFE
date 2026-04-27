@@ -1,9 +1,4 @@
 <main class="landing">
-  <section class="landing-hero">
-    <h1 class="landing-title">{{ 'landing.title' | transloco }}</h1>
-    <p class="landing-subtitle">{{ 'landing.subtitle' | transloco }}</p>
-  </section>
-
   @if (relevantProducts().length) {
     <section class="landing-section">
       <h2 class="section-title">{{ 'landing.new_relevant.title' | transloco }}</h2>
@@ -11,6 +6,53 @@
         @for (product of relevantProducts(); track product.id) {
           <app-game-card [product]="product" />
         }
+      </div>
+    </section>
+  }
+
+  @if (trailers().length) {
+    <section #trailerSection class="landing-section trailers-section">
+      <h2 class="section-title">{{ trailerTitle() ?? ('landing.trailers.title' | transloco) }}</h2>
+      <div class="trailers-layout">
+        <div class="bookshelf">
+          <div class="shelf">
+            @for (t of trailersLeft(); track t.id) {
+              <button
+                class="spine"
+                [class.active]="selectedTrailer()?.id === t.id"
+                (click)="selectTrailer(t)"
+                [title]="t.title"
+              >
+                <span class="spine-label">{{ t.title }}</span>
+              </button>
+            }
+          </div>
+          <div class="shelf shelf--right">
+            @for (t of trailersRight(); track t.id) {
+              <button
+                class="spine"
+                [class.active]="selectedTrailer()?.id === t.id"
+                (click)="selectTrailer(t)"
+                [title]="t.title"
+              >
+                <span class="spine-label">{{ t.title }}</span>
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="trailer-player">
+          @if (playerVisible()) {
+            @if (youtubeUrl(); as url) {
+              <iframe
+                [src]="url | safeUrl"
+                frameborder="0"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            }
+          }
+        </div>
       </div>
     </section>
   }

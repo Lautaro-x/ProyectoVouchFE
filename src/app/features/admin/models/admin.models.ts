@@ -143,6 +143,18 @@ export interface VerificationRequestAdmin {
   user: { id: number; name: string; email: string; role: string; badges: string[] };
 }
 
+export interface CustomTrailerItem {
+  id: number;
+  name: string;
+  youtube_url: string;
+}
+
+export interface CustomTrailerSection {
+  title: Record<string, string>;
+  is_active: boolean;
+  items: CustomTrailerItem[];
+}
+
 export interface IgdbGame {
   id: number;
   name: string;

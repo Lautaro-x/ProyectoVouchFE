@@ -81,6 +81,9 @@
       "title": "New relevant releases",
       "score_global": "Average score from all users",
       "score_pro": "Score from specialist critics"
+    },
+    "trailers": {
+      "title": "Latest trailers"
     }
   },
   "login": {
@@ -134,7 +137,8 @@
       "surveys": "Surveys",
       "announcements": "Announcements",
       "logout": "Sign out",
-      "verify_requests": "Verifications"
+      "verify_requests": "Verifications",
+      "custom_trailers": "Custom trailers"
     },
     "categories": {
       "title": "Categories",
@@ -322,6 +326,28 @@
       "approve_btn": "Approve",
       "reject_btn": "Reject",
       "empty": "No requests with this status."
+    },
+    "custom_trailers": {
+      "title": "Custom trailers",
+      "settings_card": "Section settings",
+      "section_title_label": "Section title",
+      "section_title_ph": "Latest trailers",
+      "toggle_label": "Use custom list",
+      "toggle_on": "Enabled",
+      "toggle_off": "Disabled",
+      "save": "Save",
+      "saving": "Saving…",
+      "add_card": "Add trailer",
+      "name_label": "Product name",
+      "name_ph": "E.g.: Elden Ring",
+      "url_label": "YouTube link",
+      "url_ph": "https://www.youtube.com/watch?v=...",
+      "add": "Add",
+      "adding": "Adding…",
+      "col_num": "#",
+      "col_name": "Name",
+      "col_url": "URL",
+      "delete": "Delete"
     }
   },
   "audience": {

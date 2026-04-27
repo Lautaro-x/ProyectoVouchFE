@@ -81,6 +81,9 @@
       "title": "Nuevos lanzamientos relevantes",
       "score_global": "Valoración media de todos los usuarios",
       "score_pro": "Valoración de la crítica especializada"
+    },
+    "trailers": {
+      "title": "Últimos tráilers"
     }
   },
   "login": {
@@ -134,7 +137,8 @@
       "surveys": "Encuestas",
       "announcements": "Avisos",
       "logout": "Salir",
-      "verify_requests": "Verificaciones"
+      "verify_requests": "Verificaciones",
+      "custom_trailers": "Tráilers personalizados"
     },
     "categories": {
       "title": "Categorías",
@@ -322,6 +326,28 @@
       "approve_btn": "Aprobar",
       "reject_btn": "Rechazar",
       "empty": "No hay solicitudes con este estado."
+    },
+    "custom_trailers": {
+      "title": "Tráilers personalizados",
+      "settings_card": "Configuración de la sección",
+      "section_title_label": "Título de la sección",
+      "section_title_ph": "Últimos tráilers",
+      "toggle_label": "Usar lista personalizada",
+      "toggle_on": "Activada",
+      "toggle_off": "Desactivada",
+      "save": "Guardar",
+      "saving": "Guardando…",
+      "add_card": "Añadir tráiler",
+      "name_label": "Nombre del producto",
+      "name_ph": "Ej: Elden Ring",
+      "url_label": "Enlace de YouTube",
+      "url_ph": "https://www.youtube.com/watch?v=...",
+      "add": "Añadir",
+      "adding": "Añadiendo…",
+      "col_num": "#",
+      "col_name": "Nombre",
+      "col_url": "URL",
+      "delete": "Eliminar"
     }
   },
   "audience": {

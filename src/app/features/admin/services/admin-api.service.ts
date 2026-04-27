@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
-  AdminReview, AdminUser, Announcement, Category, Genre, IgdbGame, IgdbImportReport,
-  Paginated, Platform, Product, Survey, SurveyResults, VerificationRequestAdmin,
+  AdminReview, AdminUser, Announcement, Category, CustomTrailerItem, CustomTrailerSection,
+  Genre, IgdbGame, IgdbImportReport, Paginated, Platform, Product, Survey, SurveyResults,
+  VerificationRequestAdmin,
 } from '../models/admin.models';
 
 @Injectable({ providedIn: 'root' })
@@ -151,6 +152,19 @@ export class AdminApiService {
   }
   revokeVerified(id: number): Observable<{ badges: string[] }> {
     return this.http.delete<{ badges: string[] }>(`${this.base}/users/${id}/badge/verify`);
+  }
+
+  getCustomTrailerSection(): Observable<CustomTrailerSection> {
+    return this.http.get<CustomTrailerSection>(`${this.base}/trailer-section`);
+  }
+  updateCustomTrailerSection(data: { title: Record<string, string>; is_active: boolean }): Observable<{ title: Record<string, string>; is_active: boolean }> {
+    return this.http.put<{ title: Record<string, string>; is_active: boolean }>(`${this.base}/trailer-section`, data);
+  }
+  addCustomTrailerItem(data: { name: string; youtube_url: string }): Observable<CustomTrailerItem> {
+    return this.http.post<CustomTrailerItem>(`${this.base}/trailer-section/items`, data);
+  }
+  deleteCustomTrailerItem(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/trailer-section/items/${id}`);
   }
 
   getVerifyRequests(status = 'pending'): Observable<VerificationRequestAdmin[]> {

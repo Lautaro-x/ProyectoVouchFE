@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, UserReviewCard } from '../models/product.model';
+import { PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, TrailerProduct, TrailerSectionResponse, UserReviewCard } from '../models/product.model';
 import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, SocialLinks, UserCardData, UserConsents, UserProfile, VerificationRequest } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -20,6 +20,10 @@ export class ApiService {
 
   getRelevantProducts(): Observable<ProductCard[]> {
     return this.http.get<ProductCard[]>(`${this.base}/products/relevant`);
+  }
+
+  getLatestTrailers(): Observable<TrailerSectionResponse> {
+    return this.http.get<TrailerSectionResponse>(`${this.base}/products/trailers`);
   }
 
   getProduct(type: string, slug: string): Observable<ProductDetail> {

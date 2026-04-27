@@ -43,6 +43,10 @@ export const adminRoutes: Routes = [
         path: 'verify-requests',
         loadComponent: () => import('./verify-requests/admin-verify-requests.component').then(m => m.AdminVerifyRequestsComponent),
       },
+      {
+        path: 'custom-trailers',
+        loadComponent: () => import('./custom-trailers/admin-custom-trailers.component').then(m => m.AdminCustomTrailersComponent),
+      },
     ],
   },
 ];

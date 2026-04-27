@@ -1,3 +1,16 @@
+export interface TrailerProduct {
+  id: number;
+  title: string;
+  slug: string;
+  type: string;
+  trailer_youtube_id: string;
+}
+
+export interface TrailerSectionResponse {
+  section_title: Record<string, string> | null;
+  items: TrailerProduct[];
+}
+
 export interface ReviewFormData {
   id: number;
   title: string;

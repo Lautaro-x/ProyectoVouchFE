@@ -214,7 +214,10 @@ Usuario hace clic en "Iniciar sesión"
 
 ### Landing (`/`)
 
-Página de inicio con listado de los productos más relevantes de la plataforma (score ≥ 80, máximo 6), consumiendo `GET /api/products/relevant`. Usa `GameCardComponent` para cada tarjeta. Prerenderizada.
+Página de inicio con dos secciones:
+
+- **Nuevos lanzamientos relevantes** — hasta 10 productos con score ≥ 80 (`GET /api/products/relevant`), en grid de 5 columnas (3 tablet, 2 móvil). Sin border-radius, borde de 1 px en `--color-accent`, sin título visible en la card.
+- **Últimos tráilers** — hasta 20 juegos con `trailer_youtube_id` (`GET /api/products/trailers`). Layout de dos columnas: izquierda, una estantería CSS con 2 baldas (columnas de lomos de libro clicables); derecha, iframe de YouTube embebido del tráiler seleccionado. En tablet/móvil: el reproductor va arriba y la estantería se colapsa a 1 balda debajo. El primer tráiler se selecciona automáticamente. Usa `SafeUrlPipe` para sanear la URL del iframe. La selección del tráiler activo se gestiona con signals (`selectedTrailer`, `trailersLeft`, `trailersRight`, `youtubeUrl` como computed).
 
 ---
 
@@ -504,6 +507,7 @@ Todo lo que hay que hacer antes de subir el frontend a un servidor real.
 
 ## Novedades recientes
 
+- **Sección "Últimos tráilers" en landing** — estantería CSS con 2 baldas de lomos clicables (1 en móvil) + iframe de YouTube del tráiler seleccionado. Endpoint `GET /api/products/trailers`. Selección reactiva via signals.
 - **Sitemap dinámico** — `GET /sitemap.xml` en el frontend (Express en `server.ts`) actúa como proxy hacia el endpoint `GET /sitemap.xml` del backend Laravel. Laravel genera el XML con `SitemapController` + vista Blade `sitemap.blade.php`, incluyendo `/`, `/games` y todas las rutas `/product/{type}/{slug}` con `lastmod` real. La URL base del frontend se lee de la variable de entorno `FRONTEND_URL`. `public/robots.txt` creado con `Disallow` para rutas privadas y directiva `Sitemap:`. En producción hay que actualizar la URL del sitemap en `robots.txt` con el dominio real.
 - **Meta tags dinámicos (OpenGraph completo)** — `<title>` y tags OG/Twitter configurados por ruta: detalle de producto (título del juego + portada + descripción truncada a 160 chars), listado de juegos (con label del filtro activo si aplica), landing (tags estáticos de la plataforma). Las páginas de perfil público y cards ya tenían meta tags. `index.html` corregido: título base "Vouch — Críticas ponderadas de videojuegos", `twitter:card` corregido a `summary_large_image`. Con SSR activo en las rutas públicas, los crawlers (Google, Discord, WhatsApp, Twitter) reciben el HTML pre-renderizado con los tags correctos.
 - **StoreIconComponent** — nuevo componente compartido con iconos SVG (Simple Icons, CC0) para Steam, GOG, Epic Games, PlayStation Store, Xbox y Nintendo eShop. Se usa en el detalle de producto para los links de compra por plataforma; hereda color del tema vía `currentColor`.

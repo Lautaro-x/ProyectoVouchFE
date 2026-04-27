@@ -81,6 +81,9 @@
       "title": "Nuove uscite rilevanti",
       "score_global": "Voto medio di tutti gli utenti",
       "score_pro": "Voto della critica specializzata"
+    },
+    "trailers": {
+      "title": "Ultimi trailer"
     }
   },
   "login": {
@@ -134,7 +137,8 @@
       "surveys": "Sondaggi",
       "announcements": "Annunci",
       "logout": "Esci",
-      "verify_requests": "Verifiche"
+      "verify_requests": "Verifiche",
+      "custom_trailers": "Trailer personalizzati"
     },
     "categories": {
       "title": "Categorie",
@@ -320,6 +324,28 @@
       "approve_btn": "Approva",
       "reject_btn": "Rifiuta",
       "empty": "Nessuna richiesta con questo stato."
+    },
+    "custom_trailers": {
+      "title": "Trailer personalizzati",
+      "settings_card": "Impostazioni sezione",
+      "section_title_label": "Titolo della sezione",
+      "section_title_ph": "Ultimi trailer",
+      "toggle_label": "Usa lista personalizzata",
+      "toggle_on": "Attivata",
+      "toggle_off": "Disattivata",
+      "save": "Salva",
+      "saving": "Salvataggio…",
+      "add_card": "Aggiungi trailer",
+      "name_label": "Nome del prodotto",
+      "name_ph": "Es: Elden Ring",
+      "url_label": "Link YouTube",
+      "url_ph": "https://www.youtube.com/watch?v=...",
+      "add": "Aggiungi",
+      "adding": "Aggiunta…",
+      "col_num": "#",
+      "col_name": "Nome",
+      "col_url": "URL",
+      "delete": "Elimina"
     }
   },
   "audience": {

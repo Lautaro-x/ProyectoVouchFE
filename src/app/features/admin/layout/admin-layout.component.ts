@@ -26,7 +26,8 @@ export class AdminLayoutComponent {
     { path: 'users',      labelKey: 'admin.nav.users' },
     { path: 'surveys',         labelKey: 'admin.nav.surveys' },
     { path: 'announcements',   labelKey: 'admin.nav.announcements' },
-    { path: 'verify-requests', labelKey: 'admin.nav.verify_requests' },
+    { path: 'verify-requests',  labelKey: 'admin.nav.verify_requests' },
+    { path: 'custom-trailers', labelKey: 'admin.nav.custom_trailers' },
   ];
 
   logout(): void {
