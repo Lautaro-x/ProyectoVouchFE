@@ -141,7 +141,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   private setOgTags(p: ProductDetail): void {
     const url   = `${this.doc.location.origin}/product/${p.type}/${p.slug}`;
-    const desc  = p.description ? p.description.slice(0, 160) : 'Crítica ponderada en Vouch.';
+    const desc  = p.description ? p.description.slice(0, 160) : 'Weighted review on Vouch.';
     const image = p.cover_image ?? '';
     this.titleSvc.setTitle(`${p.title} — Vouch`);
     this.meta.updateTag({ name: 'description',            content: desc });

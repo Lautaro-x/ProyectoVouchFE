@@ -106,8 +106,8 @@ export class GameListComponent implements OnInit {
   }
 
   private setOgTags(filterLabel: string): void {
-    const pageTitle = filterLabel ? `Juegos de ${filterLabel} — Vouch` : 'Juegos — Vouch';
-    const desc      = 'Explora y descubre videojuegos con críticas ponderadas en Vouch.';
+    const pageTitle = filterLabel ? `${filterLabel} games — Vouch` : 'Games — Vouch';
+    const desc      = 'Explore and discover video games with weighted reviews on Vouch.';
     this.titleSvc.setTitle(pageTitle);
     this.meta.updateTag({ name: 'description',         content: desc });
     this.meta.updateTag({ property: 'og:type',         content: 'website' });

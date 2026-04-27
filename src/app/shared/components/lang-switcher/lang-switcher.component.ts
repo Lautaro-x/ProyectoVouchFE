@@ -1,6 +1,7 @@
 import { Component, inject, signal, computed, HostListener, ElementRef, ChangeDetectionStrategy,
 } from '@angular/core';
 import { LangService } from '../../../core/services/lang.service';
+import { ACTIVE_LANGS } from '../../../core/constants/langs';
 
 interface LangOption {
   code: string;
@@ -20,13 +21,17 @@ export class LangSwitcherComponent {
 
   readonly isOpen = signal(false);
 
-  readonly langOptions: LangOption[] = [
+  private readonly allLangOptions: LangOption[] = [
     { code: 'es', country: 'es' },
     { code: 'en', country: 'gb' },
     { code: 'fr', country: 'fr' },
     { code: 'pt', country: 'pt' },
     { code: 'it', country: 'it' },
   ];
+
+  readonly langOptions = this.allLangOptions.filter(o =>
+    (ACTIVE_LANGS as readonly string[]).includes(o.code)
+  );
 
   readonly currentCountry = computed(
     () => this.langOptions.find(o => o.code === this.langService.activeLang())?.country ?? 'es'

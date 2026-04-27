@@ -70,14 +70,14 @@ export class LandingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const desc = 'Plataforma social de críticas ponderadas para videojuegos.';
-    this.titleSvc.setTitle('Vouch — Críticas ponderadas de videojuegos');
+    const desc = 'Social platform with weighted video game reviews.';
+    this.titleSvc.setTitle('Vouch — Weighted video game reviews');
     this.meta.updateTag({ name: 'description',         content: desc });
     this.meta.updateTag({ property: 'og:type',         content: 'website' });
-    this.meta.updateTag({ property: 'og:title',        content: 'Vouch — Críticas ponderadas de videojuegos' });
+    this.meta.updateTag({ property: 'og:title',        content: 'Vouch — Weighted video game reviews' });
     this.meta.updateTag({ property: 'og:description',  content: desc });
     this.meta.updateTag({ name: 'twitter:card',        content: 'summary_large_image' });
-    this.meta.updateTag({ name: 'twitter:title',       content: 'Vouch — Críticas ponderadas de videojuegos' });
+    this.meta.updateTag({ name: 'twitter:title',       content: 'Vouch — Weighted video game reviews' });
     this.meta.updateTag({ name: 'twitter:description', content: desc });
 
     if (!isPlatformBrowser(this.platformId)) return;

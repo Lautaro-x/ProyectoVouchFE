@@ -59,15 +59,15 @@ export class MidCardPageComponent implements OnInit {
 
   private setOgTags(data: UserCardData): void {
     const url  = `${this.doc.location.origin}/card/mid/${data.id}`;
-    const desc = `${data.reviews_count} reseñas · ${data.followers_count} seguidores`;
+    const desc = `${data.reviews_count} reviews · ${data.followers_count} followers`;
     this.title.setTitle(`${data.name} — Vouch`);
     this.meta.updateTag({ property: 'og:type',        content: 'profile' });
     this.meta.updateTag({ property: 'og:url',         content: url });
-    this.meta.updateTag({ property: 'og:title',       content: `${data.name} en Vouch` });
+    this.meta.updateTag({ property: 'og:title',       content: `${data.name} on Vouch` });
     this.meta.updateTag({ property: 'og:description', content: desc });
     this.meta.updateTag({ property: 'og:image',       content: data.avatar ?? '' });
     this.meta.updateTag({ name: 'twitter:card',        content: 'summary' });
-    this.meta.updateTag({ name: 'twitter:title',       content: `${data.name} en Vouch` });
+    this.meta.updateTag({ name: 'twitter:title',       content: `${data.name} on Vouch` });
     this.meta.updateTag({ name: 'twitter:description', content: desc });
     this.meta.updateTag({ name: 'twitter:image',       content: data.avatar ?? '' });
   }

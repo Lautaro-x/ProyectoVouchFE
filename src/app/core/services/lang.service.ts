@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslocoService } from '@jsverse/transloco';
 import { ACCEPT_LANGUAGE } from '../tokens/accept-language.token';
+import { ACTIVE_LANGS } from '../constants/langs';
 
 @Injectable({ providedIn: 'root' })
 export class LangService {
@@ -11,8 +12,8 @@ export class LangService {
   private readonly acceptLanguage = inject(ACCEPT_LANGUAGE);
 
   private readonly STORAGE_KEY = 'lang';
-  private readonly AVAILABLE = ['es', 'en', 'fr', 'pt', 'it'];
-  private readonly DEFAULT = 'es';
+  private readonly AVAILABLE = [...ACTIVE_LANGS];
+  private readonly DEFAULT = 'en';
 
   readonly activeLang = toSignal(this.translocoService.langChanges$, {
     initialValue: this.translocoService.getActiveLang(),

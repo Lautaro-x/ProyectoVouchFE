@@ -193,20 +193,25 @@ Usuario hace clic en "Iniciar sesión"
 
 **Librería:** `@jsverse/transloco`
 
-**Idiomas:** Español (`es`), Inglés (`en`), Francés (`fr`), Portugués (`pt`), Italiano (`it`)
+**Idiomas definidos:** Español (`es`), Inglés (`en`), Francés (`fr`), Portugués (`pt`), Italiano (`it`)
+
+**Idiomas activos:** solo `es` y `en` (`ACTIVE_LANGS`). El resto están en el código pero desactivados hasta auditoría de traducciones.
 
 **Archivos:** `public/i18n/{lang}.json` — cargados bajo demanda por idioma.
 
 **Detección automática** (`LangService`):
 ```
 1. localStorage key 'lang'      → el usuario lo eligió antes
-2. navigator.language (browser) → preferencia real del navegador
-3. 'es'                         → fallback
+2. navigator.language (browser) → preferencia del navegador (solo si está en ACTIVE_LANGS)
+3. 'en'                         → fallback (evita mostrar idiomas no auditados)
 ```
 
 **Inicialización:** `provideAppInitializer` ejecuta `LangService.init()` antes de que Angular renderice nada, evitando parpadeos de idioma.
 
-**Constantes compartidas** (`core/constants/langs.ts`): `LANGS` y `LANG_LOCALES` usados en los formularios multilingüe del panel admin para evitar repetición.
+**Constantes compartidas** (`core/constants/langs.ts`):
+- `LANGS` — los 5 idiomas, usado en el admin para formularios multilingüe
+- `ACTIVE_LANGS` — solo `['es', 'en']`, controla el switcher y la detección de idioma
+- `localizedValue(record, lang)` — fallback a `'en'` si el lang activo no tiene traducción
 
 ---
 
@@ -507,6 +512,9 @@ Todo lo que hay que hacer antes de subir el frontend a un servidor real.
 
 ## Novedades recientes
 
+- **SEO base language changed to English** — `defaultLang` en `app.config.ts` cambiado a `'en'`. `localizedValue()` tiene fallback a `'en'`. `index.html` y todos los componentes con meta tags (`landing`, `game-list`, `product-detail`, 3 cards, `public-profile`) actualizados: títulos y descripciones en inglés. Páginas de perfil/card: `"en Vouch"` → `"on Vouch"`, `"reseñas"` → `"reviews"`, `"seguidores"` → `"followers"`.
+- **Idiomas activos restringidos a ES/EN** — `ACTIVE_LANGS = ['es', 'en']` controla el switcher de idioma y la detección automática. Si el navegador tiene un idioma no activo (ej: `fr`), el fallback es `'en'`. `LANGS` conserva los 5 para el panel admin. Al activar un idioma en el futuro solo hay que añadirlo a `ACTIVE_LANGS`.
+- **Admin: sección "Últimos tráilers" personalizada** — panel en `/administration/custom-trailers` para crear una lista manual de tráilers (nombre + URL YouTube). Incluye título multilingüe (un input por idioma, usando todos los `LANGS`) y toggle para activar/desactivar. Cuando está activo, el endpoint `GET /api/products/trailers` devuelve la lista personalizada en lugar de los 20 últimos del catálogo. Útil para ferias y eventos. Modelos: `CustomTrailerSection` (singleton id=1, `title` JSON, `is_active`), `CustomTrailerItem`. Rutas admin protegidas con Sanctum + rol admin.
 - **Sección "Últimos tráilers" en landing** — estantería CSS con 2 baldas de lomos clicables (1 en móvil) + iframe de YouTube del tráiler seleccionado. Endpoint `GET /api/products/trailers`. Selección reactiva via signals.
 - **Sitemap dinámico** — `GET /sitemap.xml` en el frontend (Express en `server.ts`) actúa como proxy hacia el endpoint `GET /sitemap.xml` del backend Laravel. Laravel genera el XML con `SitemapController` + vista Blade `sitemap.blade.php`, incluyendo `/`, `/games` y todas las rutas `/product/{type}/{slug}` con `lastmod` real. La URL base del frontend se lee de la variable de entorno `FRONTEND_URL`. `public/robots.txt` creado con `Disallow` para rutas privadas y directiva `Sitemap:`. En producción hay que actualizar la URL del sitemap en `robots.txt` con el dominio real.
 - **Meta tags dinámicos (OpenGraph completo)** — `<title>` y tags OG/Twitter configurados por ruta: detalle de producto (título del juego + portada + descripción truncada a 160 chars), listado de juegos (con label del filtro activo si aplica), landing (tags estáticos de la plataforma). Las páginas de perfil público y cards ya tenían meta tags. `index.html` corregido: título base "Vouch — Críticas ponderadas de videojuegos", `twitter:card` corregido a `summary_large_image`. Con SSR activo en las rutas públicas, los crawlers (Google, Discord, WhatsApp, Twitter) reciben el HTML pre-renderizado con los tags correctos.
