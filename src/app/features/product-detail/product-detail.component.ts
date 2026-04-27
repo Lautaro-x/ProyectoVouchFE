@@ -9,6 +9,7 @@ import { ProductDetail, ProductReview } from '../../core/models/product.model';
 import { AuthService } from '../../core/services/auth.service';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { SafeUrlPipe } from '../../shared/pipes/safe-url.pipe';
+import { slugify } from '../../core/utils/slugify';
 import { ReviewShareComponent } from './review-share/review-share.component';
 import { StoreIconComponent } from '../../shared/components/store-icon/store-icon.component';
 
@@ -131,10 +132,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     return 'grade-' + grade.replace('+', 'plus').replace('-', 'minus').toLowerCase();
   }
 
+  readonly slugify = slugify;
+
   genreList = computed(() => {
     const lang = this.t.getActiveLang();
     return this.product()?.genres.map(g => ({
       id:    g.id,
+      slug:  g.slug,
       label: g.name[lang] || g.name['en'] || '',
     })) ?? [];
   });

@@ -6,6 +6,7 @@ import { filter } from 'rxjs';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AuthService } from '../../../core/services/auth.service';
 import { ApiService } from '../../../core/services/api.service';
+import { Genre } from '../../../core/models/product.model';
 import { ActiveAnnouncement, ActiveSurvey } from '../../../core/models/user.model';
 import { LangSwitcherComponent } from '../lang-switcher/lang-switcher.component';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -37,15 +38,24 @@ export class HeaderComponent {
   surveyDone            = signal(false);
   submitting            = signal(false);
 
-  announcementTooltipOpen      = signal(false);
-  activeAnnouncements          = signal<ActiveAnnouncement[]>([]);
-  announcementOpen             = signal(false);
-  selectedAnnouncement         = signal<ActiveAnnouncement | null>(null);
+  announcementTooltipOpen = signal(false);
+  activeAnnouncements     = signal<ActiveAnnouncement[]>([]);
+  announcementOpen        = signal(false);
+  selectedAnnouncement    = signal<ActiveAnnouncement | null>(null);
+
+  gamesDropdownOpen   = signal(false);
+  genres              = signal<Genre[]>([]);
+  activeMenuSection   = signal<'genres' | 'upcoming'>('genres');
+  private openTimer:  ReturnType<typeof setTimeout> | null = null;
+  private closeTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd), takeUntilDestroyed())
-      .subscribe(() => this.menuOpen.set(false));
+      .subscribe(() => {
+        this.menuOpen.set(false);
+        this.gamesDropdownOpen.set(false);
+      });
 
     toObservable(this.authService.currentUser)
       .pipe(takeUntilDestroyed())
@@ -61,6 +71,37 @@ export class HeaderComponent {
 
   private loadActiveAnnouncements(): void {
     this.api.getActiveAnnouncements().subscribe(a => this.activeAnnouncements.set(a));
+  }
+
+  onGamesEnter(): void {
+    if (this.closeTimer) {
+      clearTimeout(this.closeTimer);
+      this.closeTimer = null;
+    }
+    if (!this.gamesDropdownOpen()) {
+      this.openTimer = setTimeout(() => {
+        if (!this.genres().length) {
+          this.api.getGenres().subscribe(g => this.genres.set(g));
+        }
+        this.activeMenuSection.set('genres');
+        this.gamesDropdownOpen.set(true);
+      }, 1000);
+    }
+  }
+
+  onGamesLeave(): void {
+    if (this.openTimer) {
+      clearTimeout(this.openTimer);
+      this.openTimer = null;
+    }
+    this.closeTimer = setTimeout(() => {
+      this.gamesDropdownOpen.set(false);
+    }, 150);
+  }
+
+  genreName(genre: Genre): string {
+    const lang = this.currentLang() ?? 'en';
+    return genre.name[lang] || genre.name['en'] || Object.values(genre.name)[0] || '';
   }
 
   toggleAnnouncementTooltip(): void {
@@ -103,8 +144,8 @@ export class HeaderComponent {
   }
 
   t(record: Record<string, string>): string {
-    const lang = this.currentLang() ?? 'es';
-    return record[lang] || record['es'] || Object.values(record)[0] || '';
+    const lang = this.currentLang() ?? 'en';
+    return record[lang] || record['en'] || Object.values(record)[0] || '';
   }
 
   toggleMenu(): void {
@@ -122,6 +163,7 @@ export class HeaderComponent {
     this.menuOpen.set(false);
     this.tooltipOpen.set(false);
     this.announcementTooltipOpen.set(false);
+    this.gamesDropdownOpen.set(false);
   }
 
   logout(): void {

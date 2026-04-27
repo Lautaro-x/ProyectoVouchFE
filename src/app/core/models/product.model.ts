@@ -1,3 +1,9 @@
+export interface Genre {
+  id: number;
+  name: Record<string, string>;
+  slug: string;
+}
+
 export interface TrailerProduct {
   id: number;
   title: string;
@@ -81,7 +87,7 @@ export interface ProductDetail {
   slug: string;
   description: string | null;
   cover_image: string | null;
-  genres: { id: number; name: Record<string, string> }[];
+  genres: { id: number; name: Record<string, string>; slug: string }[];
   game_details: {
     developer: string | null;
     publisher: string | null;

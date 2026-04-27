@@ -96,7 +96,7 @@
         <h1 class="detail-title">{{ product()!.title }}</h1>
         <p class="detail-genres">
           @for (g of genreList(); track g.id; let last = $last) {
-            <a class="detail-filter-link" [routerLink]="['/games']" [queryParams]="{filterType: 'genre', filterValue: g.id, filterLabel: g.label}">{{ g.label }}</a>@if (!last){<span class="detail-genres-sep"> · </span>}
+            <a class="detail-filter-link" [routerLink]="['/games', 'genre', g.slug]">{{ g.label }}</a>@if (!last){<span class="detail-genres-sep"> · </span>}
           }
         </p>
       </div>
@@ -140,15 +140,15 @@
           <dl class="detail-dl">
             @if (product()!.game_details?.developer) {
               <dt>{{ 'product.developer' | transloco }}</dt>
-              <dd><a class="detail-filter-link" [routerLink]="['/games']" [queryParams]="{filterType: 'developer', filterValue: product()!.game_details!.developer}">{{ product()!.game_details!.developer }}</a></dd>
+              <dd><a class="detail-filter-link" [routerLink]="['/games', 'developer', slugify(product()!.game_details!.developer!)]">{{ product()!.game_details!.developer }}</a></dd>
             }
             @if (product()!.game_details?.publisher) {
               <dt>{{ 'product.publisher' | transloco }}</dt>
-              <dd><a class="detail-filter-link" [routerLink]="['/games']" [queryParams]="{filterType: 'publisher', filterValue: product()!.game_details!.publisher}">{{ product()!.game_details!.publisher }}</a></dd>
+              <dd><a class="detail-filter-link" [routerLink]="['/games', 'publisher', slugify(product()!.game_details!.publisher!)]">{{ product()!.game_details!.publisher }}</a></dd>
             }
             @if (product()!.game_details?.franchise) {
               <dt>{{ 'product.franchise' | transloco }}</dt>
-              <dd><a class="detail-filter-link" [routerLink]="['/games']" [queryParams]="{filterType: 'franchise', filterValue: product()!.game_details!.franchise}">{{ product()!.game_details!.franchise }}</a></dd>
+              <dd><a class="detail-filter-link" [routerLink]="['/games', 'franchise', slugify(product()!.game_details!.franchise!)]">{{ product()!.game_details!.franchise }}</a></dd>
             }
           </dl>
 
@@ -185,7 +185,7 @@
               <dt>{{ 'product.themes' | transloco }}</dt>
               <dd>
                 @for (t of product()!.game_details!.themes!; track t; let last = $last) {
-                  <a class="detail-filter-link" [routerLink]="['/games']" [queryParams]="{filterType: 'theme', filterValue: t}">{{ t }}</a>@if (!last){<span class="detail-genres-sep"> · </span>}
+                  <a class="detail-filter-link" [routerLink]="['/games', 'theme', slugify(t)]">{{ t }}</a>@if (!last){<span class="detail-genres-sep"> · </span>}
                 }
               </dd>
             }
@@ -193,7 +193,7 @@
               <dt>{{ 'product.game_modes' | transloco }}</dt>
               <dd>
                 @for (m of product()!.game_details!.game_modes!; track m; let last = $last) {
-                  <a class="detail-filter-link" [routerLink]="['/games']" [queryParams]="{filterType: 'game_mode', filterValue: m}">{{ m }}</a>@if (!last){<span class="detail-genres-sep"> · </span>}
+                  <a class="detail-filter-link" [routerLink]="['/games', 'game_mode', slugify(m)]">{{ m }}</a>@if (!last){<span class="detail-genres-sep"> · </span>}
                 }
               </dd>
             }
@@ -201,7 +201,7 @@
               <dt>{{ 'product.player_perspectives' | transloco }}</dt>
               <dd>
                 @for (pp of product()!.game_details!.player_perspectives!; track pp; let last = $last) {
-                  <a class="detail-filter-link" [routerLink]="['/games']" [queryParams]="{filterType: 'player_perspective', filterValue: pp}">{{ pp }}</a>@if (!last){<span class="detail-genres-sep"> · </span>}
+                  <a class="detail-filter-link" [routerLink]="['/games', 'player_perspective', slugify(pp)]">{{ pp }}</a>@if (!last){<span class="detail-genres-sep"> · </span>}
                 }
               </dd>
             }

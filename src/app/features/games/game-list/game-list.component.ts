@@ -65,15 +65,20 @@ export class GameListComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const params = this.route.snapshot.queryParamMap;
-    const ft = params.get('filterType') ?? '';
-    const fv = params.get('filterValue') ?? '';
-    const fl = params.get('filterLabel') ?? fv;
-    this.filterType.set(ft);
-    this.filterValue.set(fv);
-    this.filterLabel.set(fl);
-
-    this.setOgTags(fl || fv);
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(params => {
+        const ft = params.get('filterType') ?? '';
+        const fv = params.get('filterValue') ?? '';
+        const fl = fv.replace(/-/g, ' ');
+        this.filterType.set(ft);
+        this.filterValue.set(fv);
+        this.filterLabel.set(fl);
+        this.searchInput.set('');
+        this.page.set(1);
+        this.setOgTags(fl || fv);
+        this.load();
+      });
 
     this.search$.pipe(
       debounceTime(300),
@@ -84,8 +89,6 @@ export class GameListComponent implements OnInit {
       this.page.set(1);
       this.load();
     });
-
-    this.load();
   }
 
   onSearchInput(value: string): void {

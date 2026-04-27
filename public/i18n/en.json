@@ -2,7 +2,9 @@
   "header": {
     "login": "Sign in",
     "logout": "Sign out",
-    "administration": "Administration"
+    "administration": "Administration",
+    "by_genre": "By genre",
+    "upcoming": "Upcoming games"
   },
   "common": {
     "home": "Home",

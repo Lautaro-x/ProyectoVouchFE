@@ -2,13 +2,17 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, TrailerProduct, TrailerSectionResponse, UserReviewCard } from '../models/product.model';
+import { Genre, PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, TrailerProduct, TrailerSectionResponse, UserReviewCard } from '../models/product.model';
 import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, SocialLinks, UserCardData, UserConsents, UserProfile, VerificationRequest } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly base = environment.apiUrl;
+
+  getGenres(): Observable<Genre[]> {
+    return this.http.get<Genre[]>(`${this.base}/genres`);
+  }
 
   getGames(search: string, page: number, filterType?: string, filterValue?: string): Observable<PaginatedResponse<ProductCard>> {
     const params: Record<string, string | number> = { page };

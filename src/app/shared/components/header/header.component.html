@@ -8,9 +8,52 @@
 
     <!-- Desktop nav -->
     <nav class="header-sections desktop-only">
-      <a class="header-section-link" routerLink="/games" routerLinkActive="active">
-        {{ 'games.title' | transloco }}
-      </a>
+      <div class="games-wrap" (mouseenter)="onGamesEnter()" (mouseleave)="onGamesLeave()">
+        <a class="header-section-link" routerLink="/games" routerLinkActive="active">
+          {{ 'games.title' | transloco }}
+        </a>
+        @if (gamesDropdownOpen()) {
+          <div class="games-dropdown" (click)="$event.stopPropagation()">
+            <div class="games-dropdown-left">
+              <button
+                class="games-menu-item"
+                [class.active]="activeMenuSection() === 'genres'"
+                (mouseenter)="activeMenuSection.set('genres')"
+                type="button"
+              >
+                {{ 'header.by_genre' | transloco }}
+                <svg class="menu-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 4l4 4-4 4"/>
+                </svg>
+              </button>
+              <a
+                class="games-menu-item"
+                [class.active]="activeMenuSection() === 'upcoming'"
+                (mouseenter)="activeMenuSection.set('upcoming')"
+                routerLink="/upcoming"
+              >
+                {{ 'header.upcoming' | transloco }}
+              </a>
+            </div>
+            <div class="games-dropdown-right">
+              @if (activeMenuSection() === 'genres') {
+                <div class="genre-grid">
+                  @for (genre of genres(); track genre.id) {
+                    <a
+                      class="genre-chip"
+                      [routerLink]="['/games', 'genre', genre.slug]"
+                    >{{ genreName(genre) }}</a>
+                  }
+                </div>
+              } @else {
+                <div class="menu-section-hint">
+                  {{ 'header.upcoming' | transloco }} →
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
     </nav>
 
     <nav class="header-nav desktop-only">
@@ -125,6 +168,9 @@
       <nav class="dropdown-sections">
         <a class="dropdown-link" routerLink="/games" routerLinkActive="active">
           {{ 'games.title' | transloco }}
+        </a>
+        <a class="dropdown-link" routerLink="/upcoming" routerLinkActive="active">
+          {{ 'header.upcoming' | transloco }}
         </a>
       </nav>
       <div class="dropdown-divider"></div>

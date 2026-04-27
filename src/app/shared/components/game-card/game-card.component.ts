@@ -1,6 +1,4 @@
-import { Component, computed, HostListener, inject, input, PLATFORM_ID, signal, ChangeDetectionStrategy,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, computed, input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ProductCard } from '../../../core/models/product.model';
@@ -16,14 +14,6 @@ import { IgdbCoverPipe } from '../../pipes/igdb-cover.pipe';
 })
 export class GameCardComponent {
   product = input.required<ProductCard>();
-
-  private readonly platformId = inject(PLATFORM_ID);
-
-  readonly hovered      = signal(false);
-  readonly screenWidth  = signal(isPlatformBrowser(this.platformId) ? window.innerWidth : 1200);
-
-  @HostListener('window:resize')
-  onResize(): void { this.screenWidth.set(window.innerWidth); }
 
   gradeClass = computed(() => {
     const g = this.product().letter_grade;
@@ -41,12 +31,4 @@ export class GameCardComponent {
     const g = this.product().follower_review?.letter_grade;
     return g ? g.replace('+', 'plus').replace('-', 'minus').toLowerCase() : '';
   });
-
-  truncateName(name: string): string {
-    const limit = this.screenWidth() <= 1024 ? 7 : 15;
-    return name.length > limit ? name.slice(0, limit) + '…' : name;
-  }
-
-  @HostListener('mouseenter') onMouseEnter(): void { this.hovered.set(true); }
-  @HostListener('mouseleave') onMouseLeave(): void { this.hovered.set(false); }
 }

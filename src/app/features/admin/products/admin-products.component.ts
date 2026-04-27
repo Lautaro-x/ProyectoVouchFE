@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, HostListener, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
@@ -49,6 +49,7 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
     publisher: '',
   });
 
+  igdbMenuOpen   = signal(false);
   igdbDialogOpen = signal(false);
   igdbQuery      = signal('');
   igdbResults    = signal<IgdbGame[]>([]);
@@ -122,6 +123,7 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
   }
 
   openIgdb(): void {
+    this.igdbMenuOpen.set(false);
     this.igdbQuery.set('');
     this.igdbResults.set([]);
     this.igdbDialogOpen.set(true);
@@ -142,10 +144,20 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
   closeIgdbDialog(): void { this.igdbDialogOpen.set(false); }
 
   importRecent(): void {
+    this.igdbMenuOpen.set(false);
     this.api.importRecentFromIgdb().subscribe(report => {
       this.importReport.set(report);
       this.importReportOpen.set(true);
       this.load(1);
+    });
+  }
+
+  syncEarlyAccess(): void {
+    this.igdbMenuOpen.set(false);
+    this.api.syncEarlyAccessFromIgdb().subscribe(report => {
+      this.importReport.set(report);
+      this.importReportOpen.set(true);
+      this.load(this.page()?.current_page ?? 1);
     });
   }
 
@@ -158,6 +170,9 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
   }
 
   closeReportDialog(): void { this.importReportOpen.set(false); }
+
+  @HostListener('document:click')
+  closeIgdbMenu(): void { this.igdbMenuOpen.set(false); }
 
   toggleGenre(id: number, checked: boolean): void {
     this.form.update(f => ({

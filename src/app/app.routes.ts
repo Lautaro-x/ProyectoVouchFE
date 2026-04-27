@@ -14,6 +14,11 @@ export const routes: Routes = [
       import('./features/auth/login/login.component').then(m => m.LoginComponent),
   },
   {
+    path: 'upcoming',
+    loadComponent: () =>
+      import('./features/upcoming/upcoming.component').then(m => m.UpcomingComponent),
+  },
+  {
     path: 'administration',
     canActivate: [adminGuard],
     loadChildren: () =>
@@ -27,6 +32,11 @@ export const routes: Routes = [
   },
   {
     path: 'games',
+    loadComponent: () =>
+      import('./features/games/game-list/game-list.component').then(m => m.GameListComponent),
+  },
+  {
+    path: 'games/:filterType/:filterValue',
     loadComponent: () =>
       import('./features/games/game-list/game-list.component').then(m => m.GameListComponent),
   },

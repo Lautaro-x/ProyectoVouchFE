@@ -8,7 +8,7 @@
       }
     </div>
     @if (product().trust_grade) {
-      <div class="trust-star-outer" [class.vibrate]="hovered()">
+      <div class="trust-star-outer">
         <div class="trust-star-inner">
           <span [class]="'grade-star grade-' + trustGradeClass()">{{ product().trust_grade }}</span>
         </div>
@@ -16,7 +16,7 @@
     }
     @if (product().follower_review) {
       <div class="follower-review">
-        <strong class="follower-name">{{ truncateName(product().follower_review!.user_name) }}</strong>
+        <strong class="follower-name">{{ product().follower_review!.user_name }}</strong>
         {{ 'games.follower_rated' | transloco }}
         <span [class]="'follower-grade grade-' + followerGradeClass()">{{ product().follower_review!.letter_grade }}</span>
       </div>

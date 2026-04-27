@@ -193,6 +193,102 @@
   flex-wrap: wrap;
 }
 
+/* Games mega-dropdown */
+.games-wrap {
+  position: relative;
+}
+
+.games-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  display: flex;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.28);
+  overflow: hidden;
+  z-index: 200;
+  min-width: 480px;
+}
+
+.games-dropdown-left {
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem;
+  border-right: 1px solid var(--color-border);
+  min-width: 160px;
+  flex-shrink: 0;
+}
+
+.games-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 7px;
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-family: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.games-menu-item:hover,
+.games-menu-item.active {
+  background: var(--color-border);
+  color: var(--color-text);
+}
+
+.menu-chevron {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.games-dropdown-right {
+  flex: 1;
+  padding: 0.75rem;
+  min-width: 0;
+}
+
+.genre-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.genre-chip {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.genre-chip:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+}
+
+.menu-section-hint {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  padding: 0.5rem 0.25rem;
+}
+
 /* Survey dropdown wrapper */
 .survey-wrap {
   position: relative;

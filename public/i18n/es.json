@@ -2,7 +2,9 @@
   "header": {
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
-    "administration": "Administración"
+    "administration": "Administración",
+    "by_genre": "Por género",
+    "upcoming": "Próximos juegos"
   },
   "common": {
     "home": "Inicio",

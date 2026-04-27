@@ -1,6 +1,7 @@
 :root {
   --color-bg:            #212121;
   --color-surface:       #2c2c2c;
+  --surface-hover:       #323232;
   --color-border:        #383838;
 
   --color-text:          #F5F5F5;
