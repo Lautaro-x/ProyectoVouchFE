@@ -77,11 +77,116 @@
   opacity: 1;
 }
 
-.games-loading,
-.games-empty {
+.games-loading {
   text-align: center;
   padding: 4rem 2rem;
   color: var(--color-text-muted);
+}
+
+.games-empty {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-discover {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0.6rem 1.25rem;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-discover:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.discover-hint {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.discover-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-width: 480px;
+  margin-top: 0.25rem;
+}
+
+.discover-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s;
+}
+
+.discover-card:hover:not(:disabled) {
+  border-color: var(--color-accent);
+}
+
+.discover-card:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.discover-card img,
+.discover-no-cover {
+  width: 36px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.discover-no-cover {
+  background: var(--color-border);
+}
+
+.discover-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.discover-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.discover-year {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.discover-spinner {
+  font-size: 0.78rem;
+  color: var(--color-accent);
+  flex-shrink: 0;
 }
 
 /* Grid */

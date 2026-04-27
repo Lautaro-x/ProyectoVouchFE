@@ -161,6 +161,14 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
     });
   }
 
+  syncUpcoming(): void {
+    this.igdbMenuOpen.set(false);
+    this.api.syncUpcomingFromIgdb().subscribe(report => {
+      this.importReport.set(report);
+      this.importReportOpen.set(true);
+    });
+  }
+
   syncProduct(product: Product): void {
     this.api.syncProductFromIgdb(product.id).subscribe(report => {
       this.importReport.set(report);

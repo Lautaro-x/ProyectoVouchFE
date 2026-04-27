@@ -75,7 +75,12 @@
     "filter_type_theme": "Temática",
     "filter_type_game_mode": "Modo de juego",
     "filter_type_player_perspective": "Perspectiva",
-    "filter_type_franchise": "Franquicia"
+    "filter_type_franchise": "Franquicia",
+    "discover_btn": "¿No encuentras tu juego? Buscar en catálogo externo",
+    "discover_loading": "Buscando en catálogo externo...",
+    "discover_hint": "Hemos tenido problemas para localizar tu juego. ¿Es uno de estos?",
+    "discover_none": "No encontramos coincidencias en el catálogo externo.",
+    "discover_importing": "Importando..."
   },
   "landing": {
     "title": "Vouch",

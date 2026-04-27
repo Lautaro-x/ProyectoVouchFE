@@ -24,7 +24,38 @@
   @if (loading()) {
     <div class="games-loading">{{ 'common.loading' | transloco }}</div>
   } @else if (games().length === 0) {
-    <div class="games-empty">{{ 'games.no_results' | transloco }}</div>
+    <div class="games-empty">
+      <p>{{ 'games.no_results' | transloco }}</p>
+      @if (searchInput().length >= 3) {
+        @if (!discoverSearched()) {
+          <button class="btn-discover" (click)="discover()">{{ 'games.discover_btn' | transloco }}</button>
+        } @else if (discoverLoading()) {
+          <p class="discover-hint muted">{{ 'games.discover_loading' | transloco }}</p>
+        } @else if (discoverSuggestions().length === 0) {
+          <p class="discover-hint muted">{{ 'games.discover_none' | transloco }}</p>
+        } @else {
+          <p class="discover-hint">{{ 'games.discover_hint' | transloco }}</p>
+          <div class="discover-list">
+            @for (s of discoverSuggestions(); track s.igdb_id) {
+              <button class="discover-card" (click)="importSuggestion(s.igdb_id)" [disabled]="importing() !== null">
+                @if (s.cover) {
+                  <img [src]="s.cover" [alt]="s.name" loading="lazy" decoding="async" />
+                } @else {
+                  <div class="discover-no-cover"></div>
+                }
+                <div class="discover-info">
+                  <span class="discover-name">{{ s.name }}</span>
+                  @if (s.year) { <span class="discover-year">{{ s.year }}</span> }
+                </div>
+                @if (importing() === s.igdb_id) {
+                  <span class="discover-spinner">{{ 'games.discover_importing' | transloco }}</span>
+                }
+              </button>
+            }
+          </div>
+        }
+      }
+    </div>
   } @else {
     <div class="games-grid">
       @for (game of games(); track game.id) {

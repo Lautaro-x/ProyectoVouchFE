@@ -1,3 +1,10 @@
+export interface IgdbSuggestion {
+  igdb_id: number;
+  name: string;
+  cover: string | null;
+  year: string | null;
+}
+
 export interface Genre {
   id: number;
   name: Record<string, string>;

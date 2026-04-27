@@ -72,7 +72,12 @@
     "filter_type_theme": "Tema",
     "filter_type_game_mode": "Modo de jogo",
     "filter_type_player_perspective": "Perspectiva",
-    "filter_type_franchise": "Franquia"
+    "filter_type_franchise": "Franquia",
+    "discover_btn": "Não encontra seu jogo? Buscar no catálogo externo",
+    "discover_loading": "Buscando no catálogo externo...",
+    "discover_hint": "Tivemos dificuldade em encontrar seu jogo. É um destes?",
+    "discover_none": "Nenhuma correspondência no catálogo externo.",
+    "discover_importing": "Importando..."
   },
   "landing": {
     "title": "Olá, mundo.",

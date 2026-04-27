@@ -72,7 +72,12 @@
     "filter_type_theme": "Thème",
     "filter_type_game_mode": "Mode de jeu",
     "filter_type_player_perspective": "Perspective",
-    "filter_type_franchise": "Franchise"
+    "filter_type_franchise": "Franchise",
+    "discover_btn": "Vous ne trouvez pas votre jeu ? Rechercher dans le catalogue externe",
+    "discover_loading": "Recherche dans le catalogue externe...",
+    "discover_hint": "Nous avons eu du mal à trouver votre jeu. Est-ce l'un d'eux ?",
+    "discover_none": "Aucun résultat dans le catalogue externe.",
+    "discover_importing": "Importation..."
   },
   "landing": {
     "title": "Bonjour, monde.",

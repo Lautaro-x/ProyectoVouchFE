@@ -75,7 +75,12 @@
     "filter_type_theme": "Theme",
     "filter_type_game_mode": "Game Mode",
     "filter_type_player_perspective": "Perspective",
-    "filter_type_franchise": "Franchise"
+    "filter_type_franchise": "Franchise",
+    "discover_btn": "Can't find your game? Search external catalog",
+    "discover_loading": "Searching external catalog...",
+    "discover_hint": "We had trouble finding your game. Is it one of these?",
+    "discover_none": "No matches found in the external catalog.",
+    "discover_importing": "Importing..."
   },
   "landing": {
     "title": "Hello, world.",

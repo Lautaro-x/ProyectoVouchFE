@@ -72,7 +72,12 @@
     "filter_type_theme": "Tema",
     "filter_type_game_mode": "Modalità di gioco",
     "filter_type_player_perspective": "Prospettiva",
-    "filter_type_franchise": "Franchise"
+    "filter_type_franchise": "Franchise",
+    "discover_btn": "Non trovi il tuo gioco? Cerca nel catalogo esterno",
+    "discover_loading": "Ricerca nel catalogo esterno...",
+    "discover_hint": "Abbiamo avuto difficoltà a trovare il tuo gioco. È uno di questi?",
+    "discover_none": "Nessuna corrispondenza nel catalogo esterno.",
+    "discover_importing": "Importazione..."
   },
   "landing": {
     "title": "Ciao, mondo.",

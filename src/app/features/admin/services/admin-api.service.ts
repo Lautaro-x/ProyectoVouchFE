@@ -89,6 +89,9 @@ export class AdminApiService {
   syncEarlyAccessFromIgdb(): Observable<IgdbImportReport> {
     return this.http.post<IgdbImportReport>(`${this.base}/igdb/sync-early-access`, {});
   }
+  syncUpcomingFromIgdb(): Observable<IgdbImportReport> {
+    return this.http.post<IgdbImportReport>(`${this.base}/igdb/sync-upcoming`, {});
+  }
   updatePurchaseLinks(productId: number, platforms: { platform_id: number; purchase_url: Record<string, string> | null }[]): Observable<Product> {
     return this.http.put<Product>(`${this.base}/products/${productId}/purchase-links`, { platforms });
   }

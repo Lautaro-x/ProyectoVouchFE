@@ -6,7 +6,7 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { Meta, Title } from '@angular/platform-browser';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
-import { ProductCard } from '../../../core/models/product.model';
+import { IgdbSuggestion, ProductCard } from '../../../core/models/product.model';
 import { GameCardComponent } from '../../../shared/components/game-card/game-card.component';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/breadcrumb/breadcrumb.component';
 
@@ -40,6 +40,11 @@ export class GameListComponent implements OnInit {
   filterType  = signal('');
   filterValue = signal('');
   filterLabel = signal('');
+
+  discoverSuggestions = signal<IgdbSuggestion[]>([]);
+  discoverSearched    = signal(false);
+  discoverLoading     = signal(false);
+  importing           = signal<number | null>(null);
 
   filterTypeKey = computed(() => {
     const t = this.filterType();
@@ -87,6 +92,7 @@ export class GameListComponent implements OnInit {
     ).subscribe(value => {
       this.searchInput.set(value);
       this.page.set(1);
+      this.resetDiscover();
       this.load();
     });
   }
@@ -106,6 +112,35 @@ export class GameListComponent implements OnInit {
     this.filterValue.set('');
     this.filterLabel.set('');
     this.router.navigate(['/games']);
+  }
+
+  discover(): void {
+    if (this.searchInput().length < 3) return;
+    this.discoverLoading.set(true);
+    this.discoverSearched.set(true);
+    this.api.discoverIgdb(this.searchInput()).subscribe({
+      next: results => {
+        this.discoverSuggestions.set(results);
+        this.discoverLoading.set(false);
+      },
+      error: () => this.discoverLoading.set(false),
+    });
+  }
+
+  importSuggestion(igdbId: number): void {
+    if (this.importing() !== null) return;
+    this.importing.set(igdbId);
+    this.api.importDiscovered(igdbId).subscribe({
+      next: ({ type, slug }) => this.router.navigate(['/product', type, slug]),
+      error: () => this.importing.set(null),
+    });
+  }
+
+  private resetDiscover(): void {
+    this.discoverSearched.set(false);
+    this.discoverSuggestions.set([]);
+    this.discoverLoading.set(false);
+    this.importing.set(null);
   }
 
   private setOgTags(filterLabel: string): void {

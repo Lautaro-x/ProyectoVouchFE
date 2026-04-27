@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Genre, PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, TrailerProduct, TrailerSectionResponse, UserReviewCard } from '../models/product.model';
+import { Genre, IgdbSuggestion, PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, TrailerProduct, TrailerSectionResponse, UserReviewCard } from '../models/product.model';
 import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, SocialLinks, UserCardData, UserConsents, UserProfile, VerificationRequest } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -130,5 +130,13 @@ export class ApiService {
 
   unfollowUser(userId: number): Observable<void> {
     return this.http.delete<void>(`${this.base}/user/follow/${userId}`);
+  }
+
+  discoverIgdb(q: string): Observable<IgdbSuggestion[]> {
+    return this.http.get<IgdbSuggestion[]>(`${this.base}/discover`, { params: { q } });
+  }
+
+  importDiscovered(igdbId: number): Observable<{ type: string; slug: string }> {
+    return this.http.post<{ type: string; slug: string }>(`${this.base}/discover/import`, { igdb_id: igdbId });
   }
 }
