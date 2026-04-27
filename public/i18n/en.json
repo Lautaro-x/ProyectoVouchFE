@@ -15,6 +15,7 @@
     "scores_heading": "Your scores",
     "body_heading": "Your opinion (optional)",
     "body_ph": "Share your thoughts about this game...",
+    "body_no_links_hint": "Links are not allowed in reviews for standard users.",
     "submit": "Publish review",
     "submitting": "Publishing...",
     "update": "Update review",
@@ -138,7 +139,13 @@
       "announcements": "Announcements",
       "logout": "Sign out",
       "verify_requests": "Verifications",
-      "custom_trailers": "Custom trailers"
+      "custom_trailers": "Trailers",
+      "group_products": "Products",
+      "group_reviews": "Reviews",
+      "group_users": "Users",
+      "group_crm": "CRM",
+      "group_notifications": "Notifications",
+      "group_custom": "Custom sections"
     },
     "categories": {
       "title": "Categories",

@@ -15,6 +15,7 @@
     "scores_heading": "Tus puntuaciones",
     "body_heading": "Tu opinión (opcional)",
     "body_ph": "Comparte tu opinión sobre este juego...",
+    "body_no_links_hint": "Los enlaces no están permitidos en críticas de usuarios estándar.",
     "submit": "Publicar crítica",
     "submitting": "Publicando...",
     "update": "Actualizar crítica",
@@ -138,7 +139,13 @@
       "announcements": "Avisos",
       "logout": "Salir",
       "verify_requests": "Verificaciones",
-      "custom_trailers": "Tráilers personalizados"
+      "custom_trailers": "Tráilers",
+      "group_products": "Productos",
+      "group_reviews": "Críticas",
+      "group_users": "Usuarios",
+      "group_crm": "CRM",
+      "group_notifications": "Notificaciones",
+      "group_custom": "Secciones personalizadas"
     },
     "categories": {
       "title": "Categorías",

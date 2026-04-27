@@ -8,12 +8,35 @@
   </div>
 
   <nav class="sidebar-nav">
-    @for (section of sections; track section.path) {
-      <a
-        [routerLink]="section.path"
-        routerLinkActive="active"
-        class="nav-item"
-      >{{ section.labelKey | transloco }}</a>
+    @for (group of groups; track group.labelKey) {
+      @if (group.path) {
+        <a [routerLink]="group.path" routerLinkActive="active" class="nav-item">
+          {{ group.labelKey | transloco }}
+        </a>
+      } @else {
+        <div class="nav-group">
+          <button
+            class="nav-group-toggle"
+            [class.open]="isOpen(group.labelKey)"
+            (click)="toggleGroup(group.labelKey)"
+            type="button"
+          >
+            <span>{{ group.labelKey | transloco }}</span>
+            <svg class="toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6l4 4 4-4"/>
+            </svg>
+          </button>
+          @if (isOpen(group.labelKey)) {
+            <div class="nav-group-items">
+              @for (item of group.items; track item.path) {
+                <a [routerLink]="item.path" routerLinkActive="active" class="nav-item nav-item--sub">
+                  {{ item.labelKey | transloco }}
+                </a>
+              }
+            </div>
+          }
+        </div>
+      }
     }
   </nav>
 

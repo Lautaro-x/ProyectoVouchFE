@@ -22,12 +22,16 @@ export class ReviewCreateComponent implements OnInit {
   private auth   = inject(AuthService);
   private t      = inject(TranslocoService);
 
-  formData   = signal<ReviewFormData | null>(null);
-  scores     = signal<Record<number, number>>({});
-  body       = signal('');
-  loading    = signal(true);
-  submitting = signal(false);
-  error      = signal(false);
+  formData     = signal<ReviewFormData | null>(null);
+  scores       = signal<Record<number, number>>({});
+  body         = signal('');
+  loading      = signal(true);
+  submitting   = signal(false);
+  error        = signal(false);
+
+  readonly canAddLinks = computed(() =>
+    ['critic', 'admin'].includes(this.auth.currentUser()?.role ?? '')
+  );
 
   breadcrumbs = computed<BreadcrumbItem[]>(() => {
     const p = this.formData();

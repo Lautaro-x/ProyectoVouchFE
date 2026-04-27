@@ -30,6 +30,10 @@ export class ReviewEditComponent implements OnInit {
   submitting = signal(false);
   error      = signal(false);
 
+  readonly canAddLinks = computed(() =>
+    ['critic', 'admin'].includes(this.auth.currentUser()?.role ?? '')
+  );
+
   breadcrumbs = computed<BreadcrumbItem[]>(() => {
     const p = this.formData();
     if (!p) return [];

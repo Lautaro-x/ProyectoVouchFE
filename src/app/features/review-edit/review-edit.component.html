@@ -54,6 +54,9 @@
           maxlength="2000"
         ></textarea>
         <span class="char-count" [class.char-warn]="body().length > 1800">{{ body().length }}/2000</span>
+        @if (!canAddLinks()) {
+          <span class="body-hint">{{ 'review.body_no_links_hint' | transloco }}</span>
+        }
       </section>
 
       <div class="review-actions">

@@ -12,7 +12,7 @@ export class LangService {
   private readonly acceptLanguage = inject(ACCEPT_LANGUAGE);
 
   private readonly STORAGE_KEY = 'lang';
-  private readonly AVAILABLE = [...ACTIVE_LANGS];
+  private readonly AVAILABLE: string[] = [...ACTIVE_LANGS];
   private readonly DEFAULT = 'en';
 
   readonly activeLang = toSignal(this.translocoService.langChanges$, {

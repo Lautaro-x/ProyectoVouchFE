@@ -133,6 +133,13 @@
 
 .char-count.char-warn { color: var(--color-grade-dminus); }
 
+.body-hint {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
 .review-actions {
   display: flex;
   justify-content: flex-end;
