@@ -4,6 +4,22 @@
     "logout": "Esci",
     "administration": "Amministrazione"
   },
+  "upcoming": {
+    "title": "Giochi in arrivo",
+    "most_anticipated": "Più atteso",
+    "coming_soon": "Prossimamente",
+    "on_the_horizon": "All'orizzonte",
+    "no_date": "Prossimamente",
+    "no_date_section": "Data da definire",
+    "days": "Giorni",
+    "hours": "Ore",
+    "min": "Min",
+    "sec": "Sec",
+    "official_site": "Sito ufficiale",
+    "hypes": "hypes",
+    "soon": "Presto",
+    "no_data": "Nessun gioco in arrivo. Sincronizza da IGDB."
+  },
   "common": {
     "home": "Home",
     "loading": "Caricamento...",

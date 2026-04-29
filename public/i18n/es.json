@@ -6,6 +6,22 @@
     "by_genre": "Por género",
     "upcoming": "Próximos juegos"
   },
+  "upcoming": {
+    "title": "Próximos Juegos",
+    "most_anticipated": "Más Esperado",
+    "coming_soon": "Próximamente",
+    "on_the_horizon": "En el Horizonte",
+    "no_date": "Próximamente",
+    "no_date_section": "Sin fecha confirmada",
+    "days": "Días",
+    "hours": "Horas",
+    "min": "Min",
+    "sec": "Seg",
+    "official_site": "Sitio Oficial",
+    "hypes": "hypes",
+    "soon": "Pronto",
+    "no_data": "No hay juegos próximos. Sincroniza desde IGDB."
+  },
   "common": {
     "home": "Inicio",
     "loading": "Cargando...",

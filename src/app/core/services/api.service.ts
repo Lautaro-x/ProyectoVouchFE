@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Genre, IgdbSuggestion, PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, TrailerProduct, TrailerSectionResponse, UserReviewCard } from '../models/product.model';
+import { Genre, IgdbSuggestion, PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, TrailerSectionResponse, UpcomingGame, UserReviewCard } from '../models/product.model';
 import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, SocialLinks, UserCardData, UserConsents, UserProfile, VerificationRequest } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -130,6 +130,10 @@ export class ApiService {
 
   unfollowUser(userId: number): Observable<void> {
     return this.http.delete<void>(`${this.base}/user/follow/${userId}`);
+  }
+
+  getUpcomingGames(): Observable<UpcomingGame[]> {
+    return this.http.get<UpcomingGame[]>(`${this.base}/upcoming-games`);
   }
 
   discoverIgdb(q: string): Observable<IgdbSuggestion[]> {

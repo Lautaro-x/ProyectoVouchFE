@@ -6,6 +6,22 @@
     "by_genre": "By genre",
     "upcoming": "Upcoming games"
   },
+  "upcoming": {
+    "title": "Upcoming Games",
+    "most_anticipated": "Most Anticipated",
+    "coming_soon": "Coming Soon",
+    "on_the_horizon": "On the Horizon",
+    "no_date": "Coming Soon",
+    "no_date_section": "Coming Soon",
+    "days": "Days",
+    "hours": "Hours",
+    "min": "Min",
+    "sec": "Sec",
+    "official_site": "Official Site",
+    "hypes": "hypes",
+    "soon": "Soon",
+    "no_data": "No upcoming games available. Try syncing from IGDB."
+  },
   "common": {
     "home": "Home",
     "loading": "Loading...",

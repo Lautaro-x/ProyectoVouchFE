@@ -30,7 +30,7 @@
                 class="games-menu-item"
                 [class.active]="activeMenuSection() === 'upcoming'"
                 (mouseenter)="activeMenuSection.set('upcoming')"
-                routerLink="/upcoming"
+                routerLink="/games/upcoming"
               >
                 {{ 'header.upcoming' | transloco }}
               </a>
@@ -169,7 +169,7 @@
         <a class="dropdown-link" routerLink="/games" routerLinkActive="active">
           {{ 'games.title' | transloco }}
         </a>
-        <a class="dropdown-link" routerLink="/upcoming" routerLinkActive="active">
+        <a class="dropdown-link" routerLink="/games/upcoming" routerLinkActive="active">
           {{ 'header.upcoming' | transloco }}
         </a>
       </nav>

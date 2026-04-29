@@ -4,6 +4,22 @@
     "logout": "Se déconnecter",
     "administration": "Administration"
   },
+  "upcoming": {
+    "title": "Jeux à venir",
+    "most_anticipated": "Le plus attendu",
+    "coming_soon": "Prochainement",
+    "on_the_horizon": "À l'horizon",
+    "no_date": "Prochainement",
+    "no_date_section": "Date à confirmer",
+    "days": "Jours",
+    "hours": "Heures",
+    "min": "Min",
+    "sec": "Sec",
+    "official_site": "Site officiel",
+    "hypes": "hypes",
+    "soon": "Bientôt",
+    "no_data": "Aucun jeu à venir. Synchronisez depuis IGDB."
+  },
   "common": {
     "home": "Accueil",
     "loading": "Chargement...",

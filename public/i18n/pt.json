@@ -4,6 +4,22 @@
     "logout": "Sair",
     "administration": "Administração"
   },
+  "upcoming": {
+    "title": "Próximos Jogos",
+    "most_anticipated": "Mais Aguardado",
+    "coming_soon": "Em Breve",
+    "on_the_horizon": "No Horizonte",
+    "no_date": "Em breve",
+    "no_date_section": "Data a confirmar",
+    "days": "Dias",
+    "hours": "Horas",
+    "min": "Min",
+    "sec": "Seg",
+    "official_site": "Site oficial",
+    "hypes": "hypes",
+    "soon": "Em breve",
+    "no_data": "Nenhum jogo próximo. Sincronize via IGDB."
+  },
   "common": {
     "home": "Início",
     "loading": "Carregando...",

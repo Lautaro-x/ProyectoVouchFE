@@ -1,3 +1,16 @@
+export interface UpcomingGame {
+  id: number;
+  igdb_id: number;
+  title: string;
+  slug: string;
+  release_date: string | null;
+  cover_image: string | null;
+  trailer_youtube_id: string | null;
+  developer: string | null;
+  official_url: string | null;
+  hypes: number | null;
+}
+
 export interface IgdbSuggestion {
   igdb_id: number;
   name: string;
