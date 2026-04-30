@@ -563,6 +563,17 @@
     "landing_title": "Vouch — Weighted video game reviews",
     "landing_description": "Social platform with weighted video game reviews."
   },
+  "footer": {
+    "info": "Information",
+    "about": "About us",
+    "goal": "Our goal",
+    "faqs": "FAQs",
+    "contact": "Contact us",
+    "social": "Follow us!",
+    "thanks": "Thanks",
+    "thanks_body": "Game information and screenshots are provided by IGDB. Their impeccable work has made this project possible; we are infinitely grateful.",
+    "copyright": "© {{ year }} Lautaro Rodriguez. All rights reserved."
+  },
   "verify_request": {
     "cta": "Request verification",
     "cta_full": "Request verification or register as press",

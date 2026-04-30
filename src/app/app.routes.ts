@@ -76,6 +76,26 @@ export const routes: Routes = [
       import('./features/public-card/mini-card-page/mini-card-page.component').then(m => m.MiniCardPageComponent),
   },
   {
+    path: 'about',
+    loadComponent: () =>
+      import('./features/info/about/about.component').then(m => m.AboutComponent),
+  },
+  {
+    path: 'goal',
+    loadComponent: () =>
+      import('./features/info/goal/goal.component').then(m => m.GoalComponent),
+  },
+  {
+    path: 'faqs',
+    loadComponent: () =>
+      import('./features/info/faqs/faqs.component').then(m => m.FaqsComponent),
+  },
+  {
+    path: 'contact',
+    loadComponent: () =>
+      import('./features/info/contact/contact.component').then(m => m.ContactComponent),
+  },
+  {
     path: 'not-found',
     loadComponent: () =>
       import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),

@@ -587,5 +587,16 @@
     "approved_body": "Ya tienes el badge de verificado en tu perfil.",
     "rejected_title": "Solicitud rechazada",
     "rejected_hint": "Si crees que ha sido un error, puedes volver a enviar una nueva solicitud."
+  },
+  "footer": {
+    "info": "Información",
+    "about": "Acerca de nosotros",
+    "goal": "Objetivo",
+    "faqs": "FAQs",
+    "contact": "Contáctanos",
+    "social": "¡Síguenos!",
+    "thanks": "Gracias",
+    "thanks_body": "La información de los juegos, así como las capturas de pantalla, son provistas por IGDB. Su impecable trabajo ha hecho que este proyecto sea posible; les estamos infinitamente agradecidos.",
+    "copyright": "© {{ year }} Lautaro Rodriguez. Todos los derechos reservados."
   }
 }

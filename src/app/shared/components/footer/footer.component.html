@@ -1,0 +1,53 @@
+<footer class="footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <a class="footer-logo" routerLink="/">
+        <img src="/logo.png" alt="Vouch" class="footer-logo-img" />
+        <span class="footer-logo-text">Vouch</span>
+      </a>
+    </div>
+
+    <div class="footer-columns">
+
+      <div class="footer-col">
+        <h3 class="footer-col-title">{{ 'footer.info' | transloco }}</h3>
+        <nav class="footer-links">
+          <a class="footer-link" routerLink="/about">{{ 'footer.about' | transloco }}</a>
+          <a class="footer-link" routerLink="/goal">{{ 'footer.goal' | transloco }}</a>
+          <a class="footer-link" routerLink="/faqs">{{ 'footer.faqs' | transloco }}</a>
+          <a class="footer-link" routerLink="/contact">{{ 'footer.contact' | transloco }}</a>
+        </nav>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-col-title">{{ 'footer.social' | transloco }}</h3>
+        <nav class="footer-socials">
+          @for (s of socials; track s.key) {
+            <a class="footer-social-link" [href]="s.url" target="_blank" rel="noopener" [attr.aria-label]="s.label">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path [attr.d]="s.svgPath" />
+              </svg>
+              <span>{{ s.label }}</span>
+            </a>
+          }
+        </nav>
+      </div>
+
+      <div class="footer-col footer-col--thanks">
+        <h3 class="footer-col-title">{{ 'footer.thanks' | transloco }}</h3>
+        <a class="footer-igdb" href="https://www.igdb.com" target="_blank" rel="noopener" aria-label="IGDB">
+          <img class="igdb-logo" src="https://www.igdb.com/favicon.ico" alt="IGDB" />
+          <span class="igdb-wordmark">IGDB</span>
+        </a>
+        <p class="footer-thanks-text">{{ 'footer.thanks_body' | transloco }}</p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>{{ 'footer.copyright' | transloco : { year: currentYear } }}</span>
+    </div>
+
+  </div>
+</footer>

@@ -552,6 +552,17 @@
     "landing_title": "Vouch — Critiques pondérées de jeux vidéo",
     "landing_description": "Plateforme sociale avec des critiques pondérées de jeux vidéo."
   },
+  "footer": {
+    "info": "Informations",
+    "about": "À propos de nous",
+    "goal": "Notre objectif",
+    "faqs": "FAQ",
+    "contact": "Nous contacter",
+    "social": "Suivez-nous !",
+    "thanks": "Remerciements",
+    "thanks_body": "Les informations sur les jeux ainsi que les captures d'écran sont fournies par IGDB. Leur travail irréprochable a rendu ce projet possible ; nous leur en sommes infiniment reconnaissants.",
+    "copyright": "© {{ year }} Lautaro Rodriguez. Tous droits réservés."
+  },
   "verify_request": {
     "cta": "Demander la vérification",
     "cta_full": "Demander la vérification ou s'inscrire comme presse",
