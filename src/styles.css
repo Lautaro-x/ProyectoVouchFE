@@ -11,6 +11,23 @@
   --color-accent-hover:  #5000d6;
   --color-accent-subtle: rgba(98, 0, 238, 0.15);
 
+  --color-white:         #ffffff;
+  --color-black:         #000000;
+  --color-bg-deep:       #111111;
+  --color-surface-deep:  #1a1a1a;
+  --color-card-overlay:  rgba(10, 10, 15, 0.92);
+
+  --color-danger:        #e53935;
+  --color-danger-hover:  #c0392b;
+  --color-success:       #00c853;
+  --color-success-dark:  #007a35;
+  --color-warning:       #ff9800;
+  --color-warning-dark:  #b8960c;
+
+  --color-press:         #00bcd4;
+  --color-verified:      #b388ff;
+  --color-amber:         #f59e0b;
+
   --color-grade-s:     #ffffff;
   --color-grade-aplus: #ffd600;
   --color-grade-a:     #69f0ae;
@@ -59,7 +76,7 @@ button {
   bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
-  background: #1a1a1a;
+  background: var(--color-surface-deep);
   color: var(--color-text);
   border: 1px solid var(--color-border);
   border-radius: 6px;
@@ -84,7 +101,7 @@ button {
 /* Primary: save, submit, follow, login, claim */
 .btn-primary {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-white);
   border: none;
   border-radius: 6px;
   padding: 0.55rem 1.25rem;
@@ -97,7 +114,7 @@ button {
 .btn-primary:hover:not(:disabled) { background: var(--color-accent-hover); }
 .btn-primary:disabled              { opacity: 0.5; cursor: not-allowed; }
 .btn-primary.danger                { background: var(--color-grade-f); }
-.btn-primary.danger:hover:not(:disabled) { background: #c0392b; }
+.btn-primary.danger:hover:not(:disabled) { background: var(--color-danger-hover); }
 
 /* Secondary: logout, cancel, unfollow, copy — .btn-ghost is kept as alias */
 .btn-secondary,
@@ -120,7 +137,7 @@ button {
 /* Danger: delete, ban, destructive confirm */
 .btn-danger {
   background: var(--color-grade-f);
-  color: #fff;
+  color: var(--color-white);
   border: none;
   border-radius: 6px;
   padding: 0.55rem 1.25rem;
@@ -130,7 +147,7 @@ button {
   cursor: pointer;
   transition: background 0.15s;
 }
-.btn-danger:hover:not(:disabled) { background: #c0392b; }
+.btn-danger:hover:not(:disabled) { background: var(--color-danger-hover); }
 .btn-danger:disabled              { opacity: 0.5; cursor: not-allowed; }
 
 .btn-sm {
@@ -148,7 +165,7 @@ button {
 }
 .btn-sm:hover { border-color: var(--color-accent); color: var(--color-accent); }
 .btn-sm.danger:hover { border-color: var(--color-grade-f); color: var(--color-grade-f); }
-.btn-sm.active { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+.btn-sm.active { background: var(--color-accent); color: var(--color-white); border-color: var(--color-accent); }
 
 .form-actions {
   display: flex;
@@ -167,7 +184,7 @@ button {
   background: var(--color-border);
   color: var(--color-text-muted);
 }
-.badge.danger { background: rgba(231,76,60,0.15); color: var(--color-grade-f); }
+.badge.danger { background: color-mix(in srgb, var(--color-danger) 15%, transparent); color: var(--color-grade-f); }
 
 /* Section heading — global, usable in any component */
 .section-heading {
@@ -201,8 +218,8 @@ button {
   margin: 0 0 0.75rem;
 }
 
-.audience-badge.audience-verified { background: color-mix(in srgb, #6200EE 15%, transparent); color: #b388ff; }
-.audience-badge.audience-press    { background: color-mix(in srgb, #00bcd4 15%, transparent); color: #00bcd4; }
+.audience-badge.audience-verified { background: color-mix(in srgb, var(--color-accent) 15%, transparent); color: var(--color-verified); }
+.audience-badge.audience-press    { background: color-mix(in srgb, var(--color-press) 15%, transparent); color: var(--color-press); }
 
 /* Grade letter colors — global, usable in any component */
 .grade-s     { color: var(--color-grade-s); font-style: italic; }

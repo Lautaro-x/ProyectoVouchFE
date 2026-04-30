@@ -48,21 +48,21 @@
   width: 50px;
   height: 50px;
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  background: #fff;
+  background: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 4;
   filter:
-    drop-shadow(0 6px 16px rgba(0, 0, 0, 0.85))
-    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+    drop-shadow(0 6px 16px color-mix(in srgb, var(--color-black) 85%, transparent))
+    drop-shadow(0 2px 4px color-mix(in srgb, var(--color-black) 60%, transparent));
 }
 
 .trust-star-inner {
   width: 40px;
   height: 40px;
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  background: #111;
+  background: var(--color-bg-deep);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,21 +98,21 @@
   top: 4%;
   left: -20px;
   z-index: 4;
-  background: rgba(10, 10, 15, 0.92);
+  background: var(--color-card-overlay);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid color-mix(in srgb, var(--color-white) 10%, transparent);
   border-radius: 5px;
   padding: 0.22rem 0.55rem;
   font-size: 0.66rem;
-  color: #fff;
+  color: var(--color-white);
   white-space: nowrap;
   pointer-events: none;
   transform: rotate(-12deg);
   transform-origin: center center;
   box-shadow:
-    3px 6px 18px rgba(0, 0, 0, 0.7),
-    0 2px 5px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    3px 6px 18px color-mix(in srgb, var(--color-black) 70%, transparent),
+    0 2px 5px color-mix(in srgb, var(--color-black) 45%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-white) 7%, transparent);
 }
 
 .follower-name {

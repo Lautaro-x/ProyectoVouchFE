@@ -90,8 +90,8 @@
 }
 
 .ub-remove-btn:hover {
-  border-color: #e53935;
-  color: #e53935;
+  border-color: var(--color-danger);
+  color: var(--color-danger);
 }
 
 .ub-remove-btn:disabled {

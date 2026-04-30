@@ -33,12 +33,12 @@
 }
 
 .lang-tab.complete {
-  border-color: #00c853;
-  color: #00c853;
+  border-color: var(--color-success);
+  color: var(--color-success);
 }
 
 .lang-tab.complete.active {
-  background: color-mix(in srgb, #00c853 10%, transparent);
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
 }
 
 .page-title {
@@ -93,7 +93,7 @@
   left: 3px;
   width: 16px;
   height: 16px;
-  background: #fff;
+  background: var(--color-white);
   border-radius: 50%;
   transition: transform 0.2s;
 }

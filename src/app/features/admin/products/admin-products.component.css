@@ -71,7 +71,7 @@
 
 .report-heading.report-errors,
 .report-list.report-errors {
-  color: var(--danger, #e53e3e);
+  color: var(--color-danger);
 }
 
 .report-list {
@@ -94,7 +94,7 @@
   font-size: 0.75rem;
   padding: 4px 8px;
   border-radius: 4px;
-  color: #fff;
+  color: var(--color-white);
   white-space: nowrap;
 }
 
@@ -117,7 +117,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--color-black) 18%, transparent);
   overflow: hidden;
 }
 

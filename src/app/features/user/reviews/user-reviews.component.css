@@ -94,7 +94,7 @@
 
 .reviews-empty-link {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-white);
   text-decoration: none;
   border-radius: 6px;
   padding: 0.5rem 1.25rem;
@@ -143,7 +143,7 @@
 
 .review-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-black) 30%, transparent);
 }
 
 .review-card-cover {
@@ -165,7 +165,7 @@
   height: 28px;
   padding: 0 4px;
   border-radius: 50%;
-  background: #000;
+  background: var(--color-black);
   font-size: 0.65rem;
   font-weight: 700;
   display: flex;

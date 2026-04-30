@@ -42,8 +42,8 @@
   font-style: italic;
 }
 
-.vr-status--pending  { border-color: #ffd600; }
-.vr-status--approved { border-color: #00c853; }
+.vr-status--pending  { border-color: var(--color-grade-aplus); }
+.vr-status--approved { border-color: var(--color-success); }
 .vr-status--rejected { border-color: var(--color-grade-f); }
 
 .vr-rejected-hint {

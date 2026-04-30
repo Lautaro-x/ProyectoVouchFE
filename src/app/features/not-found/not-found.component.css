@@ -23,7 +23,7 @@
 .nf-controller {
   width: 260px;
   height: auto;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 12px 24px color-mix(in srgb, var(--color-black) 55%, transparent));
   animation: nf-float 3.2s ease-in-out infinite;
 }
 

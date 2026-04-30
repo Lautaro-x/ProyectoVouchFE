@@ -179,7 +179,7 @@
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 1.5rem;
-  background: #000;
+  background: var(--color-black);
 }
 
 .detail-trailer iframe {
@@ -322,7 +322,7 @@
 .btn-buy:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
-  background: var(--color-accent-subtle, rgba(0,0,0,0.04));
+  background: var(--color-accent-subtle);
 }
 
 /* Grade colors (shared) */
@@ -410,9 +410,9 @@
 .review-verified {
   font-size: 9px;
   font-weight: 800;
-  color: #6200EE;
-  background: rgba(98, 0, 238, 0.15);
-  border: 1px solid rgba(98, 0, 238, 0.4);
+  color: var(--color-accent);
+  background: var(--color-accent-subtle);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
   border-radius: 50%;
   width: 15px;
   height: 15px;

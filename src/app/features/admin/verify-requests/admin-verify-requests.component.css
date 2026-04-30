@@ -28,7 +28,7 @@
 .filter-btn--active {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .vr-user-name {
@@ -68,8 +68,8 @@
   border-radius: 999px;
 }
 
-.status-pending  { background: color-mix(in srgb, #ffd600 20%, transparent); color: #b8960c; }
-.status-approved { background: color-mix(in srgb, #00c853 20%, transparent); color: #007a35; }
+.status-pending  { background: color-mix(in srgb, var(--color-grade-aplus) 20%, transparent); color: var(--color-warning-dark); }
+.status-approved { background: color-mix(in srgb, var(--color-success) 20%, transparent); color: var(--color-success-dark); }
 .status-rejected { background: color-mix(in srgb, var(--color-grade-f) 20%, transparent); color: var(--color-grade-f); }
 
 .empty-row {

@@ -48,7 +48,7 @@
   flex-direction: column;
   gap: 0.15rem;
   z-index: 100;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-black) 50%, transparent);
 }
 
 .lang-option {
