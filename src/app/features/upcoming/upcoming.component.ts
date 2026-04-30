@@ -1,14 +1,15 @@
 import { Component, ChangeDetectionStrategy, OnInit, inject, signal, computed } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ApiService } from '../../core/services/api.service';
-import { UpcomingGame } from '../../core/models/product.model';
+import { HeroGame, UpcomingGame } from '../../core/models/product.model';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/breadcrumb/breadcrumb.component';
+import { UpcomingHeroComponent } from '../../shared/components/upcoming-hero/upcoming-hero.component';
 
 @Component({
   selector: 'app-upcoming',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, BreadcrumbComponent],
+  imports: [TranslocoModule, BreadcrumbComponent, UpcomingHeroComponent],
   templateUrl: './upcoming.component.html',
   styleUrl: './upcoming.component.css',
 })
@@ -21,16 +22,33 @@ export class UpcomingComponent implements OnInit {
   games   = signal<UpcomingGame[]>([]);
   loading = signal(true);
 
-  hero = computed(() => {
+  private readonly topGame = computed(() => {
     const list = this.games().filter(g => g.cover_image);
     if (!list.length) return this.games()[0] ?? null;
     return list.reduce((best, g) => (g.hypes ?? 0) > (best.hypes ?? 0) ? g : best, list[0]);
   });
 
+  hero = computed((): HeroGame | null => {
+    const g = this.topGame();
+    if (!g) return null;
+    return {
+      title: g.title,
+      cover_image: g.cover_image,
+      developer: g.developer,
+      badge_type: 'anticipated',
+      letter_grade: null,
+      release_date: g.release_date,
+      official_url: g.official_url,
+      trailer_youtube_id: g.trailer_youtube_id,
+      product_slug: null,
+      product_type: null,
+    };
+  });
+
   soon = computed(() => {
     const now    = Date.now();
     const in30   = now + 30 * 86400000;
-    const heroId = this.hero()?.igdb_id;
+    const heroId = this.topGame()?.igdb_id;
     return this.games()
       .filter(g => {
         if (!g.release_date || g.igdb_id === heroId) return false;
@@ -42,7 +60,7 @@ export class UpcomingComponent implements OnInit {
 
   later = computed(() => {
     const in30   = Date.now() + 30 * 86400000;
-    const heroId = this.hero()?.igdb_id;
+    const heroId = this.topGame()?.igdb_id;
     return this.games()
       .filter(g => {
         if (!g.release_date || g.igdb_id === heroId) return false;

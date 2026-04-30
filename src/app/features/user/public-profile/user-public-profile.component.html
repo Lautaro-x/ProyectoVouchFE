@@ -78,7 +78,7 @@
           <span class="vsc-name">
             {{ card()?.name }}
             @if (isVerified(card()?.badges ?? [])) {
-              <span class="vsc-verified" title="Verificado">✓</span>
+              <span class="vsc-verified" [title]="'badges.verificado' | transloco">✓</span>
             }
           </span>
           @for (b of displayBadges(card()?.badges ?? []); track b) {
@@ -190,7 +190,7 @@
           <span class="vmc-name">
             {{ card()?.name }}
             @if (isVerified(card()?.badges ?? [])) {
-              <span class="vmc-verified" title="Verificado">✓</span>
+              <span class="vmc-verified" [title]="'badges.verificado' | transloco">✓</span>
             }
           </span>
         </div>

@@ -27,7 +27,7 @@
       <span class="vmc-name">
         {{ card()!.name }}
         @if (isVerified()) {
-          <span class="vmc-verified" title="Verificado">✓</span>
+          <span class="vmc-verified" [title]="'badges.verificado' | transloco">✓</span>
         }
       </span>
     </div>
@@ -44,14 +44,14 @@
       <div class="vmc-stats">
         <div class="vmc-stat">
           <span class="vmc-stat-val">{{ card()!.reviews_count }}</span>
-          <span class="vmc-stat-lbl">reseñas</span>
+          <span class="vmc-stat-lbl">{{ 'public_profile.reviews_label' | transloco }}</span>
         </div>
         <div class="vmc-stat">
           <span class="vmc-stat-val">{{ card()!.followers_count }}</span>
-          <span class="vmc-stat-lbl">seguidores</span>
+          <span class="vmc-stat-lbl">{{ 'public_profile.followers_label' | transloco }}</span>
         </div>
       </div>
-      <a class="vmc-cta" [href]="publicProfileUrl()">Ver perfil →</a>
+      <a class="vmc-cta" [href]="publicProfileUrl()">{{ 'public_profile.view_profile' | transloco }}</a>
     </div>
     <div class="vmc-footer">
       @for (e of socialEntries(); track e[0]) {

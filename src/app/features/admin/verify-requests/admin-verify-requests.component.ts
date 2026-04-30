@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SlicePipe } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
@@ -13,7 +14,8 @@ import { DialogComponent } from '../../../shared/components/dialog/dialog.compon
   styleUrl: './admin-verify-requests.component.css',
 })
 export class AdminVerifyRequestsComponent implements OnInit {
-  private readonly api = inject(AdminApiService);
+  private readonly api        = inject(AdminApiService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly requests     = signal<VerificationRequestAdmin[]>([]);
   readonly filterStatus = signal<'pending' | 'approved' | 'rejected'>('pending');
@@ -25,7 +27,7 @@ export class AdminVerifyRequestsComponent implements OnInit {
   ngOnInit(): void { this.load(); }
 
   load(): void {
-    this.api.getVerifyRequests(this.filterStatus()).subscribe(data => this.requests.set(data));
+    this.api.getVerifyRequests(this.filterStatus()).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.requests.set(data));
   }
 
   setFilter(status: 'pending' | 'approved' | 'rejected'): void {
@@ -44,7 +46,7 @@ export class AdminVerifyRequestsComponent implements OnInit {
   approve(): void {
     const req = this.selected()!;
     this.saving.set(true);
-    this.api.approveVerifyRequest(req.id, this.adminNote() || undefined).subscribe({
+    this.api.approveVerifyRequest(req.id, this.adminNote() || undefined).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: updated => {
         this.requests.update(list => list.filter(r => r.id !== updated.id));
         this.saving.set(false);
@@ -57,7 +59,7 @@ export class AdminVerifyRequestsComponent implements OnInit {
   reject(): void {
     const req = this.selected()!;
     this.saving.set(true);
-    this.api.rejectVerifyRequest(req.id, this.adminNote() || undefined).subscribe({
+    this.api.rejectVerifyRequest(req.id, this.adminNote() || undefined).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: updated => {
         this.requests.update(list => list.filter(r => r.id !== updated.id));
         this.saving.set(false);

@@ -1,8 +1,8 @@
-import { Component, HostListener, inject, signal, ChangeDetectionStrategy,
+import { Component, DestroyRef, HostListener, inject, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, switchMap, timer } from 'rxjs';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AuthService } from '../../../core/services/auth.service';
 import { ApiService } from '../../../core/services/api.service';
@@ -24,6 +24,7 @@ export class HeaderComponent {
   private readonly router        = inject(Router);
   private readonly api           = inject(ApiService);
   private readonly transloco     = inject(TranslocoService);
+  private readonly destroyRef    = inject(DestroyRef);
 
   readonly currentLang = toSignal(this.transloco.langChanges$, {
     initialValue: this.transloco.getActiveLang(),
@@ -43,11 +44,9 @@ export class HeaderComponent {
   announcementOpen        = signal(false);
   selectedAnnouncement    = signal<ActiveAnnouncement | null>(null);
 
-  gamesDropdownOpen   = signal(false);
-  genres              = signal<Genre[]>([]);
-  activeMenuSection   = signal<'genres' | 'upcoming'>('genres');
-  private openTimer:  ReturnType<typeof setTimeout> | null = null;
-  private closeTimer: ReturnType<typeof setTimeout> | null = null;
+  gamesDropdownOpen = signal(false);
+  genres            = signal<Genre[]>([]);
+  activeMenuSection = signal<'genres' | 'upcoming'>('genres');
 
   constructor() {
     this.router.events
@@ -63,6 +62,7 @@ export class HeaderComponent {
         if (user) { this.loadActiveSurveys(); this.loadActiveAnnouncements(); }
         else       { this.activeSurveys.set([]); this.activeAnnouncements.set([]); }
       });
+
   }
 
   private loadActiveSurveys(): void {
@@ -73,30 +73,11 @@ export class HeaderComponent {
     this.api.getActiveAnnouncements().subscribe(a => this.activeAnnouncements.set(a));
   }
 
-  onGamesEnter(): void {
-    if (this.closeTimer) {
-      clearTimeout(this.closeTimer);
-      this.closeTimer = null;
+  toggleGamesDropdown(): void {
+    if (!this.gamesDropdownOpen() && !this.genres().length) {
+      this.api.getGenres().subscribe(g => this.genres.set(g));
     }
-    if (!this.gamesDropdownOpen()) {
-      this.openTimer = setTimeout(() => {
-        if (!this.genres().length) {
-          this.api.getGenres().subscribe(g => this.genres.set(g));
-        }
-        this.activeMenuSection.set('genres');
-        this.gamesDropdownOpen.set(true);
-      }, 1000);
-    }
-  }
-
-  onGamesLeave(): void {
-    if (this.openTimer) {
-      clearTimeout(this.openTimer);
-      this.openTimer = null;
-    }
-    this.closeTimer = setTimeout(() => {
-      this.gamesDropdownOpen.set(false);
-    }, 150);
+    this.gamesDropdownOpen.update(v => !v);
   }
 
   genreName(genre: Genre): string {
@@ -131,15 +112,18 @@ export class HeaderComponent {
     const option = this.selectedOption();
     if (!survey || option === null || this.submitting()) return;
     this.submitting.set(true);
-    this.api.respondSurvey(survey.id, option).subscribe(() => {
-      this.submitting.set(false);
-      this.surveyDone.set(true);
-      setTimeout(() => {
-        const respondedId = this.selectedSurvey()?.id;
-        this.surveyOpen.set(false);
-        this.activeSurveys.update(list => list.filter(s => s.id !== respondedId));
-        this.selectedSurvey.set(null);
-      }, 2000);
+    this.api.respondSurvey(survey.id, option).pipe(
+      switchMap(() => {
+        this.submitting.set(false);
+        this.surveyDone.set(true);
+        return timer(2000);
+      }),
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(() => {
+      const respondedId = this.selectedSurvey()?.id;
+      this.surveyOpen.set(false);
+      this.activeSurveys.update(list => list.filter(s => s.id !== respondedId));
+      this.selectedSurvey.set(null);
     });
   }
 
@@ -156,6 +140,7 @@ export class HeaderComponent {
   closeTooltips(): void {
     this.tooltipOpen.set(false);
     this.announcementTooltipOpen.set(false);
+    this.gamesDropdownOpen.set(false);
   }
 
   @HostListener('document:keydown.escape')

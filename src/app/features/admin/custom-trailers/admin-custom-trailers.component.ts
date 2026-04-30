@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { CustomTrailerItem } from '../models/admin.models';
@@ -13,7 +14,8 @@ import { LANGS } from '../../../core/constants/langs';
   styleUrl: './admin-custom-trailers.component.css',
 })
 export class AdminCustomTrailersComponent implements OnInit {
-  private readonly api = inject(AdminApiService);
+  private readonly api        = inject(AdminApiService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly LANGS = LANGS;
 
@@ -27,7 +29,7 @@ export class AdminCustomTrailersComponent implements OnInit {
   newUrl     = signal('');
 
   ngOnInit(): void {
-    this.api.getCustomTrailerSection().subscribe(s => {
+    this.api.getCustomTrailerSection().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(s => {
       this.title.set(s.title ?? {});
       this.isActive.set(s.is_active);
       this.items.set(s.items);
@@ -42,6 +44,7 @@ export class AdminCustomTrailersComponent implements OnInit {
     if (this.saving()) return;
     this.saving.set(true);
     this.api.updateCustomTrailerSection({ title: this.title(), is_active: this.isActive() })
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: ()  => this.saving.set(false),
         error: () => this.saving.set(false),
@@ -53,7 +56,7 @@ export class AdminCustomTrailersComponent implements OnInit {
     const url  = this.newUrl().trim();
     if (!name || !url || this.adding()) return;
     this.adding.set(true);
-    this.api.addCustomTrailerItem({ name, youtube_url: url }).subscribe({
+    this.api.addCustomTrailerItem({ name, youtube_url: url }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: item => {
         this.items.update(list => [...list, item]);
         this.newName.set('');
@@ -65,7 +68,7 @@ export class AdminCustomTrailersComponent implements OnInit {
   }
 
   removeItem(id: number): void {
-    this.api.deleteCustomTrailerItem(id).subscribe(() =>
+    this.api.deleteCustomTrailerItem(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() =>
       this.items.update(list => list.filter(i => i.id !== id))
     );
   }

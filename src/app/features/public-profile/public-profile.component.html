@@ -1,19 +1,19 @@
 <app-dialog
-  title="Dejar de fiarse"
-  [subtitle]="'¿Seguro que quieres dejar de fiarte de ' + (card()?.name ?? '') + '?'"
+  [title]="'public_profile.unfollow_title' | transloco"
+  [subtitle]="('public_profile.unfollow_confirm' | transloco: { name: card()?.name ?? '' })"
   [isOpen]="unfollowDialogOpen()"
   (closed)="unfollowDialogOpen.set(false)"
 >
   <div class="form-actions">
-    <button class="btn-primary danger" (click)="confirmUnfollow()">Dejar de fiarse</button>
-    <button class="btn-ghost" (click)="unfollowDialogOpen.set(false)">Cancelar</button>
+    <button class="btn-primary danger" (click)="confirmUnfollow()">{{ 'public_profile.unfollow_title' | transloco }}</button>
+    <button class="btn-ghost" (click)="unfollowDialogOpen.set(false)">{{ 'common.cancel' | transloco }}</button>
   </div>
 </app-dialog>
 
 @if (loading()) {
-  <div class="pp-loading">Cargando…</div>
+  <div class="pp-loading">{{ 'common.loading' | transloco }}</div>
 } @else if (!card()) {
-  <div class="pp-error">Usuario no encontrado.</div>
+  <div class="pp-error">{{ 'public_profile.not_found' | transloco }}</div>
 } @else {
   <app-user-profile-card
     [card]="card()!"

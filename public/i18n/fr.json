@@ -22,8 +22,9 @@
   },
   "common": {
     "home": "Accueil",
-    "loading": "Chargement...",
-    "not_found": "Page introuvable."
+    "loading": "Chargement…",
+    "not_found": "Page introuvable.",
+    "cancel": "Annuler"
   },
   "review": {
     "create_title": "Écrire une critique",
@@ -93,7 +94,9 @@
     "discover_loading": "Recherche dans le catalogue externe...",
     "discover_hint": "Nous avons eu du mal à trouver votre jeu. Est-ce l'un d'eux ?",
     "discover_none": "Aucun résultat dans le catalogue externe.",
-    "discover_importing": "Importation..."
+    "discover_importing": "Importation...",
+    "top_rated": "Meilleur noté",
+    "view_detail": "Voir la fiche"
   },
   "landing": {
     "title": "Bonjour, monde.",
@@ -104,7 +107,8 @@
       "score_pro": "Note de la critique spécialisée"
     },
     "trailers": {
-      "title": "Dernières bandes-annonces"
+      "title": "Dernières bandes-annonces",
+      "view_game": "Voir la fiche du jeu"
     }
   },
   "login": {
@@ -226,7 +230,9 @@
       "report_imported": "Importés",
       "report_skipped": "Ignorés",
       "report_errors": "Erreurs",
-      "already_imported": "Déjà importé"
+      "already_imported": "Déjà importé",
+      "field_developer": "Développeur",
+      "field_publisher": "Éditeur"
     },
     "reviews": {
       "title": "Critiques",
@@ -376,7 +382,8 @@
   "not_found": {
     "title": "Cette page n'existe pas",
     "hint": "L'URL que vous cherchez n'existe pas ou a été supprimée.",
-    "back": "Retour à l'accueil"
+    "back": "Retour à l'accueil",
+    "glitch": "Ce mur n'a aucun glitch."
   },
   "survey": {
     "icon_title": "Il y a des sondages actifs",
@@ -425,12 +432,16 @@
     "following": "Vous faites confiance à ce critique",
     "copy_link": "Copier le lien",
     "copied_link": "✓ Lien copié",
-    "view_profile": "Voir le profil complet →"
+    "view_profile": "Voir le profil complet →",
+    "unfollow_title": "Ne plus suivre",
+    "unfollow_confirm": "Êtes-vous sûr de vouloir ne plus suivre {{ name }} ?",
+    "not_found": "Utilisateur introuvable."
   },
   "badges": {
     "nav": "Succès",
     "show_completed": "Voir les complétés",
     "remove": "Supprimer",
+    "verificado": "Vérifié",
     "critico-rapido": "Critique Rapide",
     "critico-novel": "Critique Débutant",
     "critico-junior": "Critique Junior",
@@ -534,6 +545,12 @@
     "text_opacity": "Saturation",
     "chart_label_color": "Couleur étiquettes",
     "chart_label_size": "Taille étiquettes"
+  },
+  "meta": {
+    "games_title": "Jeux — Vouch",
+    "games_description": "Explorez et découvrez des jeux vidéo avec des critiques pondérées sur Vouch.",
+    "landing_title": "Vouch — Critiques pondérées de jeux vidéo",
+    "landing_description": "Plateforme sociale avec des critiques pondérées de jeux vidéo."
   },
   "verify_request": {
     "cta": "Demander la vérification",

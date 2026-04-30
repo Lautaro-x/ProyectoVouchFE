@@ -90,6 +90,10 @@
         >›</button>
       </nav>
     }
+
+    @if (!searchInput() && featuredGame()) {
+      <app-upcoming-hero [game]="featuredGame()!" />
+    }
   }
 
 </div>

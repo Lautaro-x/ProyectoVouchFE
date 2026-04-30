@@ -16,7 +16,7 @@
             <a class="uf-link" [routerLink]="['/u', f.id]">
               {{ f.name }}
               @if (f.verified) {
-                <span class="uf-verified" title="Verificado">✓</span>
+                <span class="uf-verified" [title]="'badges.verificado' | transloco">✓</span>
               }
             </a>
           </li>

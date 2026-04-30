@@ -1,5 +1,6 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SlicePipe } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
@@ -15,8 +16,9 @@ import { AdminTableBase } from '../admin-table.base';
   styleUrl: './admin-reviews.component.css',
 })
 export class AdminReviewsComponent extends AdminTableBase<AdminReview> implements OnInit {
-  private api = inject(AdminApiService);
-  private t   = inject(TranslocoService);
+  private api        = inject(AdminApiService);
+  private t          = inject(TranslocoService);
+  private destroyRef = inject(DestroyRef);
 
   bannedOnly = signal(false);
 
@@ -36,7 +38,7 @@ export class AdminReviewsComponent extends AdminTableBase<AdminReview> implement
     };
     if (this.bannedOnly()) params['banned'] = '1';
     if (this.filterSearch()) params['search'] = this.filterSearch();
-    this.api.getReviews(params).subscribe(data => this.page.set(data));
+    this.api.getReviews(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.page.set(data));
   }
 
   toggleBannedFilter(): void { this.bannedOnly.update(v => !v); this.load(); }
@@ -52,7 +54,7 @@ export class AdminReviewsComponent extends AdminTableBase<AdminReview> implement
 
   confirmBan(): void {
     const id = this.banningId()!;
-    this.api.banReview(id, this.banReason()).subscribe(() => {
+    this.api.banReview(id, this.banReason()).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.banDialogOpen.set(false);
       this.load(this.page()?.current_page ?? 1);
     });
@@ -67,7 +69,7 @@ export class AdminReviewsComponent extends AdminTableBase<AdminReview> implement
         user: review.user?.name ?? review.user_id,
         product: review.product?.title ?? review.product_id,
       }),
-      () => this.api.unbanReview(review.id).subscribe(() => this.load(this.page()?.current_page ?? 1))
+      () => this.api.unbanReview(review.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load(this.page()?.current_page ?? 1))
     );
   }
 }

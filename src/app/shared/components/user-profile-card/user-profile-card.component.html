@@ -9,7 +9,7 @@
     <span class="upc-name">
       {{ card.name }}
       @if (isVerified) {
-        <span class="upc-verified" title="Verificado">✓</span>
+        <span class="upc-verified" [title]="'badges.verificado' | transloco">✓</span>
       }
     </span>
   </div>

@@ -1,5 +1,6 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Platform } from '../models/admin.models';
@@ -14,8 +15,9 @@ import { AdminTableBase } from '../admin-table.base';
   styleUrl: './admin-platforms.component.css',
 })
 export class AdminPlatformsComponent extends AdminTableBase<Platform> implements OnInit {
-  private api = inject(AdminApiService);
-  private t   = inject(TranslocoService);
+  private api        = inject(AdminApiService);
+  private t          = inject(TranslocoService);
+  private destroyRef = inject(DestroyRef);
 
   filterType = signal('');
 
@@ -35,7 +37,7 @@ export class AdminPlatformsComponent extends AdminTableBase<Platform> implements
     };
     if (this.filterSearch()) params['search'] = this.filterSearch();
     if (this.filterType()) params['type'] = this.filterType();
-    this.api.getPlatforms(params).subscribe(data => this.page.set(data));
+    this.api.getPlatforms(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.page.set(data));
   }
 
   openCreate(): void {
@@ -47,7 +49,7 @@ export class AdminPlatformsComponent extends AdminTableBase<Platform> implements
 
   save(): void {
     const payload = { name: this.formName(), type: this.formType() };
-    this.api.createPlatform(payload).subscribe(() => {
+    this.api.createPlatform(payload).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.formDialogOpen.set(false);
       this.load(this.page()?.current_page ?? 1);
     });

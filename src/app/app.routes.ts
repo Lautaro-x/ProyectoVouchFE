@@ -43,12 +43,12 @@ export const routes: Routes = [
   {
     path: 'review/new/:productId',
     loadComponent: () =>
-      import('./features/review-create/review-create.component').then(m => m.ReviewCreateComponent),
+      import('./features/review-form/review-form.component').then(m => m.ReviewFormComponent),
   },
   {
     path: 'review/edit/:reviewId',
     loadComponent: () =>
-      import('./features/review-edit/review-edit.component').then(m => m.ReviewEditComponent),
+      import('./features/review-form/review-form.component').then(m => m.ReviewFormComponent),
   },
   {
     path: 'product/:type/:slug',

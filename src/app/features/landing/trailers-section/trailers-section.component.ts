@@ -3,6 +3,7 @@ import { Component, computed, inject, OnDestroy, OnInit, signal, PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { TrailerProduct } from '../../../core/models/product.model';
@@ -13,7 +14,7 @@ import { localizedValue } from '../../../core/utils/localized-value';
   selector: 'app-trailers-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, SafeUrlPipe],
+  imports: [TranslocoModule, SafeUrlPipe, RouterLink],
   templateUrl: './trailers-section.component.html',
   styleUrl: './trailers-section.component.css',
 })

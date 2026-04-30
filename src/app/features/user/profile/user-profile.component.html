@@ -20,7 +20,7 @@
       <p class="profile-name-display">
         {{ name() || '—' }}
         @if (badges().includes('verificado')) {
-          <span class="profile-verified" title="Verificado">✓</span>
+          <span class="profile-verified" [title]="'badges.verificado' | transloco">✓</span>
         }
       </p>
 

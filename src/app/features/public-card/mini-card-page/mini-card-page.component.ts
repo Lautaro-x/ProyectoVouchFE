@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal, computed, DOCUMENT, ChangeDetectionS
 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { UserCardData } from '../../../core/models/user.model';
 
@@ -10,7 +11,7 @@ import { UserCardData } from '../../../core/models/user.model';
   selector: 'app-mini-card-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [],
+  imports: [TranslocoModule],
   templateUrl: './mini-card-page.component.html',
   styleUrl: './mini-card-page.component.css',
 })

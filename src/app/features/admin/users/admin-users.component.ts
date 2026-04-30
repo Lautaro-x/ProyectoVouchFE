@@ -1,5 +1,6 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SlicePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -16,8 +17,9 @@ import { AdminTableBase } from '../admin-table.base';
   styleUrl: './admin-users.component.css',
 })
 export class AdminUsersComponent extends AdminTableBase<AdminUser> implements OnInit {
-  private api = inject(AdminApiService);
-  private t   = inject(TranslocoService);
+  private api        = inject(AdminApiService);
+  private t          = inject(TranslocoService);
+  private destroyRef = inject(DestroyRef);
 
   filterBanned = signal(false);
   filterRole   = signal('');
@@ -39,7 +41,7 @@ export class AdminUsersComponent extends AdminTableBase<AdminUser> implements On
     if (this.filterBanned()) params['banned'] = '1';
     if (this.filterRole()) params['role'] = this.filterRole();
     if (this.filterSearch()) params['search'] = this.filterSearch();
-    this.api.getUsers(params).subscribe(data => this.page.set(data));
+    this.api.getUsers(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.page.set(data));
   }
 
   startBan(user: AdminUser): void {
@@ -51,7 +53,7 @@ export class AdminUsersComponent extends AdminTableBase<AdminUser> implements On
 
   confirmBan(): void {
     const id = this.banningId()!;
-    this.api.banUser(id, this.banReason()).subscribe(() => {
+    this.api.banUser(id, this.banReason()).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.banDialogOpen.set(false);
       this.load(this.page()?.current_page ?? 1);
     });
@@ -63,18 +65,18 @@ export class AdminUsersComponent extends AdminTableBase<AdminUser> implements On
     this.openConfirm(
       this.t.translate('admin.users.unban_title', { name: user.name }),
       this.t.translate('admin.users.unban_subtitle'),
-      () => this.api.unbanUser(user.id).subscribe(() => this.load(this.page()?.current_page ?? 1))
+      () => this.api.unbanUser(user.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load(this.page()?.current_page ?? 1))
     );
   }
 
   changeRole(id: number, role: string): void {
-    this.api.updateUserRole(id, role).subscribe(() => this.load(this.page()?.current_page ?? 1));
+    this.api.updateUserRole(id, role).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load(this.page()?.current_page ?? 1));
   }
 
   toggleVerified(user: AdminUser): void {
     const isVerified = user.badges?.includes('verificado') ?? false;
     const req = isVerified ? this.api.revokeVerified(user.id) : this.api.grantVerified(user.id);
-    req.subscribe(res => {
+    req.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
       this.page.update(p => p ? {
         ...p,
         data: p.data.map(u => u.id === user.id ? { ...u, badges: res.badges } : u),

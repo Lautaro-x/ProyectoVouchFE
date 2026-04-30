@@ -1,5 +1,6 @@
-import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, computed, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Category, Genre, TranslatableName } from '../models/admin.models';
@@ -20,8 +21,9 @@ const EMPTY_NAME = (): TranslatableName => ({ en: '', es: '', fr: '', pt: '', it
   styleUrl: './admin-genres.component.css',
 })
 export class AdminGenresComponent extends AdminTableBase<Genre> implements OnInit {
-  private api = inject(AdminApiService);
-  private t   = inject(TranslocoService);
+  private api        = inject(AdminApiService);
+  private t          = inject(TranslocoService);
+  private destroyRef = inject(DestroyRef);
 
   readonly locales = LANG_LOCALES;
 
@@ -44,7 +46,7 @@ export class AdminGenresComponent extends AdminTableBase<Genre> implements OnIni
 
   ngOnInit(): void {
     this.load();
-    this.api.getAllCategories().subscribe(c => this.allCategories.set(c));
+    this.api.getAllCategories().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(c => this.allCategories.set(c));
   }
 
   load(p = 1): void {
@@ -55,7 +57,7 @@ export class AdminGenresComponent extends AdminTableBase<Genre> implements OnIni
       sort_dir: this.sortDir(),
     };
     if (this.filterSearch()) params['search'] = this.filterSearch();
-    this.api.getGenres(params).subscribe(data => this.page.set(data));
+    this.api.getGenres(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.page.set(data));
   }
 
   updateFormName(locale: string, value: string): void {
@@ -82,7 +84,7 @@ export class AdminGenresComponent extends AdminTableBase<Genre> implements OnIni
     const req = id
       ? this.api.updateGenre(id, { name: this.formName() })
       : this.api.createGenre({ name: this.formName() });
-    req.subscribe(() => { this.formDialogOpen.set(false); this.load(this.page()?.current_page ?? 1); });
+    req.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => { this.formDialogOpen.set(false); this.load(this.page()?.current_page ?? 1); });
   }
 
   closeFormDialog(): void { this.formDialogOpen.set(false); }
@@ -91,7 +93,7 @@ export class AdminGenresComponent extends AdminTableBase<Genre> implements OnIni
     this.openConfirm(
       this.t.translate('admin.genres.delete_title', { name: item.name[this.t.getActiveLang()] || item.name['en'] }),
       this.t.translate('admin.genres.delete_subtitle'),
-      () => this.api.deleteGenre(item.id).subscribe(() => this.load(this.page()?.current_page ?? 1))
+      () => this.api.deleteGenre(item.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load(this.page()?.current_page ?? 1))
     );
   }
 
@@ -141,7 +143,7 @@ export class AdminGenresComponent extends AdminTableBase<Genre> implements OnIni
   saveWeights(): void {
     const id = this.weightGenreId()!;
     const categories = this.assignedRows().map(r => ({ id: r.id, weight: r.weight }));
-    this.api.syncGenreCategories(id, categories).subscribe(() => {
+    this.api.syncGenreCategories(id, categories).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.weightsDialogOpen.set(false);
       this.load(this.page()?.current_page ?? 1);
     });

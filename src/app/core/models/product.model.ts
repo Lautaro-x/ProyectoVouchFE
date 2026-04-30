@@ -1,3 +1,26 @@
+export interface FeaturedGameData {
+  title: string;
+  slug: string;
+  type: string;
+  cover_image: string | null;
+  developer: string | null;
+  letter_grade: string;
+  trailer_youtube_id: string | null;
+}
+
+export interface HeroGame {
+  title: string;
+  cover_image: string | null;
+  developer: string | null;
+  badge_type: 'anticipated' | 'top_rated';
+  letter_grade: string | null;
+  release_date: string | null;
+  official_url: string | null;
+  trailer_youtube_id: string | null;
+  product_slug: string | null;
+  product_type: string | null;
+}
+
 export interface UpcomingGame {
   id: number;
   igdb_id: number;

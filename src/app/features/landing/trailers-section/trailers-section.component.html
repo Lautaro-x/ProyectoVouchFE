@@ -29,16 +29,30 @@
         </div>
       </div>
 
-      <div class="trailer-player">
-        @if (playerVisible()) {
-          @if (youtubeUrl(); as url) {
-            <iframe
-              [src]="url | safeUrl"
-              frameborder="0"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+      <div class="trailer-player-wrap">
+        <div class="trailer-player">
+          @if (playerVisible()) {
+            @if (youtubeUrl(); as url) {
+              <iframe
+                [src]="url | safeUrl"
+                frameborder="0"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            }
           }
+        </div>
+        @if (selectedTrailer()?.slug && selectedTrailer()?.type) {
+          <a
+            class="trailer-game-link"
+            [routerLink]="['/product', selectedTrailer()!.type, selectedTrailer()!.slug]"
+            [title]="'landing.trailers.view_game' | transloco"
+          >
+            <span class="trailer-game-title">{{ selectedTrailer()!.title }}</span>
+            <svg class="trailer-game-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
         }
       </div>
     </div>

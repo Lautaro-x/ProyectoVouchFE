@@ -1,5 +1,6 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Category, TranslatableName } from '../models/admin.models';
@@ -19,8 +20,9 @@ const EMPTY_DESC = (): TranslatableName => ({ en: '', es: '', fr: '', pt: '', it
   styleUrl: './admin-categories.component.css',
 })
 export class AdminCategoriesComponent extends AdminTableBase<Category> implements OnInit {
-  private api = inject(AdminApiService);
-  private t   = inject(TranslocoService);
+  private api        = inject(AdminApiService);
+  private t          = inject(TranslocoService);
+  private destroyRef = inject(DestroyRef);
 
   readonly locales = LANG_LOCALES;
 
@@ -41,7 +43,7 @@ export class AdminCategoriesComponent extends AdminTableBase<Category> implement
       sort_dir: this.sortDir(),
     };
     if (this.filterSearch()) params['search'] = this.filterSearch();
-    this.api.getCategories(params).subscribe(data => this.page.set(data));
+    this.api.getCategories(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.page.set(data));
   }
 
   updateFormName(locale: string, value: string): void {
@@ -78,7 +80,7 @@ export class AdminCategoriesComponent extends AdminTableBase<Category> implement
     const req = id
       ? this.api.updateCategory(id, payload)
       : this.api.createCategory(payload);
-    req.subscribe(() => { this.formDialogOpen.set(false); this.load(this.page()?.current_page ?? 1); });
+    req.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => { this.formDialogOpen.set(false); this.load(this.page()?.current_page ?? 1); });
   }
 
   closeFormDialog(): void { this.formDialogOpen.set(false); }
@@ -87,7 +89,7 @@ export class AdminCategoriesComponent extends AdminTableBase<Category> implement
     this.openConfirm(
       this.t.translate('admin.categories.delete_title', { name: item.name[this.t.getActiveLang()] || item.name['en'] }),
       this.t.translate('admin.common.irreversible'),
-      () => this.api.deleteCategory(item.id).subscribe(() => this.load(this.page()?.current_page ?? 1))
+      () => this.api.deleteCategory(item.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load(this.page()?.current_page ?? 1))
     );
   }
 }

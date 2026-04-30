@@ -1,5 +1,6 @@
-import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, computed, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Announcement } from '../models/admin.models';
@@ -26,8 +27,9 @@ interface AnnouncementForm {
   styleUrl: './admin-announcements.component.css',
 })
 export class AdminAnnouncementsComponent implements OnInit {
-  private readonly api       = inject(AdminApiService);
-  private readonly transloco = inject(TranslocoService);
+  private readonly api        = inject(AdminApiService);
+  private readonly transloco  = inject(TranslocoService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly LANGS = LANGS;
   readonly utcToLocal = utcToLocal;
@@ -53,7 +55,7 @@ export class AdminAnnouncementsComponent implements OnInit {
   }
 
   private load(): void {
-    this.api.getAnnouncements().subscribe(a => this.announcements.set(a));
+    this.api.getAnnouncements().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(a => this.announcements.set(a));
   }
 
   private emptyForm(): AnnouncementForm {
@@ -71,7 +73,7 @@ export class AdminAnnouncementsComponent implements OnInit {
   openEdit(a: Announcement): void {
     this.target.set(a);
     this.activeLang.set('es');
-    this.api.getAnnouncement(a.id).subscribe(data => {
+    this.api.getAnnouncement(a.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
       const empty = Object.fromEntries(LANGS.map(l => [l, '']));
       this.form.set({
         title:     { ...empty, ...data.title },
@@ -129,7 +131,7 @@ export class AdminAnnouncementsComponent implements OnInit {
       ? this.api.updateAnnouncement(this.target()!.id, payload)
       : this.api.createAnnouncement(payload);
 
-    req.subscribe({
+    req.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next:  () => { this.saving.set(false); this.editOpen.set(false); this.load(); },
       error: () => this.saving.set(false),
     });
@@ -138,7 +140,7 @@ export class AdminAnnouncementsComponent implements OnInit {
   confirmDelete(): void {
     const t = this.target();
     if (!t) return;
-    this.api.deleteAnnouncement(t.id).subscribe(() => {
+    this.api.deleteAnnouncement(t.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.deleteOpen.set(false);
       this.announcements.update(list => list.filter(a => a.id !== t.id));
     });

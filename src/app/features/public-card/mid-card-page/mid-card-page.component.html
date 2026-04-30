@@ -35,7 +35,7 @@
       <span class="vsc-name">
         {{ card()!.name }}
         @if (isVerified()) {
-          <span class="vsc-verified" title="Verificado">✓</span>
+          <span class="vsc-verified" [title]="'badges.verificado' | transloco">✓</span>
         }
       </span>
     </div>

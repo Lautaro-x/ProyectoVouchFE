@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal, computed, DOCUMENT, ChangeDetectionS
 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { ApiService } from '../../core/services/api.service';
 import { AuthService } from '../../core/services/auth.service';
 import { UserCardData } from '../../core/models/user.model';
@@ -12,7 +13,7 @@ import { UserProfileCardComponent } from '../../shared/components/user-profile-c
   selector: 'app-public-profile',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [DialogComponent, UserProfileCardComponent],
+  imports: [DialogComponent, UserProfileCardComponent, TranslocoPipe],
   templateUrl: './public-profile.component.html',
   styleUrl: './public-profile.component.css',
 })

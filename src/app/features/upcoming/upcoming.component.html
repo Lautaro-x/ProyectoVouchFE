@@ -6,46 +6,7 @@
   <div class="upcoming-empty">{{ 'upcoming.no_data' | transloco }}</div>
 } @else {
 
-  <section class="hero">
-    <div class="hero-bg" [style.backgroundImage]="'url(' + hero()!.cover_image + ')'"></div>
-    <div class="hero-inner">
-      <div class="hero-left">
-        <span class="hero-badge">{{ 'upcoming.most_anticipated' | transloco }}</span>
-        <h1 class="hero-title">{{ hero()!.title }}</h1>
-        @if (hero()!.developer) {
-          <p class="hero-developer">{{ hero()!.developer }}</p>
-        }
-        <p class="hero-date">
-          {{ hero()!.release_date ? formatDate(hero()!.release_date) : ('upcoming.no_date' | transloco) }}
-        </p>
-        @if (hero()!.official_url) {
-          <div class="hero-actions">
-            <a [href]="hero()!.official_url" target="_blank" rel="noopener" class="btn-hero">
-              {{ 'upcoming.official_site' | transloco }}
-            </a>
-          </div>
-        }
-      </div>
-      <div class="hero-right">
-        @if (hero()!.cover_image) {
-          <img class="hero-cover"
-               [src]="hero()!.cover_image"
-               [alt]="hero()!.title"
-               loading="eager"
-               fetchpriority="high"
-               [class.has-trailer]="!!hero()!.trailer_youtube_id"
-               (click)="openTrailer(hero()!)" />
-          @if (hero()!.trailer_youtube_id) {
-            <div class="hero-play" (click)="openTrailer(hero()!)">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          }
-        }
-      </div>
-    </div>
-  </section>
+  <app-upcoming-hero [game]="hero()!" />
 
   @if (soon().length) {
     <section class="upcoming-section">

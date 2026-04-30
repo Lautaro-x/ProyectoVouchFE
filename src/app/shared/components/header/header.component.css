@@ -53,6 +53,11 @@
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
   transition: color 0.15s, background 0.15s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
 }
 
 .header-section-link:hover {
@@ -193,7 +198,7 @@
   flex-wrap: wrap;
 }
 
-/* Games mega-dropdown */
+/* Games dropdown */
 .games-wrap {
   position: relative;
 }
@@ -209,7 +214,6 @@
   box-shadow: 0 8px 28px rgba(0,0,0,0.28);
   overflow: hidden;
   z-index: 200;
-  min-width: 480px;
 }
 
 .games-dropdown-left {
@@ -219,6 +223,12 @@
   border-right: 1px solid var(--color-border);
   min-width: 160px;
   flex-shrink: 0;
+}
+
+.games-dropdown-right {
+  padding: 0.75rem;
+  min-width: 300px;
+  max-width: 400px;
 }
 
 .games-menu-item {
@@ -253,12 +263,6 @@
   opacity: 0.5;
 }
 
-.games-dropdown-right {
-  flex: 1;
-  padding: 0.75rem;
-  min-width: 0;
-}
-
 .genre-grid {
   display: flex;
   flex-wrap: wrap;
@@ -281,12 +285,6 @@
   border-color: var(--color-accent);
   color: var(--color-accent);
   background: color-mix(in srgb, var(--color-accent) 8%, transparent);
-}
-
-.menu-section-hint {
-  color: var(--color-text-muted);
-  font-size: 0.875rem;
-  padding: 0.5rem 0.25rem;
 }
 
 /* Survey dropdown wrapper */

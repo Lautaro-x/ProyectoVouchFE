@@ -4,17 +4,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { Meta, Title } from '@angular/platform-browser';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
-import { IgdbSuggestion, ProductCard } from '../../../core/models/product.model';
+import { FeaturedGameData, HeroGame, IgdbSuggestion, ProductCard } from '../../../core/models/product.model';
 import { GameCardComponent } from '../../../shared/components/game-card/game-card.component';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/breadcrumb/breadcrumb.component';
+import { UpcomingHeroComponent } from '../../../shared/components/upcoming-hero/upcoming-hero.component';
 
 @Component({
   selector: 'app-game-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, GameCardComponent, BreadcrumbComponent],
+  imports: [TranslocoModule, GameCardComponent, BreadcrumbComponent, UpcomingHeroComponent],
   templateUrl: './game-list.component.html',
   styleUrl: './game-list.component.css',
 })
@@ -25,6 +26,7 @@ export class GameListComponent implements OnInit {
   private router     = inject(Router);
   private meta       = inject(Meta);
   private titleSvc   = inject(Title);
+  private t          = inject(TranslocoService);
   private search$    = new Subject<string>();
 
   readonly breadcrumbs: BreadcrumbItem[] = [
@@ -40,6 +42,8 @@ export class GameListComponent implements OnInit {
   filterType  = signal('');
   filterValue = signal('');
   filterLabel = signal('');
+
+  featuredGame = signal<HeroGame | null>(null);
 
   discoverSuggestions = signal<IgdbSuggestion[]>([]);
   discoverSearched    = signal(false);
@@ -83,6 +87,7 @@ export class GameListComponent implements OnInit {
         this.page.set(1);
         this.setOgTags(fl || fv);
         this.load();
+        this.loadFeatured(ft || undefined, fv || undefined);
       });
 
     this.search$.pipe(
@@ -136,6 +141,27 @@ export class GameListComponent implements OnInit {
     });
   }
 
+  private loadFeatured(filterType?: string, filterValue?: string): void {
+    this.api.getFeaturedGame(filterType, filterValue).subscribe({
+      next: (data: FeaturedGameData | null) => {
+        if (!data) { this.featuredGame.set(null); return; }
+        this.featuredGame.set({
+          title:              data.title,
+          cover_image:        data.cover_image,
+          developer:          data.developer,
+          badge_type:         'top_rated',
+          letter_grade:       data.letter_grade,
+          release_date:       null,
+          official_url:       null,
+          trailer_youtube_id: data.trailer_youtube_id,
+          product_slug:       data.slug,
+          product_type:       data.type,
+        });
+      },
+      error: () => this.featuredGame.set(null),
+    });
+  }
+
   private resetDiscover(): void {
     this.discoverSearched.set(false);
     this.discoverSuggestions.set([]);
@@ -144,8 +170,9 @@ export class GameListComponent implements OnInit {
   }
 
   private setOgTags(filterLabel: string): void {
-    const pageTitle = filterLabel ? `${filterLabel} games — Vouch` : 'Games — Vouch';
-    const desc      = 'Explore and discover video games with weighted reviews on Vouch.';
+    const baseTitle = this.t.translate('meta.games_title');
+    const pageTitle = filterLabel ? `${filterLabel} — ${baseTitle}` : baseTitle;
+    const desc      = this.t.translate('meta.games_description');
     this.titleSvc.setTitle(pageTitle);
     this.meta.updateTag({ name: 'description',         content: desc });
     this.meta.updateTag({ property: 'og:type',         content: 'website' });

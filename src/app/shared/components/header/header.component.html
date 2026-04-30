@@ -8,10 +8,15 @@
 
     <!-- Desktop nav -->
     <nav class="header-sections desktop-only">
-      <div class="games-wrap" (mouseenter)="onGamesEnter()" (mouseleave)="onGamesLeave()">
-        <a class="header-section-link" routerLink="/games" routerLinkActive="active">
+      <div class="games-wrap" (click)="$event.stopPropagation()">
+        <button
+          class="header-section-link"
+          [class.active]="gamesDropdownOpen()"
+          (click)="toggleGamesDropdown()"
+          type="button"
+        >
           {{ 'games.title' | transloco }}
-        </a>
+        </button>
         @if (gamesDropdownOpen()) {
           <div class="games-dropdown" (click)="$event.stopPropagation()">
             <div class="games-dropdown-left">
@@ -28,29 +33,21 @@
               </button>
               <a
                 class="games-menu-item"
-                [class.active]="activeMenuSection() === 'upcoming'"
                 (mouseenter)="activeMenuSection.set('upcoming')"
                 routerLink="/games/upcoming"
               >
                 {{ 'header.upcoming' | transloco }}
               </a>
             </div>
-            <div class="games-dropdown-right">
-              @if (activeMenuSection() === 'genres') {
+            @if (activeMenuSection() === 'genres') {
+              <div class="games-dropdown-right">
                 <div class="genre-grid">
                   @for (genre of genres(); track genre.id) {
-                    <a
-                      class="genre-chip"
-                      [routerLink]="['/games', 'genre', genre.slug]"
-                    >{{ genreName(genre) }}</a>
+                    <a class="genre-chip" [routerLink]="['/games', 'genre', genre.slug]">{{ genreName(genre) }}</a>
                   }
                 </div>
-              } @else {
-                <div class="menu-section-hint">
-                  {{ 'header.upcoming' | transloco }} →
-                </div>
-              }
-            </div>
+              </div>
+            }
           </div>
         }
       </div>

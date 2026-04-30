@@ -1,5 +1,6 @@
-import { Component, HostListener, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, DestroyRef, HostListener, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Genre, IgdbGame, IgdbImportReport, PlatformWithPivot, Product } from '../models/admin.models';
@@ -27,8 +28,9 @@ const STORE_LABELS: Record<string, string> = {
   styleUrl: './admin-products.component.css',
 })
 export class AdminProductsComponent extends AdminTableBase<Product> implements OnInit {
-  private api = inject(AdminApiService);
-  private t   = inject(TranslocoService);
+  private api        = inject(AdminApiService);
+  private t          = inject(TranslocoService);
+  private destroyRef = inject(DestroyRef);
 
   override sortBy = signal('title');
 
@@ -66,7 +68,7 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
 
   ngOnInit(): void {
     this.load();
-    this.api.getAllGenres().subscribe(g => this.genres.set(g));
+    this.api.getAllGenres().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(g => this.genres.set(g));
   }
 
   load(p = 1): void {
@@ -79,7 +81,7 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
     if (this.filterSearch()) params['search'] = this.filterSearch();
     if (this.filterType()) params['type'] = this.filterType();
     if (this.filterGenreId()) params['genre_id'] = String(this.filterGenreId());
-    this.api.getProducts(params).subscribe(data => this.page.set(data));
+    this.api.getProducts(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.page.set(data));
   }
 
   openCreate(): void {
@@ -109,7 +111,7 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
     const req = id
       ? this.api.updateProduct(id, this.form())
       : this.api.createProduct(this.form());
-    req.subscribe(() => { this.formDialogOpen.set(false); this.load(this.page()?.current_page ?? 1); });
+    req.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => { this.formDialogOpen.set(false); this.load(this.page()?.current_page ?? 1); });
   }
 
   closeFormDialog(): void { this.formDialogOpen.set(false); }
@@ -118,7 +120,7 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
     this.openConfirm(
       this.t.translate('admin.products.delete_title', { name: item.title }),
       this.t.translate('admin.products.delete_subtitle'),
-      () => this.api.deleteProduct(item.id).subscribe(() => this.load(this.page()?.current_page ?? 1))
+      () => this.api.deleteProduct(item.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load(this.page()?.current_page ?? 1))
     );
   }
 
@@ -131,11 +133,11 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
 
   searchIgdb(): void {
     if (!this.igdbQuery()) return;
-    this.api.searchIgdb(this.igdbQuery()).subscribe(r => this.igdbResults.set(r));
+    this.api.searchIgdb(this.igdbQuery()).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(r => this.igdbResults.set(r));
   }
 
   importIgdb(igdbId: number): void {
-    this.api.importFromIgdb(igdbId).subscribe(() => {
+    this.api.importFromIgdb(igdbId).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.igdbDialogOpen.set(false);
       this.load(1);
     });
@@ -145,7 +147,7 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
 
   importRecent(): void {
     this.igdbMenuOpen.set(false);
-    this.api.importRecentFromIgdb().subscribe(report => {
+    this.api.importRecentFromIgdb().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(report => {
       this.importReport.set(report);
       this.importReportOpen.set(true);
       this.load(1);
@@ -154,7 +156,7 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
 
   syncEarlyAccess(): void {
     this.igdbMenuOpen.set(false);
-    this.api.syncEarlyAccessFromIgdb().subscribe(report => {
+    this.api.syncEarlyAccessFromIgdb().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(report => {
       this.importReport.set(report);
       this.importReportOpen.set(true);
       this.load(this.page()?.current_page ?? 1);
@@ -163,14 +165,14 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
 
   syncUpcoming(): void {
     this.igdbMenuOpen.set(false);
-    this.api.syncUpcomingFromIgdb().subscribe(report => {
+    this.api.syncUpcomingFromIgdb().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(report => {
       this.importReport.set(report);
       this.importReportOpen.set(true);
     });
   }
 
   syncProduct(product: Product): void {
-    this.api.syncProductFromIgdb(product.id).subscribe(report => {
+    this.api.syncProductFromIgdb(product.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(report => {
       this.importReport.set(report);
       this.importReportOpen.set(true);
       this.load(this.page()?.current_page ?? 1);
@@ -236,7 +238,7 @@ export class AdminProductsComponent extends AdminTableBase<Product> implements O
         purchase_url: Object.keys(filtered).length ? filtered : null,
       };
     });
-    this.api.updatePurchaseLinks(id, platforms).subscribe(() => {
+    this.api.updatePurchaseLinks(id, platforms).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.linksDialogOpen.set(false);
       this.load(this.page()?.current_page ?? 1);
     });

@@ -1,5 +1,6 @@
-import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy,
+import { Component, computed, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Survey, SurveyResults } from '../models/admin.models';
@@ -27,8 +28,9 @@ interface SurveyForm {
   styleUrl: './admin-surveys.component.css',
 })
 export class AdminSurveysComponent implements OnInit {
-  private readonly api       = inject(AdminApiService);
-  private readonly transloco = inject(TranslocoService);
+  private readonly api        = inject(AdminApiService);
+  private readonly transloco  = inject(TranslocoService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly LANGS = LANGS;
   readonly utcToLocal = utcToLocal;
@@ -58,7 +60,7 @@ export class AdminSurveysComponent implements OnInit {
   }
 
   private load(): void {
-    this.api.getSurveys().subscribe(s => this.surveys.set(s));
+    this.api.getSurveys().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(s => this.surveys.set(s));
   }
 
   private emptyForm(): SurveyForm {
@@ -83,7 +85,7 @@ export class AdminSurveysComponent implements OnInit {
   openEdit(survey: Survey): void {
     this.target.set(survey);
     this.activeLang.set('es');
-    this.api.getSurvey(survey.id).subscribe(s => {
+    this.api.getSurvey(survey.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(s => {
       const empty = Object.fromEntries(LANGS.map(l => [l, '']));
       this.form.set({
         title:     { ...empty, ...s.title },
@@ -100,7 +102,7 @@ export class AdminSurveysComponent implements OnInit {
   openDuplicate(survey: Survey): void {
     this.target.set(null);
     this.activeLang.set('es');
-    this.api.getSurvey(survey.id).subscribe(s => {
+    this.api.getSurvey(survey.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(s => {
       const empty = Object.fromEntries(LANGS.map(l => [l, '']));
       this.form.set({
         title:     { ...empty, ...s.title },
@@ -118,7 +120,7 @@ export class AdminSurveysComponent implements OnInit {
     this.target.set(survey);
     this.results.set(null);
     this.resultsOpen.set(true);
-    this.api.getSurveyResults(survey.id).subscribe(r => this.results.set(r));
+    this.api.getSurveyResults(survey.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(r => this.results.set(r));
   }
 
   openDelete(survey: Survey): void {
@@ -183,7 +185,7 @@ export class AdminSurveysComponent implements OnInit {
       ? this.api.updateSurvey(this.target()!.id, payload)
       : this.api.createSurvey(payload);
 
-    req.subscribe({
+    req.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next:  () => { this.saving.set(false); this.editOpen.set(false); this.load(); },
       error: () => this.saving.set(false),
     });
@@ -192,7 +194,7 @@ export class AdminSurveysComponent implements OnInit {
   confirmDelete(): void {
     const t = this.target();
     if (!t) return;
-    this.api.deleteSurvey(t.id).subscribe(() => {
+    this.api.deleteSurvey(t.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.deleteOpen.set(false);
       this.surveys.update(list => list.filter(s => s.id !== t.id));
     });

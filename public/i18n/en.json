@@ -24,8 +24,9 @@
   },
   "common": {
     "home": "Home",
-    "loading": "Loading...",
-    "not_found": "Page not found."
+    "loading": "Loading…",
+    "not_found": "Page not found.",
+    "cancel": "Cancel"
   },
   "review": {
     "create_title": "Write a review",
@@ -96,7 +97,9 @@
     "discover_loading": "Searching external catalog...",
     "discover_hint": "We had trouble finding your game. Is it one of these?",
     "discover_none": "No matches found in the external catalog.",
-    "discover_importing": "Importing..."
+    "discover_importing": "Importing...",
+    "top_rated": "Top Rated",
+    "view_detail": "View game"
   },
   "landing": {
     "title": "Hello, world.",
@@ -107,7 +110,8 @@
       "score_pro": "Score from specialist critics"
     },
     "trailers": {
-      "title": "Latest trailers"
+      "title": "Latest trailers",
+      "view_game": "View game page"
     }
   },
   "login": {
@@ -235,7 +239,9 @@
       "report_imported": "Imported",
       "report_skipped": "Skipped",
       "report_errors": "Errors",
-      "already_imported": "Already imported"
+      "already_imported": "Already imported",
+      "field_developer": "Developer",
+      "field_publisher": "Publisher"
     },
     "reviews": {
       "title": "Reviews",
@@ -387,7 +393,8 @@
   "not_found": {
     "title": "This page doesn't exist",
     "hint": "The URL you're looking for doesn't exist or has been removed.",
-    "back": "Back to home"
+    "back": "Back to home",
+    "glitch": "This wall has no glitch."
   },
   "survey": {
     "icon_title": "There are active surveys",
@@ -436,12 +443,16 @@
     "following": "You trust this critic",
     "copy_link": "Copy link",
     "copied_link": "✓ Link copied",
-    "view_profile": "View full profile →"
+    "view_profile": "View full profile →",
+    "unfollow_title": "Unfollow",
+    "unfollow_confirm": "Are you sure you want to unfollow {{ name }}?",
+    "not_found": "User not found."
   },
   "badges": {
     "nav": "Achievements",
     "show_completed": "Show completed",
     "remove": "Remove",
+    "verificado": "Verified",
     "critico-rapido": "Fast Critic",
     "critico-novel": "Rookie Critic",
     "critico-junior": "Junior Critic",
@@ -545,6 +556,12 @@
     "text_opacity": "Opacity",
     "chart_label_color": "Label color",
     "chart_label_size": "Label size"
+  },
+  "meta": {
+    "games_title": "Games — Vouch",
+    "games_description": "Explore and discover video games with weighted reviews on Vouch.",
+    "landing_title": "Vouch — Weighted video game reviews",
+    "landing_description": "Social platform with weighted video game reviews."
   },
   "verify_request": {
     "cta": "Request verification",

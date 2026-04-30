@@ -24,8 +24,9 @@
   },
   "common": {
     "home": "Inicio",
-    "loading": "Cargando...",
-    "not_found": "Página no encontrada."
+    "loading": "Cargando…",
+    "not_found": "Página no encontrada.",
+    "cancel": "Cancelar"
   },
   "review": {
     "create_title": "Escribir una crítica",
@@ -96,7 +97,9 @@
     "discover_loading": "Buscando en catálogo externo...",
     "discover_hint": "Hemos tenido problemas para localizar tu juego. ¿Es uno de estos?",
     "discover_none": "No encontramos coincidencias en el catálogo externo.",
-    "discover_importing": "Importando..."
+    "discover_importing": "Importando...",
+    "top_rated": "Mejor valorado",
+    "view_detail": "Ver ficha"
   },
   "landing": {
     "title": "Vouch",
@@ -107,7 +110,8 @@
       "score_pro": "Valoración de la crítica especializada"
     },
     "trailers": {
-      "title": "Últimos tráilers"
+      "title": "Últimos tráilers",
+      "view_game": "Ver ficha del juego"
     }
   },
   "login": {
@@ -235,7 +239,9 @@
       "report_imported": "Importados",
       "report_skipped": "Omitidos",
       "report_errors": "Errores",
-      "already_imported": "Ya importado"
+      "already_imported": "Ya importado",
+      "field_developer": "Desarrollador",
+      "field_publisher": "Distribuidora"
     },
     "reviews": {
       "title": "Reviews",
@@ -425,12 +431,16 @@
     "following": "Te fías de este crítico",
     "copy_link": "Copiar enlace",
     "copied_link": "✓ Enlace copiado",
-    "view_profile": "Ver perfil completo →"
+    "view_profile": "Ver perfil completo →",
+    "unfollow_title": "Dejar de fiarse",
+    "unfollow_confirm": "¿Seguro que quieres dejar de fiarte de {{ name }}?",
+    "not_found": "Usuario no encontrado."
   },
   "badges": {
     "nav": "Logros",
     "show_completed": "Ver los ya completados",
     "remove": "Eliminar",
+    "verificado": "Verificado",
     "critico-rapido": "Crítico Rápido",
     "critico-novel": "Crítico Novel",
     "critico-junior": "Crítico Junior",
@@ -469,7 +479,8 @@
   "not_found": {
     "title": "Esta página no existe",
     "hint": "La URL que buscas no existe o fue eliminada.",
-    "back": "Volver al inicio"
+    "back": "Volver al inicio",
+    "glitch": "Esta pared no tiene ningún glich."
   },
   "survey": {
     "icon_title": "Hay encuestas activas",
@@ -545,6 +556,12 @@
     "text_opacity": "Saturación",
     "chart_label_color": "Color etiquetas",
     "chart_label_size": "Tamaño etiquetas"
+  },
+  "meta": {
+    "games_title": "Juegos — Vouch",
+    "games_description": "Explora y descubre videojuegos con críticas ponderadas en Vouch.",
+    "landing_title": "Vouch — Críticas ponderadas de videojuegos",
+    "landing_description": "Plataforma social con críticas ponderadas de videojuegos."
   },
   "verify_request": {
     "cta": "Solicitar verificación",

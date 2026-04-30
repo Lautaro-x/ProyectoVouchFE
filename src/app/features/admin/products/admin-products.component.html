@@ -22,11 +22,11 @@
     </div>
     @if (form().type === 'game') {
       <div class="field">
-        <label>Developer</label>
+        <label>{{ 'admin.products.field_developer' | transloco }}</label>
         <input type="text" [value]="form().developer" (input)="updateForm('developer', $any($event.target).value)" />
       </div>
       <div class="field">
-        <label>Publisher</label>
+        <label>{{ 'admin.products.field_publisher' | transloco }}</label>
         <input type="text" [value]="form().publisher" (input)="updateForm('publisher', $any($event.target).value)" />
       </div>
     }
