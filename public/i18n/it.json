@@ -32,6 +32,8 @@
     "scores_heading": "I tuoi voti",
     "body_heading": "La tua opinione (opzionale)",
     "body_ph": "Condividi la tua opinione su questo gioco...",
+    "body_no_links_hint": "I link non sono consentiti nelle recensioni degli utenti standard.",
+    "body_limited_links_hint": "Puoi includere solo link di YouTube, TikTok o Twitch.",
     "submit": "Pubblica recensione",
     "submitting": "Pubblicazione...",
     "update": "Aggiorna recensione",

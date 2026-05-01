@@ -35,6 +35,7 @@
     "body_heading": "Your opinion (optional)",
     "body_ph": "Share your thoughts about this game...",
     "body_no_links_hint": "Links are not allowed in reviews for standard users.",
+    "body_limited_links_hint": "You can only include links from YouTube, TikTok, or Twitch.",
     "submit": "Publish review",
     "submitting": "Publishing...",
     "update": "Update review",

@@ -35,6 +35,7 @@
     "body_heading": "Tu opinión (opcional)",
     "body_ph": "Comparte tu opinión sobre este juego...",
     "body_no_links_hint": "Los enlaces no están permitidos en críticas de usuarios estándar.",
+    "body_limited_links_hint": "Solo puedes incluir enlaces de YouTube, TikTok o Twitch.",
     "submit": "Publicar crítica",
     "submitting": "Publicando...",
     "update": "Actualizar crítica",

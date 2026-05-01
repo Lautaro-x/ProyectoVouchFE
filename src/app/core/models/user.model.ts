@@ -4,6 +4,7 @@ export interface User {
   email: string;
   avatar: string | null;
   role: 'user' | 'critic' | 'admin';
+  badges: string[];
   created_at: string;
 }
 

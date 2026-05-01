@@ -230,6 +230,7 @@
 
     <div class="reviews-list">
       @for (r of reviews(); track r.id) {
+        @if (r.body?.trim()) {
         <div class="review-card">
           <div class="review-header">
             @if (r.user.avatar && !isAvatarBroken(r.user.id)) {
@@ -262,6 +263,7 @@
             }
           }
         </div>
+        }
       }
     </div>
 

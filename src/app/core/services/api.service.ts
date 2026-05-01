@@ -42,7 +42,7 @@ export class ApiService {
     return this.http.get<ReviewFormData>(`${this.base}/products/${productId}/review-form`);
   }
 
-  submitReview(data: { product_id: number; body: string; scores: { category_id: number; score: number }[] }): Observable<void> {
+  submitReview(data: { product_id: number; body: string | null; scores: { category_id: number; score: number }[] }): Observable<void> {
     return this.http.post<void>(`${this.base}/reviews`, data);
   }
 
@@ -54,7 +54,7 @@ export class ApiService {
     return this.http.get<ReviewShareData>(`${this.base}/reviews/${reviewId}/share-data`);
   }
 
-  updateReview(reviewId: number, data: { body: string; scores: { category_id: number; score: number }[] }): Observable<void> {
+  updateReview(reviewId: number, data: { body: string | null; scores: { category_id: number; score: number }[] }): Observable<void> {
     return this.http.put<void>(`${this.base}/reviews/${reviewId}`, data);
   }
 

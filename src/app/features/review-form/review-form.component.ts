@@ -32,9 +32,14 @@ export class ReviewFormComponent implements OnInit {
   submitting = signal(false);
   error      = signal(false);
 
-  readonly canAddLinks = computed(() =>
+  readonly canAddAllLinks = computed(() =>
     ['critic', 'admin'].includes(this.auth.currentUser()?.role ?? '')
   );
+
+  readonly canAddLinks = computed(() => {
+    const user = this.auth.currentUser();
+    return this.canAddAllLinks() || (user?.badges ?? []).includes('verificado');
+  });
 
   breadcrumbs = computed<BreadcrumbItem[]>(() => {
     const p = this.formData();
@@ -108,12 +113,12 @@ export class ReviewFormComponent implements OnInit {
     }));
 
     if (this.isEditMode()) {
-      this.api.updateReview(this.reviewId, { body: this.body(), scores }).subscribe({
+      this.api.updateReview(this.reviewId, { body: this.body().trim() || null, scores }).subscribe({
         next: () => this.router.navigate(['/product', data.type, data.slug]),
         error: () => this.submitting.set(false),
       });
     } else {
-      this.api.submitReview({ product_id: data.id, body: this.body(), scores }).subscribe({
+      this.api.submitReview({ product_id: data.id, body: this.body().trim() || null, scores }).subscribe({
         next: () => this.router.navigate(['/product', data.type, data.slug]),
         error: () => this.submitting.set(false),
       });

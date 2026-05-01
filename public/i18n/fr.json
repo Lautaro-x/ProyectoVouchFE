@@ -32,6 +32,8 @@
     "scores_heading": "Vos notes",
     "body_heading": "Votre avis (optionnel)",
     "body_ph": "Partagez votre avis sur ce jeu...",
+    "body_no_links_hint": "Les liens ne sont pas autorisés dans les avis des utilisateurs standard.",
+    "body_limited_links_hint": "Vous pouvez uniquement inclure des liens YouTube, TikTok ou Twitch.",
     "submit": "Publier la critique",
     "submitting": "Publication...",
     "update": "Mettre à jour la critique",
