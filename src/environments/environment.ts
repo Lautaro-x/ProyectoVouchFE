@@ -4,6 +4,8 @@ export const environment = {
   apiUrl: 'http://proyectovouchbe.test/api',
   googleClientId: '1097121642430-sec2o8bm0g1ebakk45ord8fcgfln92eg.apps.googleusercontent.com',
   pressEmail: 'lautarohrodriguez@gmail.com',
+  supportEmail: 'support@vouch.com',
+  noreplyEmail: 'noreply@vouch.com',
   vouchSocials: {
     youtube:   { label: 'YouTube',   url: 'https://youtube.com/@vouch_placeholder' },
     twitch:    { label: 'Twitch',    url: 'https://twitch.tv/vouch_placeholder' },

@@ -109,6 +109,15 @@
   font-size: 0.82rem;
 }
 
+.vr-explain--note {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.75rem;
+  margin-top: 0.25rem;
+}
+
 .vr-socials {
   margin: 0 0 0.75rem 1.25rem;
   padding: 0;

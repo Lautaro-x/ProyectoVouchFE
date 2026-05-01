@@ -114,3 +114,7 @@ export const SOCIAL_NETWORKS: { key: string; label: string }[] = [
   { key: 'x',         label: 'X' },
   { key: 'instagram', label: 'Instagram' },
 ];
+
+export const VERIFY_SOCIAL_NETWORKS = SOCIAL_NETWORKS.filter(n =>
+  ['x', 'instagram'].includes(n.key)
+);

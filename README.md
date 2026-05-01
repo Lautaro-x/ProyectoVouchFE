@@ -90,10 +90,12 @@ src/
 │   │   ├── components/
 │   │   │   ├── breadcrumb/                # Breadcrumb auto-prepend "Home"
 │   │   │   ├── dialog/                    # Modal genérico con ng-content
+│   │   │   ├── footer/                    # Pie de página global con i18n completa
 │   │   │   ├── game-card/                 # Card de producto para grids y listados
 │   │   │   ├── header/                    # Cabecera global con nav, encuestas y avisos
 │   │   │   ├── lang-switcher/             # Selector de idioma
 │   │   │   ├── store-icon/                # Iconos SVG de tiendas (Steam, GOG, Epic…)
+│   │   │   ├── upcoming-hero/             # Hero de próximos lanzamientos
 │   │   │   └── user-profile-card/         # Cards compartibles (Big, Mid, Mini)
 │   │   └── pipes/
 │   │       ├── igdb-cover.pipe.ts         # Transforma URL de portada IGDB (t_cover_small / t_cover_big)
@@ -409,8 +411,10 @@ Renderiza el icono SVG de una tienda a partir de una clave. Claves soportadas: `
 - Sin `ngModel` — property binding + event binding manual
 - Sin comentarios en el código
 - Pipes de `@angular/common` importados explícitamente en cada componente
-- Variables CSS globales de `styles.css` para colores; nunca hexadecimales hardcodeados
-- Clases reutilizables entre componentes (`.grade-*`) en `styles.css`, no en CSS de componente
+- Variables CSS globales de `styles.css` para colores; nunca hexadecimales hardcodeados en ningún archivo CSS del proyecto — todos los colores están definidos en `:root`
+- `color-mix(in srgb, var(--color-x) N%, transparent)` como patrón estándar para valores semi-transparentes (sin `rgba` hardcodeados)
+- Clases reutilizables entre componentes (`.grade-*`, `.btn-*`, `.badge`, etc.) en `styles.css`, no en CSS de componente
+- Fuente global: Aldrich (TTF local en `/fonts/Aldrich/`), declarada con `@font-face` + `font-display: swap`
 - Toda `<img>` incluye `loading` y `decoding` explícitos; portadas IGDB pasan por `IgdbCoverPipe`
 - Todas las páginas públicas (excepto landing y admin) incluyen `<app-breadcrumb>`
 
@@ -465,7 +469,9 @@ Renderiza el icono SVG de una tienda a partir de una clave. Claves soportadas: `
 ### Fase 5 — Pre-producción
 - [x] Meta tags dinámicos por producto y usuario (OpenGraph completo)
 - [x] Sitemap dinámico
-- [ ] Identidad visual definitiva (tipografía, paleta, personalidad)
+- [x] Footer global con i18n completa (5 idiomas), copyright "Lautaro Rodriguez"
+- [x] Sistema de colores globalizado — todos los colores en variables `:root`, cero hexadecimales sueltos en ningún CSS del proyecto
+- [~] Identidad visual definitiva (tipografía, paleta, personalidad) — en exploración: 4 paletas de tema disponibles, fuente Aldrich activa
 
 ### Fase 6 — Post-producción
 - [ ] Verificar SSR en producción (view-source, Facebook Debugger)
@@ -511,6 +517,15 @@ Todo lo que hay que hacer antes de subir el frontend a un servidor real.
 ---
 
 ## Novedades recientes
+
+- **Identidad visual y sistema de diseño (2026-05-01):**
+  - **Footer global** — `FooterComponent` con columnas de información, redes sociales, agradecimiento a IGDB y copyright. I18n completa en los 5 idiomas. Copyright: "Lautaro Rodriguez". Brand centrado horizontalmente.
+  - **Sistema de colores globalizado** — auditoría completa de todos los archivos CSS del proyecto. Todos los hexadecimales y `rgba()` hardcodeados eliminados y sustituidos por variables CSS en `:root`. Patrón `color-mix(in srgb, var(--color-x) N%, transparent)` para transparencias. 14 nuevas variables añadidas (`--color-white`, `--color-black`, `--color-bg-deep`, `--color-surface-deep`, `--color-card-overlay`, `--color-danger`, `--color-danger-hover`, `--color-success`, `--color-success-dark`, `--color-warning`, `--color-warning-dark`, `--color-press`, `--color-verified`, `--color-amber`).
+  - **Paletas de tema** — 4 archivos de tema alternativos para exploración de identidad corporativa: `styles Dark & Violet.css`, `styles Deep Ocean & Amber.css`, `styles Forest & Mint.css`, `styles Midnight Purple & Cian.css`. Cada archivo es un `styles.css` completo con su propio `:root`. Intercambiables manualmente renombrando el archivo.
+  - **Fuente Aldrich** — declarada con `@font-face` apuntando a `/fonts/Aldrich/Aldrich-Regular.ttf` (servida localmente desde `public/fonts/`). `font-display: swap` para evitar FOIT.
+  - **Sticky footer** — `app-root` como flex column con `min-height: 100vh`; el componente de ruta activo crece con `flex: 1`. El footer siempre queda en la parte inferior del viewport aunque el contenido sea corto.
+  - **Cache busting** — `outputHashing: all` añadido a la configuración de desarrollo en `angular.json` (producción ya lo tenía).
+  - **Paginación de juegos** — listado de juegos amplíado de 12 a 24 resultados por página. `ApiService.getGames()` acepta parámetro `perPage` (default 24) que se envía como `per_page` al backend.
 
 - **Correcciones de calidad (2026-04-30):**
   - **Memory leaks eliminados** — todos los componentes admin (`announcements`, `surveys`, `categories`, `genres`, `platforms`, `products`, `users`, `reviews`, `verify-requests`, `custom-trailers`) y `HeaderComponent` inyectan ahora `DestroyRef` e incluyen `takeUntilDestroyed(this.destroyRef)` antes de cada `.subscribe()`.

@@ -3,7 +3,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
 import { VerificationRequest, VerificationRequestType } from '../../../core/models/user.model';
 import { environment } from '../../../../environments/environment';
-import { SOCIAL_NETWORKS } from '../../../core/models/user.model';
+import { VERIFY_SOCIAL_NETWORKS } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-user-verify-request',
@@ -16,9 +16,10 @@ import { SOCIAL_NETWORKS } from '../../../core/models/user.model';
 export class UserVerifyRequestComponent implements OnInit {
   private readonly api = inject(ApiService);
 
-  readonly vouchSocials   = Object.entries(environment.vouchSocials).map(([, v]) => v);
-  readonly socialNetworks = SOCIAL_NETWORKS;
-  readonly pressEmail     = environment.pressEmail;
+  readonly vouchSocials   = (['x', 'instagram'] as const)
+    .map(k => environment.vouchSocials[k]);
+  readonly socialNetworks = VERIFY_SOCIAL_NETWORKS;
+  readonly supportEmail   = environment.supportEmail;
 
   readonly loading  = signal(true);
   readonly saving   = signal(false);
@@ -26,7 +27,7 @@ export class UserVerifyRequestComponent implements OnInit {
   readonly existing = signal<VerificationRequest | null>(null);
 
   readonly type            = signal<VerificationRequestType>('verified');
-  readonly socialNetwork   = signal('youtube');
+  readonly socialNetwork   = signal('x');
   readonly socialUsername  = signal('');
   readonly pressUrl        = signal('');
   readonly pressContact    = signal('');

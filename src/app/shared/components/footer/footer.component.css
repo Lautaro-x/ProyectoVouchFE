@@ -143,6 +143,13 @@
   text-align: center;
 }
 
+.footer-verify-guest {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-top: 0.25rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .footer-columns {

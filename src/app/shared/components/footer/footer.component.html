@@ -17,6 +17,15 @@
           <a class="footer-link" routerLink="/goal">{{ 'footer.goal' | transloco }}</a>
           <a class="footer-link" routerLink="/faqs">{{ 'footer.faqs' | transloco }}</a>
           <a class="footer-link" routerLink="/contact">{{ 'footer.contact' | transloco }}</a>
+          @if (isLoggedIn()) {
+            <a class="footer-link" routerLink="/user/verify-request">{{ 'footer.get_verified' | transloco }}</a>
+          } @else {
+            <p class="footer-verify-guest">
+              <a class="footer-link" routerLink="/login">{{ 'footer.verify_login' | transloco }}</a>
+              {{ 'footer.verify_or' | transloco }}
+              <a class="footer-link" [href]="mailtoSupport">{{ supportEmail }}</a>
+            </p>
+          }
         </nav>
       </div>
 

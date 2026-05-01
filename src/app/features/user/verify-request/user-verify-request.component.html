@@ -42,6 +42,7 @@
         }
       </ul>
       <p class="vr-explain vr-explain--small">{{ 'verify_request.verified_explain2' | transloco }}</p>
+      <p class="vr-explain vr-explain--note">{{ 'verify_request.verified_note' | transloco }}</p>
     </div>
 
     <div class="field">
@@ -86,8 +87,9 @@
 
     <div class="vr-block vr-block--alt">
       <p class="vr-explain vr-explain--small">{{ 'verify_request.press_email_alt' | transloco }}
-        <a [href]="'mailto:' + pressEmail">{{ pressEmail }}</a>
+        <a [href]="'mailto:' + supportEmail">{{ supportEmail }}</a>
       </p>
+      <p class="vr-explain vr-explain--note">{{ 'verify_request.press_security_note' | transloco }}</p>
     </div>
   }
 
