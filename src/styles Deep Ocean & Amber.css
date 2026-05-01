@@ -45,6 +45,14 @@
   --color-grade-f:     #ff5252;
 }
 
+@font-face {
+  font-family: 'Aldrich';
+  src: url('/fonts/Aldrich/Aldrich-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {
@@ -54,7 +62,7 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Aldrich', system-ui, sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
 }
