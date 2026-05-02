@@ -7,26 +7,30 @@
         <div class="cover-placeholder"></div>
       }
     </div>
-    @if (product().trust_grade) {
-      <div class="trust-star-outer">
-        <div class="trust-star-inner">
-          <span [class]="'grade-star grade-' + trustGradeClass()">{{ product().trust_grade }}</span>
-        </div>
-      </div>
-    }
-    @if (product().follower_review) {
-      <div class="follower-review">
-        <strong class="follower-name">{{ product().follower_review!.user_name }}</strong>
-        {{ 'games.follower_rated' | transloco }}
-        <span [class]="'follower-grade grade-' + followerGradeClass()">{{ product().follower_review!.letter_grade }}</span>
-      </div>
-    }
   </div>
+  @if (product().trust_grade) {
+    <div class="trust-star-outer">
+      <div class="trust-star-inner">
+        <span [class]="'grade-star grade-' + trustGradeClass()">{{ product().trust_grade }}</span>
+      </div>
+    </div>
+  }
+  @if (product().follower_review) {
+    <div class="follower-review">
+      <strong class="follower-name">{{ product().follower_review!.user_name }}</strong>
+      {{ 'games.follower_rated' | transloco }}
+      <span [class]="'follower-grade grade-' + followerGradeClass()">{{ product().follower_review!.letter_grade }}</span>
+    </div>
+  }
   <div class="card-body">
     <h3 class="card-title">{{ product().title }}</h3>
     <div class="card-score">
       @if (product().score_type === 'none') {
         <span class="score-label score-label--first">{{ 'product.be_first' | transloco }}</span>
+        <svg class="no-score-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 20h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       } @else {
         <span class="score-label" [class.score-label--igdb]="product().score_type === 'igdb'">
           @if (product().score_type === 'global') {

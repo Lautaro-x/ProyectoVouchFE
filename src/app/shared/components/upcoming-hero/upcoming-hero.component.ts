@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { HeroGame } from '../../../core/models/product.model';
@@ -15,6 +15,11 @@ export class UpcomingHeroComponent {
   private readonly t = inject(TranslocoService);
 
   readonly game = input.required<HeroGame>();
+
+  gradeClass = computed(() => {
+    const g = this.game().letter_grade;
+    return g ? g.replace('+', 'plus').replace('-', 'minus').toLowerCase() : '';
+  });
 
   formatDate(dateStr: string | null): string {
     if (!dateStr) return '';

@@ -106,7 +106,8 @@
     "discover_none": "No matches found in the external catalog.",
     "discover_importing": "Importing...",
     "top_rated": "Top Rated",
-    "view_detail": "View game"
+    "view_detail": "View game",
+    "results_count": "games"
   },
   "landing": {
     "title": "Hello, world.",

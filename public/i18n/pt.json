@@ -104,7 +104,8 @@
     "discover_none": "Nenhuma correspondência no catálogo externo.",
     "discover_importing": "Importando...",
     "top_rated": "Mais bem avaliado",
-    "view_detail": "Ver ficha"
+    "view_detail": "Ver ficha",
+    "results_count": "jogos"
   },
   "landing": {
     "title": "Olá, mundo.",

@@ -106,7 +106,8 @@
     "discover_none": "No encontramos coincidencias en el catálogo externo.",
     "discover_importing": "Importando...",
     "top_rated": "Mejor valorado",
-    "view_detail": "Ver ficha"
+    "view_detail": "Ver ficha",
+    "results_count": "juegos"
   },
   "landing": {
     "title": "Vouch",

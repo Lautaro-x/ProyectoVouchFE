@@ -4,6 +4,7 @@
   border-radius: 0;
   background: var(--color-surface);
   border: 1px solid var(--color-accent);
+  position: relative;
   transition: transform 0.15s;
   cursor: pointer;
 }
@@ -17,6 +18,7 @@
   aspect-ratio: 3 / 4;
   background: var(--color-bg);
   position: relative;
+  overflow: hidden;
 }
 
 .cover-img-wrap {
@@ -30,6 +32,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   display: block;
 }
 
@@ -95,7 +98,7 @@
 
 .follower-review {
   position: absolute;
-  top: 4%;
+  top: 12px;
   left: -20px;
   z-index: 4;
   background: var(--color-card-overlay);
@@ -167,6 +170,14 @@
   font-size: 0.68rem;
   color: var(--color-text-muted);
   line-height: 1.35;
+}
+
+.no-score-icon {
+  width: 25px;
+  height: 25px;
+  color: var(--color-border);
+  flex-shrink: 0;
+  margin: 5px;
 }
 
 .grade--igdb {

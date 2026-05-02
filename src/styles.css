@@ -297,3 +297,11 @@ button {
 
 .info-page { max-width: 800px; margin: 4rem auto; padding: 0 2rem; }
 .info-title { font-size: 2rem; font-weight: 700; color: var(--color-text); margin: 0 0 1.5rem; }
+
+app-game-list {
+  .game-card       { border: none !important; }
+  .follower-review { font-size: 0.66rem !important; }
+  .grade           { font-size: 2rem !important; }  
+}
+
+

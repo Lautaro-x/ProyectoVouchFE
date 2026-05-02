@@ -3,21 +3,30 @@
 <div class="games-page">
 
   <div class="games-header">
-    <h1 class="games-title">{{ 'games.title' | transloco }}</h1>
-    <div class="games-header-right">
+    <h1 class="section-title">{{ 'games.title' | transloco }}</h1>
+    <div class="games-controls">
       @if (filterType()) {
         <span class="filter-chip">
           {{ 'games.filter_by' | transloco }} {{ filterTypeKey() | transloco }} = {{ filterLabel() }}
           <button class="filter-clear" (click)="clearFilter()" [title]="'games.filter_clear' | transloco">×</button>
         </span>
       }
-      <input
-        class="games-search"
-        type="search"
-        [placeholder]="'games.search_ph' | transloco"
-        [value]="searchInput()"
-        (input)="onSearchInput($any($event.target).value)"
-      />
+      @if (!loading() && total() > 0) {
+        <span class="games-count">{{ total() }} {{ 'games.results_count' | transloco }}</span>
+      }
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <input
+          class="games-search"
+          type="search"
+          [placeholder]="'games.search_ph' | transloco"
+          [value]="searchInput()"
+          (input)="onSearchInput($any($event.target).value)"
+        />
+      </div>
     </div>
   </div>
 

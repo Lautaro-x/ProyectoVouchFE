@@ -104,7 +104,8 @@
     "discover_none": "Aucun résultat dans le catalogue externe.",
     "discover_importing": "Importation...",
     "top_rated": "Meilleur noté",
-    "view_detail": "Voir la fiche"
+    "view_detail": "Voir la fiche",
+    "results_count": "jeux"
   },
   "landing": {
     "title": "Bonjour, monde.",

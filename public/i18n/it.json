@@ -104,7 +104,8 @@
     "discover_none": "Nessuna corrispondenza nel catalogo esterno.",
     "discover_importing": "Importazione...",
     "top_rated": "Più votato",
-    "view_detail": "Vedi scheda"
+    "view_detail": "Vedi scheda",
+    "results_count": "giochi"
   },
   "landing": {
     "title": "Ciao, mondo.",
