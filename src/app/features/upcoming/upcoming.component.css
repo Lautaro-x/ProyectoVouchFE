@@ -36,7 +36,6 @@
   flex-shrink: 0;
   width: 160px;
   aspect-ratio: 3 / 4;
-  border-radius: 10px;
   overflow: hidden;
   background: var(--color-surface);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
