@@ -1,4 +1,10 @@
 {
+  "hero": {
+    "eyebrow": "Not just another review platform",
+    "title": "Your vision counts here. Your vision matters.",
+    "subtitle": "Vouch is the platform that filters the noise and gives relevance to the opinions that deserve it. Follow those whose opinion you respect and don't be swayed by those you don't.",
+    "cta": "Join and be part of Vouch"
+  },
   "header": {
     "login": "Sign in",
     "logout": "Sign out",

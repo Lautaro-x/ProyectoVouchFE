@@ -1,4 +1,10 @@
 {
+  "hero": {
+    "eyebrow": "Pas seulement une plateforme d'analyse",
+    "title": "Votre vision compte ici. Votre vision a de l'importance.",
+    "subtitle": "Vouch est la plateforme qui filtre l'information et donne de la pertinence aux opinions qui le méritent. Suivez les personnes dont vous respectez le jugement et ne vous laissez pas influencer par celles que vous ne respectez pas.",
+    "cta": "Rejoignez Vouch et faites partie de l'aventure"
+  },
   "header": {
     "login": "Se connecter",
     "logout": "Se déconnecter",

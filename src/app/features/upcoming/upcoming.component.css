@@ -12,22 +12,6 @@
   padding: 0 2rem;
 }
 
-.section-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-text);
-  margin: 0 0 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.section-title::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--color-border);
-}
 
 /* ── Cards scroll (soon) ── */
 .cards-scroll {

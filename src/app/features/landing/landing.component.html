@@ -1,4 +1,7 @@
 <main class="landing">
-  <app-relevant-releases style="width: 100%;margin-top: 10px;justify-items: center;"/>
-  <app-trailers-section style="width: 100%;margin-top: 10px;justify-items: center;"/>
+  @if (!auth.isAuthenticated()) {
+    <app-landing-hero style="width:100%" />
+  }
+  <app-relevant-releases style="width:100%" />
+  <app-trailers-section style="width:100%" />
 </main>

@@ -1,0 +1,123 @@
+.hero {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: 4rem 3rem;
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--color-accent) 8%, var(--color-surface)) 0%,
+      var(--color-surface) 60%
+    );
+  border: 1px solid color-mix(in srgb, var(--color-accent) 25%, var(--color-border));
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 6%, transparent) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 600px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  max-width: 480px;
+}
+
+.hero-cta {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.75rem 2rem;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.hero-cta:hover {
+  opacity: 0.85;
+}
+
+.hero-decoration {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.hero-grade {
+  font-family: 'Rubik Mono One', sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  opacity: 0.15;
+  user-select: none;
+}
+
+.hero-grade--1 {
+  font-size: 9rem;
+  color: var(--color-grade-s);
+  opacity: 0.18;
+}
+
+.hero-grade--2 {
+  font-size: 6rem;
+  color: var(--color-grade-aplus);
+  opacity: 0.12;
+}
+
+.hero-grade--3 {
+  font-size: 4.5rem;
+  color: var(--color-grade-bplus);
+  opacity: 0.1;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    padding: 2.5rem 1.5rem;
+    min-height: auto;
+  }
+
+  .hero-decoration { display: none; }
+
+  .hero-title { font-size: 2.2rem; }
+}

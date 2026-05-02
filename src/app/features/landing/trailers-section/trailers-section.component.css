@@ -1,14 +1,9 @@
 .trailers-section {
   width: 100%;
   max-width: 1400px;
+  margin: 0 auto;
 }
 
-.section-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 1rem;
-}
 
 .trailers-layout {
   display: grid;
