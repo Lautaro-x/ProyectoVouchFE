@@ -41,7 +41,7 @@
             {{ 'product.score_igdb' | transloco }}
           }
         </span>
-        <span class="grade" [class]="'grade-' + gradeClass()" [class.grade--igdb]="product().score_type === 'igdb'">
+        <span [class]="'grade grade-' + gradeClass()" [class.grade--igdb]="product().score_type === 'igdb'">
           {{ product().letter_grade }}
         </span>
       }

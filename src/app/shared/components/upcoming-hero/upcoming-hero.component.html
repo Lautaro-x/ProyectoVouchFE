@@ -25,7 +25,7 @@
       } @else {
         @if (game().letter_grade) {
           <div class="hero-grade">
-            <span class="grade hero-grade-value" [class]="'grade grade-' + gradeClass()">{{ game().letter_grade }}</span>
+            <span class="hero-grade-value" [class]="'grade grade-' + gradeClass()">{{ game().letter_grade }}</span>
           </div>
         }
         @if (game().product_slug && game().product_type) {

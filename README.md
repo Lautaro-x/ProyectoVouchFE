@@ -518,6 +518,18 @@ Todo lo que hay que hacer antes de subir el frontend a un servidor real.
 
 ## Novedades recientes
 
+- **Mejoras visuales sección games y componentes compartidos (2026-05-02):**
+  - **`/games` — título con `section-title`:** El `<h1>` de la página pasa a usar la clase global `.section-title` (línea accent, Aldrich bold). Los controles (chip de filtro, contador de resultados, buscador) se separan en una fila `.games-controls` debajo del título.
+  - **Buscador con icono de lupa:** El input de búsqueda se envuelve en `.search-wrap` con un SVG de lupa posicionado absolutamente a la izquierda (`padding-left: 2.2rem`). El icono cambia a `--color-accent` al enfocar.
+  - **Contador de resultados:** `{{ total() }} {{ 'games.results_count' | transloco }}` visible junto al buscador cuando hay resultados. Clave `games.results_count` añadida en los 5 idiomas.
+  - **Gap de grid reducido:** `.games-grid` pasa de `gap: 1.25rem` a `gap: 0.75rem` para mayor densidad visual.
+  - **Aspect ratio 3:4 forzado en portadas:** `.card-cover` añade `overflow: hidden`; `.cover-img-wrap img` añade `object-position: center top`. Las portadas con relación 2:3 ya no rompen la armonía del grid.
+  - **Overrides de `game-card` en sección games:** En `styles.css`, `app-game-list .game-card { border: none !important }` elimina el borde accent solo en `/games` (el landing lo conserva). `app-game-list .follower-review { font-size: 0.66rem !important }` reduce el tooltip de seguidos en el contexto de grid denso. Necesitan `!important` para superar la especificidad del selector encapsulado por Angular.
+  - **`trust-star-outer` y `follower-review` fuera de `card-cover`:** Ambos elementos se han movido a ser hijos directos de `article.game-card` para que `overflow: hidden` de `.card-cover` no los recorte. `.game-card` añade `position: relative`. `follower-review` pasa de `top: 4%` (relativo a card-cover) a `top: 12px` (valor fijo relativo a game-card).
+  - **Icono de pluma en cards sin nota:** Cuando `score_type === 'none'`, se muestra junto al texto `product.be_first` un SVG de pluma de 22 px en `--color-border` para dar cuerpo visual al card-body sin ser intrusivo.
+  - **`upcoming-hero` — nota estandarizada:** `.hero-grade-value` usaba `color: var(--color-white)` y `font-weight: 900` propios, sobreescribiendo el sistema de gradientes global. Ahora usa `[class]="'grade grade-' + gradeClass()"` con `gradeClass()` computed añadido al TS, y el CSS del componente solo sobreescribe `font-size: 4rem` y `line-height`.
+  - **Fix `[class]` vs `class` en Angular:** En `game-card` y `upcoming-hero`, el patrón `class="grade" [class]="'grade-X'"` hacía que Angular descartara la clase estática. Corregido poniendo todo en el binding dinámico: `[class]="'grade grade-' + gradeClass()"`.
+
 - **Identidad visual y sistema de diseño (2026-05-01):**
   - **Footer global** — `FooterComponent` con columnas de información, redes sociales, agradecimiento a IGDB y copyright. I18n completa en los 5 idiomas. Copyright: "Lautaro Rodriguez". Brand centrado horizontalmente.
   - **Sistema de colores globalizado** — auditoría completa de todos los archivos CSS del proyecto. Todos los hexadecimales y `rgba()` hardcodeados eliminados y sustituidos por variables CSS en `:root`. Patrón `color-mix(in srgb, var(--color-x) N%, transparent)` para transparencias. 14 nuevas variables añadidas (`--color-white`, `--color-black`, `--color-bg-deep`, `--color-surface-deep`, `--color-card-overlay`, `--color-danger`, `--color-danger-hover`, `--color-success`, `--color-success-dark`, `--color-warning`, `--color-warning-dark`, `--color-press`, `--color-verified`, `--color-amber`).
