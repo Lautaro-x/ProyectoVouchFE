@@ -55,6 +55,25 @@
   display: inline-block;
 }
 
+.pc-iframe {
+  display: block;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pc-iframe--mid {
+  width: 480px;
+  height: 480px;
+  border-radius: 12px;
+}
+
+.pc-iframe--mini {
+  width: 360px;
+  height: 160px;
+  border-radius: 10px;
+}
+
 .pc-copy-btn {
   align-self: flex-start;
 }
