@@ -4,12 +4,13 @@ import { ApiService } from '../../core/services/api.service';
 import { HeroGame, UpcomingGame } from '../../core/models/product.model';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { UpcomingHeroComponent } from '../../shared/components/upcoming-hero/upcoming-hero.component';
+import { AdBannerComponent } from '../../shared/components/ad-banner/ad-banner.component';
 
 @Component({
   selector: 'app-upcoming',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, BreadcrumbComponent, UpcomingHeroComponent],
+  imports: [TranslocoModule, BreadcrumbComponent, UpcomingHeroComponent, AdBannerComponent],
   templateUrl: './upcoming.component.html',
   styleUrl: './upcoming.component.css',
 })

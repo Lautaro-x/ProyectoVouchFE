@@ -12,6 +12,13 @@
   padding: 0 2rem;
 }
 
+.upcoming-ad {
+  width: 728px;
+  max-width: calc(100% - 4rem);
+  height: 90px;
+  margin: 0 auto;
+}
+
 
 /* ── Cards scroll (soon) ── */
 .cards-scroll {

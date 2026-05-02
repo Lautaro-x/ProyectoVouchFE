@@ -5,12 +5,13 @@ import { AuthService } from '../../core/services/auth.service';
 import { RelevantReleasesComponent } from './relevant-releases/relevant-releases.component';
 import { TrailersSectionComponent } from './trailers-section/trailers-section.component';
 import { LandingHeroComponent } from './hero/landing-hero.component';
+import { AdBannerComponent } from '../../shared/components/ad-banner/ad-banner.component';
 
 @Component({
   selector: 'app-landing',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [RelevantReleasesComponent, TrailersSectionComponent, LandingHeroComponent],
+  imports: [RelevantReleasesComponent, TrailersSectionComponent, LandingHeroComponent, AdBannerComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
 })

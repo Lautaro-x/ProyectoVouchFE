@@ -104,6 +104,10 @@
 
 </div>
 
+@if (!searchInput()) {
+  <app-ad-banner class="games-ad" />
+}
+
 @if (!searchInput() && featuredGame()) {
   <app-upcoming-hero [game]="featuredGame()!" />
 }

@@ -1,7 +1,8 @@
 import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { Title } from '@angular/platform-browser';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { SOCIAL_NETWORKS, SocialLinks } from '../../../core/models/user.model';
@@ -15,8 +16,10 @@ import { SOCIAL_NETWORKS, SocialLinks } from '../../../core/models/user.model';
   styleUrl: './user-profile.component.css',
 })
 export class UserProfileComponent implements OnInit {
-  private readonly api  = inject(ApiService);
-  private readonly auth = inject(AuthService);
+  private readonly api      = inject(ApiService);
+  private readonly auth     = inject(AuthService);
+  private readonly titleSvc = inject(Title);
+  private readonly t        = inject(TranslocoService);
 
   readonly SOCIAL_NETWORKS = SOCIAL_NETWORKS;
 
@@ -36,6 +39,8 @@ export class UserProfileComponent implements OnInit {
   readonly socialLinks = signal<SocialLinks>({});
 
   ngOnInit(): void {
+    this.titleSvc.setTitle(this.t.translate('meta.profile_title'));
+
     this.api.getProfile().subscribe(profile => {
       this.email.set(profile.email);
       this.name.set(profile.name);

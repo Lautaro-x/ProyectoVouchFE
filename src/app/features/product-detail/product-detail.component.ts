@@ -12,12 +12,13 @@ import { SafeUrlPipe } from '../../shared/pipes/safe-url.pipe';
 import { slugify } from '../../core/utils/slugify';
 import { ReviewShareComponent } from './review-share/review-share.component';
 import { StoreIconComponent } from '../../shared/components/store-icon/store-icon.component';
+import { AdBannerComponent } from '../../shared/components/ad-banner/ad-banner.component';
 
 @Component({
   selector: 'app-product-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, RouterLink, DatePipe, KeyValuePipe, BreadcrumbComponent, SafeUrlPipe, ReviewShareComponent, StoreIconComponent],
+  imports: [TranslocoModule, RouterLink, DatePipe, KeyValuePipe, BreadcrumbComponent, SafeUrlPipe, ReviewShareComponent, StoreIconComponent, AdBannerComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })

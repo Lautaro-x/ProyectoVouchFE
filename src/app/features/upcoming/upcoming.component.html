@@ -37,6 +37,10 @@
     </section>
   }
 
+  @if (soon().length && later().length) {
+    <app-ad-banner class="upcoming-ad" />
+  }
+
   @if (later().length) {
     <section class="upcoming-section">
       <h2 class="section-title">{{ 'upcoming.on_the_horizon' | transloco }}</h2>

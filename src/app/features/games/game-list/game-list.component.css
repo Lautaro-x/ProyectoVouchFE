@@ -285,3 +285,10 @@
   font-size: 0.875rem;
   line-height: 36px;
 }
+
+.games-ad {
+  width: 728px;
+  max-width: calc(100% - 4rem);
+  height: 90px;
+  margin: 3rem auto 0;
+}

@@ -10,12 +10,13 @@ import { FeaturedGameData, HeroGame, IgdbSuggestion, ProductCard } from '../../.
 import { GameCardComponent } from '../../../shared/components/game-card/game-card.component';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/breadcrumb/breadcrumb.component';
 import { UpcomingHeroComponent } from '../../../shared/components/upcoming-hero/upcoming-hero.component';
+import { AdBannerComponent } from '../../../shared/components/ad-banner/ad-banner.component';
 
 @Component({
   selector: 'app-game-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule, GameCardComponent, BreadcrumbComponent, UpcomingHeroComponent],
+  imports: [TranslocoModule, GameCardComponent, BreadcrumbComponent, UpcomingHeroComponent, AdBannerComponent],
   templateUrl: './game-list.component.html',
   styleUrl: './game-list.component.css',
 })
