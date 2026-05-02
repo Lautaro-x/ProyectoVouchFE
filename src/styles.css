@@ -43,7 +43,13 @@
   --color-grade-eplus: #ff3d00;
   --color-grade-e:     #ff1744;
   --color-grade-f:     #ff5252;
+
+  --color-score-follower: #fbbf24;
+  --color-score-trust:    #f59e0b;
+  --color-score-pro:      #5b8dd9;
+  --color-score-global:   #4caf7d;
 }
+
 
 @font-face {
   font-family: 'Aldrich';

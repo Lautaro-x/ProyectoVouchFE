@@ -48,10 +48,10 @@
   padding: 0.65rem 1rem;
 }
 
-.score-block--trust {
-  border-color: var(--color-primary);
-  border-style: dashed;
-}
+.score-block--follower { border-left: 3px solid var(--color-score-follower); }
+.score-block--trust    { border-left: 3px solid var(--color-score-trust); }
+.score-block--pro      { border-left: 3px solid var(--color-score-pro); }
+.score-block--global   { border-left: 3px solid var(--color-score-global); }
 
 .score-block--igdb {
   border-style: dashed;
@@ -256,6 +256,8 @@
   color: var(--color-text);
   line-height: 1.7;
   margin: 0;
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1rem;
 }
 
 .detail-dl {
@@ -491,6 +493,34 @@
 }
 
 #reviews-sentinel { height: 1px; }
+
+/* ── Ad slots ── */
+.sidebar-ad {
+  width: 100%;
+  min-height: 250px;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: 8px;
+}
+
+.inline-ad {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar-ad { display: none; }
+
+  .inline-ad {
+    display: block;
+    max-width: 1100px;
+    margin: 2rem auto 0;
+    padding: 0 2rem;
+    min-height: 90px;
+    background: var(--color-surface);
+    border: 1px dashed var(--color-border);
+    border-radius: 8px;
+  }
+}
 
 @media (max-width: 1024px) {
   .detail-aside {
