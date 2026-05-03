@@ -450,6 +450,9 @@
     },
     "badges": {
         "nav": "Conquistas",
+        "title": "Minhas conquistas",
+        "awarded_on": "Obtido",
+        "count_label": "conquistas",
         "show_completed": "Ver os completados",
         "remove": "Remover",
         "verificado": "Verificado",

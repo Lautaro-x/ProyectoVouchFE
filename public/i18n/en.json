@@ -460,6 +460,9 @@
                        },
     "badges":  {
                    "nav":  "Achievements",
+                   "title":  "My achievements",
+                   "awarded_on":  "Earned",
+                   "count_label":  "achievements",
                    "show_completed":  "Show completed",
                    "remove":  "Remove",
                    "verificado":  "Verified",

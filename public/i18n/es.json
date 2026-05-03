@@ -448,6 +448,9 @@
                        },
     "badges":  {
                    "nav":  "Logros",
+                   "title":  "Mis logros",
+                   "awarded_on":  "Obtenido",
+                   "count_label":  "logros",
                    "show_completed":  "Ver los ya completados",
                    "remove":  "Eliminar",
                    "verificado":  "Verificado",

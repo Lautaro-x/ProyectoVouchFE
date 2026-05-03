@@ -80,6 +80,7 @@ export interface BadgeProgress {
   threshold: number;
   awarded: boolean;
   claimable: boolean;
+  awarded_at?: string | null;
 }
 
 export type BadgesProgress = Record<string, BadgeProgress>;

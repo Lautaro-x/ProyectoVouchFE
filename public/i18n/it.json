@@ -450,6 +450,9 @@
     },
     "badges": {
         "nav": "Obiettivi",
+        "title": "I miei obiettivi",
+        "awarded_on": "Ottenuto",
+        "count_label": "obiettivi",
         "show_completed": "Mostra i completati",
         "remove": "Rimuovi",
         "verificado": "Verificato",

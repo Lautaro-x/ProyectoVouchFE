@@ -450,6 +450,9 @@
     },
     "badges": {
         "nav": "Succès",
+        "title": "Mes succès",
+        "awarded_on": "Obtenu",
+        "count_label": "succès",
         "show_completed": "Voir les complétés",
         "remove": "Supprimer",
         "verificado": "Vérifié",
