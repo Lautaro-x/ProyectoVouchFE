@@ -100,15 +100,10 @@ export interface VerificationRequest {
   created_at: string;
 }
 
-export interface FollowerUser {
-  id: number;
-  name: string;
-  verified: boolean;
-}
-
 export interface FollowersResponse {
   total: number;
-  followers: FollowerUser[];
+  last_page: number;
+  followers: UserCardData[];
 }
 
 export interface SocialNetworkDef {

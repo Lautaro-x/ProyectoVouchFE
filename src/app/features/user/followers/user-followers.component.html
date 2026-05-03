@@ -1,31 +1,42 @@
+<h1 class="section-title">
+  <span class="uf-total">{{ total() }}</span>&nbsp;{{ 'followers.title' | transloco }}
+</h1>
+
+<div class="uf-toolbar">
+  <input
+    class="uf-search"
+    type="search"
+    [placeholder]="'followers.search_ph' | transloco"
+    [value]="search()"
+    (input)="onSearch($any($event.target).value)"
+  />
+  <select class="uf-sort" [value]="sort()" (change)="onSort($any($event.target).value)">
+    <option value="date_desc">{{ 'followers.sort_date_desc' | transloco }}</option>
+    <option value="date_asc">{{ 'followers.sort_date_asc' | transloco }}</option>
+    <option value="name_asc">{{ 'followers.sort_name_asc' | transloco }}</option>
+  </select>
+</div>
+
 @if (loading()) {
   <p class="uf-loading">{{ 'common.loading' | transloco }}</p>
+} @else if (!followers().length) {
+  <p class="uf-empty">{{ search() ? ('followers.no_results' | transloco) : ('followers.empty' | transloco) }}</p>
 } @else {
-  <div class="uf-layout">
-    <div class="uf-header">
-      <span class="uf-count">{{ total() }}</span>
-      <span class="uf-count-label">{{ 'followers.title' | transloco }}</span>
-    </div>
-
-    @if (!followers().length) {
-      <p class="uf-empty">{{ 'followers.empty' | transloco }}</p>
-    } @else {
-      <ul class="uf-grid">
-        @for (f of followers(); track f.id) {
-          <li class="uf-item">
-            <a class="uf-link" [routerLink]="['/u', f.id]">
-              {{ f.name }}
-              @if (f.verified) {
-                <span class="uf-verified" [title]="'badges.verificado' | transloco">✓</span>
-              }
-            </a>
-          </li>
-        }
-      </ul>
-
-      @if (total() > followers().length) {
-        <p class="uf-more">{{ 'followers.showing' | transloco : { shown: followers().length, total: total() } }}</p>
-      }
+  <ul class="uf-grid">
+    @for (f of followers(); track f.id) {
+      <li>
+        <app-user-mini-card [card]="f" />
+      </li>
     }
-  </div>
+  </ul>
+
+  @if (lastPage() > 1) {
+    <div class="uf-pagination">
+      <button class="page-btn" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">‹</button>
+      @for (p of pages(); track p) {
+        <button class="page-btn" [class.page-btn--active]="p === currentPage()" (click)="goToPage(p)">{{ p }}</button>
+      }
+      <button class="page-btn" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === lastPage()">›</button>
+    </div>
+  }
 }

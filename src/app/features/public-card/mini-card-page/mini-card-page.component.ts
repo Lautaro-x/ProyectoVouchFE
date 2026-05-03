@@ -1,17 +1,16 @@
-import { Component, inject, OnInit, signal, computed, DOCUMENT, ChangeDetectionStrategy,
+import { Component, inject, OnInit, signal, DOCUMENT, ChangeDetectionStrategy,
 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
-import { UserCardData, SOCIAL_NETWORK_MAP } from '../../../core/models/user.model';
-
+import { UserCardData } from '../../../core/models/user.model';
+import { UserMiniCardComponent } from '../../../shared/components/user-mini-card/user-mini-card.component';
 
 @Component({
   selector: 'app-mini-card-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule],
+  imports: [UserMiniCardComponent],
   templateUrl: './mini-card-page.component.html',
   styleUrl: './mini-card-page.component.css',
 })
@@ -22,16 +21,7 @@ export class MiniCardPageComponent implements OnInit {
   private readonly title = inject(Title);
   private readonly doc   = inject(DOCUMENT);
 
-  readonly card         = signal<UserCardData | null>(null);
-  readonly avatarBroken = signal(false);
-  readonly isVerified   = computed(() => this.card()?.badges?.includes('verificado') ?? false);
-  readonly socialEntries = computed(() =>
-    Object.entries(this.card()?.social_links ?? {}).filter(([, url]) => !!url)
-  );
-  readonly publicProfileUrl = computed(() => {
-    const id = this.card()?.id;
-    return id ? `${this.doc.location.origin}/u/${id}` : '';
-  });
+  readonly card = signal<UserCardData | null>(null);
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -55,7 +45,4 @@ export class MiniCardPageComponent implements OnInit {
     this.meta.updateTag({ name: 'twitter:description', content: desc });
     this.meta.updateTag({ name: 'twitter:image',       content: data.avatar ?? '' });
   }
-
-  onAvatarError(): void { this.avatarBroken.set(true); }
-  netSvgPath(key: string): string { return SOCIAL_NETWORK_MAP[key]?.svgPath ?? ''; }
 }

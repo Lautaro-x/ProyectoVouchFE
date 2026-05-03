@@ -1,0 +1,66 @@
+<style>
+  .vmc{width:360px;height:160px;position:relative;overflow:hidden;border-radius:10px;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;background:#1e293b;color:#f8fafc}
+  .vmc-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25}
+  .vmc-header{position:relative;z-index:1;display:flex;align-items:center;gap:6px;padding:9px 14px;background:rgba(15,23,42,.75);border-bottom:1px solid rgba(51,65,85,.9);flex-shrink:0}
+  .vmc-name{font-size:13px;font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:4px}
+  .vmc-verified{font-size:9px;font-weight:800;color:#fbbf24;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.5);border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .vmc-body{position:relative;z-index:1;flex:1;display:flex;align-items:center;gap:14px;padding:10px 14px}
+  .vmc-avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid rgba(51,65,85,.9);flex-shrink:0}
+  .vmc-avatar-ph{width:56px;height:56px;border-radius:50%;background:rgba(30,41,59,.5);border:2px solid rgba(51,65,85,.6);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .vmc-avatar-ph svg{width:28px;height:28px;fill:rgba(148,163,184,.5);flex-shrink:0}
+  .vmc-stats{display:flex;gap:16px;flex:1}
+  .vmc-stat{display:flex;flex-direction:column;align-items:center;gap:1px}
+  .vmc-stat-val{font-size:18px;font-weight:700}
+  .vmc-stat-lbl{font-size:10px;color:#94a3b8}
+  .vmc-cta{margin-left:auto;background:#fbbf24;border:none;color:#0f172a;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Inter',system-ui,sans-serif;text-decoration:none;white-space:nowrap;display:inline-block}
+  .vmc-footer{position:relative;z-index:1;display:flex;align-items:center;gap:10px;padding:7px 14px;background:rgba(15,23,42,.75);border-top:1px solid rgba(51,65,85,.9);flex-shrink:0}
+  .vmc-social-link{display:flex;align-items:center;opacity:.75}
+  .vmc-social-link svg{width:15px;height:15px;fill:#f8fafc}
+  .vmc-following{font-size:9px;font-weight:700;color:#34d399;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);border-radius:999px;padding:2px 7px;white-space:nowrap;margin-left:auto}
+</style>
+
+<div class="vmc">
+  @if (card().card_mini_bg) {
+    <div class="vmc-bg" [style.background-image]="'url(' + card().card_mini_bg + ')'"></div>
+  }
+  <div class="vmc-header">
+    <span class="vmc-name">
+      {{ card().name }}
+      @if (isVerified()) {
+        <span class="vmc-verified" [title]="'badges.verificado' | transloco">✓</span>
+      }
+    </span>
+    @if (card().is_following) {
+      <span class="vmc-following">{{ 'public_profile.you_follow' | transloco }}</span>
+    }
+  </div>
+  <div class="vmc-body">
+    @if (card().avatar && !avatarBroken()) {
+      <img class="vmc-avatar" [src]="card().avatar!" [alt]="card().name" (error)="onAvatarError()" loading="eager" />
+    } @else {
+      <div class="vmc-avatar-ph">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/>
+        </svg>
+      </div>
+    }
+    <div class="vmc-stats">
+      <div class="vmc-stat">
+        <span class="vmc-stat-val">{{ card().reviews_count }}</span>
+        <span class="vmc-stat-lbl">{{ 'public_profile.reviews_label' | transloco }}</span>
+      </div>
+      <div class="vmc-stat">
+        <span class="vmc-stat-val">{{ card().followers_count }}</span>
+        <span class="vmc-stat-lbl">{{ 'public_profile.followers_label' | transloco }}</span>
+      </div>
+    </div>
+    <a class="vmc-cta" [href]="publicProfileUrl()">{{ 'public_profile.view_profile' | transloco }}</a>
+  </div>
+  <div class="vmc-footer">
+    @for (e of socialEntries(); track e[0]) {
+      <a class="vmc-social-link" [href]="e[1]" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path [attr.d]="netSvgPath(e[0])"/></svg>
+      </a>
+    }
+  </div>
+</div>

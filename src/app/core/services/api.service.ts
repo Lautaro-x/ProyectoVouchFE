@@ -89,8 +89,10 @@ export class ApiService {
     return this.http.patch<void>(`${this.base}/user/consents`, data);
   }
 
-  getFollowers(): Observable<FollowersResponse> {
-    return this.http.get<FollowersResponse>(`${this.base}/user/followers`);
+  getFollowers(search = '', sort = 'date_desc', page = 1): Observable<FollowersResponse> {
+    return this.http.get<FollowersResponse>(`${this.base}/user/followers`, {
+      params: { search, sort, page: String(page) },
+    });
   }
 
   getBadgeProgress(): Observable<BadgesProgress> {

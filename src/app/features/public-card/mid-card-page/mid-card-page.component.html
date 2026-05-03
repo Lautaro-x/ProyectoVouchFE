@@ -24,6 +24,7 @@
     .vsc-footer{position:relative;z-index:1;display:flex;align-items:center;gap:14px;padding:10px 18px;background:rgba(15,23,42,.75);border-top:1px solid rgba(51,65,85,.9);flex-shrink:0}
     .vsc-social-link{display:flex;align-items:center;opacity:.75}
     .vsc-social-link svg{width:18px;height:18px;fill:#f8fafc}
+    .vsc-following{font-size:10px;font-weight:700;color:#34d399;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);border-radius:999px;padding:3px 10px;white-space:nowrap;margin-left:auto}
   </style>
 
   <div class="vsc">
@@ -39,6 +40,9 @@
       </span>
       @for (b of displayBadges(); track b) {
         <span class="vsc-badge">{{ 'badges.' + b | transloco }}</span>
+      }
+      @if (card()!.is_following) {
+        <span class="vsc-following">{{ 'public_profile.you_follow' | transloco }}</span>
       }
     </div>
     <div class="vsc-body">
