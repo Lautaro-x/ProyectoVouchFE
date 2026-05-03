@@ -430,3 +430,61 @@
 .vr-link {
   align-self: flex-start;
 }
+
+/* ── Mobile (≤ 600px) ────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .profile-card {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    text-align: left;
+  }
+
+  .profile-avatar-wrap {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+
+  .profile-name-display {
+    text-align: left;
+    justify-content: flex-start;
+    font-size: 0.95rem;
+  }
+
+  .profile-badges {
+    justify-content: flex-start;
+  }
+
+  .profile-section {
+    padding: 1rem;
+  }
+
+  .social-entry {
+    grid-template-columns: 1fr 32px;
+    grid-template-rows: auto auto;
+  }
+
+  .social-entry .net-select {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .social-entry .social-url-wrap {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .social-entry .btn-remove {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}

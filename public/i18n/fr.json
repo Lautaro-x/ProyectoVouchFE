@@ -402,6 +402,7 @@
     },
     "profile": {
         "nav_profile": "Profil",
+        "back_to_vouch": "Aller sur Vouch",
         "section_identity": "Identité",
         "name_label": "Nom",
         "name_ph": "Votre nom public",

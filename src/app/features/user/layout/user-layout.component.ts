@@ -1,7 +1,8 @@
 import { Component, inject, signal, ChangeDetectionStrategy,
 } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
+import { filter } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { LangSwitcherComponent } from '../../../shared/components/lang-switcher/lang-switcher.component';
 
@@ -14,22 +15,30 @@ import { LangSwitcherComponent } from '../../../shared/components/lang-switcher/
   styleUrls: ['../../layout-sidebar.css', './user-layout.component.css'],
 })
 export class UserLayoutComponent {
-  private auth = inject(AuthService);
+  private readonly auth   = inject(AuthService);
+  private readonly router = inject(Router);
 
-  readonly user = this.auth.currentUser;
+  readonly user         = this.auth.currentUser;
   readonly avatarBroken = signal(false);
+  readonly navOpen      = signal(false);
 
-  onAvatarError(): void {
-    this.avatarBroken.set(true);
+  constructor() {
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(() => this.navOpen.set(false));
   }
 
+  onAvatarError(): void { this.avatarBroken.set(true); }
+  toggleNav(): void     { this.navOpen.update(v => !v); }
+  closeNav(): void      { this.navOpen.set(false); }
+
   readonly sections = [
-    { path: 'profile',         labelKey: 'profile.nav_profile' },
-    { path: 'consents',        labelKey: 'consents.nav' },
-    { path: 'public-profile',  labelKey: 'public_profile.nav' },
-    { path: 'reviews',         labelKey: 'reviews.nav_reviews' },
-    { path: 'badges',          labelKey: 'badges.nav' },
-    { path: 'followers',       labelKey: 'followers.nav' },
+    { path: 'profile',        labelKey: 'profile.nav_profile' },
+    { path: 'consents',       labelKey: 'consents.nav' },
+    { path: 'public-profile', labelKey: 'public_profile.nav' },
+    { path: 'reviews',        labelKey: 'reviews.nav_reviews' },
+    { path: 'badges',         labelKey: 'badges.nav' },
+    { path: 'followers',      labelKey: 'followers.nav' },
   ];
 
   logout(): void {

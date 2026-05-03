@@ -1,9 +1,22 @@
-<aside class="sidebar">
+<aside class="sidebar" [class.sidebar--open]="navOpen()">
   <div class="sidebar-brand">
     <a class="brand-link" routerLink="/">
       <span class="brand-vouch">VOUCH</span>
     </a>
-    <app-lang-switcher />
+    <div class="sidebar-brand-right">
+      <app-lang-switcher />
+      <button class="mobile-nav-toggle" (click)="toggleNav()" [attr.aria-expanded]="navOpen()">
+        @if (navOpen()) {
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+          </svg>
+        }
+      </button>
+    </div>
   </div>
 
   <div class="sidebar-identity">
@@ -33,10 +46,11 @@
     @if (user()?.role === 'admin') {
       <a class="admin-link" routerLink="/administration">{{ 'header.administration' | transloco }}</a>
     }
+    <a class="btn-primary sidebar-back-link" routerLink="/">{{ 'profile.back_to_vouch' | transloco }}</a>
     <button class="btn-secondary" (click)="logout()">{{ 'header.logout' | transloco }}</button>
   </div>
 </aside>
 
-<main class="user-main">
+<main class="user-main" (click)="closeNav()">
   <router-outlet />
 </main>

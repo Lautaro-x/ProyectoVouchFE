@@ -412,6 +412,7 @@
                },
     "profile":  {
                     "nav_profile":  "Profile",
+                    "back_to_vouch":  "Go to Vouch",
                     "section_identity":  "Identity",
                     "name_label":  "Name",
                     "name_ph":  "Your public name",
