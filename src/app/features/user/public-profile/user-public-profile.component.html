@@ -1,3 +1,18 @@
+<app-dialog
+  [title]="'public_profile.copy_dialog_title' | transloco"
+  [isOpen]="copyDialogOpen()"
+  (closed)="copyDialogOpen.set(false)"
+>
+  @if (copyDialogType() === 'big') {
+    <p class="pc-dialog-msg">{{ 'public_profile.copy_dialog_big' | transloco }}</p>
+  } @else if (copyDialogType() === 'mid') {
+    <p class="pc-dialog-msg">{{ 'public_profile.copy_dialog_mid' | transloco }}</p>
+  } @else {
+    <p class="pc-dialog-msg">{{ 'public_profile.copy_dialog_mini' | transloco }}</p>
+  }
+  <code class="pc-dialog-url">{{ copyDialogUrl() }}</code>
+</app-dialog>
+
 @if (loading()) {
   <p class="pc-loading">{{ 'common.loading' | transloco }}</p>
 } @else {
@@ -8,71 +23,49 @@
       @else if (savedBg()) { {{ 'public_profile.saved_bg' | transloco }} }
       @else { {{ 'public_profile.save_bg' | transloco }} }
     </button>
+    <p class="pc-save-hint">{{ 'public_profile.save_bg_hint' | transloco }}</p>
   </div>
 
-  <!-- ═══ CARD 1 — FULL (720 × 430 px) ═══ -->
   <section class="pc-section">
-    <h2 class="pc-section-title">{{ 'public_profile.card_full_title' | transloco }}</h2>
+    <h2 class="section-title">{{ 'public_profile.card_full_title' | transloco }}</h2>
     <div class="pc-bg-input">
       <label class="pc-bg-label">{{ 'public_profile.bg_url' | transloco }}</label>
       <input class="pc-bg-field" type="text" [value]="fullBg()"
              (input)="fullBg.set($any($event.target).value)"
              [placeholder]="'public_profile.bg_url_ph' | transloco" />
     </div>
-    <div class="pc-card-wrap">
-      <app-user-profile-card
-        [card]="previewBigCard()!"
-        [isSelf]="true"
-        [isAuthenticated]="true"
-      />
+    <div class="pc-card-col">
+      <app-user-profile-card [card]="previewBigCard()!" [isSelf]="true" [isAuthenticated]="true" />
+      <button class="btn-secondary" (click)="copyLink('big')">{{ 'public_profile.copy_link' | transloco }}</button>
     </div>
-    <button class="btn-secondary" (click)="copyLink('big')">
-      {{ copiedBig() ? ('public_profile.copied_link' | transloco) : ('public_profile.copy_link' | transloco) }}
-    </button>
   </section>
 
-
-  <!-- ═══ CARD 2 — RESUMEN INSTAGRAM (480 × 480 px) ═══ -->
   <section class="pc-section">
-    <h2 class="pc-section-title">{{ 'public_profile.card_summary_title' | transloco }}</h2>
+    <h2 class="section-title">{{ 'public_profile.card_summary_title' | transloco }}</h2>
     <div class="pc-bg-input">
       <label class="pc-bg-label">{{ 'public_profile.bg_url' | transloco }}</label>
       <input class="pc-bg-field" type="text" [value]="midBg()"
              (input)="midBg.set($any($event.target).value)"
              [placeholder]="'public_profile.bg_url_ph' | transloco" />
     </div>
-    <div class="pc-card-wrap">
-      @if (midSrcdoc()) {
-        <iframe [srcdoc]="midSrcdoc()!"
-                class="pc-iframe pc-iframe--mid"
-                scrolling="no" frameborder="0"></iframe>
-      }
+    <div class="pc-card-col">
+      <app-user-mid-card [card]="previewMidCard()!" />
+      <button class="btn-secondary" (click)="copyLink('mid')">{{ 'public_profile.copy_link' | transloco }}</button>
     </div>
-    <button class="btn-secondary" (click)="copyLink('mid')">
-      {{ copiedMid() ? ('public_profile.copied_link' | transloco) : ('public_profile.copy_link' | transloco) }}
-    </button>
   </section>
 
-
-  <!-- ═══ CARD 3 — MINI WHATSAPP (360 × 160 px) ═══ -->
   <section class="pc-section">
-    <h2 class="pc-section-title">{{ 'public_profile.card_mini_title' | transloco }}</h2>
+    <h2 class="section-title">{{ 'public_profile.card_mini_title' | transloco }}</h2>
     <div class="pc-bg-input">
       <label class="pc-bg-label">{{ 'public_profile.bg_url' | transloco }}</label>
       <input class="pc-bg-field" type="text" [value]="miniBg()"
              (input)="miniBg.set($any($event.target).value)"
              [placeholder]="'public_profile.bg_url_ph' | transloco" />
     </div>
-    <div class="pc-card-wrap">
-      @if (miniSrcdoc()) {
-        <iframe [srcdoc]="miniSrcdoc()!"
-                class="pc-iframe pc-iframe--mini"
-                scrolling="no" frameborder="0"></iframe>
-      }
+    <div class="pc-card-col">
+      <app-user-mini-card [card]="previewMiniCard()!" />
+      <button class="btn-secondary" (click)="copyLink('mini')">{{ 'public_profile.copy_link' | transloco }}</button>
     </div>
-    <button class="btn-secondary" (click)="copyLink('mini')">
-      {{ copiedMini() ? ('public_profile.copied_link' | transloco) : ('public_profile.copy_link' | transloco) }}
-    </button>
   </section>
 
 }

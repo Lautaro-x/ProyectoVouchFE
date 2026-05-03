@@ -448,7 +448,12 @@
     "unfollow_title": "Smettere di seguire",
     "unfollow_confirm": "Sei sicuro di voler smettere di seguire {{ name }}?",
     "not_found": "Utente non trovato.",
-    "you_follow": "Seguendo"
+    "you_follow": "Seguendo",
+    "copy_dialog_title": "Link copiato",
+    "copy_dialog_big": "Il link è stato copiato per poter incorporare la tua carta di presentazione di grandi dimensioni (720 × 430 px).",
+    "copy_dialog_mid": "Il link è stato copiato per poter incorporare la tua carta di presentazione di medie dimensioni (480 × 480 px).",
+    "copy_dialog_mini": "Il link è stato copiato per poter incorporare la tua carta di presentazione mini (360 × 160 px).",
+    "save_bg_hint": "Salva i fondi di tutte e tre le carte contemporaneamente."
   },
   "badges": {
     "nav": "Obiettivi",

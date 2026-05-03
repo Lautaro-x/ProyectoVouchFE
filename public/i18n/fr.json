@@ -448,7 +448,12 @@
     "unfollow_title": "Ne plus suivre",
     "unfollow_confirm": "Êtes-vous sûr de vouloir ne plus suivre {{ name }} ?",
     "not_found": "Utilisateur introuvable.",
-    "you_follow": "Abonné"
+    "you_follow": "Abonné",
+    "copy_dialog_title": "Lien copié",
+    "copy_dialog_big": "Le lien a été copié pour que vous puissiez intégrer votre carte de présentation grande taille (720 × 430 px).",
+    "copy_dialog_mid": "Le lien a été copié pour que vous puissiez intégrer votre carte de présentation taille moyenne (480 × 480 px).",
+    "copy_dialog_mini": "Le lien a été copié pour que vous puissiez intégrer votre carte de présentation mini (360 × 160 px).",
+    "save_bg_hint": "Enregistre les fonds des trois cartes simultanément."
   },
   "badges": {
     "nav": "Succès",
