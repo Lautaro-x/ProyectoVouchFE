@@ -4,7 +4,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
-import { UserCardData } from '../../../core/models/user.model';
+import { UserCardData, SOCIAL_NETWORK_MAP } from '../../../core/models/user.model';
 
 
 @Component({
@@ -57,4 +57,5 @@ export class MiniCardPageComponent implements OnInit {
   }
 
   onAvatarError(): void { this.avatarBroken.set(true); }
+  netSvgPath(key: string): string { return SOCIAL_NETWORK_MAP[key]?.svgPath ?? ''; }
 }

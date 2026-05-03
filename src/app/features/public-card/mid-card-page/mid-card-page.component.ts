@@ -4,7 +4,8 @@ import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ApiService } from '../../../core/services/api.service';
-import { UserCardData } from '../../../core/models/user.model';
+import { UserCardData, SOCIAL_NETWORK_MAP } from '../../../core/models/user.model';
+import { IgdbCoverPipe } from '../../../shared/pipes/igdb-cover.pipe';
 
 const REVIEW_LADDER   = ['el-critico', 'critico-maestro', 'critico-senior', 'critico-junior', 'critico-novel'];
 const FOLLOWER_LADDER = ['critico-influyente', 'critico-famoso', 'critico-fiable', 'critico-solicitado', 'critico-amigo'];
@@ -13,7 +14,7 @@ const FOLLOWER_LADDER = ['critico-influyente', 'critico-famoso', 'critico-fiable
   selector: 'app-mid-card-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslocoModule],
+  imports: [TranslocoModule, IgdbCoverPipe],
   templateUrl: './mid-card-page.component.html',
   styleUrl: './mid-card-page.component.css',
 })
@@ -29,7 +30,7 @@ export class MidCardPageComponent implements OnInit {
   readonly socialEntries = computed(() =>
     Object.entries(this.card()?.social_links ?? {}).filter(([, url]) => !!url)
   );
-  readonly summaryReviews = computed(() => this.card()?.last_reviews?.slice(0, 5) ?? []);
+  readonly summaryReviews = computed(() => this.card()?.last_reviews?.slice(0, 4) ?? []);
 
   readonly isVerified = computed(() =>
     this.card()?.badges?.includes('verificado') ?? false
@@ -73,4 +74,6 @@ export class MidCardPageComponent implements OnInit {
   }
 
   onAvatarError(): void { this.avatarBroken.set(true); }
+  gradeClass(grade: string): string { return 'grade-' + grade.replace('+', 'plus').replace('-', 'minus').toLowerCase(); }
+  netSvgPath(key: string): string { return SOCIAL_NETWORK_MAP[key]?.svgPath ?? ''; }
 }

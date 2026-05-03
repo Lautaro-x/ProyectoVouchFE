@@ -12,10 +12,10 @@ interface AuthResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly TOKEN_KEY = 'auth_token';
-  private readonly USER_KEY = 'auth_user';
+  private readonly TOKEN_KEY  = 'auth_token';
+  private readonly USER_KEY   = 'auth_user';
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly http = inject(HttpClient);
+  private readonly http       = inject(HttpClient);
 
   readonly currentUser = signal<User | null>(this.loadUserFromStorage());
 
@@ -51,6 +51,20 @@ export class AuthService {
     return !!this.getToken();
   }
 
+  activatePersistentSession(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const token = sessionStorage.getItem(this.TOKEN_KEY) ?? localStorage.getItem(this.TOKEN_KEY);
+    const user  = sessionStorage.getItem(this.USER_KEY)  ?? localStorage.getItem(this.USER_KEY);
+    if (token) localStorage.setItem(this.TOKEN_KEY, token);
+    if (user)  localStorage.setItem(this.USER_KEY, user);
+  }
+
+  deactivatePersistentSession(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.USER_KEY);
+  }
+
   private loadUserFromStorage(): User | null {
     const raw = this.getItem(this.USER_KEY);
     return raw ? JSON.parse(raw) : null;
@@ -58,16 +72,20 @@ export class AuthService {
 
   private getItem(key: string): string | null {
     if (!isPlatformBrowser(this.platformId)) return null;
-    return localStorage.getItem(key);
+    return sessionStorage.getItem(key) ?? localStorage.getItem(key);
   }
 
   private setItem(key: string, value: string): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    localStorage.setItem(key, value);
+    sessionStorage.setItem(key, value);
+    if (localStorage.getItem(this.TOKEN_KEY)) {
+      localStorage.setItem(key, value);
+    }
   }
 
   private removeItem(key: string): void {
     if (!isPlatformBrowser(this.platformId)) return;
+    sessionStorage.removeItem(key);
     localStorage.removeItem(key);
   }
 }

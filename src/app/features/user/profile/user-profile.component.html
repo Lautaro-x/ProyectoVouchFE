@@ -3,7 +3,6 @@
 } @else {
   <div class="profile-layout">
 
-    <!-- Left sticky card -->
     <aside class="profile-card">
       <div class="profile-avatar-wrap">
         @if (avatarUrl() && !avatarBroken()) {
@@ -33,13 +32,10 @@
           }
         </div>
       }
-
     </aside>
 
-    <!-- Right sections -->
     <div class="profile-sections">
 
-      <!-- Identity -->
       <div class="profile-section">
         <h2 class="section-title">{{ 'profile.section_identity' | transloco }}</h2>
 
@@ -56,7 +52,13 @@
         </div>
 
         <div class="field">
-          <label class="field-label">{{ 'profile.avatar_label' | transloco }}</label>
+          <div class="field-label-row">
+            <label class="field-label">{{ 'profile.avatar_label' | transloco }}</label>
+            <span class="field-tooltip">
+              <span class="field-tooltip-icon">ⓘ</span>
+              <span class="field-tooltip-text">{{ 'profile.avatar_tooltip' | transloco }}</span>
+            </span>
+          </div>
           <input
             class="field-input"
             type="text"
@@ -65,45 +67,70 @@
             [placeholder]="'profile.avatar_ph' | transloco"
           />
         </div>
-      </div>
-
-      <!-- Personal data -->
-      <div class="profile-section">
-        <h2 class="section-title">{{ 'profile.section_personal' | transloco }}</h2>
 
         <div class="field">
           <label class="field-label">{{ 'profile.email_label' | transloco }}</label>
-          <input class="field-input field-input--readonly" type="email" [value]="email()" readonly />
+          <div class="field-locked">
+            <svg class="field-lock-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1a5 5 0 0 1 5 5v2h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h1V6a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3z"/>
+            </svg>
+            <span class="field-locked-value">{{ email() }}</span>
+          </div>
         </div>
       </div>
 
-      <!-- Social links -->
       <div class="profile-section">
         <h2 class="section-title">{{ 'profile.section_social' | transloco }}</h2>
 
-        @for (net of SOCIAL_NETWORKS; track net.key) {
-          <div class="social-row">
-            <span class="social-label">{{ net.label }}</span>
-            <input
-              class="field-input social-input"
-              type="text"
-              [value]="getSocialUrl(net.key)"
-              (input)="setSocialUrl(net.key, $any($event.target).value)"
-              [placeholder]="'profile.social_url_ph' | transloco"
-            />
-            <label class="social-toggle">
+        @for (entry of socialEntries(); track entry.key; let i = $index) {
+          <div class="social-entry">
+            <div class="net-select" [class.net-select--open]="openSelectorIdx() === i">
+              <button type="button" class="net-select-trigger" (click)="toggleSelector($event, i)">
+                <svg class="net-icon" viewBox="0 0 24 24"><path [attr.d]="netSvgPath(entry.key)"/></svg>
+                <span>{{ NET_MAP[entry.key]?.label }}</span>
+                <svg class="net-chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+              </button>
+              @if (openSelectorIdx() === i) {
+                <div class="net-select-panel" (click)="$event.stopPropagation()">
+                  @for (net of availableNets(entry.key); track net.key) {
+                    <button type="button" class="net-option" [class.net-option--active]="net.key === entry.key"
+                            (click)="selectNet($event, i, net.key)">
+                      <svg class="net-icon" viewBox="0 0 24 24"><path [attr.d]="net.svgPath"/></svg>
+                      <span>{{ net.label }}</span>
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="social-url-wrap">
               <input
-                type="checkbox"
-                [checked]="getSocialShared(net.key)"
-                (change)="setSocialShared(net.key, $any($event.target).checked)"
+                class="field-input"
+                [class.field-input--error]="!entry.valid"
+                type="text"
+                [value]="entry.url"
+                (input)="setNetworkUrl(i, $any($event.target).value)"
+                [placeholder]="'profile.social_url_ph' | transloco"
               />
-              <span>{{ 'profile.social_shared' | transloco }}</span>
-            </label>
+              @if (!entry.valid) {
+                <span class="social-url-error">{{ 'profile.social_url_invalid' | transloco }}</span>
+              }
+            </div>
+
+            <button type="button" class="btn-remove" [title]="'profile.social_remove' | transloco"
+                    (click)="removeNetwork(i)">✕</button>
           </div>
+        }
+
+        @if (canAddNetwork()) {
+          <button type="button" class="btn-add-network" (click)="addNetwork()">
+            + {{ 'profile.social_add' | transloco }}
+          </button>
+        } @else {
+          <p class="social-max-msg">{{ 'profile.social_max' | transloco }}</p>
         }
       </div>
 
-      <!-- Verification CTA -->
       @if (canRequestVerification()) {
         <div class="profile-section">
           <h2 class="section-title">{{ 'profile.section_verification' | transloco }}</h2>
@@ -114,7 +141,6 @@
         </div>
       }
 
-      <!-- Actions -->
       <div class="profile-actions">
         <button class="btn-primary" (click)="save()" [disabled]="saving()">
           @if (saving()) {

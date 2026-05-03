@@ -2,7 +2,7 @@ import {
   Component, Input, Output, EventEmitter, inject, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslocoService, TranslocoModule } from '@jsverse/transloco';
-import { UserCardData, UserCardReview } from '../../../core/models/user.model';
+import { UserCardData, UserCardReview, SOCIAL_NETWORK_MAP } from '../../../core/models/user.model';
 import { IgdbCoverPipe } from '../../pipes/igdb-cover.pipe';
 
 const GRADE_HEX: Record<string, string> = {
@@ -67,11 +67,13 @@ export class UserProfileCardComponent {
   }
 
   get fullReviews(): UserCardReview[] {
-    return this.card?.last_reviews?.slice(0, 3) ?? [];
+    return this.card?.last_reviews?.slice(0, 4) ?? [];
   }
 
   onAvatarError(): void { this.avatarBroken.set(true); }
   onFollowClick(): void { this.followClick.emit(); }
-  gradeHex(grade: string): string  { return GRADE_HEX[grade] ?? '#9e9e9e'; }
-  badgeLabel(slug: string): string { return this.transloco.translate(`badges.${slug}`); }
+  gradeHex(grade: string): string   { return GRADE_HEX[grade] ?? '#9e9e9e'; }
+  gradeClass(grade: string): string { return 'grade-' + grade.replace('+', 'plus').replace('-', 'minus').toLowerCase(); }
+  badgeLabel(slug: string): string  { return this.transloco.translate(`badges.${slug}`); }
+  netSvgPath(key: string): string   { return SOCIAL_NETWORK_MAP[key]?.svgPath ?? ''; }
 }

@@ -101,7 +101,6 @@
   letter-spacing: 0.02em;
 }
 
-
 /* ── Right sections ─────────────────────────────────── */
 
 .profile-sections {
@@ -137,6 +136,12 @@
   gap: 0.35rem;
 }
 
+.field-label-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .field-label {
   font-size: 0.8rem;
   color: var(--color-text-muted);
@@ -160,64 +165,241 @@
   border-color: var(--color-accent);
 }
 
-.field-input--readonly {
+.field-input--error {
+  border-color: #ef4444;
+}
+
+/* ── Tooltip ─────────────────────────────────────────── */
+
+.field-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.field-tooltip-icon {
+  font-size: 0.78rem;
   color: var(--color-text-muted);
   cursor: default;
+  line-height: 1;
 }
 
-/* ── Toggles ─────────────────────────────────────────── */
+.field-tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  max-width: 280px;
+  white-space: normal;
+  width: max-content;
+  max-width: 240px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+  transition: opacity 0.15s;
+  z-index: 10;
+}
 
-.toggle-row {
+.field-tooltip:hover .field-tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ── Locked field ────────────────────────────────────── */
+
+.field-locked {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  cursor: pointer;
-  font-size: 0.88rem;
-  color: var(--color-text);
+  gap: 0.5rem;
+  background: var(--color-bg);
+  border: 1px dashed var(--color-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  cursor: not-allowed;
 }
 
-.toggle-row input[type="checkbox"] {
-  accent-color: var(--color-accent);
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
+.field-lock-icon {
+  width: 14px;
+  height: 14px;
+  fill: var(--color-text-muted);
+  opacity: 0.6;
   flex-shrink: 0;
 }
 
-/* ── Social rows ─────────────────────────────────────── */
+.field-locked-value {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  opacity: 0.7;
+  user-select: none;
+}
 
-.social-row {
+/* ── Social entries ──────────────────────────────────── */
+
+.social-entry {
   display: grid;
-  grid-template-columns: 90px 1fr auto;
-  align-items: center;
-  gap: 0.75rem;
+  grid-template-columns: 160px 1fr 32px;
+  align-items: start;
+  gap: 0.6rem;
 }
 
-.social-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-.social-input {
+.social-url-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
   min-width: 0;
 }
 
-.social-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  cursor: pointer;
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  white-space: nowrap;
+.social-url-error {
+  font-size: 0.73rem;
+  color: #ef4444;
 }
 
-.social-toggle input[type="checkbox"] {
-  accent-color: var(--color-accent);
-  width: 14px;
-  height: 14px;
+/* ── Network selector ────────────────────────────────── */
+
+.net-select {
+  position: relative;
+}
+
+.net-select-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-family: inherit;
   cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s;
+}
+
+.net-select-trigger:hover,
+.net-select--open .net-select-trigger {
+  border-color: var(--color-accent);
+}
+
+.net-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.net-chevron {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  margin-left: auto;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.net-select-trigger span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.net-select-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.3);
+  z-index: 100;
+  overflow: hidden;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.net-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.net-option:hover {
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+
+.net-option--active {
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent);
+}
+
+/* ── Remove button ───────────────────────────────────── */
+
+.btn-remove {
+  width: 32px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-remove:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* ── Add network button ──────────────────────────────── */
+
+.btn-add-network {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  border-radius: 6px;
+  padding: 0.4rem 0.9rem;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-add-network:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.social-max-msg {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
 }
 
 /* ── Settings hint ───────────────────────────────────── */

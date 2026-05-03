@@ -2,41 +2,62 @@
   <p class="consents-loading">{{ 'common.loading' | transloco }}</p>
 } @else {
   <div class="consents-layout">
-    <h1 class="consents-title">{{ 'consents.title' | transloco }}</h1>
+    <h1 class="section-title">{{ 'consents.title' | transloco }}</h1>
     <p class="consents-intro">{{ 'consents.intro' | transloco }}</p>
 
     <div class="consent-list">
 
       <div class="consent-item">
-        <label class="consent-label">
-          <input
-            type="checkbox"
-            [checked]="showEmail()"
-            (change)="showEmail.set($any($event.target).checked)"
-          />
-          <span class="consent-text">
-            <strong>{{ 'consents.show_email_label' | transloco }}</strong>
-            <span class="consent-desc">{{ 'consents.show_email_desc' | transloco }}</span>
-          </span>
+        <span class="consent-text">
+          <strong>{{ 'consents.show_email_label' | transloco }}</strong>
+          <span class="consent-desc">{{ 'consents.show_email_desc' | transloco }}</span>
+        </span>
+        <label class="toggle-switch">
+          <input type="checkbox" [checked]="showEmail()" (change)="showEmail.set($any($event.target).checked)" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="consent-item">
+        <span class="consent-text">
+          <strong>{{ 'consents.notify_email_label' | transloco }}</strong>
+          <span class="consent-desc">{{ 'consents.notify_email_desc' | transloco }}</span>
+        </span>
+        <label class="toggle-switch">
+          <input type="checkbox" [checked]="notifyEmail()" (change)="notifyEmail.set($any($event.target).checked)" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="consent-item">
+        <span class="consent-text">
+          <strong>{{ 'consents.session_persistent_label' | transloco }}</strong>
+          <span class="consent-desc">{{ 'consents.session_persistent_desc' | transloco }}</span>
+        </span>
+        <label class="toggle-switch">
+          <input type="checkbox" [checked]="sessionPersistent()" (change)="sessionPersistent.set($any($event.target).checked)" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
         </label>
       </div>
 
       <div class="consent-item" [class.consent-item--locked]="!isVerified()">
-        <label class="consent-label">
-          <input
-            type="checkbox"
-            [checked]="consentFollower()"
-            [disabled]="!isVerified()"
-            (change)="consentFollower.set($any($event.target).checked)"
-          />
-          <span class="consent-text">
-            <strong>{{ 'consents.follower_score_label' | transloco }}</strong>
-            <span class="consent-desc">{{ 'consents.follower_score_desc' | transloco }}</span>
-            @if (!isVerified()) {
-              <span class="consent-locked">{{ 'consents.follower_score_only_verified' | transloco }}</span>
-            }
-          </span>
-        </label>
+        <span class="consent-text">
+          <strong>{{ 'consents.follower_score_label' | transloco }}</strong>
+          <span class="consent-desc">{{ 'consents.follower_score_desc' | transloco }}</span>
+          @if (!isVerified()) {
+            <span class="consent-locked">{{ 'consents.follower_score_only_verified' | transloco }}</span>
+          }
+        </span>
+        @if (!isVerified()) {
+          <svg class="consent-lock-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 1a5 5 0 0 1 5 5v2h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h1V6a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3z"/>
+          </svg>
+        } @else {
+          <label class="toggle-switch">
+            <input type="checkbox" [checked]="consentFollower()" (change)="consentFollower.set($any($event.target).checked)" />
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </label>
+        }
       </div>
 
     </div>
