@@ -106,6 +106,12 @@ export interface FollowersResponse {
   followers: UserCardData[];
 }
 
+export interface FollowingResponse {
+  total: number;
+  last_page: number;
+  following: UserCardData[];
+}
+
 export interface SocialNetworkDef {
   key: string;
   label: string;

@@ -626,5 +626,15 @@
   },
   "ads": {
     "label": "Publicidade"
+  },
+  "following": {
+    "title": "usuários de confiança",
+    "nav": "De confiança",
+    "search_ph": "Pesquisar utilizador...",
+    "sort_date_desc": "Mais recente primeiro",
+    "sort_date_asc": "Mais antigo primeiro",
+    "sort_name_asc": "Nome (A-Z)",
+    "no_results": "Sem resultados",
+    "empty": "Ainda não segues ninguém"
   }
 }

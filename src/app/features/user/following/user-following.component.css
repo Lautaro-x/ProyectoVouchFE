@@ -1,0 +1,110 @@
+/* ── Title count ─────────────────────────────────── */
+
+.uf-total {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Toolbar ─────────────────────────────────────── */
+
+.uf-toolbar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.uf-search {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  width: 220px;
+  transition: border-color 0.15s;
+}
+
+.uf-search:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.uf-sort {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.45rem 0.6rem;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.uf-sort:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+/* ── States ──────────────────────────────────────── */
+
+.uf-loading,
+.uf-empty {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+/* ── Grid ────────────────────────────────────────── */
+
+.uf-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.uf-grid li {
+  flex: 0 0 360px;
+}
+
+/* ── Pagination ──────────────────────────────────── */
+
+.uf-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text-muted);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s;
+  min-width: 30px;
+}
+
+.page-btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.page-btn--active {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}

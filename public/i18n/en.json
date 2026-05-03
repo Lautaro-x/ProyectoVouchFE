@@ -636,5 +636,15 @@
   },
   "ads": {
     "label": "Advertisement"
+  },
+  "following": {
+    "title": "trusted users",
+    "nav": "Trusted",
+    "search_ph": "Search user...",
+    "sort_date_desc": "Newest first",
+    "sort_date_asc": "Oldest first",
+    "sort_name_asc": "Name (A-Z)",
+    "no_results": "No results",
+    "empty": "You are not following anyone yet"
   }
 }

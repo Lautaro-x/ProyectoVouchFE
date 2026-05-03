@@ -626,5 +626,15 @@
   },
   "ads": {
     "label": "Pubblicità"
+  },
+  "following": {
+    "title": "utenti di fiducia",
+    "nav": "Di fiducia",
+    "search_ph": "Cerca utente...",
+    "sort_date_desc": "Più recente prima",
+    "sort_date_asc": "Più vecchio prima",
+    "sort_name_asc": "Nome (A-Z)",
+    "no_results": "Nessun risultato",
+    "empty": "Non stai ancora seguendo nessuno"
   }
 }

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { FeaturedGameData, Genre, IgdbSuggestion, PaginatedResponse, ProductCard, ProductDetail, ProductReview, ReviewEditFormData, ReviewFormData, ReviewShareData, TrailerSectionResponse, UpcomingGame, UserReviewCard } from '../models/product.model';
-import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, SocialLinks, UserCardData, UserConsents, UserProfile, VerificationRequest } from '../models/user.model';
+import { ActiveAnnouncement, ActiveSurvey, BadgesProgress, FollowersResponse, FollowingResponse, SocialLinks, UserCardData, UserConsents, UserProfile, VerificationRequest } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -91,6 +91,12 @@ export class ApiService {
 
   getFollowers(search = '', sort = 'date_desc', page = 1): Observable<FollowersResponse> {
     return this.http.get<FollowersResponse>(`${this.base}/user/followers`, {
+      params: { search, sort, page: String(page) },
+    });
+  }
+
+  getFollowing(search = '', sort = 'date_desc', page = 1): Observable<FollowingResponse> {
+    return this.http.get<FollowingResponse>(`${this.base}/user/following`, {
       params: { search, sort, page: String(page) },
     });
   }

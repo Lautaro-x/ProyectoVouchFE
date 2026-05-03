@@ -1,0 +1,42 @@
+<h1 class="section-title">
+  <span class="uf-total">{{ total() }}</span>&nbsp;{{ 'following.title' | transloco }}
+</h1>
+
+<div class="uf-toolbar">
+  <input
+    class="uf-search"
+    type="search"
+    [placeholder]="'following.search_ph' | transloco"
+    [value]="search()"
+    (input)="onSearch($any($event.target).value)"
+  />
+  <select class="uf-sort" [value]="sort()" (change)="onSort($any($event.target).value)">
+    <option value="date_desc">{{ 'following.sort_date_desc' | transloco }}</option>
+    <option value="date_asc">{{ 'following.sort_date_asc' | transloco }}</option>
+    <option value="name_asc">{{ 'following.sort_name_asc' | transloco }}</option>
+  </select>
+</div>
+
+@if (loading()) {
+  <p class="uf-loading">{{ 'common.loading' | transloco }}</p>
+} @else if (!following().length) {
+  <p class="uf-empty">{{ search() ? ('following.no_results' | transloco) : ('following.empty' | transloco) }}</p>
+} @else {
+  <ul class="uf-grid">
+    @for (f of following(); track f.id) {
+      <li>
+        <app-user-mini-card [card]="f" />
+      </li>
+    }
+  </ul>
+
+  @if (lastPage() > 1) {
+    <div class="uf-pagination">
+      <button class="page-btn" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">‹</button>
+      @for (p of pages(); track p) {
+        <button class="page-btn" [class.page-btn--active]="p === currentPage()" (click)="goToPage(p)">{{ p }}</button>
+      }
+      <button class="page-btn" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === lastPage()">›</button>
+    </div>
+  }
+}
