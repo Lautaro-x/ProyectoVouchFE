@@ -1,14 +1,3 @@
-.reviews-header {
-  margin-bottom: 1.25rem;
-}
-
-.reviews-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--color-text);
-  margin: 0;
-}
-
 /* ── Media type tabs ─────────────────────────────── */
 
 .media-tabs {
@@ -43,8 +32,9 @@
 .reviews-toolbar {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .reviews-search {
@@ -55,7 +45,7 @@
   color: var(--color-text);
   font-size: 0.9rem;
   font-family: inherit;
-  width: 260px;
+  width: 220px;
   transition: border-color 0.15s;
 }
 
@@ -64,9 +54,62 @@
   border-color: var(--color-accent);
 }
 
+.reviews-sort {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.45rem 0.6rem;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.reviews-sort:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
 .reviews-count {
   font-size: 0.8rem;
   color: var(--color-text-muted);
+  margin-left: auto;
+}
+
+/* ── Grade filter chips ───────────────────────────── */
+
+.grade-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.grade-filter-btn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  transition: border-color 0.15s, background 0.15s;
+  line-height: 1.6;
+}
+
+.grade-filter-btn:hover {
+  border-color: var(--color-accent);
+}
+
+.grade-filter-btn--active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-subtle);
+}
+
+.grade-filter-btn .grade {
+  font-size: 0.8rem;
 }
 
 /* ── States ─────────────────────────────────────── */
@@ -103,28 +146,22 @@
   transition: opacity 0.15s;
 }
 
-.reviews-empty-link:hover {
-  opacity: 0.85;
-}
+.reviews-empty-link:hover { opacity: 0.85; }
 
 /* ── Grid ────────────────────────────────────────── */
 
 .reviews-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   gap: 0.5rem;
 }
 
 @media (max-width: 1024px) {
-  .reviews-grid {
-    grid-template-columns: repeat(8, 1fr);
-  }
+  .reviews-grid { grid-template-columns: repeat(7, 1fr); }
 }
 
 @media (max-width: 600px) {
-  .reviews-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  .reviews-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* ── Review card ─────────────────────────────────── */
@@ -138,12 +175,12 @@
   text-decoration: none;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform 0.18s, box-shadow 0.18s;
 }
 
 .review-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-black) 30%, transparent);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--color-black) 40%, transparent);
 }
 
 .review-card-cover {
@@ -157,22 +194,75 @@
   background: var(--color-border);
 }
 
-.review-card-score {
+/* ── Hover overlay ───────────────────────────────── */
+
+.review-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.5)  55%,
+    transparent         100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8px 7px 7px;
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+
+.review-card:hover .review-card-overlay { opacity: 1; }
+
+.review-card-title {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 5px;
+  line-height: 1.3;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.review-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.review-card-grade {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.review-card-date {
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.65);
+  white-space: nowrap;
+}
+
+/* ── Always-visible badge ────────────────────────── */
+
+.review-card-badge {
   position: absolute;
   bottom: 6px;
   right: 6px;
-  min-width: 28px;
-  height: 28px;
-  padding: 0 4px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: var(--color-black);
-  font-size: 0.65rem;
-  font-weight: 700;
+  background: rgba(0, 0, 0, 0.82);
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
+  transition: opacity 0.18s;
+  pointer-events: none;
 }
+
+.review-card:hover .review-card-badge { opacity: 0; }
+
+.review-card-badge .grade { font-size: 0.72rem; }
 
 /* ── Pagination ──────────────────────────────────── */
 

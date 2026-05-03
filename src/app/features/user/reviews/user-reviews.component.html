@@ -1,6 +1,4 @@
-<div class="reviews-header">
-  <h1 class="reviews-title">{{ 'reviews.title' | transloco }}</h1>
-</div>
+<h1 class="section-title">{{ 'reviews.title' | transloco }}</h1>
 
 <div class="media-tabs">
   <button class="media-tab media-tab--active">{{ 'reviews.tab_games' | transloco }}</button>
@@ -14,14 +12,34 @@
     [value]="search()"
     (input)="onSearch($any($event.target).value)"
   />
+  <select class="reviews-sort" [value]="sort()" (change)="onSort($any($event.target).value)">
+    <option value="date_desc">{{ 'reviews.sort_date_desc' | transloco }}</option>
+    <option value="date_asc">{{ 'reviews.sort_date_asc' | transloco }}</option>
+    <option value="score_desc">{{ 'reviews.sort_score_desc' | transloco }}</option>
+    <option value="score_asc">{{ 'reviews.sort_score_asc' | transloco }}</option>
+    <option value="title_asc">{{ 'reviews.sort_title_asc' | transloco }}</option>
+  </select>
   @if (!loading()) {
     <span class="reviews-count">{{ total() }} {{ 'reviews.results' | transloco }}</span>
   }
 </div>
 
+<div class="grade-filters">
+  <button class="grade-filter-btn" [class.grade-filter-btn--active]="gradeFilter() === ''"
+          (click)="onGradeFilter('')">
+    {{ 'reviews.filter_all' | transloco }}
+  </button>
+  @for (g of GRADES; track g) {
+    <button class="grade-filter-btn" [class.grade-filter-btn--active]="gradeFilter() === g"
+            (click)="onGradeFilter(g)">
+      <span [class]="'grade ' + gradeClass(g)">{{ g }}</span>
+    </button>
+  }
+</div>
+
 @if (loading()) {
   <p class="reviews-loading">{{ 'common.loading' | transloco }}</p>
-} @else if (reviews().length === 0 && !search()) {
+} @else if (reviews().length === 0 && !search() && !gradeFilter()) {
   <div class="reviews-empty">
     <p class="reviews-empty-text">{{ 'reviews.empty_games' | transloco }}</p>
     <a class="reviews-empty-link" routerLink="/games">{{ 'reviews.empty_cta' | transloco }}</a>
@@ -33,11 +51,23 @@
     @for (review of reviews(); track review.id) {
       <a class="review-card" [routerLink]="['/product', review.product.type, review.product.slug]">
         @if (review.product.cover_image) {
-          <img class="review-card-cover" [src]="review.product.cover_image | igdbCover:'small'" [alt]="review.product.title" loading="lazy" decoding="async" />
+          <img class="review-card-cover" [src]="review.product.cover_image | igdbCover:'small'"
+               [alt]="review.product.title" loading="lazy" decoding="async" />
         } @else {
           <div class="review-card-cover review-card-cover--placeholder"></div>
         }
-        <span class="review-card-score" [class]="'review-card-score ' + gradeClass(review.letter_grade)">{{ review.letter_grade }}</span>
+
+        <div class="review-card-overlay">
+          <p class="review-card-title">{{ review.product.title }}</p>
+          <div class="review-card-meta">
+            <span [class]="'grade ' + gradeClass(review.letter_grade) + ' review-card-grade'">{{ review.letter_grade }}</span>
+            <span class="review-card-date">{{ formatDate(review.created_at) }}</span>
+          </div>
+        </div>
+
+        <div class="review-card-badge">
+          <span [class]="'grade ' + gradeClass(review.letter_grade)">{{ review.letter_grade }}</span>
+        </div>
       </a>
     }
   </div>
@@ -46,11 +76,7 @@
     <div class="reviews-pagination">
       <button class="page-btn" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">‹</button>
       @for (p of pages(); track p) {
-        <button
-          class="page-btn"
-          [class.page-btn--active]="p === currentPage()"
-          (click)="goToPage(p)"
-        >{{ p }}</button>
+        <button class="page-btn" [class.page-btn--active]="p === currentPage()" (click)="goToPage(p)">{{ p }}</button>
       }
       <button class="page-btn" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === lastPage()">›</button>
     </div>

@@ -486,7 +486,13 @@
         "results": "resenhas",
         "empty_games": "Você ainda não escreveu nenhuma resenha. Esta é a sua chance de criar a primeira!",
         "empty_cta": "Ir para jogos",
-        "no_results": "Nenhuma resenha encontrada com esse nome."
+        "no_results": "Nenhuma resenha encontrada com esse nome.",
+        "sort_date_desc": "Mais recentes",
+        "sort_date_asc": "Mais antigas",
+        "sort_score_desc": "Melhor nota",
+        "sort_score_asc": "Pior nota",
+        "sort_title_asc": "Título A-Z",
+        "filter_all": "Todas"
     },
     "followers": {
         "nav": "Seguidores",

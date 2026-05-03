@@ -486,7 +486,13 @@
         "results": "avis",
         "empty_games": "Vous n'avez encore écrit aucun avis. C'est l'occasion de créer le premier !",
         "empty_cta": "Aller aux jeux",
-        "no_results": "Aucun avis trouvé avec ce nom."
+        "no_results": "Aucun avis trouvé avec ce nom.",
+        "sort_date_desc": "Plus récents",
+        "sort_date_asc": "Plus anciens",
+        "sort_score_desc": "Meilleure note",
+        "sort_score_asc": "Note la plus basse",
+        "sort_title_asc": "Titre A-Z",
+        "filter_all": "Toutes"
     },
     "followers": {
         "nav": "Abonnés",

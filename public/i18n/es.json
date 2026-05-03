@@ -482,6 +482,12 @@
                     "tab_games":  "Juegos",
                     "search_ph":  "Buscar por nombre de juego...",
                     "results":  "reseñas",
+                    "sort_date_desc":  "Más recientes",
+                    "sort_date_asc":  "Más antiguas",
+                    "sort_score_desc":  "Mejor nota",
+                    "sort_score_asc":  "Peor nota",
+                    "sort_title_asc":  "Título A-Z",
+                    "filter_all":  "Todas",
                     "empty_games":  "Aún no has escrito ninguna reseña. ¡Esta es tu oportunidad de crear la primera!",
                     "empty_cta":  "Ir a juegos",
                     "no_results":  "No se encontraron reseñas con ese nombre."

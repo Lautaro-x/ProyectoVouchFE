@@ -58,9 +58,10 @@ export class ApiService {
     return this.http.put<void>(`${this.base}/reviews/${reviewId}`, data);
   }
 
-  getUserGameReviews(search: string, page: number): Observable<PaginatedResponse<UserReviewCard>> {
-    const params: Record<string, string | number> = { page };
+  getUserGameReviews(search: string, page: number, sort: string, grade: string): Observable<PaginatedResponse<UserReviewCard>> {
+    const params: Record<string, string | number> = { page, sort };
     if (search) params['search'] = search;
+    if (grade)  params['grade']  = grade;
     return this.http.get<PaginatedResponse<UserReviewCard>>(`${this.base}/user/reviews/games`, { params });
   }
 

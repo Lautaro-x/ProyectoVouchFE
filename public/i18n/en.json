@@ -494,6 +494,12 @@
                     "tab_games":  "Games",
                     "search_ph":  "Search by game name...",
                     "results":  "reviews",
+                    "sort_date_desc":  "Most recent",
+                    "sort_date_asc":  "Oldest first",
+                    "sort_score_desc":  "Best grade",
+                    "sort_score_asc":  "Worst grade",
+                    "sort_title_asc":  "Title A-Z",
+                    "filter_all":  "All",
                     "empty_games":  "You haven\u0027t written any review yet. This is your chance to create your first one!",
                     "empty_cta":  "Go to games",
                     "no_results":  "No reviews found with that name."
