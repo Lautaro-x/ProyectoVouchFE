@@ -48,8 +48,8 @@
   "product": {
     "score_global": "Usuários",
     "score_pro": "Críticos",
-    "score_trust": "Nota confiável",
-    "score_follower": "Nota dos meus seguidores",
+    "score_trust": "Nota Vouch",
+    "score_follower": "Nota dos meus Vouches",
     "description": "Descrição",
     "development": "Desenvolvimento",
     "developer": "Desenvolvedor",
@@ -437,18 +437,18 @@
     "saving_bg": "Salvando...",
     "saved_bg": "Salvo!",
     "reviews_label": "resenhas",
-    "followers_label": "seguidores",
+    "followers_label": "Vouchers",
     "last_reviews": "Minhas últimas resenhas",
-    "fiarme": "Confiar",
+    "fiarme": "Vouch",
     "fiarme_self": "Seu perfil",
-    "following": "Você confia neste crítico",
+    "following": "Vouched",
     "copy_link": "Copiar link",
     "copied_link": "✓ Link copiado",
     "view_profile": "Ver perfil completo →",
-    "unfollow_title": "Deixar de seguir",
-    "unfollow_confirm": "Tem certeza que quer deixar de seguir {{ name }}?",
+    "unfollow_title": "Unvouch",
+    "unfollow_confirm": "Tem certeza que quer fazer Unvouch de {{ name }}?",
     "not_found": "Utilizador não encontrado.",
-    "you_follow": "Seguindo",
+    "you_follow": "Vouched",
     "copy_dialog_title": "Link copiado",
     "copy_dialog_big": "O link foi copiado para que possa incorporar o seu cartão de apresentação em tamanho grande (720 × 430 px).",
     "copy_dialog_mid": "O link foi copiado para que possa incorporar o seu cartão de apresentação em tamanho médio (480 × 480 px).",
@@ -481,11 +481,11 @@
       "critico-senior": "Escreva 50 resenhas.",
       "critico-maestro": "Escreva 100 resenhas.",
       "el-critico": "Escreva 200 resenhas.",
-      "critico-amigo": "Alcance 10 seguidores.",
-      "critico-solicitado": "Alcance 100 seguidores.",
-      "critico-fiable": "Alcance 1.000 seguidores.",
-      "critico-famoso": "Alcance 3.000 seguidores.",
-      "critico-influyente": "Alcance 6.000 seguidores."
+      "critico-amigo": "Alcance 10 Vouchers.",
+      "critico-solicitado": "Alcance 100 Vouchers.",
+      "critico-fiable": "Alcance 1.000 Vouchers.",
+      "critico-famoso": "Alcance 3.000 Vouchers.",
+      "critico-influyente": "Alcance 6.000 Vouchers."
     }
   },
   "reviews": {
@@ -505,10 +505,10 @@
     "filter_all": "Todas"
   },
   "followers": {
-    "nav": "Seguidores",
-    "title": "seguidores",
-    "empty": "Você ainda não tem seguidores.",
-    "no_results": "Nenhum seguidor encontrado com esse nome.",
+    "nav": "Vouchers",
+    "title": "Vouchers",
+    "empty": "Você ainda não tem Vouchers.",
+    "no_results": "Nenhum Voucher encontrado com esse nome.",
     "search_ph": "Pesquisar por nome...",
     "sort_date_desc": "Mais recentes",
     "sort_date_asc": "Mais antigos",
@@ -520,14 +520,14 @@
     "intro": "Controle quais dados seus são visíveis para outros usuários.",
     "show_email_label": "Mostrar email no meu perfil público",
     "show_email_desc": "Seu endereço de email ficará visível no seu perfil público.",
-    "follower_score_label": "Ver nota dos usuários que confiam em mim",
-    "follower_score_desc": "Exibe nos produtos uma nota calculada com as resenhas dos seus seguidores.",
+    "follower_score_label": "Ver Vouch Score dos meus Vouchers",
+    "follower_score_desc": "Exibe nos produtos uma nota calculada com as resenhas dos seus Vouchers.",
     "follower_score_only_verified": "Disponível apenas para críticos verificados.",
     "save": "Salvar alterações",
     "saving": "Salvando...",
     "saved": "Salvo!",
     "notify_email_label": "Receber notificações por email",
-    "notify_email_desc": "Avisaremos quando alguém começar a seguir você ou houver atualizações importantes na sua conta.",
+    "notify_email_desc": "Avisaremos quando alguém te fizer Vouch ou houver atualizações importantes na sua conta.",
     "session_persistent_label": "Manter sessão ativa",
     "session_persistent_desc": "Sua sessão será mantida mesmo após fechar o navegador. Se desativado, você será desconectado ao fechar o navegador."
   },
@@ -633,13 +633,13 @@
     "label": "Publicidade"
   },
   "following": {
-    "title": "usuários de confiança",
-    "nav": "De confiança",
+    "title": "meus Vouches",
+    "nav": "Meus Vouches",
     "search_ph": "Pesquisar utilizador...",
     "sort_date_desc": "Mais recente primeiro",
     "sort_date_asc": "Mais antigo primeiro",
     "sort_name_asc": "Nome (A-Z)",
     "no_results": "Sem resultados",
-    "empty": "Ainda não segues ninguém"
+    "empty": "Ainda não fizeste Vouch de ninguém."
   }
 }

@@ -48,8 +48,8 @@
   "product": {
     "score_global": "Utilisateurs",
     "score_pro": "Critiques",
-    "score_trust": "Note fiable",
-    "score_follower": "Note de mes abonnés",
+    "score_trust": "Note Vouch",
+    "score_follower": "Note de mes Vouches",
     "description": "Description",
     "development": "Développement",
     "developer": "Développeur",
@@ -437,18 +437,18 @@
     "saving_bg": "Enregistrement...",
     "saved_bg": "Enregistré !",
     "reviews_label": "avis",
-    "followers_label": "abonnés",
+    "followers_label": "Vouchers",
     "last_reviews": "Mes derniers avis",
-    "fiarme": "Me fier",
+    "fiarme": "Vouch",
     "fiarme_self": "Votre profil",
-    "following": "Vous faites confiance à ce critique",
+    "following": "Vouched",
     "copy_link": "Copier le lien",
     "copied_link": "✓ Lien copié",
     "view_profile": "Voir le profil complet →",
-    "unfollow_title": "Ne plus suivre",
-    "unfollow_confirm": "Êtes-vous sûr de vouloir ne plus suivre {{ name }} ?",
+    "unfollow_title": "Unvouch",
+    "unfollow_confirm": "Êtes-vous sûr de vouloir faire Unvouch de {{ name }} ?",
     "not_found": "Utilisateur introuvable.",
-    "you_follow": "Abonné",
+    "you_follow": "Vouched",
     "copy_dialog_title": "Lien copié",
     "copy_dialog_big": "Le lien a été copié pour que vous puissiez intégrer votre carte de présentation grande taille (720 × 430 px).",
     "copy_dialog_mid": "Le lien a été copié pour que vous puissiez intégrer votre carte de présentation taille moyenne (480 × 480 px).",
@@ -481,11 +481,11 @@
       "critico-senior": "Écrivez 50 critiques.",
       "critico-maestro": "Écrivez 100 critiques.",
       "el-critico": "Écrivez 200 critiques.",
-      "critico-amigo": "Atteignez 10 abonnés.",
-      "critico-solicitado": "Atteignez 100 abonnés.",
-      "critico-fiable": "Atteignez 1 000 abonnés.",
-      "critico-famoso": "Atteignez 3 000 abonnés.",
-      "critico-influyente": "Atteignez 6 000 abonnés."
+      "critico-amigo": "Atteignez 10 Vouchers.",
+      "critico-solicitado": "Atteignez 100 Vouchers.",
+      "critico-fiable": "Atteignez 1 000 Vouchers.",
+      "critico-famoso": "Atteignez 3 000 Vouchers.",
+      "critico-influyente": "Atteignez 6 000 Vouchers."
     }
   },
   "reviews": {
@@ -505,10 +505,10 @@
     "filter_all": "Toutes"
   },
   "followers": {
-    "nav": "Abonnés",
-    "title": "abonnés",
-    "empty": "Vous n'avez pas encore d'abonnés.",
-    "no_results": "Aucun abonné trouvé avec ce nom.",
+    "nav": "Vouchers",
+    "title": "Vouchers",
+    "empty": "Vous n'avez pas encore de Vouchers.",
+    "no_results": "Aucun Voucher trouvé avec ce nom.",
     "search_ph": "Rechercher par nom...",
     "sort_date_desc": "Plus récents",
     "sort_date_asc": "Plus anciens",
@@ -520,14 +520,14 @@
     "intro": "Contrôlez quelles données vous sont visibles par les autres utilisateurs.",
     "show_email_label": "Afficher l'e-mail sur mon profil public",
     "show_email_desc": "Votre adresse e-mail sera visible sur votre profil public.",
-    "follower_score_label": "Afficher la note des utilisateurs qui me font confiance",
-    "follower_score_desc": "Affiche sur les produits une note calculée à partir des avis de vos abonnés.",
+    "follower_score_label": "Afficher le Vouch Score de mes Vouchers",
+    "follower_score_desc": "Affiche sur les produits une note calculée à partir des avis de vos Vouchers.",
     "follower_score_only_verified": "Disponible uniquement pour les critiques vérifiés.",
     "save": "Enregistrer les modifications",
     "saving": "Enregistrement...",
     "saved": "Enregistré !",
     "notify_email_label": "Recevoir des notifications par email",
-    "notify_email_desc": "Nous vous informerons lorsque quelqu'un commence à vous suivre ou qu'il y a des mises à jour importantes sur votre compte.",
+    "notify_email_desc": "Nous vous informerons lorsque quelqu'un fait Vouch pour vous ou qu'il y a des mises à jour importantes sur votre compte.",
     "session_persistent_label": "Rester connecté",
     "session_persistent_desc": "Votre session sera maintenue même après la fermeture du navigateur. Si désactivé, vous serez déconnecté à la fermeture du navigateur."
   },
@@ -633,13 +633,13 @@
     "label": "Publicité"
   },
   "following": {
-    "title": "utilisateurs de confiance",
-    "nav": "De confiance",
+    "title": "mes Vouches",
+    "nav": "Mes Vouches",
     "search_ph": "Rechercher un utilisateur...",
     "sort_date_desc": "Plus récent en premier",
     "sort_date_asc": "Plus ancien en premier",
     "sort_name_asc": "Nom (A-Z)",
     "no_results": "Aucun résultat",
-    "empty": "Vous ne suivez encore personne"
+    "empty": "Vous n'avez encore fait Vouch de personne."
   }
 }
