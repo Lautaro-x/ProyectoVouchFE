@@ -21,11 +21,10 @@
   text-decoration: none;
 }
 
-.brand-vouch {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--color-accent);
-  letter-spacing: 0.08em;
+.brand-logo {
+  height: 18px;
+  width: auto;
+  display: block;
 }
 
 .sidebar-nav {

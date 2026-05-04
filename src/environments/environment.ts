@@ -1,7 +1,7 @@
 export const environment = {
   baseUrl: 'http://localhost:4200',
   production: false,
-  apiUrl: 'http://192.168.1.134/ProyectoVouchBE/public/api',
+  apiUrl: 'http://localhost/ProyectoVouchBE/public/api',
   googleClientId: '1097121642430-sec2o8bm0g1ebakk45ord8fcgfln92eg.apps.googleusercontent.com',
   pressEmail: 'lautarohrodriguez@gmail.com',
   supportEmail: 'support@vouch.com',

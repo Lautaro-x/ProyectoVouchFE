@@ -25,16 +25,9 @@
 }
 
 .header-logo-img {
-  height: 32px;
+  height: 26px;
   width: auto;
   display: block;
-}
-
-.header-logo-text {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-text);
-  letter-spacing: 0.05em;
 }
 
 /* Desktop sections */
