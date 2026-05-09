@@ -1,4 +1,19 @@
 <app-breadcrumb [items]="breadcrumbs" />
 <div class="info-page">
-  <h1 class="info-title">{{ 'footer.faqs' | transloco }}</h1>
+  <h1 class="section-title">{{ 'footer.faqs' | transloco }}</h1>
+  <dl class="faq-list">
+    @for (item of items; track item.q) {
+      <div class="faq-item" [class.faq-item--open]="item.open()">
+        <dt class="faq-question" (click)="toggle(item)">
+          <span>{{ item.q | transloco }}</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </dt>
+        @if (item.open()) {
+          <dd class="faq-answer" [innerHTML]="item.a | transloco"></dd>
+        }
+      </div>
+    }
+  </dl>
 </div>
