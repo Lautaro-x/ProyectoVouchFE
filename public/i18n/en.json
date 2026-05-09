@@ -2,8 +2,8 @@
   "hero": {
     "eyebrow": "Not just another review platform",
     "title": "Your vision counts here. Your vision matters.",
-    "subtitle": "Vouch is the platform that filters the noise and gives relevance to the opinions that deserve it. Follow those whose opinion you respect and don't be swayed by those you don't.",
-    "cta": "Join and be part of Vouch"
+    "subtitle": "Pondoxa is the platform that filters the noise and gives relevance to the opinions that deserve it. Follow those whose opinion you respect and don't be swayed by those you don't.",
+    "cta": "Join and be part of Pondoxa"
   },
   "header": {
     "login": "Sign in",
@@ -50,8 +50,8 @@
   "product": {
     "score_global": "All users",
     "score_pro": "Critics",
-    "score_trust": "Vouch Score",
-    "score_follower": "My Vouches' score",
+    "score_trust": "Pondoxa Score",
+    "score_follower": "My Following Score",
     "description": "Description",
     "development": "Development",
     "developer": "Developer",
@@ -123,7 +123,7 @@
     }
   },
   "login": {
-    "title": "Welcome to Vouch",
+    "title": "Welcome to Pondoxa",
     "subtitle": "Sign in to start rating"
   },
   "admin": {
@@ -412,7 +412,7 @@
   },
   "profile": {
     "nav_profile": "Profile",
-    "back_to_vouch": "Go to Vouch",
+    "back_to_vouch": "Go to Pondoxa",
     "section_identity": "Identity",
     "name_label": "Name",
     "name_ph": "Your public name",
@@ -447,18 +447,18 @@
     "saving_bg": "Saving...",
     "saved_bg": "Saved!",
     "reviews_label": "reviews",
-    "followers_label": "Vouchers",
+    "followers_label": "Followers",
     "last_reviews": "My latest reviews",
-    "fiarme": "Vouch",
+    "fiarme": "Follow",
     "fiarme_self": "Your profile",
-    "following": "Vouched",
+    "following": "Following",
     "copy_link": "Copy link",
     "copied_link": "✓ Link copied",
     "view_profile": "View full profile →",
-    "unfollow_title": "Unvouch",
-    "unfollow_confirm": "Are you sure you want to Unvouch {{ name }}?",
+    "unfollow_title": "Unfollow",
+    "unfollow_confirm": "Are you sure you want to Unfollow {{ name }}?",
     "not_found": "User not found.",
-    "you_follow": "Vouched",
+    "you_follow": "Following",
     "copy_dialog_title": "Link copied",
     "copy_dialog_big": "The link has been copied so you can embed your full-size presentation card (720 × 430 px).",
     "copy_dialog_mid": "The link has been copied so you can embed your medium-size presentation card (480 × 480 px).",
@@ -491,11 +491,11 @@
       "critico-senior": "Write 50 reviews.",
       "critico-maestro": "Write 100 reviews.",
       "el-critico": "Write 200 reviews.",
-      "critico-amigo": "Reach 10 Vouchers.",
-      "critico-solicitado": "Reach 100 Vouchers.",
-      "critico-fiable": "Reach 1,000 Vouchers.",
-      "critico-famoso": "Reach 3,000 Vouchers.",
-      "critico-influyente": "Reach 6,000 Vouchers."
+      "critico-amigo": "Reach 10 Followers.",
+      "critico-solicitado": "Reach 100 Followers.",
+      "critico-fiable": "Reach 1,000 Followers.",
+      "critico-famoso": "Reach 3,000 Followers.",
+      "critico-influyente": "Reach 6,000 Followers."
     }
   },
   "reviews": {
@@ -515,10 +515,10 @@
     "no_results": "No reviews found with that name."
   },
   "followers": {
-    "nav": "Vouchers",
-    "title": "Vouchers",
-    "empty": "You don't have any Vouchers yet.",
-    "no_results": "No Vouchers found with that name.",
+    "nav": "Followers",
+    "title": "Followers",
+    "empty": "You don't have any Followers yet.",
+    "no_results": "No Followers found with that name.",
     "search_ph": "Search by name...",
     "sort_date_desc": "Most recent",
     "sort_date_asc": "Oldest first",
@@ -531,11 +531,11 @@
     "show_email_label": "Show email on my public profile",
     "show_email_desc": "Your email address will be visible on your public profile.",
     "notify_email_label": "Receive email notifications",
-    "notify_email_desc": "We'll notify you when someone Vouches for you or when there are important updates to your account.",
+    "notify_email_desc": "We'll notify you when someone follows you or when there are important updates to your account.",
     "session_persistent_label": "Stay signed in",
     "session_persistent_desc": "Your session will persist even after closing the browser. If disabled, you'll be signed out when you close the browser.",
-    "follower_score_label": "Show Vouch Score from my Vouchers",
-    "follower_score_desc": "Displays a score on products calculated from your Vouchers' reviews.",
+    "follower_score_label": "Show Pondoxa Score from my Followers",
+    "follower_score_desc": "Displays a score on products calculated from your Followers' reviews.",
     "follower_score_only_verified": "Only available for verified critics.",
     "save": "Save changes",
     "saving": "Saving...",
@@ -592,23 +592,23 @@
     "chart_label_size": "Label size"
   },
   "meta": {
-    "games_title": "Games — Vouch",
-    "games_description": "Explore and discover video games with weighted reviews on Vouch.",
-    "landing_title": "Vouch — Weighted video game reviews",
+    "games_title": "Games — Pondoxa",
+    "games_description": "Explore and discover video games with weighted reviews on Pondoxa.",
+    "landing_title": "Pondoxa — Weighted video game reviews",
     "landing_description": "Social platform with weighted video game reviews.",
-    "profile_title": "Settings — Vouch"
+    "profile_title": "Settings — Pondoxa"
   },
   "faqs": {
-    "q1": "What is Vouch?",
-    "a1": "Vouch is a weighted review platform. Unlike other platforms, a game's score is not just a number without context — it is broken down into categories with a specific weight depending on the genre of the product. This allows for a score closer to something «objective».\n\nWe believe this alone is still not enough, so we added a «personal trust» system where you decide who to trust: Vouch for the critics whose opinion you respect and their scores will be averaged together — this is the Vouch score.",
+    "q1": "What is Pondoxa?",
+    "a1": "Pondoxa is a weighted review platform. Unlike other platforms, a game's score is not just a number without context — it is broken down into categories with a specific weight depending on the genre of the product. This allows for a score closer to something «objective».\n\nWe believe this alone is still not enough, so we added a «personal trust» system where you decide who to trust: Follow the critics whose opinion you respect and their scores will be averaged together — this is the Pondoxa Score.",
     "q2": "How does the scoring system work?",
     "a2": "Imagine any product: internally we assign a specific weight to the most important characteristics that type of product should have, a value between 0 and 1. A user rates each of these categories from 1 to 10, but since the categories do not carry the same weight, they do not impact the final score equally.\n\nFor example, in an FPS (First-Person Shooter) we consider that technical quality — performance, frame rate, mouse feel, etc. — matters more than the story. These games typically have rather weak narratives, much weaker than those of an RPG (Role-Playing Game).\n\nWhen a user gives a 5 in story because it is fairly thin but a 10 in technical quality, the game's score will lean heavily towards positive. In an RPG it would be the opposite: the plot would carry enormous weight in the final score.",
-    "q3": "What is the Vouch Score?",
-    "a3": "The Vouch Score is a personalised score visible on every product. It is calculated only from the reviews of the critics you have vouched for — your trusted circle.\n\nThe Vouch Score makes the most sense the more selective you are when choosing who to Vouch. You should give this vote of confidence only to people whose taste you believe is similar to yours and who you think will evaluate things the way you would.\n\nThe whole point is that when you are unsure whether a game is worth buying, you have a rating that closely reflects what you will actually feel when you play it — cutting out all the noise from users with different tastes, users who engage in review bombing, or users frustrated with a product for reasons that have nothing to do with you.\n\nHere, Vouches are not a popularity contest. Do not Vouch for a critic because you like them or find them entertaining on stream — Vouch for them because of how closely their judgment aligns with yours. Although in the end, the decision is yours alone.",
-    "q4": "What is the difference between Vouchers and Vouches?",
-    "a4": "When you Vouch for someone, they become one of your 'Vouches': critics whose opinion you have chosen to value. In turn, the people who Vouch for you become your 'Vouchers'. The more Vouchers you have, the more influence your voice carries on the platform.",
-    "q5": "Can I use Vouch without an account?",
-    "a5": "Yes. You can explore the catalogue, view game pages and read reviews without any account. To write reviews, Vouch for critics or access the Vouch Score, you need to create an account.",
+    "q3": "What is the Pondoxa Score?",
+    "a3": "The Pondoxa Score is a personalised score visible on every product. It is calculated only from the reviews of the critics you follow — your trusted circle.\n\nThe Pondoxa Score makes the most sense the more selective you are when choosing who to follow. You should give this vote of confidence only to people whose taste you believe is similar to yours and who you think will evaluate things the way you would.\n\nThe whole point is that when you are unsure whether a game is worth buying, you have a rating that closely reflects what you will actually feel when you play it — cutting out all the noise from users with different tastes, users who engage in review bombing, or users frustrated with a product for reasons that have nothing to do with you.\n\nHere, following is not a popularity contest. Do not follow a critic because you like them or find them entertaining on stream — follow them because of how closely their judgment aligns with yours. Although in the end, the decision is yours alone.",
+    "q4": "What is the difference between followers and following?",
+    "a4": "When you follow someone, they become one of your 'following': critics whose opinion you have chosen to value. In turn, the people who follow you become your 'followers'. The more followers you have, the more influence your voice carries on the platform.",
+    "q5": "Can I use Pondoxa without an account?",
+    "a5": "Yes. You can explore the catalogue, view game pages and read reviews without any account. To write reviews, follow critics or access the Pondoxa Score, you need to create an account.",
     "q6": "How do I get verified as a critic or press?",
     "a6": "From your profile, in the Verification section, you can request the verified badge if you are a relevant public figure, or press access if you represent a media outlet. The process is manual and may take a few days.",
     "q7": "What are the requirements to become a verified user?",
@@ -616,19 +616,19 @@
     "q8": "What benefits does a verified user have?",
     "a8": "Your profile will display the verified badge, setting you apart from the rest, which will also appear alongside each of your reviews.\n\nYou will also be able to include YouTube, TikTok and Twitch links in your review text to redirect users to your accounts, and you will have access to surveys and announcements exclusive to verified users. Surveys that could have a direct impact on how the platform works or its scores.",
     "q9": "What are achievements?",
-    "a9": "Achievements are badges awarded automatically when you reach certain milestones on the platform: writing reviews, gaining Vouchers, being among the first to review a game, and more. You can view them all from your profile.",
-    "q10": "Can I remove a Vouch I gave someone by mistake?",
-    "a10": "Yes. From the public profile of your Vouched user, click the 'Unvouch' button and confirm the action. Keep in mind that this will remove that reviewer's influence on your Vouch Score, so only do it if you're sure.",
+    "a9": "Achievements are badges awarded automatically when you reach certain milestones on the platform: writing reviews, gaining followers, being among the first to review a game, and more. You can view them all from your profile.",
+    "q10": "Can I unfollow someone?",
+    "a10": "Yes. From the public profile of the user you follow, click the 'Unfollow' button and confirm the action. Keep in mind that this will remove that reviewer's influence on your Pondoxa Score, so only do it if you're sure.",
     "q11": "Can I delete a review I wrote?",
     "a11": "No, but you can edit it. If you want to delete it completely, please contact us and we will do it for you. This is to avoid losing valuable information about products, since even if you no longer like a review, it may still be useful to other users or the community in general.",
-    "q12": "How can I contact the Vouch team?",
-    "a12": "You can reach us through our social media or send us an email at <a href=\"mailto:contacto@vouch.com\">contacto@vouch.com</a>.",
+    "q12": "How can I contact the Pondoxa team?",
+    "a12": "You can reach us through our social media or send us an email at <a href=\"mailto:contacto@pondoxa.com\">contacto@pondoxa.com</a>.",
     "q13": "Can I suggest a game that is not in the catalog?",
     "a13": "Yes. If you can't find a game in the catalog when searching by name, you will see an option to look it up in the external IGDB catalog and add it automatically to our database. If the game does not appear there either, you can contact us to have it added manually.",
     "q14": "How can I work with you or collaborate on the project?",
-    "a14": "Unfortunately we are not at a point where we can accept external collaborators, as the project does not generate revenue and we do not have the resources to manage contributions. However, we are open to hearing any ideas or proposals you may have. You can reach us through our social media or send us an email at <a href=\"mailto:contacto@vouch.com\">contacto@vouch.com</a>.\n\nThat said, we have high hopes for the project and will work hard for it to grow, and when the time comes, we will announce it through our social media and the website itself — if we reach that point, it will be news we want to share so everyone knows how the project is evolving.",
+    "a14": "Unfortunately we are not at a point where we can accept external collaborators, as the project does not generate revenue and we do not have the resources to manage contributions. However, we are open to hearing any ideas or proposals you may have. You can reach us through our social media or send us an email at <a href=\"mailto:contacto@pondoxa.com\">contacto@pondoxa.com</a>.\n\nThat said, we have high hopes for the project and will work hard for it to grow, and when the time comes, we will announce it through our social media and the website itself — if we reach that point, it will be news we want to share so everyone knows how the project is evolving.",
     "q15": "Why are only English and Spanish available?",
-    "a15": "The team behind Vouch is small and we could not maintain adequate quality control right now — even the current languages may have errors since none of us are linguists, haha.\n\nWe do have, to be honest, AI-generated translation files for several languages, but we prefer that they are at least reviewed and corrected by a human translator. Hiring a translator to keep these files up to date for each of those languages is, at this moment, economically impossible for us."
+    "a15": "The team behind Pondoxa is small and we could not maintain adequate quality control right now — even the current languages may have errors since none of us are linguists, haha.\n\nWe do have, to be honest, AI-generated translation files for several languages, but we prefer that they are at least reviewed and corrected by a human translator. Hiring a translator to keep these files up to date for each of those languages is, at this moment, economically impossible for us."
   },
   "footer": {
     "info": "Information",
@@ -651,7 +651,7 @@
     "type_verified": "Verified (public figure)",
     "type_press": "Press",
     "verified_explain": "The verified badge is for public figures and notable personalities. Send us a direct message from your X or Instagram account to start the process.",
-    "verified_explain2": "Include your Vouch username or email in the message so we can identify you. Also, indicate below the social network from which you will send us the DM and your username on that network.",
+    "verified_explain2": "Include your Pondoxa username or email in the message so we can identify you. Also, indicate below the social network from which you will send us the DM and your username on that network.",
     "verified_note": "Note: This is the best way we have found to avoid having to respond to every DM we receive. We will go directly to your DM, verify that your profile is truly relevant and, if everything checks out, we will manually verify your account. As this is a manual process, it may take a few days. We are sorry we cannot make it faster.",
     "social_network_label": "Social network",
     "social_username_label": "Your username on that network",
@@ -675,13 +675,13 @@
     "label": "Advertisement"
   },
   "following": {
-    "title": "my Vouches",
-    "nav": "My Vouches",
+    "title": "Following",
+    "nav": "Following",
     "search_ph": "Search user...",
     "sort_date_desc": "Newest first",
     "sort_date_asc": "Oldest first",
     "sort_name_asc": "Name (A-Z)",
     "no_results": "No results",
-    "empty": "You haven't vouched for anyone yet."
+    "empty": "You haven't followed anyone yet."
   }
 }
