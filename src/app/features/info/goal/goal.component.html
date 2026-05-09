@@ -1,4 +1,39 @@
 <app-breadcrumb [items]="breadcrumbs" />
 <div class="info-page">
-  <h1 class="info-title">{{ 'footer.goal' | transloco }}</h1>
+  <section class="goal-section">
+    <h2 class="section-title">{{ 'goal_page.preamble_title' | transloco }}</h2>
+    <p class="goal-text">{{ 'goal_page.preamble_p1' | transloco }}</p>
+    <p class="goal-text">{{ 'goal_page.preamble_p2' | transloco }}</p>
+    <p class="goal-text">{{ 'goal_page.preamble_p3' | transloco }}</p>
+  </section>
+
+  <section class="goal-section">
+    <h2 class="section-title">{{ 'goal_page.goal_title' | transloco }}</h2>
+    <p class="goal-text goal-text--highlight">{{ 'goal_page.goal_text' | transloco }}</p>
+  </section>
+
+  <section class="goal-section">
+    <h2 class="section-title">{{ 'goal_page.methods_title' | transloco }}</h2>
+    <ol class="goal-steps">
+      <li>{{ 'goal_page.methods_step1' | transloco }}</li>
+      <li>{{ 'goal_page.methods_step2' | transloco }}</li>
+      <li>{{ 'goal_page.methods_step3' | transloco }}</li>
+      <li>{{ 'goal_page.methods_step4' | transloco }}</li>
+    </ol>
+    <p class="goal-text">{{ 'goal_page.methods_groups_intro' | transloco }}</p>
+    <ul class="goal-groups">
+      <li>{{ 'goal_page.methods_group1' | transloco }}</li>
+      <li>{{ 'goal_page.methods_group2' | transloco }}</li>
+    </ul>
+  </section>
+
+  <section class="goal-section">
+    <h2 class="section-title">{{ 'goal_page.trust_title' | transloco }}</h2>
+    <p class="goal-text">{{ 'goal_page.trust_text' | transloco }}</p>
+  </section>
+
+  <section class="goal-section">
+    <h2 class="section-title">{{ 'goal_page.simple_title' | transloco }}</h2>
+    <p class="goal-text">{{ 'goal_page.simple_text' | transloco }}</p>
+  </section>
 </div>

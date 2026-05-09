@@ -620,6 +620,26 @@
     "q15": "Pourquoi seulement l'anglais et l'espagnol sont-ils disponibles ?",
     "a15": "L'équipe derrière Pondoxa est petite et nous ne pourrions pas maintenir un contrôle de qualité adéquat actuellement — même les langues actuelles pourraient contenir des erreurs car aucun d'entre nous n'est linguiste, haha.\n\nNous avons, pour être honnêtes, des fichiers de traduction générés par IA dans plusieurs langues, mais nous préférons qu'ils soient au minimum révisés et corrigés par un traducteur humain. Embaucher un traducteur pour maintenir ces fichiers à jour pour chacune de ces langues est, à ce stade, économiquement impossible pour nous."
   },
+  "goal_page": {
+    "preamble_title": "Préambule",
+    "preamble_p1": "Les notes des jeux sont cassées. Un seul chiffre résume l'expérience complète d'un produit qui, au mieux, reflète à moitié une série d'opinions sans contexte, sans consensus sur l'évaluation et sans analyse objective.",
+    "preamble_p2": "Il existe une asymétrie métrique où la note fonctionnellement passable (5/10) ne coïncide pas avec l'équilibre de qualité ; le point médian réel de l'échelle s'est déplacé vers la mention bien, invalidant l'échec comme outil de filtrage. Le 5 est le nouveau 0 ; le 7,5, le nouveau 5.",
+    "preamble_p3": "De plus, les critiques émotionnelles de masse qui notent positivement ou négativement des jeux pour des raisons sans rapport avec le produit lui-même ne devraient pas impacter sa note. Nous reconnaissons leur utilité médiatique, mais elles distordent la réalité d'un produit qui possède des caractéristiques concrètes malgré les décisions arbitraires de ses responsables.",
+    "goal_title": "Objectif",
+    "goal_text": "Nous voulons que les notes aient un sens et qu'elles reflètent, le plus fidèlement possible, l'idéal utopique de l'«objectivité». C'est pourquoi l'agrégation d'opinions de masse est aussi importante qu'une plateforme qui aide à unifier les critères d'évaluation.",
+    "methods_title": "Méthodes",
+    "methods_step1": "Établissement des caractéristiques principales d'un produit.",
+    "methods_step2": "Évaluation du poids de chaque caractéristique pour ce produit en particulier.",
+    "methods_step3": "Calcul de la note pondérée du produit.",
+    "methods_step4": "Obtention de la moyenne des notes individuelles pour définir une note unique.",
+    "methods_groups_intro": "En suivant cette méthode, nous pouvons définir des groupes d'intérêt :",
+    "methods_group1": "De manière globale : Utilisateurs généraux sans affiliation ni intérêts économiques et utilisateurs dédiés exclusivement ou partiellement à l'analyse de ces produits.",
+    "methods_group2": "De manière particulière : Utilisateurs que vous choisissez d'inclure dans votre groupe ou utilisateurs qui font confiance à votre avis lors de l'évaluation de produits.",
+    "trust_title": "La confiance comme filtre",
+    "trust_text": "Le système d'abonnements vous permet de décider de qui vous faites confiance. La Note Pondoxa de chaque produit est calculée uniquement avec les avis des personnes que vous suivez : des critiques dont les critères correspondent aux vôtres. Ce n'est pas le bruit de tous, mais l'opinion de ceux qui comptent.",
+    "simple_title": "Sans complications",
+    "simple_text": "Si vous voulez juste explorer le catalogue et lire des avis, vous pouvez le faire sans créer de compte. Si vous voulez que la plateforme travaille pour vous et voir des notes personnalisées, commencez à suivre ceux qui partagent vos critères. Pondoxa s'occupe du reste."
+  },
   "footer": {
     "info": "Informations",
     "about": "À propos de nous",

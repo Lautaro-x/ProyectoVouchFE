@@ -620,6 +620,26 @@
     "q15": "Perché sono disponibili solo l'inglese e lo spagnolo?",
     "a15": "Il team dietro Pondoxa è piccolo e non riusciremmo a mantenere un adeguato controllo della qualità al momento — anche le lingue attuali potrebbero avere errori poiché nessuno di noi è un linguista, haha.\n\nAbbiamo, per essere onesti, file di traduzione in diverse lingue generati dall'IA, ma preferiamo che vengano almeno revisionati e corretti da un traduttore umano. Assumere un traduttore per mantenere questi file aggiornati per ciascuna di queste lingue è, al momento, economicamente impossibile per noi."
   },
+  "goal_page": {
+    "preamble_title": "Preambolo",
+    "preamble_p1": "I voti nei giochi sono rotti. Un singolo numero riassume l'esperienza completa di un prodotto che, nel migliore dei casi, riflette a metà una serie di opinioni senza contesto, senza consenso nella valutazione e senza un'analisi oggettiva.",
+    "preamble_p2": "Esiste un'asimmetria metrica dove la sufficienza funzionale (5/10) non coincide con l'equilibrio di qualità; il punto medio reale della scala si è spostato verso il buono, invalidando l'insufficienza come strumento di filtraggio. Il 5 è il nuovo 0; il 7,5, il nuovo 5.",
+    "preamble_p3": "Inoltre, le critiche emotive di massa che valutano positivamente o negativamente giochi per cause estranee al prodotto stesso non dovrebbero influire sul suo voto. Riconosciamo la loro utilità mediatica, ma questa distorce la realtà di un prodotto che possiede caratteristiche concrete nonostante le decisioni arbitrarie dei suoi responsabili.",
+    "goal_title": "Obiettivo",
+    "goal_text": "Vogliamo che i voti abbiano significato e che riflettano, nel modo più vicino possibile, l'ideale utopico dell'«oggettività». Per questo, l'aggregazione di opinioni di massa è tanto importante quanto una piattaforma che aiuti ad allineare i criteri di valutazione.",
+    "methods_title": "Metodi",
+    "methods_step1": "Definizione delle caratteristiche principali di un prodotto.",
+    "methods_step2": "Valutazione del peso di ogni caratteristica per quel prodotto in particolare.",
+    "methods_step3": "Calcolo del punteggio ponderato del prodotto.",
+    "methods_step4": "Calcolo della media dei punteggi individuali per definire un punteggio unico.",
+    "methods_groups_intro": "Seguendo questo metodo, possiamo definire gruppi di interesse:",
+    "methods_group1": "In modo globale: Utenti generali senza affiliazione né interessi economici e utenti dedicati esclusivamente o parzialmente all'analisi di questi prodotti.",
+    "methods_group2": "In modo particolare: Utenti che decidi di includere nel tuo gruppo o utenti che si fidano della tua opinione nel valutare i prodotti.",
+    "trust_title": "La fiducia come filtro",
+    "trust_text": "Il sistema di follower ti permette di decidere di chi ti fidi. La Nota Pondoxa di ogni prodotto viene calcolata solo con le recensioni delle persone che segui: critici il cui criterio coincide con il tuo. Non è il rumore di tutti, ma l'opinione di chi conta.",
+    "simple_title": "Senza complicazioni",
+    "simple_text": "Se vuoi solo esplorare il catalogo e leggere le recensioni, puoi farlo senza bisogno di creare un account. Se vuoi che la piattaforma lavori per te e vedere voti personalizzati, inizia a seguire chi condivide il tuo criterio. Il resto lo fa Pondoxa."
+  },
   "footer": {
     "info": "Informazioni",
     "about": "Chi siamo",

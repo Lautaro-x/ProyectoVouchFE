@@ -630,6 +630,26 @@
     "q15": "Why are only English and Spanish available?",
     "a15": "The team behind Pondoxa is small and we could not maintain adequate quality control right now — even the current languages may have errors since none of us are linguists, haha.\n\nWe do have, to be honest, AI-generated translation files for several languages, but we prefer that they are at least reviewed and corrected by a human translator. Hiring a translator to keep these files up to date for each of those languages is, at this moment, economically impossible for us."
   },
+  "goal_page": {
+    "preamble_title": "Preamble",
+    "preamble_p1": "Game scores are broken. A single number summarizes the complete experience of a product that, at best, partially reflects a series of opinions without context, without consensus in evaluation, and without objective analysis.",
+    "preamble_p2": "There is a metric asymmetry where the functional pass (5/10) does not coincide with the quality balance; the real midpoint of the scale has shifted toward the notable, invalidating the fail as a filtering tool. 5 is the new 0; 7.5 is the new 5.",
+    "preamble_p3": "Moreover, mass emotional reviews that rate games positively or negatively for reasons unrelated to the product itself should not impact its score. We value their media utility, but it distorts the reality of a product that has concrete characteristics despite the arbitrary decisions of those responsible for it.",
+    "goal_title": "Goal",
+    "goal_text": "We want scores to have meaning and to reflect, as closely as possible, the utopian ideal of «objectivity». That is why mass opinion aggregation is as important as a platform that helps align evaluation criteria.",
+    "methods_title": "Methods",
+    "methods_step1": "Establishing the main characteristics of a product.",
+    "methods_step2": "Evaluating the weight of each characteristic for that specific product.",
+    "methods_step3": "Calculating the weighted score of the product.",
+    "methods_step4": "Obtaining the average of individual scores to define a single score.",
+    "methods_groups_intro": "Following this method, we can define groups of interest:",
+    "methods_group1": "Globally: General users without affiliation or economic interests, and users dedicated exclusively or partially to the analysis of these products.",
+    "methods_group2": "Individually: Users you choose to include in your group, or users who trust your opinion when rating products.",
+    "trust_title": "Trust as a filter",
+    "trust_text": "The follow system lets you decide who you trust. The Pondoxa Score for each product is calculated only with reviews from the people you follow: critics whose criteria align with yours. It is not the noise of everyone, but the opinion of those who matter.",
+    "simple_title": "No complications",
+    "simple_text": "If you just want to browse the catalog and read reviews, you can do so without creating an account. If you want the platform to work for you and see personalized scores, start following those who share your criteria. Pondoxa handles the rest."
+  },
   "footer": {
     "info": "Information",
     "about": "About us",

@@ -8,6 +8,7 @@ import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/
   standalone: true,
   imports: [TranslocoModule, BreadcrumbComponent],
   templateUrl: './goal.component.html',
+  styleUrl: './goal.component.css',
 })
 export class GoalComponent {
   readonly breadcrumbs: BreadcrumbItem[] = [{ labelKey: 'footer.goal' }];
