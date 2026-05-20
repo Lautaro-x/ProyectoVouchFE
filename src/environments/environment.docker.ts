@@ -1,7 +1,7 @@
 export const environment = {
-  baseUrl: 'http://localhost:4200',
+  baseUrl: 'http://localhost',
   production: false,
-  apiUrl: 'http://localhost/ProyectoVouchBE/public/api',
+  apiUrl: 'http://localhost/api',
   googleClientId: '210662394839-scaqm3a10c9mr5pgei2f5rpl793acc9v.apps.googleusercontent.com',
   pressEmail: 'support@pondoxa.com',
   supportEmail: 'support@pondoxa.com',
