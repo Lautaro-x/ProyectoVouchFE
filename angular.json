@@ -29,7 +29,7 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": ["localhost"]
+              "allowedHosts": ["localhost", "pondoxa.com", "www.pondoxa.com"]
             },
             "ssr": {
               "entry": "src/server.ts"
