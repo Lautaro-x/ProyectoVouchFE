@@ -172,7 +172,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     try {
       this.canvasRef.nativeElement.toBlob(async blob => {
         if (!blob) return;
-        const filename = `vouch-${d.product.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`;
+        const filename = `Pondoxa-${d.product.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`;
         const file = new File([blob], filename, { type: 'image/png' });
         if (!('share' in navigator) || !navigator.canShare({ files: [file] })) { this.download(); return; }
         try { await navigator.share({ files: [file], title: d.product.title }); } catch { /* cancelled */ }
@@ -271,7 +271,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     if (!d) return;
     try {
       const a = document.createElement('a');
-      a.download = `vouch-${d.product.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`;
+      a.download = `Pondoxa-${d.product.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`;
       a.href = this.canvasRef.nativeElement.toDataURL('image/png');
       a.click();
     } catch { /* tainted canvas */ }
@@ -727,7 +727,7 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     ctx.textAlign    = 'right';
     ctx.textBaseline = 'bottom';
     ctx.letterSpacing = '4px';
-    ctx.fillText('VOUCH', W - 36, H - 36);
+    ctx.fillText('Pondoxa', W - 36, H - 36);
     ctx.restore();
   }
 

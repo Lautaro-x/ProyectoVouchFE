@@ -1,6 +1,6 @@
-# Vouch — Frontend
+# Pondoxa — Frontend
 
-Aplicación Angular del proyecto Vouch, una plataforma social de críticas ponderadas para videojuegos.
+Aplicación Angular del proyecto Pondoxa, una plataforma social de críticas ponderadas para videojuegos.
 
 ---
 

@@ -146,17 +146,17 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   private setOgTags(p: ProductDetail): void {
     const url   = `${this.doc.location.origin}/product/${p.type}/${p.slug}`;
-    const desc  = p.description ? p.description.slice(0, 160) : 'Weighted review on Vouch.';
+    const desc  = p.description ? p.description.slice(0, 160) : 'Weighted review on Pondoxa.';
     const image = p.cover_image ?? '';
-    this.titleSvc.setTitle(`${p.title} — Vouch`);
+    this.titleSvc.setTitle(`${p.title} — Pondoxa`);
     this.meta.updateTag({ name: 'description',            content: desc });
     this.meta.updateTag({ property: 'og:type',            content: 'website' });
     this.meta.updateTag({ property: 'og:url',             content: url });
-    this.meta.updateTag({ property: 'og:title',           content: `${p.title} — Vouch` });
+    this.meta.updateTag({ property: 'og:title',           content: `${p.title} — Pondoxa` });
     this.meta.updateTag({ property: 'og:description',     content: desc });
     this.meta.updateTag({ property: 'og:image',           content: image });
     this.meta.updateTag({ name: 'twitter:card',           content: 'summary_large_image' });
-    this.meta.updateTag({ name: 'twitter:title',          content: `${p.title} — Vouch` });
+    this.meta.updateTag({ name: 'twitter:title',          content: `${p.title} — Pondoxa` });
     this.meta.updateTag({ name: 'twitter:description',    content: desc });
     this.meta.updateTag({ name: 'twitter:image',          content: image });
   }

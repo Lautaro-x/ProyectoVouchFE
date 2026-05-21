@@ -34,14 +34,14 @@ export class BigCardPageComponent implements OnInit {
   private setOgTags(data: UserCardData): void {
     const url  = `${this.doc.location.origin}/card/big/${data.id}`;
     const desc = `${data.reviews_count} reviews · ${data.followers_count} followers`;
-    this.title.setTitle(`${data.name} — Vouch`);
+    this.title.setTitle(`${data.name} — Pondoxa`);
     this.meta.updateTag({ property: 'og:type',        content: 'profile' });
     this.meta.updateTag({ property: 'og:url',         content: url });
-    this.meta.updateTag({ property: 'og:title',       content: `${data.name} on Vouch` });
+    this.meta.updateTag({ property: 'og:title',       content: `${data.name} on Pondoxa` });
     this.meta.updateTag({ property: 'og:description', content: desc });
     this.meta.updateTag({ property: 'og:image',       content: data.avatar ?? '' });
     this.meta.updateTag({ name: 'twitter:card',        content: 'summary_large_image' });
-    this.meta.updateTag({ name: 'twitter:title',       content: `${data.name} on Vouch` });
+    this.meta.updateTag({ name: 'twitter:title',       content: `${data.name} on Pondoxa` });
     this.meta.updateTag({ name: 'twitter:description', content: desc });
     this.meta.updateTag({ name: 'twitter:image',       content: data.avatar ?? '' });
   }
