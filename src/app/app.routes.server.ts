@@ -1,7 +1,7 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
 
 export const serverRoutes: ServerRoute[] = [
-  { path: '', renderMode: RenderMode.Prerender },
+  { path: '', renderMode: RenderMode.Server },
   { path: 'login', renderMode: RenderMode.Prerender },
   { path: 'not-found', renderMode: RenderMode.Prerender },
   { path: 'games', renderMode: RenderMode.Server },
