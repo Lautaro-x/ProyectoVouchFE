@@ -5,6 +5,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideTransloco } from '@jsverse/transloco';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { ssrUrlInterceptor } from './core/interceptors/ssr-url.interceptor';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { LangService } from './core/services/lang.service';
 
@@ -12,7 +13,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([ssrUrlInterceptor, authInterceptor])),
     provideClientHydration(withEventReplay()),
     provideTransloco({
       config: {
