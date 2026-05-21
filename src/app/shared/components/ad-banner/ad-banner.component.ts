@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
@@ -9,4 +9,17 @@ import { TranslocoModule } from '@jsverse/transloco';
   templateUrl: './ad-banner.component.html',
   styleUrl: './ad-banner.component.css',
 })
-export class AdBannerComponent {}
+export class AdBannerComponent {
+  adSlot = input.required<string>();
+
+  readonly adClient = 'ca-pub-9130792052986864';
+
+  constructor() {
+    afterNextRender(() => {
+      try {
+        (window as any)['adsbygoogle'] = (window as any)['adsbygoogle'] || [];
+        (window as any)['adsbygoogle'].push({});
+      } catch {}
+    });
+  }
+}
