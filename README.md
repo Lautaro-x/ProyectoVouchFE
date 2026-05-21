@@ -88,6 +88,7 @@ src/
 │   │       └── verify-requests/           # Revisión de solicitudes de verificación
 │   ├── shared/
 │   │   ├── components/
+│   │   │   ├── ad-banner/                 # Banner de Google AdSense (afterNextRender)
 │   │   │   ├── breadcrumb/                # Breadcrumb auto-prepend "Home"
 │   │   │   ├── dialog/                    # Modal genérico con ng-content
 │   │   │   ├── footer/                    # Pie de página global con i18n completa
@@ -147,13 +148,13 @@ export const environment = {
 
 ## SSR — Server-Side Rendering
 
-**Librería:** `@angular/ssr` 21.2.7
+**Librería:** `@angular/ssr` 21.2.7 · **Estado en producción: ✓ verificado**
 
 **Render modes** (`app.routes.server.ts`):
 
 | Ruta | Modo | Motivo |
 |---|---|---|
-| `/` | Prerender | Contenido estático, óptimo para SEO |
+| `/` | Server | Contenido dinámico, indexable |
 | `/login` | Prerender | Contenido estático |
 | `/not-found` | Prerender | Contenido estático |
 | `/games` | Server | Contenido dinámico, indexable |
@@ -165,6 +166,10 @@ export const environment = {
 | `**` | Client | Rutas privadas sin pre-renderizado |
 
 **Compatibilidad SSR:** `localStorage`, `document`, `window` y Google GSI no están disponibles en el servidor. Todo acceso está protegido con `isPlatformBrowser(PLATFORM_ID)`.
+
+**`ssrUrlInterceptor`** (`core/interceptors/ssr-url.interceptor.ts`): interceptor HTTP que solo actúa en el servidor. Reescribe todas las URLs para que los requests salientes del proceso Node.js vayan a `http://nginx` (nombre del servicio Docker) en lugar de a `https://pondoxa.com` o rutas relativas `/...`, que no son accesibles desde dentro del contenedor. Sin él, `withFetch()` de Angular fallaría porque Node `fetch` requiere URLs absolutas y no puede resolver el dominio externo desde el entorno Docker.
+
+**`trustProxyHeaders: true` en `AngularNodeAppEngine`** (`server.ts`): nginx reenvía la cabecera `X-Forwarded-For` en cada petición. Angular 21 solo confía por defecto en `x-forwarded-host` y `x-forwarded-proto`; cualquier otra cabecera `x-forwarded-*` desconocida activa un degrade silencioso a CSR (sirve el shell estático en lugar de renderizar). Pasar `{ trustProxyHeaders: true }` al constructor le indica a Angular que confíe en todas las cabeceras `x-forwarded-*` procedentes de nginx, que es nuestro proxy de confianza.
 
 ---
 
@@ -252,7 +257,7 @@ Página de detalle con:
 - **Sección de reseñas** con infinite scroll, expansión de texto largo, avatar con fallback
 - **Score blocks:** Global (usuarios), Pro (críticos), Trust (seguidos), Follower (seguidores), IGDB (cuando no hay votos propios)
 
-**`ReviewShareComponent`** — modal que abre el generador de imagen de reseña al pulsar el icono de compartir.
+**`ReviewShareComponent`** — generador de imagen de reseña basado en `<canvas>`. 3 formatos (square 1080×1080, stories 1080×1920, banner 1920×1080), 3 layouts (portada izquierda, portada derecha, minimalista), 3 tipos de gráfica (barras horizontales, barras verticales, radar), 4 temas predefinidos (dark/light/amoled/neon), fondo configurable (color sólido, portada del juego con difuminado de borde, URL externa, imagen subida desde dispositivo), color de gráfica, texto y opacidad ajustables de forma independiente, backdrop opcional para la zona de la gráfica. Marca de agua: texto "PONDOXA" en fuente Rubik Mono One (cargada con `FontFace` desde `/fonts/Rubik_Mono_One/`), esquina inferior derecha, 18% de opacidad. Botones de descarga (PNG), copia al portapapeles y share nativo.
 
 ---
 
@@ -362,6 +367,10 @@ El header se oculta automáticamente en rutas bajo `/administration` mediante un
 
 ## Componentes compartidos
 
+### `AdBannerComponent`
+
+Banner de Google AdSense. Input requerido: `adSlot` (ID del slot del anuncio). Llama a `adsbygoogle.push({})` dentro de `afterNextRender` para garantizar que el acceso a `window` solo ocurre tras la hidratación en el cliente — nunca durante el SSR. Incluye el script de AdSense y el elemento `<ins class="adsbygoogle">` en su template.
+
 ### `BreadcrumbComponent`
 
 Auto-prepende "Home" (enlace a `/`). Las páginas pasan solo el resto del path vía `[items]`. Usa `labelKey` para claves i18n y `label` para texto dinámico.
@@ -376,7 +385,7 @@ Modal genérico con `<ng-content>`. Se cierra con la tecla Escape, clic en el ba
 
 ### `GameCardComponent`
 
-Card de producto para grids y listados. Input: `product: ProductCard`. Muestra portada (via `IgdbCoverPipe`), título, nota con clase de color, tipo y — si el usuario sigue a alguien que lo ha reseñado en el último mes — su nota (Trust) flotando sobre la portada.
+Card de producto para grids y listados. Renderiza como `<a routerLink>` (semántica de enlace, favorable al SEO). Input: `product: ProductCard`. Muestra portada (via `IgdbCoverPipe`), título, nota con clase de color, tipo, icono de pluma cuando no hay nota aún (`score_type === 'none'`), y — si el usuario sigue a alguien que lo ha reseñado en el último mes — su nota (follower) flotando sobre la portada.
 
 ### `UserProfileCardComponent`
 
@@ -474,7 +483,7 @@ Renderiza el icono SVG de una tienda a partir de una clave. Claves soportadas: `
 - [~] Identidad visual definitiva (tipografía, paleta, personalidad) — en exploración: 4 paletas de tema disponibles, fuente Aldrich activa
 
 ### Fase 6 — Post-producción
-- [ ] Verificar SSR en producción (view-source, Facebook Debugger)
+- [x] Verificar SSR en producción (view-source, Facebook Debugger)
 - [ ] Widget para streamers (OBS)
 - [x] Generador de infografías para redes sociales
 - [ ] Juegos recomendados al usuario (ML o scoring heurístico)
@@ -507,8 +516,8 @@ Todo lo que hay que hacer antes de subir el frontend a un servidor real.
 
 ### Verificación post-deploy
 
-- [ ] `view-source:https://vouch.gg/games` → debe mostrar HTML con contenido real, no `<app-root></app-root>` vacío
-- [ ] `view-source:https://vouch.gg/product/game/{slug}` → debe incluir `<title>` y `<meta property="og:*">` con datos del juego
+- [x] `view-source:https://vouch.gg/games` → debe mostrar HTML con contenido real, no `<app-root></app-root>` vacío
+- [x] `view-source:https://vouch.gg/product/game/{slug}` → debe incluir `<title>` y `<meta property="og:*">` con datos del juego
 - [ ] Verificar OG tags con [Facebook Debugger](https://developers.facebook.com/tools/debug/) o Twitter Card Validator
 - [ ] `https://vouch.gg/sitemap.xml` devuelve XML con todas las rutas de productos
 - [ ] Registrar `https://vouch.gg/sitemap.xml` en Google Search Console
@@ -517,6 +526,10 @@ Todo lo que hay que hacer antes de subir el frontend a un servidor real.
 ---
 
 ## Novedades recientes
+
+- **SSR confirmado en producción (2026-05-21):** El SSR estaba retornando el shell estático (`<app-root></app-root>`) en lugar de HTML pre-renderizado. Causa raíz: nginx envía la cabecera `X-Forwarded-For` en cada petición; Angular 21 solo confía por defecto en `x-forwarded-host` y `x-forwarded-proto`, y cualquier otra cabecera `x-forwarded-*` activa un degrade silencioso a CSR. Fix: `new AngularNodeAppEngine({ trustProxyHeaders: true })` en `server.ts`. Confirmado con `docker compose logs frontend` mostrando HTML completo de los componentes renderizados. El `ssrUrlInterceptor` ya estaba en su lugar para redirigir requests salientes del proceso Node a `http://nginx` dentro del contenedor Docker. Documentación técnica detallada en la sección SSR.
+
+- **`AdBannerComponent` — Google AdSense (2026-05-21):** Nuevo componente compartido en `shared/components/ad-banner/`. Integra anuncios de Google AdSense de forma compatible con SSR usando `afterNextRender` para diferir la llamada a `adsbygoogle.push({})` hasta después de la hidratación en el cliente.
 
 - **Mejoras visuales sección games y componentes compartidos (2026-05-02):**
   - **`/games` — título con `section-title`:** El `<h1>` de la página pasa a usar la clase global `.section-title` (línea accent, Aldrich bold). Los controles (chip de filtro, contador de resultados, buscador) se separan en una fila `.games-controls` debajo del título.
