@@ -53,6 +53,11 @@ app.use(
 /**
  * Handle all other requests by rendering the Angular application.
  */
+app.use((_req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  next();
+});
+
 app.use((req, res, next) => {
   angularApp
     .handle(req)
