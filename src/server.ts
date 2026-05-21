@@ -61,25 +61,10 @@ app.use((_req, res, next) => {
 app.use((req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) => {
-      if (response) {
-        const clone = response.clone();
-        clone.text().then(body => {
-          if (!body.includes('<app-root></app-root>')) {
-            console.log(`[SSR OK] ${req.url}`);
-          } else {
-            console.error(`[SSR EMPTY] ${req.url} — shell served`);
-          }
-        }).catch(() => {});
-        writeResponseToNodeResponse(response, res);
-      } else {
-        next();
-      }
-    })
-    .catch((err) => {
-      console.error(`[SSR ERROR] ${req.url}`, err);
-      next(err);
-    });
+    .then((response) =>
+      response ? writeResponseToNodeResponse(response, res) : next()
+    )
+    .catch(next);
 });
 
 /**
