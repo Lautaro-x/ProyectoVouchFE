@@ -88,11 +88,12 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
     { key: 'neon',   labelKey: 'share.theme_neon',   bg: '#050511', font: '#00ffdd', chart: '#ff00aa', label: '#00ffdd' },
   ];
 
-  private coverImg:  HTMLImageElement | null = null;
-  private bgImg:     HTMLImageElement | null = null;
-  private offCanvas: HTMLCanvasElement | null = null;
-  private viewReady = false;
-  private rafId = 0;
+  private coverImg:       HTMLImageElement | null = null;
+  private bgImg:          HTMLImageElement | null = null;
+  private offCanvas:      HTMLCanvasElement | null = null;
+  private viewReady     = false;
+  private rafId         = 0;
+  private rubikFontReady = false;
 
   private readonly GRADE_COLORS: Record<string, string> = {
     'S':  '#ffffff',
@@ -110,6 +111,15 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
       this.bgImg     = null;
       this.offCanvas = null;
     });
+
+    if (typeof FontFace !== 'undefined') {
+      const font = new FontFace('Rubik Mono One', 'url(/fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf)');
+      font.load().then(f => {
+        document.fonts.add(f);
+        this.rubikFontReady = true;
+        this.redraw();
+      }).catch(() => { this.rubikFontReady = false; });
+    }
 
     this.api.getReviewShareData(this.reviewId)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -722,12 +732,13 @@ export class ReviewShareComponent implements OnInit, AfterViewInit {
 
   private drawWatermark(ctx: CanvasRenderingContext2D, W: number, H: number): void {
     ctx.save();
-    ctx.font = '800 22px system-ui, sans-serif';
-    ctx.fillStyle = this.alphaColor(this.fontColor(), 0.18 * this.fontOpacity());
-    ctx.textAlign    = 'right';
-    ctx.textBaseline = 'bottom';
+    const fontFamily = this.rubikFontReady ? '"Rubik Mono One", monospace' : 'system-ui, sans-serif';
+    ctx.font = `400 22px ${fontFamily}`;
+    ctx.fillStyle     = this.alphaColor(this.fontColor(), 0.18 * this.fontOpacity());
+    ctx.textAlign     = 'right';
+    ctx.textBaseline  = 'bottom';
     ctx.letterSpacing = '4px';
-    ctx.fillText('Pondoxa', W - 36, H - 36);
+    ctx.fillText('PONDOXA', W - 36, H - 36);
     ctx.restore();
   }
 

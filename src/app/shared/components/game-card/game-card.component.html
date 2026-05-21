@@ -10,7 +10,8 @@
   </div>
   @if (product().trust_grade) {
     <div class="trust-star-outer">
-      <img src="/logo/vouch/icon-chrome.svg" class="trust-star-svg" aria-hidden="true" alt="" />
+      <div class="trust-star-bg"></div>
+      <img src="/icon/pondoxa/icon.svg" class="trust-star-svg" aria-hidden="true" alt="" />
       <span [class]="'vouch-grade grade-' + trustGradeClass()">{{ product().trust_grade }}</span>
     </div>
   }
