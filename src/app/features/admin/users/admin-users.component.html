@@ -105,6 +105,7 @@
           } @else {
             <button class="btn-sm danger" (click)="startBan(u)">{{ 'admin.users.action_ban' | transloco }}</button>
           }
+          <button class="btn-sm danger" [title]="'admin.users.delete_title' | transloco" (click)="confirmDelete(u)">{{ 'admin.users.action_delete' | transloco }}</button>
         </td>
       </tr>
     }

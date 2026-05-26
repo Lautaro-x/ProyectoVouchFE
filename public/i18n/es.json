@@ -292,6 +292,9 @@
       "action_unban": "Desbanear",
       "grant_verified": "Dar verificado",
       "revoke_verified": "Quitar verificado",
+      "action_delete": "Eliminar",
+      "delete_title": "Eliminar usuario — {{ name }}",
+      "delete_subtitle": "Se eliminarán permanentemente el usuario, sus reseñas, suscripciones y todos los datos asociados. Esta acción no se puede deshacer.",
       "search_ph": "Buscar nombre o email..."
     },
     "surveys": {

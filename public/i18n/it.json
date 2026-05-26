@@ -282,6 +282,9 @@
       "status_banned": "Bannito",
       "action_ban": "Banna",
       "action_unban": "Riabilita",
+      "action_delete": "Elimina",
+      "delete_title": "Elimina utente — {{ name }}",
+      "delete_subtitle": "L'utente, le sue recensioni, le iscrizioni e tutti i dati associati saranno eliminati definitivamente. Questa azione non può essere annullata.",
       "search_ph": "Cerca nome o email..."
     },
     "surveys": {

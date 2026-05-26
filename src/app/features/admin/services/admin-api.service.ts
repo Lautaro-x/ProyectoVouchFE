@@ -159,6 +159,9 @@ export class AdminApiService {
   revokeVerified(id: number): Observable<{ badges: string[] }> {
     return this.http.delete<{ badges: string[] }>(`${this.base}/users/${id}/badge/verify`);
   }
+  deleteUser(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/users/${id}`);
+  }
 
   getCustomTrailerSection(): Observable<CustomTrailerSection> {
     return this.http.get<CustomTrailerSection>(`${this.base}/trailer-section`);

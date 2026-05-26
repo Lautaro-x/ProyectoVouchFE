@@ -292,6 +292,9 @@
       "action_unban": "Unban",
       "grant_verified": "Grant verified",
       "revoke_verified": "Revoke verified",
+      "action_delete": "Delete",
+      "delete_title": "Delete user — {{ name }}",
+      "delete_subtitle": "The user, their reviews, subscriptions and all associated data will be permanently deleted. This action cannot be undone.",
       "search_ph": "Search name or email..."
     },
     "surveys": {

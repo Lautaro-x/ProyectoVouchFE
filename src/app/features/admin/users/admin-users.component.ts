@@ -83,4 +83,12 @@ export class AdminUsersComponent extends AdminTableBase<AdminUser> implements On
       } : p);
     });
   }
+
+  confirmDelete(user: AdminUser): void {
+    this.openConfirm(
+      this.t.translate('admin.users.delete_title', { name: user.name }),
+      this.t.translate('admin.users.delete_subtitle'),
+      () => this.api.deleteUser(user.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load(this.page()?.current_page ?? 1))
+    );
+  }
 }

@@ -282,6 +282,9 @@
       "status_banned": "Banido",
       "action_ban": "Banir",
       "action_unban": "Desbanir",
+      "action_delete": "Eliminar",
+      "delete_title": "Eliminar utilizador — {{ name }}",
+      "delete_subtitle": "O utilizador, as suas críticas, subscrições e todos os dados associados serão eliminados permanentemente. Esta ação não pode ser desfeita.",
       "search_ph": "Buscar nome ou email..."
     },
     "surveys": {

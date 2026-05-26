@@ -282,6 +282,9 @@
       "status_banned": "Banni",
       "action_ban": "Bannir",
       "action_unban": "Débannir",
+      "action_delete": "Supprimer",
+      "delete_title": "Supprimer l'utilisateur — {{ name }}",
+      "delete_subtitle": "L'utilisateur, ses critiques, abonnements et toutes les données associées seront supprimés définitivement. Cette action est irréversible.",
       "search_ph": "Rechercher un nom ou un email..."
     },
     "surveys": {
