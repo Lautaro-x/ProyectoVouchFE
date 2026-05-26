@@ -82,7 +82,7 @@ src/
 │   │       ├── platforms/                 # CRUD Plataformas
 │   │       ├── products/                  # CRUD Productos + búsqueda/importación IGDB
 │   │       ├── reviews/                   # Gestión de reseñas (banear/desbanear)
-│   │       ├── users/                     # Gestión de usuarios (banear, roles, badge verificado)
+│   │       ├── users/                     # Gestión de usuarios (banear, roles, badge verificado, eliminar en cascada)
 │   │       ├── surveys/                   # CRUD Encuestas multilingüe + resultados
 │   │       ├── announcements/             # CRUD Avisos multilingüe
 │   │       └── verify-requests/           # Revisión de solicitudes de verificación
@@ -342,7 +342,7 @@ Servicio centralizado con métodos tipados para todos los endpoints admin. Devue
 
 **Reseñas** — Listado paginado, filtro por baneadas, banear con motivo / desbanear.
 
-**Usuarios** — Listado paginado, filtros por estado y rol, cambio de rol inline, banear/desbanear, otorgar/revocar badge `verificado`.
+**Usuarios** — Listado paginado, filtros por estado y rol, cambio de rol inline, banear/desbanear, otorgar/revocar badge `verificado`, eliminar usuario en cascada (confirmación con dialog de advertencia).
 
 **Encuestas** — CRUD con título, pregunta y opciones multilingüe (5 idiomas). Selector de audiencia (`all | verified | press`). Pastillas de estado (upcoming/active/ended/missing\_translations). Botón de resultados con barras de progreso.
 
