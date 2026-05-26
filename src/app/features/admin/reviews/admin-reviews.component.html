@@ -25,6 +25,21 @@
   </div>
 </app-dialog>
 
+<app-dialog
+  [title]="reviewDialogTitle()"
+  [isOpen]="reviewDialogOpen()"
+  (closed)="closeReviewDialog()"
+>
+  <div class="field">
+    <label>{{ 'admin.reviews.review_body_label' | transloco }}</label>
+    <textarea rows="5" [value]="reviewBody()" (input)="reviewBody.set($any($event.target).value)" [placeholder]="'admin.reviews.review_body_ph' | transloco"></textarea>
+  </div>
+  <div class="form-actions">
+    <button class="btn-primary" (click)="saveReview()">{{ 'admin.reviews.review_save' | transloco }}</button>
+    <button class="btn-ghost" (click)="closeReviewDialog()">{{ 'admin.common.cancel' | transloco }}</button>
+  </div>
+</app-dialog>
+
 <div class="section-header">
   <h2>{{ 'admin.reviews.title' | transloco }}</h2>
   <div class="filters">
@@ -69,8 +84,14 @@
     @for (r of page()?.data ?? []; track r.id) {
       <tr [class.banned-row]="r.banned_at">
         <td class="muted">{{ r.id }}</td>
-        <td>{{ r.user?.name ?? r.user_id }}</td>
-        <td>{{ r.product?.title ?? r.product_id }}</td>
+        <td><a class="text-link" [routerLink]="['/u', r.user?.id ?? r.user_id]">{{ r.user?.name ?? r.user_id }}</a></td>
+        <td>
+          @if (r.product?.slug && r.product?.type) {
+            <a class="text-link" [routerLink]="['/product', r.product!.type, r.product!.slug]">{{ r.product!.title }}</a>
+          } @else {
+            {{ r.product?.title ?? r.product_id }}
+          }
+        </td>
         <td><strong>{{ r.letter_grade }}</strong></td>
         <td>
           @if (r.banned_at) {
@@ -81,6 +102,7 @@
         </td>
         <td class="muted">{{ r.created_at | slice:0:10 }}</td>
         <td class="actions">
+          <button class="btn-sm" (click)="openReviewDialog(r)">{{ 'admin.reviews.action_review' | transloco }}</button>
           @if (r.banned_at) {
             <button class="btn-sm" (click)="unban(r)">{{ 'admin.reviews.action_unban' | transloco }}</button>
           } @else {

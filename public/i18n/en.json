@@ -270,6 +270,11 @@
       "status_banned": "Banned",
       "action_ban": "Ban",
       "action_unban": "Unban",
+      "action_review": "Review",
+      "review_title": "Review #{{ id }} — {{ user }}",
+      "review_body_label": "Review text",
+      "review_body_ph": "Write or edit the review text...",
+      "review_save": "Save",
       "search_ph": "Search user or product..."
     },
     "users": {

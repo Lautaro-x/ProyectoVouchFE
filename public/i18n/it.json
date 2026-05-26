@@ -262,6 +262,11 @@
       "status_banned": "Bannita",
       "action_ban": "Banna",
       "action_unban": "Riabilita",
+      "action_review": "Revisionare",
+      "review_title": "Recensione #{{ id }} — {{ user }}",
+      "review_body_label": "Testo della recensione",
+      "review_body_ph": "Scrivi o modifica il testo della recensione...",
+      "review_save": "Salva",
       "search_ph": "Cerca utente o prodotto..."
     },
     "users": {

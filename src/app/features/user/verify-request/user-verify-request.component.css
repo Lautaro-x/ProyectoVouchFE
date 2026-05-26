@@ -131,11 +131,14 @@
 }
 
 .vr-socials a {
-  color: var(--color-accent);
+  color: var(--color-text);
   text-decoration: none;
 }
 
-.vr-socials a:hover { text-decoration: underline; }
+.vr-socials a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
 
 .vr-actions {
   margin-top: 0.5rem;

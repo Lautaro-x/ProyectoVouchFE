@@ -67,7 +67,7 @@ export interface AdminReview {
   ban_reason: string | null;
   created_at: string;
   user?: { id: number; name: string; email: string };
-  product?: { id: number; title: string };
+  product?: { id: number; title: string; slug: string; type: string };
 }
 
 export interface AdminUser {

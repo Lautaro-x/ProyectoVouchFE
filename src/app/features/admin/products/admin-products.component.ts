@@ -1,6 +1,7 @@
 import { Component, DestroyRef, HostListener, inject, OnInit, signal, ChangeDetectionStrategy,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AdminApiService } from '../services/admin-api.service';
 import { Genre, IgdbGame, IgdbImportReport, PlatformWithPivot, Product } from '../models/admin.models';
@@ -23,7 +24,7 @@ const STORE_LABELS: Record<string, string> = {
 @Component({
   selector: 'app-admin-products',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslocoModule, DialogComponent, LocalizedNamePipe, IgdbCoverPipe],
+  imports: [RouterLink, TranslocoModule, DialogComponent, LocalizedNamePipe, IgdbCoverPipe],
   templateUrl: './admin-products.component.html',
   styleUrl: './admin-products.component.css',
 })

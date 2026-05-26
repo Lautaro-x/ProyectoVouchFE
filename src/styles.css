@@ -93,6 +93,16 @@ a {
   text-decoration: none;
 }
 
+.text-link {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.text-link:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
 button {
   font-family: inherit;
 }

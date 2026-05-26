@@ -102,11 +102,14 @@
 }
 
 .detail-value a {
-  color: var(--color-accent);
+  color: var(--color-text);
   text-decoration: none;
 }
 
-.detail-value a:hover { text-decoration: underline; }
+.detail-value a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
 
 .detail-textarea {
   width: 100%;

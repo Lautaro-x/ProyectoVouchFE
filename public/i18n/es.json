@@ -270,6 +270,11 @@
       "status_banned": "Baneada",
       "action_ban": "Banear",
       "action_unban": "Desbanear",
+      "action_review": "Revisar",
+      "review_title": "Reseña #{{ id }} — {{ user }}",
+      "review_body_label": "Texto de la reseña",
+      "review_body_ph": "Escribe o edita el texto de la reseña...",
+      "review_save": "Guardar",
       "search_ph": "Buscar usuario o producto..."
     },
     "users": {

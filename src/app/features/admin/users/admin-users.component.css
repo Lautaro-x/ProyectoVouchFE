@@ -1,11 +1,1 @@
 @import '../admin-shared.css';
-
-.user-link {
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.user-link:hover {
-  color: var(--color-accent);
-  text-decoration: underline;
-}

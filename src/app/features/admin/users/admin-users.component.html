@@ -76,7 +76,7 @@
     @for (u of page()?.data ?? []; track u.id) {
       <tr [class.banned-row]="u.banned_at">
         <td class="muted">{{ u.id }}</td>
-        <td><a class="user-link" [routerLink]="['/u', u.id]">{{ u.name }}</a></td>
+        <td><a class="text-link" [routerLink]="['/u', u.id]">{{ u.name }}</a></td>
         <td class="muted">{{ u.email }}</td>
         <td>
           <select [value]="u.role" (change)="changeRole(u.id, $any($event.target).value)">

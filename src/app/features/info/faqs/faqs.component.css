@@ -71,12 +71,11 @@
 }
 
 .faq-answer a {
-  color: var(--color-accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.15s;
+  color: var(--color-text);
+  text-decoration: none;
 }
 
 .faq-answer a:hover {
-  color: var(--color-accent-hover);
+  color: var(--color-accent);
+  text-decoration: underline;
 }

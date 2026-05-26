@@ -226,7 +226,7 @@
         <td class="muted">{{ p.id }}</td>
         <td>
           @if (p.cover_image) { <img class="cover-thumb" [src]="p.cover_image | igdbCover:'small'" [alt]="p.title" loading="lazy" decoding="async" /> }
-          {{ p.title }}
+          <a class="text-link" [routerLink]="['/product', p.type, p.slug]">{{ p.title }}</a>
         </td>
         <td><span class="badge">{{ 'admin.types.' + p.type | transloco }}</span></td>
         <td class="muted">{{ genreNames(p) }}</td>

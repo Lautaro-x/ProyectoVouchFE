@@ -262,6 +262,11 @@
       "status_banned": "Banida",
       "action_ban": "Banir",
       "action_unban": "Desbanir",
+      "action_review": "Rever",
+      "review_title": "Crítica #{{ id }} — {{ user }}",
+      "review_body_label": "Texto da crítica",
+      "review_body_ph": "Escreva ou edite o texto da crítica...",
+      "review_save": "Guardar",
       "search_ph": "Buscar usuário ou produto..."
     },
     "users": {

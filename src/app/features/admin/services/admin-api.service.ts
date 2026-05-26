@@ -105,6 +105,9 @@ export class AdminApiService {
   unbanReview(id: number): Observable<AdminReview> {
     return this.http.delete<AdminReview>(`${this.base}/reviews/${id}/ban`);
   }
+  updateReviewBody(id: number, body: string | null): Observable<AdminReview> {
+    return this.http.patch<AdminReview>(`${this.base}/reviews/${id}/body`, { body });
+  }
 
   getUsers(params?: Record<string, string>): Observable<Paginated<AdminUser>> {
     return this.http.get<Paginated<AdminUser>>(`${this.base}/users`, { params });
