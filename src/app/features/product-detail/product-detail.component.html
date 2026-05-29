@@ -34,7 +34,7 @@
         }
         @if (product()!.scores.pro_score !== null) {
           <div class="score-block score-block--pro">
-            <span class="score-label">{{ 'product.score_pro' | transloco }}</span>
+            <span class="score-label">{{ 'product.score_pro' | transloco }} ({{ product()!.scores.pro_count }})</span>
             <span [class]="'grade ' + gradeClass(product()!.scores.pro_grade)">
               {{ product()!.scores.pro_grade }}
             </span>
@@ -42,7 +42,7 @@
         }
         @if (product()!.scores.global_score !== null) {
           <div class="score-block score-block--global">
-            <span class="score-label">{{ 'product.score_global' | transloco }}</span>
+            <span class="score-label">{{ 'product.score_global' | transloco }} ({{ product()!.scores.global_count }})</span>
             <span [class]="'grade ' + gradeClass(product()!.scores.global_grade)">
               {{ product()!.scores.global_grade }}
             </span>

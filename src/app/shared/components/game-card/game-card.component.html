@@ -34,7 +34,7 @@
       } @else {
         <span class="score-label" [class.score-label--igdb]="product().score_type === 'igdb'">
           @if (product().score_type === 'global') {
-            {{ 'landing.new_relevant.score_global' | transloco }}
+            {{ 'landing.new_relevant.score_global' | transloco }} ({{ product().review_count ?? 0 }})
           } @else if (product().score_type === 'pro') {
             {{ 'landing.new_relevant.score_pro' | transloco }}
           } @else {

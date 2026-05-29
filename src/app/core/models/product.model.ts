@@ -89,6 +89,7 @@ export interface ProductCard {
   cover_image: string | null;
   letter_grade: string | null;
   score_type: 'global' | 'pro' | 'igdb' | 'none';
+  review_count?: number;
   trust_grade?: string | null;
   follower_review?: { user_name: string; letter_grade: string } | null;
 }
@@ -157,8 +158,10 @@ export interface ProductDetail {
   scores: {
     global_score: number | null;
     global_grade: string | null;
+    global_count: number;
     pro_score: number | null;
     pro_grade: string | null;
+    pro_count: number;
     trust_score: number | null;
     trust_grade: string | null;
     follower_score: number | null;
