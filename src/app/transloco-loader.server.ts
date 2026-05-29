@@ -9,11 +9,19 @@ import { Observable, of } from 'rxjs';
 export class TranslocoFsLoader implements TranslocoLoader {
   getTranslation(lang: string): Observable<Translation> {
     const serverDir = dirname(fileURLToPath(import.meta.url));
-    const path = join(serverDir, '../browser/i18n/', `${lang}.json`);
-    try {
-      return of(JSON.parse(readFileSync(path, 'utf-8')));
-    } catch {
-      return of({});
+    const candidates = [
+      join(serverDir, '../browser/i18n/', `${lang}.json`),
+      join(process.cwd(), 'public/i18n/', `${lang}.json`),
+    ];
+
+    for (const path of candidates) {
+      try {
+        return of(JSON.parse(readFileSync(path, 'utf-8')));
+      } catch {
+        // try next
+      }
     }
+
+    return of({});
   }
 }
