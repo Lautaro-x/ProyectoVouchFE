@@ -79,6 +79,7 @@ export interface AdminUser {
   badges: string[] | null;
   banned_at: string | null;
   ban_reason: string | null;
+  bot_score: number;
   created_at: string;
 }
 

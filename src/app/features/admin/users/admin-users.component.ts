@@ -84,6 +84,15 @@ export class AdminUsersComponent extends AdminTableBase<AdminUser> implements On
     });
   }
 
+  toggleBot(user: AdminUser): void {
+    this.api.toggleUserBot(user.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
+      this.page.update(p => p ? {
+        ...p,
+        data: p.data.map(u => u.id === user.id ? { ...u, bot_score: res.bot_score } : u),
+      } : p);
+    });
+  }
+
   confirmDelete(user: AdminUser): void {
     this.openConfirm(
       this.t.translate('admin.users.delete_title', { name: user.name }),

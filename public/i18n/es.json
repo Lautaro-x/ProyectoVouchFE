@@ -293,6 +293,7 @@
       "col_registered": "Registro",
       "status_active": "Activo",
       "status_banned": "Baneado",
+      "status_bot": "Bot",
       "action_ban": "Banear",
       "action_unban": "Desbanear",
       "grant_verified": "Dar verificado",

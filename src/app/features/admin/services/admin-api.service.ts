@@ -162,6 +162,9 @@ export class AdminApiService {
   revokeVerified(id: number): Observable<{ badges: string[] }> {
     return this.http.delete<{ badges: string[] }>(`${this.base}/users/${id}/badge/verify`);
   }
+  toggleUserBot(id: number): Observable<{ bot_score: number }> {
+    return this.http.post<{ bot_score: number }>(`${this.base}/users/${id}/bot`, {});
+  }
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.base}/users/${id}`);
   }

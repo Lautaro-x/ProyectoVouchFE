@@ -293,6 +293,7 @@
       "col_registered": "Registered",
       "status_active": "Active",
       "status_banned": "Banned",
+      "status_bot": "Bot",
       "action_ban": "Ban",
       "action_unban": "Unban",
       "grant_verified": "Grant verified",

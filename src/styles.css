@@ -204,6 +204,7 @@ button {
 .btn-sm:hover { border-color: var(--color-accent); color: var(--color-accent); }
 .btn-sm.danger:hover { border-color: var(--color-grade-f); color: var(--color-grade-f); }
 .btn-sm.active { background: var(--color-accent); color: var(--color-white); border-color: var(--color-accent); }
+.btn-sm.btn-icon { width: auto; padding: 0.25rem 0.45rem; line-height: 0; }
 
 .form-actions {
   display: flex;

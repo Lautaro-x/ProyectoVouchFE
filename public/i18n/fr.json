@@ -285,6 +285,7 @@
       "col_registered": "Inscription",
       "status_active": "Actif",
       "status_banned": "Banni",
+      "status_bot": "Bot",
       "action_ban": "Bannir",
       "action_unban": "Débannir",
       "action_delete": "Supprimer",

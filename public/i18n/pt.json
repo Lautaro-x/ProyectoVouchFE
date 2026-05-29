@@ -285,6 +285,7 @@
       "col_registered": "Registro",
       "status_active": "Ativo",
       "status_banned": "Banido",
+      "status_bot": "Bot",
       "action_ban": "Banir",
       "action_unban": "Desbanir",
       "action_delete": "Eliminar",
